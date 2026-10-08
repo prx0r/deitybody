@@ -41,6 +41,12 @@ body.split #second{display:block; position:fixed; z-index:1; top:0; right:0; wid
 #menu h3{margin:.7rem 0 .35rem; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
  color:var(--mut); font-family:ui-sans-serif,system-ui}
 #menu h3:first-child{margin-top:0}
+#menu details.trad{border-left:2px solid var(--line); margin:.3rem 0 .3rem .2rem; padding-left:.55rem}
+#menu details.trad > summary{cursor:pointer; font-size:.82rem; letter-spacing:.06em; text-transform:uppercase;
+ color:var(--ink); font-family:ui-sans-serif,system-ui; list-style:none; padding:.3rem 0}
+#menu details.trad > summary::-webkit-details-marker{display:none}
+#menu details.trad > summary::before{content:'▸ '; color:var(--mut)}
+#menu details.trad[open] > summary::before{content:'▾ '; color:var(--gold)}
 #menu .row{display:flex; gap:.4rem; flex-wrap:wrap}
 #menu .row button{font-family:ui-sans-serif,system-ui; font-size:.85rem; padding:.55rem .9rem;
  min-height:42px; border-radius:999px; border:1px solid var(--line); background:transparent;

@@ -321,7 +321,7 @@ setVisibleDeep(yantra,false);
   [['nivṛtti',-3.2],['pratiṣṭhā',-1.7],['vidyā',-.2],['śāntā',1.5],['śāntātītā',3.1]].forEach(([n,yy])=>{
     line([new THREE.Vector3(-.85,yy,0),new THREE.Vector3(.85,yy,0)],TEAL,.45);
     const d=document.createElement('div'); d.className='klabel'; d.textContent=n;
-    const o=new CSS2DObject(d); o.position.set(1.05,yy,0); yantra.add(o);
+    const o=new CSS2DObject(d); o.position.set(1.05,yy,0); o.visible=false; yantra.add(o);
   });
   /* dvādaśānta 12-unit measure above crown */
   for(let k=1;k<=12;k++){const yy=3.3+k*.083;
@@ -873,6 +873,10 @@ function menuClose(){ menu.classList.remove('show'); document.getElementById('me
 function buildMenu(){
   const sec=(t)=>{const h=document.createElement('h3'); h.textContent=t; menu.appendChild(h);
     const r=document.createElement('div'); r.className='row'; menu.appendChild(r); return r;};
+  const grp=(t,open)=>{const d=document.createElement('details'); d.className='trad';
+    const s=document.createElement('summary'); s.textContent=t; d.appendChild(s);
+    const r=document.createElement('div'); r.className='row'; d.appendChild(r);
+    if(open)d.open=true; menu.appendChild(d); return r;};
   const btn=(parent,label,fn,id)=>{const b=document.createElement('button'); b.textContent=label;
     if(id)b.id=id; b.onclick=(ev)=>{fn(ev); menuMark();}; parent.appendChild(b); return b;};
   let r=sec('');
@@ -884,7 +888,7 @@ function buildMenu(){
   r=sec('Canvas');
   btn(r,'body lines',e=>{bodyOn(!bodyLinesOn); menuMark();},'mBody');
   btn(r,'✕ clear',()=>{clearAll(); menuClose();});
-  r=sec('☸ Trika');
+  r=grp('☸ Trika — mantra body',true);
   const trikaGo=fn=>()=>{ if(fw!=='trika')setFw('trika'); fn(); menuClose(); };
   btn(r,'Mātṛkā install',trikaGo(()=>setCfg('matrika')));
   btn(r,'Mālinī infusion',trikaGo(()=>setCfg('malini')));
@@ -899,20 +903,20 @@ function buildMenu(){
   btn(r,'Melody',e=>{melodyOn=!melodyOn; e.target.textContent=`Melody: ${melodyOn?'sa…ni ♪':'off'}`;},'mMel');
   const a=document.createElement('a'); a.href='mantra'; a.textContent='chant-through →';
   a.style.cssText='font-size:.85rem;font-family:ui-sans-serif,system-ui'; r.appendChild(a);
-  r=sec('🕉️ Sivananda');
+  r=grp('🕉️ Sivananda — breath school');
   const yogGo=fn=>()=>{ if(fw!=='yoga')setFw('yoga'); fn(); menuClose(); };
   btn(r,'Nadi-shodhana',yogGo(()=>score('frameworks/yoga/practices/nadi-shodhana.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'}))));
   btn(r,'Cakra tour',yogGo(()=>score('frameworks/yoga/practices/cakra-tour.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda loci'}))));
   btn(r,'Three knots',yogGo(()=>score('frameworks/yoga/practices/granthi-piercing.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'}))));
   btn(r,'Kundalini ascent',yogGo(()=>score('frameworks/yoga/practices/kundalini-ascent.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'}))));
-  r=sec('☩ Pillar');
+  r=grp('☩ Pillar — middle column');
   btn(r,'Enter',()=>{ if(fw==='mp')setFw('bare'); else setFw('mp'); menuClose(); menuMark(); });
   btn(r,'▶ Descent',()=>{ if(fw!=='mp')setFw('mp'); mpRun('descent'); menuClose(); });
   btn(r,'▶ Circulation',()=>{ if(fw!=='mp')setFw('mp'); mpRun('circulation'); menuClose(); });
-  r=sec('🪷 Lotus · ❖ Kāla');
+  r=grp('🪷 Lotus · ❖ Time-wheel');
   btn(r,'Anahata lotus',()=>{ if(fw==='layayoga')setFw('bare'); else setFw('layayoga'); menuClose(); menuMark(); });
   btn(r,'Kālacakra',()=>{ if(fw==='kalachakra')setFw('bare'); else setFw('kalachakra'); menuClose(); menuMark(); });
-  r=sec('🧘 Breath');
+  r=grp('🧘 Breath — no tradition');
   btn(r,'Ajahn Lee M1',()=>{startAjahn(); menuClose();});
   btn(r,'Breath audio',e=>{breathAudioOn=!breathAudioOn; e.target.textContent=`Breath audio: ${breathAudioOn?'on':'off'}`;});
   btn(r,'Guide voice',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;},'mGuide');
