@@ -14,12 +14,20 @@ async function score(url){
   return SCORES[url];
 }
 /* one player: every trajectory is a score of address-space events */
+let guideOn=false;
+function speak(t){
+  if(!guideOn||!('speechSynthesis' in window)) return;
+  try{ const u=new SpeechSynthesisUtterance(t); u.rate=.95; speechSynthesis.speak(u); }catch(e){}
+}
 function runScore(events){
   scoreClock.clear();
+  try{ speechSynthesis.cancel(); }catch(e){}
   for(const e of events) scoreClock.at(e.t, ()=>exec(e));
   scoreClock.play();
 }
 function exec(e){
+  if(e.cue){ info.querySelector('.locus').textContent=e.cue+(e.feel?` · feel: ${e.feel}`:''); speak(e.cue); }
+  else if(e.feel){ info.querySelector('.locus').textContent=`feel: ${e.feel}`; }
   const Y=a=>BD?BD.regionY(a):({heart:.78,crown:3.3,dvadasanta:4.3,feet:-3.9}[a]??0);
   switch(e.do){
     case 'info':
@@ -45,6 +53,9 @@ function exec(e){
     case 'ring': ringPing(Y(e.at),TEAL); break;
     case 'breath': {
       const y0=Y(e.from), y1=Y(e.to);
+      pulse(y0,y1,e.dur||4.0,()=>ringPing(y1,TEAL)); break; }
+    case 'breath': {
+      const y0=Y(e.from), y1=Y(e.to);
       if(e.cue) info.querySelector('.locus').textContent=e.cue;
       pulse(y0,y1,e.dur||4.0,()=>ringPing(y1,TEAL)); break; }
     case 'splat': {
@@ -67,7 +78,7 @@ const canvas = document.getElementById('scene');
 const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x0b0d12, 0.022);
+scene.fog = null;
 const camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, .1, 100);
 camera.position.set(2.6, 1.1, 7.2);
 const controls = new OrbitControls(camera, canvas);
@@ -83,9 +94,10 @@ document.body.appendChild(cssRenderer.domElement);
 /* bloom — the alive glow (auto-off on small screens) */
 let composer=null, bloomOn=innerWidth>=640 && !reduce;
 if(bloomOn){
-  composer=new EffectComposer(renderer);
+  const rt=new THREE.WebGLRenderTarget(innerWidth,innerHeight,{samples:4,type:THREE.HalfFloatType});
+  composer=new EffectComposer(renderer,rt);
   composer.addPass(new RenderPass(scene,camera));
-  const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.22,.45,.9);
+  const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.16,.4,.9);
   composer.addPass(bloom); composer.addPass(new OutputPass());
 }
 
@@ -94,9 +106,34 @@ if(bloomOn){
 /* ---------- body shell (stylized lathe, NOT anatomy) ---------- */
 const shellPts=[[.02,-4],[.35,-3.9],[.28,-3.2],[.42,-2.4],[.5,-2.2],[.42,-1.2],[.55,-.2],[.62,.4],[.55,1.0],[.7,1.25],[.28,1.6],[.3,1.9],[.62,2.3],[.62,2.9],[.3,3.2],[.02,3.3]]
   .map(p=>new THREE.Vector2(p[0],p[1]));
-const shellGeo=new THREE.LatheGeometry(shellPts,32);
-const shellWire=new THREE.Mesh(shellGeo,new THREE.MeshBasicMaterial({color:GOLD,wireframe:true,transparent:true,opacity:.16}));
-scene.add(shellWire);
+const gridMat=new THREE.LineBasicMaterial({color:GOLD,transparent:true,opacity:.2});
+/* true mathematical grid: clean meridians + parallels, NO triangulation diagonals.
+   (LatheGeometry wireframe draws quad diagonals — that was the blockiness.) */
+{
+  const grid=new THREE.Group();
+  const M=24, P=26;
+  for(let k=0;k<M;k++){
+    const a=k/M*Math.PI*2;
+    grid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(
+      shellPts.map(p=>new THREE.Vector3(Math.cos(a)*p.x,p.y,Math.sin(a)*p.x))),gridMat));
+  }
+  const ys=[]; for(let k=0;k<P;k++) ys.push(-3.9+(3.25+3.9)*k/(P-1));
+  const prof=[...shellPts].sort((a,b)=>a.y-b.y);
+  const radiusAt=y=>{
+    for(let k=0;k<prof.length-1;k++){
+      const a=prof[k],b=prof[k+1];
+      if(y>=a.y&&y<=b.y){const t=(y-a.y)/Math.max(1e-6,b.y-a.y); return a.x+(b.x-a.x)*t;}
+    }
+    return 0.02;
+  };
+  for(const y of ys){
+    const r=radiusAt(y), pts=[];
+    for(let k=0;k<=48;k++){const a=k/48*Math.PI*2; pts.push(new THREE.Vector3(Math.cos(a)*r,y,Math.sin(a)*r));}
+    grid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),gridMat));
+  }
+  window.__grid=grid; scene.add(grid);
+}
+const shellWire={material:gridMat};
 /* arms: single clean lines, not capsules */
 const armMat=new THREE.LineBasicMaterial({color:GOLD,transparent:true,opacity:.16});
 [[-1,1],[1,1]].forEach(([s])=>{
@@ -473,7 +510,8 @@ const panel=document.getElementById('fpanel');
 const PANELS={
   trika:{t:'☸ Trika',d:'Mātṛkā base install, Mālinī infusion after automatic. One map per sitting.',
     opts:[['Mātṛkā · base',()=>setCfg('matrika')],['Mālinī · infusion',()=>setCfg('malini')],
-      ['VBT 24 · heart↔12 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events))]]},
+      ['VBT 24 · heart↔12 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events))],
+      ['Guide voice: off',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;}]]},
   pillar:{t:'☩ Middle Pillar',d:'Hermetic descent + circulation over the same body. Separate layer — never mixed with nyāsa.',
     opts:[['Enter Pillar',()=>setFw('mp')],['Back to Trika',()=>setFw('trika')]]},
   layayoga:{t:'🪷 Anahata lotus',d:'12-petal procedural lotus at the heart (needs_verification vs Śaṭcakranirūpaṇa). Tap petals for bīja + source.',
@@ -491,7 +529,7 @@ function openPanel(k){
   panel.querySelector('p').textContent=p.d;
   const row=panel.querySelector('.row'); row.innerHTML='';
   p.opts.forEach(([label,fn])=>{const b=document.createElement('button'); b.textContent=label;
-    b.onclick=()=>{fn(); markRail();}; row.appendChild(b);});
+    b.onclick=(ev)=>{fn(ev); markRail();}; row.appendChild(b);});
   panel.classList.add('show');
   ['rTrika','rPillar','rLotus','rKal','rScan','rYan','rX'].forEach(id=>{const b=document.getElementById(id); if(b)b.classList.remove('on');});
   ({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',kalachakra:'rKal',scan:'rScan',yantra:'rYan'}[k]||'') &&
@@ -519,7 +557,7 @@ function toggleScan(){
 }
 function toggleYan(){ yantra.visible=!yantra.visible; markRail(); }
 function toggleX(){
-  xray=!xray; shellWire.material.opacity=xray?.05:.16;
+  xray=!xray; gridMat.opacity=xray?.04:.2;
   document.getElementById('rX').classList.toggle('on',xray);
 }
 document.getElementById('rTrika').onclick=()=>{setFw('trika'); openPanel('trika');};
@@ -551,7 +589,6 @@ document.getElementById('bHa').onclick=()=>{
     innerWidth*(.3+Math.random()*.4),innerHeight*(.3+Math.random()*.3),
     (Math.random()-.5)*60,(Math.random()-.5)*60),k*160);
   pulse(channelY0,3.3,.9,()=>{ CAKRAS.forEach(([n,y],k)=>setTimeout(()=>ringPing(y),k*120)); });
-  shellWire.material.opacity=.3; setTimeout(()=>shellWire.material.opacity=.13,1100);
 };
 const SEQ={sutra:['sa','u','a','i','ta','a','ña','ma','ā','ta','ma','ā'],
  hrdaye:['ha','ṛ','da','ya','e']};
@@ -587,7 +624,7 @@ function tick(){
   controls.update();
   if(!reduce){
     scan.position.y=-3.4+((t*.5)%7.2); scan.material.opacity=.3+.2*Math.sin(t*2);
-    shellWire.material.opacity=.11+.03*Math.sin(t*1.3);
+    shellWire.material.opacity=(xray?.04:.2)+.02*Math.sin(t*1.3);
     ida.rotation.y+=dt*.05; ping.rotation.y-=dt*.05;
     rings.forEach((r,k)=>r.material.opacity=.32+.12*Math.sin(t*1.5+k));
   }
