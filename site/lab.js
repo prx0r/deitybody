@@ -148,10 +148,10 @@ renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 const scene = new THREE.Scene();
 scene.fog = null;
 const camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, .1, 100);
-camera.position.set(2.6, 1.1, 7.2);
+camera.position.set(2.2, 0.6, 12.6);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; controls.target.set(0,.4,0);
-controls.minDistance = 3; controls.maxDistance = 16;
+controls.minDistance = 4; controls.maxDistance = 24;
 
 /* CSS2D label layer — real shaped Devanagari (browser HarfBuzz), always crisp */
 const cssRenderer = new CSS2DRenderer();
@@ -1108,6 +1108,4 @@ window.addEventListener('message',ev=>{
   const fw=q.get('fw');
   if(fw&&['trika','mp','layayoga','kalachakra'].includes(fw)) setFw(fw);
 })();
-addEventListener('resize',resize); resize();
-try{ vitEnsure(); vitStill(); }catch(e){}
-tick();
+addEventListener('resize',resize); resize(); tick();
