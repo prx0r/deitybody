@@ -1,0 +1,33 @@
+{
+  "id": "vbt-body-dharanas-v1",
+  "source": "Vijñānabhairava via lakshmanjoo/vb_lakshmanjoo.json (KSTS verse = dhāraṇā offset: V24 = dh.1)",
+  "note": "25 most bodily dhāraṇās. Loci are attention-seats, not anatomy. Future scores in practices/vbt/.",
+  "dharanas": [
+    {"v": 24, "locus": "heart↔dvādaśānta", "do": "watch ūrdhva-prāṇa heart→12-end and jīva return; fill both with awareness"},
+    {"v": 26, "locus": "suṣumnā-madhya", "do": "nirvikalpa attention in the central channel; breath's coarse flow drops"},
+    {"v": 27, "locus": "heart-point", "do": "inhale to heart, retain briefly, exhale; non-conceptual calm shines"},
+    {"v": 28, "locus": "mūlādhāra→up", "do": "Śakti rising from the root as calming lightning; Bhairava at subsidence"},
+    {"v": 29, "locus": "rising current", "do": "lightning-like ascent through the centres; mahodaya at the end"},
+    {"v": 35, "locus": "madhya-nāḍī", "do": "central channel thin as a lotus stalk, interior; deva shines"},
+    {"v": 36, "locus": "eyes/nostrils/ears/mouth", "do": "close all head openings by hand; supreme fixation in the middle"},
+    {"v": 37, "locus": "pupils", "do": "press/agitate eyeballs till tremor ceases; dissolve into That"},
+    {"v": 48, "locus": "skin/body-wall", "do": "imagine the skin-partition wall-less; supportless meditation"},
+    {"v": 49, "locus": "heart-ether", "do": "gaze introverted, thought dissolved in hṛd-ākāśa"},
+    {"v": 50, "locus": "any bodily dvādaśānta (brows/heart/throat-pit)", "do": "fix mind there from all sides"},
+    {"v": 52, "locus": "left-foot toe", "do": "kālāgni in the toe consuming body/universe to ash"},
+    {"v": 64, "locus": "prāṇa-apāna junction", "do": "rest attention where ingress ends and egress begins"},
+    {"v": 66, "locus": "armpits", "do": "tickling laughter burst; uncontainable laugh reveals tattva"},
+    {"v": 69, "locus": "sexual embrace", "do": "recollect delight even absent; own bliss proclaimed"},
+    {"v": 70, "locus": "sex act", "do": "merge in ānanda-continuum; mind dissolved becomes That"},
+    {"v": 78, "locus": "seat (one buttock), unsupported limbs", "do": "soft seat, rest on sphija; pūrṇā mati"},
+    {"v": 79, "locus": "arms half-bent posture", "do": "seated, ardha-kuñcita arms stabilized; mind quiets"},
+    {"v": 81, "locus": "tongue/mouth cavity", "do": "tongue centred, mouth widened inward; dissolve in śānta"},
+    {"v": 85, "locus": "skull interior", "do": "house the whole ākāśa inside the skull; enter tejas"},
+    {"v": 88, "locus": "darkness before closed eyes", "do": "softly closed eyes on blackness; become That"},
+    {"v": 89, "locus": "any sense at impact", "do": "at the moment of sense-contact, attend; ātman shines there"},
+    {"v": 91, "locus": "mouth/visarga letters", "do": "prolong any savisarga letter (kaḥ, khaḥ…); touch Brahman"},
+    {"v": 93, "locus": "pricked limb", "do": "pierce any limb with a sharp point; one-pointed Bhairava-gati"},
+    {"v": 113, "locus": "ears + lower gate", "do": "contract ears, close adhodvāra, hear inner unstruck resonance"},
+    {"v": 118, "locus": "nose/sneeze", "do": "catch beginning and end of a sneeze; Brahman-proximity"}
+  ]
+}
