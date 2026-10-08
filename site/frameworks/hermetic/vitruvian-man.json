@@ -37,8 +37,9 @@
     {"id": "relational", "claim": "No absolute state: physical facts are interactions between systems (Rovelli)",
      "source": "C. Rovelli, relational QM / Helgoland", "status": "mainstream-contender",
      "renders": "node-link ticks (relations, not absolutes)"},
-    {"id": "zpe-frank", "claim": "TBD — owner to name the Frank zero-point-energy book",
-     "source": "TBD", "status": "missing"}
+    {"id": "wilczek-grid", "claim": "The vacuum is the Grid: a cosmic superconductor seething with virtual activity; mass and 'nothing' are Grid properties (Wilczek)",
+     "source": "F. Wilczek, The Lightness of Being", "status": "mainstream",
+     "renders": "vacuum lattice hint behind the body"}
   ],
   "provenance": {"status": "pedagogical-synthesis",
     "note": "da Vinci proportions historical; Hermetic maxim from Emerald Tablet; physics notes are modern overlays with individual statuses — never presented as one doctrine."}
