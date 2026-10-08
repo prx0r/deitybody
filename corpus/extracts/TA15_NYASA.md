@@ -57,7 +57,7 @@ Consonant limbs:
 - right lower limb: ṭa-varga
 - left lower limb: ta-varga
 - torso: pa/pha sides · ba back · bha belly · ma heart
-- deeper: ya skin · ra blood · la flesh · va sinews · śa bone · ṣa marrow · sa essence · ha prāṇa · kṣa generative
+- deeper: ya skin · ra blood · la flesh · va sūtra (sinews) · śa bone · ṣa marrow · sa essence · ha prāṇa · kṣa generative
 
 ---
 
@@ -114,3 +114,29 @@ Body loci largely mirror the Mātṛkā tattvamudrā list (forehead → mouth �
 | TĀ Āhnika 11 | varṇa as pramā; ṣaḍadhvan |
 
 Extract script: `scripts/deepdive_tantraloka.py`.
+
+---
+
+## Verse vs apparatus (resolved 2026-10-05, volume-checked)
+
+Two Abhinavagupta-tradition readings of the arm series. Both source-attested — never collapse them.
+
+**Project decision (peer review 2026-10-05): verse-literal is canonical**
+(`matrika-body-map-v2`, regression-tested). The apparatus survives only as a
+recorded per-entry variant, never used for install.
+
+| Phonemes | Verse (TĀ 15.118 GRETIL) | Apparatus (Dyczkowski vol 8, App. A + C, number-paired) |
+|----------|--------------------------|----------------------------------------------------------|
+| ka / ca | skandha — shoulder | Right/Left shoulder (agree) |
+| kha / cha | bāhu — arm | Right/Left arm (agree) |
+| ga / ja | **kara — hand** | Right/Left **elbow** |
+| gha / jha | **aṅguli — fingers** | Right/Left **wrist** |
+| ṅa / ña | **nakha — nails** | **Fingers** of the hand |
+
+Verse text: `dakṣānyayoḥ skandha-bāhu-kara-aṅguli-nakhe kacau vargau` (TĀ 15.118).
+Apparatus tables (Mātṛkānyāsa App. A + Śabdarāśinyāsa App. C) agree with each other — deliberate, not a slip.
+Same split: ṭa/ta verse `kaṭi` (**hip**, TĀ 15.119) vs apparatus **buttock**; `a` verse `lalāṭa` (**forehead**, TĀ 15.117) vs App. A locus 1 = **Topknot**.
+
+**Encoding rule:** `matrika_body_map.json` AND `matrka-data.json` both follow the verse literally
+(canonical v1, regression-tested). Apparatus survives only as `apparatus_variant` per entry + readout on the integrated wheel, never used for install.
+Unresolved from disk: whether apparatus follows MV 8/27–32 wording against the verse, or a kara-as-joints gloss (needs MV Sanskrit or Jayaratha — neither on volume).

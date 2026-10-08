@@ -85,11 +85,11 @@ class TestMaps(unittest.TestCase):
             self.assertIn("devanagari", o)
             self.assertIn("imaginal_signature_rule", o)
             self.assertTrue(o["devanagari"])
-        # gha dual coords present
+        # gha dual coords present (verse-literal v2: TĀ 15.118, resolved 2026-10-05)
         gha = next(o for o in objs["objects"] if o["iast"] == "gha")
         self.assertEqual(gha["devanagari"], "घ")
         self.assertIn("aspirated", gha["manner_en"])
-        self.assertIn("wrist", gha["tantric_locus"])
+        self.assertIn("fingers", gha["tantric_locus"])
 
     def test_bruno_wheel_rings(self):
         w = load("bruno_wheel.json")

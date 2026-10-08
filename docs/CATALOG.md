@@ -151,7 +151,9 @@ of traditions; no menu logic changes otherwise.
   (same rule as today); guide lines are cues, not claims; every AI-driven
   branch logged as `PEDAGOGICAL`. No implementation until the catalog +
   grammar above are stable — the guide can only say lines and trigger ops
-  that already exist here.
+  that already exist here. Proven live Edge pattern to steal when the time
+  comes: `/root/sanskrithelp/lib/hindi/speak.ts` (neural Edge first,
+  browser fallback, in-session blob cache) + `/root/sanskrithelp/app/api/tts/route.ts`.
 
 ---
 
