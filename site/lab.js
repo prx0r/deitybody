@@ -442,8 +442,9 @@ function kalCentreShow(c, el){
 function setFw(f){
   fw=f;
   setFigGhost(false);
-  const trika=f==='trika', mp=f==='mp', lay=f==='layayoga', kal=f==='kalachakra';
+  const trika=f==='trika', mp=f==='mp', lay=f==='layayoga', kal=f==='kalachakra', bare=f==='bare';
   nodes.forEach(n=>{n.anchor.visible=trika;});
+  edges.visible=trika;
   mpGroup.visible=mp;
   if(lotus) lotus.group.visible=lay;
   if(kalSpokes) kalSpokes.group.visible=kal;
@@ -457,10 +458,6 @@ function setFw(f){
     let k=0; const bloomIn=setInterval(()=>{k+=0.06; lotus.setOpen(Math.min(1,k)); if(k>=1)clearInterval(bloomIn);},60);
   }
   markRail();
-  document.getElementById('bHa').style.display=trika?'':'none';
-  document.querySelectorAll('[data-s]').forEach(b=>b.style.display=trika?'':'none');
-  document.getElementById('bOm').textContent=trika?'▶ OM':'▶ Descent';
-  document.getElementById('bNam').textContent=trika?'▶ Namaḥ Śivāya':'▶ Circulation';
 }
 /* (framework switching lives on the rail → rPillar panel) */
 function lotusBloom(){
@@ -741,25 +738,27 @@ function buildMenu(){
     const r=document.createElement('div'); r.className='row'; menu.appendChild(r); return r;};
   const btn=(parent,label,fn,id)=>{const b=document.createElement('button'); b.textContent=label;
     if(id)b.id=id; b.onclick=(ev)=>{fn(ev); menuMark();}; parent.appendChild(b); return b;};
-  let r=sec('Traditions');
-  const fwBtn=(label,fwId,go)=>btn(r,label,()=>{go(); menuClose();},null).dataset.fw=fwId;
-  fwBtn('☸ Trika · Mātṛkā','trika',()=>{setFw('trika'); setCfg('matrika');});
-  fwBtn('☸ Trika · Mālinī','trika',()=>{setFw('trika'); setCfg('malini');});
-  fwBtn('☩ Middle Pillar','mp',()=>setFw('mp'));
-  fwBtn('🪷 Anahata lotus','layayoga',()=>setFw('layayoga'));
-  fwBtn('❖ Kālacakra','kalachakra',()=>setFw('kalachakra'));
-  r=sec('Posture');
+  let r=sec('Posture');
   const poseBtn=(label,name)=>{const b=btn(r,label,()=>{setPose(name); menuMark();});
     b.dataset.pose=name; return b;};
   poseBtn('🧍 standing','standing'); poseBtn('🧘 seated','seated'); poseBtn('🛌 lying','lying');
-  r=sec('Layers');
+  r=sec('Tradition');
+  const fwBtn=(label,fwId,go)=>btn(r,label,()=>{go(); menuClose();},null).dataset.fw=fwId;
+  fwBtn('○ bare','bare',()=>setFw('bare'));
+  fwBtn('☸ Mātṛkā','trika',()=>{setFw('trika'); setCfg('matrika');});
+  fwBtn('☸ Mālinī','trika',()=>{setFw('trika'); setCfg('malini');});
+  fwBtn('☩ Pillar','mp',()=>setFw('mp'));
+  fwBtn('🪷 Lotus','layayoga',()=>setFw('layayoga'));
+  fwBtn('❖ Kāla','kalachakra',()=>setFw('kalachakra'));
+  r=sec('Fields');
+  btn(r,'🌊 waves',()=>{setFluid(!fluidOn);},'mFluid');
+  btn(r,'≋ chladni',()=>toggleChladni(),'mChlad');
   btn(r,'◉ scan',()=>toggleScan(),'mScan');
+  r=sec('Overlays');
   btn(r,'△ yantra',()=>toggleYan(),'mYan');
   btn(r,'✦ figure',e=>{cycleVitFig(); e.target.textContent='✦ '+vitFigLabel();},'mVit');
   btn(r,'◈ lines',()=>toggleX(),'mX');
   btn(r,'◍ avatar',()=>cycleAvatar(),'mAva');
-  btn(r,'🌊 fluid',()=>{fluidOn=!fluidOn; fluidCanvas.style.display=fluidOn?'':'none';},'mFluid');
-  btn(r,'≋ chladni',()=>toggleChladni(),'mChlad');
   r=sec('Practice');
   btn(r,'▶ OM',()=>playOM());
   btn(r,'▶ Namaḥ Śivāya',()=>playNamah());
