@@ -56,17 +56,15 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 #info .iast{color:var(--gold); font-size:.85rem; font-family:ui-sans-serif,system-ui}
 #info .locus{color:var(--mut); font-size:.8rem}
 /* phoneme chips — real DOM text: browser shapes every conjunct perfectly, sharp at any zoom */
-.glyph{width:38px; height:38px; cursor:pointer; user-select:none;
- transition:opacity .3s}
-.glyph svg{display:block; overflow:visible}
-.glyph .ring{fill:rgba(20,26,41,.88); stroke:var(--gold); stroke-width:1.5}
-.glyph .g{fill:var(--ink); font-size:16px; font-weight:600;
- font-family:'Noto Sans Devanagari','Mangal','Kokila',serif}
-.glyph:hover .ring{stroke:var(--gold-hi, #e8cf8f)}
-.glyph.lit .ring{fill:var(--gold); stroke:var(--gold-hi, #e8cf8f)}
-.glyph.lit .g{fill:#0b0d12; font-weight:700}
-.glyph.back{opacity:.18; pointer-events:none}
-.glyph:focus-visible{outline:2px solid var(--gold-hi, #e8cf8f); outline-offset:2px; border-radius:50%}
+.glyph{font-family:'Noto Sans Devanagari','Mangal','Kokila',serif; font-size:21px;
+ font-weight:500; color:rgba(240,235,224,.85); cursor:pointer; user-select:none;
+ padding:6px; transition:color .2s, opacity .3s; text-shadow:0 1px 8px rgba(0,0,0,.9)}
+.glyph:hover{color:#fff}
+.glyph.lit{color:var(--gold-hi, #e8cf8f); font-weight:700;
+ text-shadow:0 0 12px rgba(201,164,92,.9); animation:chipPop .45s ease-out}
+@keyframes chipPop{0%{scale:.6}60%{scale:1.25}100%{scale:1}}
+.glyph.back{opacity:.16; pointer-events:none}
+.glyph:focus-visible{outline:2px solid var(--gold-hi, #e8cf8f); outline-offset:2px; border-radius:6px}
 .petal{min-width:30px; height:30px; padding:0 6px; border-radius:999px;
  display:inline-flex; align-items:center; justify-content:center;
  font-family:'Noto Sans Devanagari',serif; font-size:14px; font-weight:600; color:var(--ink);

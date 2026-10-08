@@ -85,46 +85,25 @@ let composer=null, bloomOn=innerWidth>=640 && !reduce;
 if(bloomOn){
   composer=new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene,camera));
-  const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.32,.5,.87);
+  const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.22,.45,.9);
   composer.addPass(bloom); composer.addPass(new OutputPass());
 }
 
-/* dust */
-{
-  const n=350, pos=new Float32Array(n*3);
-  for(let i=0;i<n;i++){ pos[i*3]=(Math.random()-.5)*22; pos[i*3+1]=(Math.random()-.5)*14; pos[i*3+2]=(Math.random()-.5)*14; }
-  const g=new THREE.BufferGeometry(); g.setAttribute('position', new THREE.BufferAttribute(pos,3));
-  scene.add(new THREE.Points(g, new THREE.PointsMaterial({color:0x8a7a55,size:.035,transparent:true,opacity:.5})));
-}
-/* ground glow */
-{
-  const c=document.createElement('canvas'); c.width=c.height=256;
-  const x=c.getContext('2d'), gr=x.createRadialGradient(128,128,4,128,128,128);
-  gr.addColorStop(0,'rgba(201,164,92,.5)'); gr.addColorStop(1,'rgba(201,164,92,0)');
-  x.fillStyle=gr; x.fillRect(0,0,256,256);
-  const m=new THREE.Mesh(new THREE.PlaneGeometry(9,9),
-    new THREE.MeshBasicMaterial({map:new THREE.CanvasTexture(c),transparent:true,opacity:.35,depthWrite:false}));
-  m.rotation.x=-Math.PI/2; m.position.y=-4.4; scene.add(m);
-}
+/* grid only — no dust, no backdrop. Space is the aesthetic. */
 
 /* ---------- body shell (stylized lathe, NOT anatomy) ---------- */
 const shellPts=[[.02,-4],[.35,-3.9],[.28,-3.2],[.42,-2.4],[.5,-2.2],[.42,-1.2],[.55,-.2],[.62,.4],[.55,1.0],[.7,1.25],[.28,1.6],[.3,1.9],[.62,2.3],[.62,2.9],[.3,3.2],[.02,3.3]]
   .map(p=>new THREE.Vector2(p[0],p[1]));
-const shellGeo=new THREE.LatheGeometry(shellPts,64);
-const shellSolid=new THREE.Mesh(shellGeo,new THREE.MeshBasicMaterial({color:GOLD,transparent:true,opacity:.05,depthWrite:false,side:THREE.DoubleSide}));
-const shellWire=new THREE.Mesh(shellGeo,new THREE.MeshBasicMaterial({color:GOLD,wireframe:true,transparent:true,opacity:.13}));
-scene.add(shellSolid,shellWire);
-/* arms */
-const armMat=new THREE.MeshBasicMaterial({color:GOLD,wireframe:true,transparent:true,opacity:.13});
+const shellGeo=new THREE.LatheGeometry(shellPts,32);
+const shellWire=new THREE.Mesh(shellGeo,new THREE.MeshBasicMaterial({color:GOLD,wireframe:true,transparent:true,opacity:.16}));
+scene.add(shellWire);
+/* arms: single clean lines, not capsules */
+const armMat=new THREE.LineBasicMaterial({color:GOLD,transparent:true,opacity:.16});
 [[-1,1],[1,1]].forEach(([s])=>{
-  const a=new THREE.Mesh(new THREE.CapsuleGeometry(.16,1.6,4,10),armMat);
-  a.position.set(s*.95,.35,0); a.rotation.z=s*.28; scene.add(a);
+  const g=new THREE.BufferGeometry().setFromPoints(
+    [new THREE.Vector3(s*.62,1.2,0), new THREE.Vector3(s*1.15,-.35,0)]);
+  scene.add(new THREE.Line(g,armMat));
 });
-/* head aura ring */
-{
-  const r=new THREE.Mesh(new THREE.TorusGeometry(.78,.012,8,64),new THREE.MeshBasicMaterial({color:GOLD,transparent:true,opacity:.4}));
-  r.position.set(0,2.6,0); scene.add(r);
-}
 /* suṣumṇā */
 const channelY0=-3.9, channelY1=4.3;
 {
@@ -252,30 +231,22 @@ const A=p=>({x:(p[6]-200)/90, y:(400-p[7])/90, z:zFor(p[5])});
 let cfg='matrika';
 function glyphChip(dev, iast){
   const el=document.createElement('div');
-  el.className='glyph';
-  el.innerHTML=`<svg viewBox="0 0 36 36" width="36" height="36">`
-    +`<circle cx="18" cy="18" r="16.5" class="ring"/>`
-    +`<text x="18" y="18.5" text-anchor="middle" dominant-baseline="central" class="g">${dev}</text></svg>`;
+  el.className='glyph'; el.textContent=dev;
   el.setAttribute('role','button'); el.setAttribute('tabindex','0');
   el.setAttribute('aria-label','phoneme '+iast);
   const o=new CSS2DObject(el);
   el.style.pointerEvents='auto';
   return {o, el};
 }
-/* soft additive halo behind each chip — gives bloom something to catch + true 3D pop */
+/* pulse glow texture (kept: travelling pulses need a soft head) */
 let _glowTex=null;
-function haloSprite(){
-  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(),transparent:true,opacity:.28,depthWrite:false}));
-  s.scale.set(.42,.42,1); return s;
-}
 const nodes=P.map(p=>{
   const m=M(p);
   const anchor=new THREE.Object3D(); anchor.position.set(m.x,m.y,m.z); scene.add(anchor);
   const {o, el}=glyphChip(p[1],p[0]); anchor.add(o);
-  const halo=haloSprite(); halo.position.copy(anchor.position); scene.add(halo);
   el.addEventListener('click',ev=>{ev.stopPropagation(); fire(p[0]);});
   el.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault(); fire(p[0]);}});
-  return {anchor, el, halo, p, base:.42, target:m};
+  return {anchor, el, p, base:.42, target:m};
 });
 const byIast={}; P.forEach((p,k)=>byIast[p[0]]=k);
 
@@ -347,7 +318,7 @@ function kalCentreShow(c, el){
 function setFw(f){
   fw=f;
   const trika=f==='trika', mp=f==='mp', lay=f==='layayoga', kal=f==='kalachakra';
-  nodes.forEach(n=>{n.anchor.visible=trika; n.halo.visible=trika;});
+  nodes.forEach(n=>{n.anchor.visible=trika;});
   mpGroup.visible=mp;
   if(lotus) lotus.group.visible=lay;
   if(kalSpokes) kalSpokes.group.visible=kal;
@@ -450,10 +421,8 @@ if(fluidOn) document.getElementById('rFluid').classList.add('on');
 const tweens=[];
 function pop(k,big=1.6,dur=.5){
   const n=nodes[k]; if(!n) return;
-  const s0=n.base;
-  n.el.classList.add('lit');
-  tweens.push({t:0,dur,fn:t=>{const s=s0*(1+(big-1)*Math.sin(Math.PI*t)); n.halo.scale.set(s,s,1);},
-    done:()=>setTimeout(()=>n.el.classList.remove('lit'),650)});
+  n.el.classList.remove('lit'); void n.el.offsetWidth; n.el.classList.add('lit');
+  clearTimeout(n._lt); n._lt=setTimeout(()=>n.el.classList.remove('lit'), 1100);
 }
 const pulses=[];
 const pulseMat=new THREE.MeshBasicMaterial({color:0xffe9b0,transparent:true,opacity:.95});
@@ -550,7 +519,7 @@ function toggleScan(){
 }
 function toggleYan(){ yantra.visible=!yantra.visible; markRail(); }
 function toggleX(){
-  xray=!xray; shellSolid.material.opacity=xray?.28:.05;
+  xray=!xray; shellWire.material.opacity=xray?.05:.16;
   document.getElementById('rX').classList.toggle('on',xray);
 }
 document.getElementById('rTrika').onclick=()=>{setFw('trika'); openPanel('trika');};
@@ -635,7 +604,6 @@ function tick(){
     a.position.x+=(tg.x-a.position.x)*Math.min(1,dt*4);
     a.position.y+=(tg.y-a.position.y)*Math.min(1,dt*4);
     a.position.z+=(tg.z-a.position.z)*Math.min(1,dt*4);
-    n.halo.position.copy(a.position);
     /* depth cue: nodes on the far side dim (unless x-ray) */
     if(!xray){
       _nd.copy(a.position).sub(_ct); _cam.copy(camera.position).sub(_ct);
