@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Mantra Body — chant-through</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#0b0d12;--panel:#12161f;--ink:#f0ebe0;--mut:#a8a294;--gold:#c9a45c;--gold-hi:#e8cf8f;--line:#2a3142}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 Georgia,serif;min-height:100%}
+header{max-width:640px;margin:0 auto;padding:1rem;text-align:center}
+h1{font-family:'Yatra One','Noto Sans Devanagari',serif;font-weight:400;font-size:clamp(1.5rem,5vw,2rem);margin:.2rem 0;
+ background:linear-gradient(100deg,var(--gold-hi),var(--gold) 60%,#9a7a3a);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{color:var(--mut);font-size:.9rem}
+main{max-width:640px;margin:0 auto;padding:0 1rem 3rem}
+#card{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:2rem 1rem;text-align:center;min-height:340px}
+#glyph{font-family:'Noto Serif Devanagari',serif;font-size:5.5rem;line-height:1.6}
+#iast{color:var(--gold);font-family:ui-sans-serif,system-ui;font-size:1.1rem}
+#locus{color:var(--mut);margin:.3rem 0 .2rem}
+#count{color:var(--mut);font-size:.85rem;font-family:ui-sans-serif,system-ui}
+#flag{color:#d4899a;font-size:.85rem;min-height:1.4em}
+#transport{display:flex;gap:.5rem;justify-content:center;margin:1rem 0;flex-wrap:wrap}
+#transport button{font-family:ui-sans-serif,system-ui;font-size:1rem;padding:.7rem 1.2rem;min-height:48px;border-radius:999px;
+ border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer}
+#transport button.primary{background:linear-gradient(120deg,var(--gold-hi),var(--gold));color:#0b0d12;border-color:var(--gold);font-weight:700}
+#opts{display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;font-size:.85rem;color:var(--mut);font-family:ui-sans-serif,system-ui}
+#opts label{display:flex;gap:.35rem;align-items:center;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:.5rem .9rem}
+#opts select,#opts input{background:transparent;color:var(--ink);border:none;font-size:.85rem}
+#report{font-size:.8rem;color:var(--mut);text-align:center;margin-top:1rem;font-family:ui-sans-serif,system-ui}
+footer{text-align:center;color:var(--mut);font-size:.75rem;padding:1rem}
+a{color:var(--gold)}
+</style>
+</head>
+<body>
+<header><h1>मन्त्रशरीर</h1><div class="sub">Mantra Body · chant-through · <a href="lab">3D body</a></div>
+<div id="opts">
+ <label>map <select id="map"><option value="matrika">Mātṛkā</option><option value="malini">Mālinī</option></select></label>
+ <label>sequence <select id="seq"><option value="pair">starter a·ā</option><option value="vowels">vowels 16</option><option value="full">full 50</option></select></label>
+ <label>gap <input id="gap" type="range" min="0.4" max="5" step="0.2" value="1.6"/> <span id="gapV">1.6s</span></label>
+ <label><input id="loop" type="checkbox"/> loop</label>
+</div></header>
+<main><div id="card">
+ <div id="glyph">अ</div><div id="iast">a</div><div id="locus">forehead</div>
+ <div id="flag"></div><div id="count">ready</div>
+ <div id="transport">
+  <button id="prev" aria-label="Previous">⏮</button>
+  <button id="play" class="primary" aria-label="Play or pause">▶ chant</button>
+  <button id="next" aria-label="Next">⏭</button>
+  <button id="rep" aria-label="Repeat">↻</button>
+  <button id="stop" aria-label="Stop">⏹</button>
+ </div>
+</div>
+<div id="report" aria-live="polite"></div></main>
+<footer>practice scaffold · clips: human-grid-v1 + EdgeSanskrit-v1(unverified ṅa/kṣa) · ḷ/ḹ silence+flag · no autoplay before tap</footer>
+<script type="module">
+import { ChantPlayer } from './engine/audio/chant-player.js';
+import { loadRegistry } from './engine/audio/asset-registry.js';
+const $=s=>document.querySelector(s);
+const SEQ16=['a','ā','i','ī','u','ū','ṛ','ṝ','ḷ','ḹ','e','ai','o','au','aṃ','aḥ'];
+const FULL=["a","ā","i","ī","u","ū","ṛ","ṝ","ḷ","ḹ","e","ai","o","au","aṃ","aḥ","ka","kha","ga","gha","ṅa","ca","cha","ja","jha","ña","ṭa","ṭha","ḍa","ḍha","ṇa","ta","tha","da","dha","na","pa","pha","ba","bha","ma","ya","ra","la","va","śa","ṣa","sa","ha","kṣa"];
+const reg=await loadRegistry();
+ChantPlayer.setRecords({phonemes:reg.records});
+const actx=new (window.AudioContext||window.webkitAudioContext)();
+const P=new ChantPlayer(actx);
+const seqFor=()=>({pair:['a','ā'],vowels:SEQ16,full:FULL}[$('#seq').value]);
+function show(id,idx){
+  const ph=reg.records.find(p=>p.iast===id);
+  if(!ph) return;
+  $('#glyph').textContent=ph.dev; $('#iast').textContent=ph.iast;
+  $('#locus').textContent=ph.placements[$('#map').value].regionId;
+  const miss=!ph.audio.reference;
+  $('#flag').textContent=miss?'no verified recording — silence, breathe here':'';
+  $('#count').textContent=`item ${idx+1} of ${P.seq.length} · ${$('#map').value}`;
+}
+P.onPhoneme=(id,ph,idx)=>show(id,idx);
+P.onEnd=()=>{$('#play').textContent='▶ chant'; $('#report').textContent='complete — again, or switch map.';};
+async function rebuild(){
+  P.stop(); $('#play').textContent='▶ chant';
+  const r=await P.load(seqFor(), $('#map').value);
+  const miss=r.silent;
+  $('#report').textContent=miss.length?`silent flagged: ${miss.join(' ')} — breathe, don't substitute.`:`${r.loaded} clips buffered.`;
+  show(P.seq[0],0);
+}
+$('#play').onclick=()=>{ if(P.playing){P.pause(); $('#play').textContent='▶ chant';} else {P.play(); $('#play').textContent='⏸ pause';} };
+$('#stop').onclick=()=>{P.stop(); $('#play').textContent='▶ chant'; show(P.seq[P.idx],P.idx);};
+$('#next').onclick=()=>{P.next(); show(P.seq[P.idx],P.idx);};
+$('#prev').onclick=()=>{P.prev(); show(P.seq[P.idx],P.idx);};
+$('#rep').onclick=()=>P.repeat();
+$('#gap').oninput=e=>{P.gap=+e.target.value; $('#gapV').textContent=P.gap.toFixed(1)+'s';};
+$('#loop').onchange=e=>P.loop=e.target.checked;
+$('#map').onchange=rebuild; $('#seq').onchange=rebuild;
+await rebuild();
+</script>
+</body>
+</html>

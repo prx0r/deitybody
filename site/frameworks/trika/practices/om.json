@@ -1,18 +1,68 @@
 {
-  "id": "om-ascent",
-  "title": "OM · ascent + nectar descent",
-  "provenance": "OM 11-stage spine (Padoux pp.422-425, ped encoding) + Netra amṛta down-flood",
-  "addresses": ["heart", "crown", "dvadasanta"],
-  "feel_taxonomy": "pressure, warmth, expansion, luminosity, stillness, dissolution",
-  "events": [
-    {"t": 0.0, "do": "info", "dev": "ॐ", "iast": "OM · heart → crown → dvādaśānta → rain to heart"},
-    {"t": 0.1, "do": "pulse", "from": "heart", "to": "dvadasanta", "dur": 1.4,
-     "cue": "Attention rises from the heart toward the crown", "feel": "pressure rising to luminosity"},
-    {"t": 0.2, "do": "flash", "node": "ma", "cue": "Rest a breath in the heart", "feel": "warmth"},
-    {"t": 0.65, "do": "flash", "node": "ha", "feel": "luminosity"},
-    {"t": 1.1, "do": "flash", "node": "aṃ", "feel": "stillness"},
-    {"t": 1.55, "do": "flash", "node": "a", "feel": "expansion"},
-    {"t": 1.7, "do": "pulse", "from": "dvadasanta", "to": "heart", "dur": 1.2, "color": "teal",
-     "cue": "Nectar rains back down to the heart", "feel": "dissolution"}
-  ]
+ "id": "om-ascent",
+ "title": "OM · ascent + nectar descent",
+ "provenance": "OM 11-stage spine (Padoux pp.422-425, ped encoding) + Netra amṛta down-flood",
+ "addresses": [
+  "heart",
+  "crown",
+  "dvadasanta"
+ ],
+ "feel_taxonomy": "pressure, warmth, expansion, luminosity, stillness, dissolution",
+ "events": [
+  {
+   "t": 0.0,
+   "do": "info",
+   "dev": "ॐ",
+   "iast": "OM · heart → crown → dvādaśānta → rain to heart"
+  },
+  {
+   "t": 0.1,
+   "do": "pulse",
+   "from": "heart",
+   "to": "dvadasanta",
+   "dur": 1.4,
+   "cue": "Attention rises from the heart toward the crown",
+   "feel": "pressure rising to luminosity"
+  },
+  {
+   "t": 0.2,
+   "do": "flash",
+   "node": "ma",
+   "cue": "Rest a breath in the heart",
+   "feel": "warmth"
+  },
+  {
+   "t": 0.65,
+   "do": "flash",
+   "node": "ha",
+   "feel": "luminosity"
+  },
+  {
+   "t": 1.1,
+   "do": "flash",
+   "node": "aṃ",
+   "feel": "stillness"
+  },
+  {
+   "t": 1.55,
+   "do": "flash",
+   "node": "a",
+   "feel": "expansion"
+  },
+  {
+   "t": 1.7,
+   "do": "pulse",
+   "from": "dvadasanta",
+   "to": "heart",
+   "dur": 1.2,
+   "color": "teal",
+   "cue": "Nectar rains back down to the heart",
+   "feel": "dissolution"
+  }
+ ],
+ "classification": {
+  "kind": "text-based-synthesis",
+  "status": "pedagogical",
+  "note": "OM 11-stage spine per Padoux pp.422-425; amṛta down-flood per Netra sequel. Sequencing/pacing are ours."
+ }
 }

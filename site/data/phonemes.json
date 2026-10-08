@@ -1,5 +1,5 @@
 {
- "id": "phonemes-v1",
+ "id": "phonemes-v2-canonical",
  "source": "matrika-body-map-v2 (TĀ 15 verse-literal) + malini_order.json (MV 3.37–41)",
  "count": 50,
  "phonemes": [
@@ -16,7 +16,30 @@
     "x": 200,
     "y": 190
    },
-   "clip": "a.ogg"
+   "clip": "a.ogg",
+   "id": "varna_a",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "short"
+   },
+   "audio": {
+    "reference": "audio/phonemes/a.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "forehead",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "Topknot"
+    },
+    "malini": {
+     "regionId": "speech",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ā",
@@ -31,7 +54,29 @@
     "x": 200,
     "y": 300
    },
-   "clip": "aa.ogg"
+   "clip": "aa.ogg",
+   "id": "varna_aa",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "long"
+   },
+   "audio": {
+    "reference": "audio/phonemes/aa.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "mouth",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "milk / amṛta",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "i",
@@ -46,7 +91,29 @@
     "x": 200,
     "y": 170
    },
-   "clip": "i.ogg"
+   "clip": "i.ogg",
+   "id": "varna_i",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "short"
+   },
+   "audio": {
+    "reference": "audio/phonemes/i.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right eye",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "tongue",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ī",
@@ -61,7 +128,29 @@
     "x": 200,
     "y": 140
    },
-   "clip": "ii.ogg"
+   "clip": "ii.ogg",
+   "id": "varna_ii",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "long"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ii.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left eye",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "nose",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "u",
@@ -76,7 +165,29 @@
     "x": 156,
     "y": 128
    },
-   "clip": "u.ogg"
+   "clip": "u.ogg",
+   "id": "varna_u",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "short"
+   },
+   "audio": {
+    "reference": "audio/phonemes/u.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right ear",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "right ear",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ū",
@@ -91,7 +202,29 @@
     "x": 244,
     "y": 128
    },
-   "clip": "uu.ogg"
+   "clip": "uu.ogg",
+   "id": "varna_uu",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "long"
+   },
+   "audio": {
+    "reference": "audio/phonemes/uu.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left ear",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "left ear",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ṛ",
@@ -106,7 +239,29 @@
     "x": 170,
     "y": 78
    },
-   "clip": "r.ogg"
+   "clip": "r.ogg",
+   "id": "varna_r",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "short"
+   },
+   "audio": {
+    "reference": "audio/phonemes/r.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right nostril",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "headband",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ṝ",
@@ -121,7 +276,29 @@
     "x": 230,
     "y": 78
    },
-   "clip": "rr.ogg"
+   "clip": "rr.ogg",
+   "id": "varna_rr",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "long"
+   },
+   "audio": {
+    "reference": "audio/phonemes/rr.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left nostril",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "headband",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ḷ",
@@ -136,7 +313,31 @@
     "x": 190,
     "y": 78
    },
-   "clip": null
+   "clip": null,
+   "id": "varna_l",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "short"
+   },
+   "audio": {
+    "reference": null,
+    "speaker": null,
+    "verified": false,
+    "missing": true,
+    "note": "No verified recording; synth renders wrong (lɪ/empty). Silence + visible flag, never substitution."
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right cheek",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "headband",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ḹ",
@@ -151,7 +352,31 @@
     "x": 210,
     "y": 78
    },
-   "clip": null
+   "clip": null,
+   "id": "varna_ll",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "long"
+   },
+   "audio": {
+    "reference": null,
+    "speaker": null,
+    "verified": false,
+    "missing": true,
+    "note": "No verified recording; synth renders wrong (lɪ/empty). Silence + visible flag, never substitution."
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left cheek",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "headband",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "e",
@@ -166,7 +391,29 @@
     "x": 170,
     "y": 570
    },
-   "clip": "e.ogg"
+   "clip": "e.ogg",
+   "id": "varna_e",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "long"
+   },
+   "audio": {
+    "reference": "audio/phonemes/e.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "lower teeth",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "right knee",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ai",
@@ -181,7 +428,29 @@
     "x": 230,
     "y": 570
    },
-   "clip": "ai.ogg"
+   "clip": "ai.ogg",
+   "id": "varna_ai",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "diphthong"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ai.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "upper teeth",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "left knee",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "o",
@@ -196,7 +465,29 @@
     "x": 170,
     "y": 630
    },
-   "clip": "o.ogg"
+   "clip": "o.ogg",
+   "id": "varna_o",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "long"
+   },
+   "audio": {
+    "reference": "audio/phonemes/o.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "lower lip",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "right shank",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "au",
@@ -211,7 +502,29 @@
     "x": 230,
     "y": 630
    },
-   "clip": "au.ogg"
+   "clip": "au.ogg",
+   "id": "varna_au",
+   "phonetic": {
+    "class": "vowel",
+    "quantity_or_manner": "diphthong"
+   },
+   "audio": {
+    "reference": "audio/phonemes/au.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "upper lip",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "left shank",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "aṃ",
@@ -226,7 +539,29 @@
     "x": 172,
     "y": 510
    },
-   "clip": "anusvara.ogg"
+   "clip": "anusvara.ogg",
+   "id": "varna_am",
+   "phonetic": {
+    "class": "dependent",
+    "quantity_or_manner": "anusvara"
+   },
+   "audio": {
+    "reference": "audio/phonemes/anusvara.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "crown",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "right thigh",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "aḥ",
@@ -241,7 +576,29 @@
     "x": 200,
     "y": 350
    },
-   "clip": "visarga.ogg"
+   "clip": "visarga.ogg",
+   "id": "varna_ah",
+   "phonetic": {
+    "class": "dependent",
+    "quantity_or_manner": "visarga"
+   },
+   "audio": {
+    "reference": "audio/phonemes/visarga.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "tongue",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "general prāṇa",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ka",
@@ -256,7 +613,30 @@
     "x": 182,
     "y": 162
    },
-   "clip": "ka.ogg"
+   "clip": "ka.ogg",
+   "id": "varna_ka",
+   "phonetic": {
+    "class": "ka",
+    "quantity_or_manner": "stop"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ka.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right shoulder",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "R elbow"
+    },
+    "malini": {
+     "regionId": "teeth",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "kha",
@@ -271,7 +651,30 @@
     "x": 194,
     "y": 162
    },
-   "clip": "kha.ogg"
+   "clip": "kha.ogg",
+   "id": "varna_kha",
+   "phonetic": {
+    "class": "ka",
+    "quantity_or_manner": "stop-aspirated"
+   },
+   "audio": {
+    "reference": "audio/phonemes/kha.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right arm",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "R wrist"
+    },
+    "malini": {
+     "regionId": "teeth",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ga",
@@ -286,7 +689,30 @@
     "x": 206,
     "y": 162
    },
-   "clip": "ga.ogg"
+   "clip": "ga.ogg",
+   "id": "varna_ga",
+   "phonetic": {
+    "class": "ka",
+    "quantity_or_manner": "stop-voiced"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ga.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right hand",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "R elbow"
+    },
+    "malini": {
+     "regionId": "teeth",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "gha",
@@ -301,7 +727,30 @@
     "x": 218,
     "y": 162
    },
-   "clip": "gha.ogg"
+   "clip": "gha.ogg",
+   "id": "varna_gha",
+   "phonetic": {
+    "class": "ka",
+    "quantity_or_manner": "stop-voiced-aspirated"
+   },
+   "audio": {
+    "reference": "audio/phonemes/gha.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right fingers",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "R wrist"
+    },
+    "malini": {
+     "regionId": "teeth",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ṅa",
@@ -316,7 +765,30 @@
     "x": 200,
     "y": 150
    },
-   "clip": null
+   "clip": "nga.ogg",
+   "id": "varna_na",
+   "phonetic": {
+    "class": "ka",
+    "quantity_or_manner": "nasal"
+   },
+   "audio": {
+    "reference": "audio/phonemes/nga.ogg",
+    "speaker": "edgesanskrit-v1-unverified",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right nails",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "R fingers"
+    },
+    "malini": {
+     "regionId": "teeth",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ca",
@@ -331,7 +803,30 @@
     "x": 181,
     "y": 118
    },
-   "clip": "ca.ogg"
+   "clip": "ca.ogg",
+   "id": "varna_ca",
+   "phonetic": {
+    "class": "ca",
+    "quantity_or_manner": "stop"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ca.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left shoulder",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "L elbow"
+    },
+    "malini": {
+     "regionId": "right eye",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "cha",
@@ -346,7 +841,30 @@
     "x": 175,
     "y": 310
    },
-   "clip": "cha.ogg"
+   "clip": "cha.ogg",
+   "id": "varna_cha",
+   "phonetic": {
+    "class": "ca",
+    "quantity_or_manner": "stop-aspirated"
+   },
+   "audio": {
+    "reference": "audio/phonemes/cha.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left arm",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "L wrist"
+    },
+    "malini": {
+     "regionId": "right chest",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ja",
@@ -361,7 +879,30 @@
     "x": 170,
     "y": 40
    },
-   "clip": "ja.ogg"
+   "clip": "ja.ogg",
+   "id": "varna_ja",
+   "phonetic": {
+    "class": "ca",
+    "quantity_or_manner": "stop-voiced"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ja.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left hand",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "L elbow"
+    },
+    "malini": {
+     "regionId": "trident prongs",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "jha",
@@ -376,7 +917,30 @@
     "x": 120,
     "y": 380
    },
-   "clip": "jha.ogg"
+   "clip": "jha.ogg",
+   "id": "varna_jha",
+   "phonetic": {
+    "class": "ca",
+    "quantity_or_manner": "stop-voiced-aspirated"
+   },
+   "audio": {
+    "reference": "audio/phonemes/jha.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left fingers",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "L wrist"
+    },
+    "malini": {
+     "regionId": "right fingers",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ña",
@@ -391,7 +955,30 @@
     "x": 280,
     "y": 380
    },
-   "clip": "na_j.ogg"
+   "clip": "na_j.ogg",
+   "id": "varna_nya",
+   "phonetic": {
+    "class": "ca",
+    "quantity_or_manner": "nasal"
+   },
+   "audio": {
+    "reference": "audio/phonemes/na_j.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left nails",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "L fingers"
+    },
+    "malini": {
+     "regionId": "left fingers",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ṭa",
@@ -406,7 +993,30 @@
     "x": 200,
     "y": 40
    },
-   "clip": "ta1.ogg"
+   "clip": "ta1.ogg",
+   "id": "varna_ta",
+   "phonetic": {
+    "class": "ṭa",
+    "quantity_or_manner": "stop"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ta1.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right hip",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "R buttock"
+    },
+    "malini": {
+     "regionId": "skull",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ṭha",
@@ -421,7 +1031,30 @@
     "x": 200,
     "y": 365
    },
-   "clip": "tha1.ogg"
+   "clip": "tha1.ogg",
+   "id": "varna_tha",
+   "phonetic": {
+    "class": "ṭa",
+    "quantity_or_manner": "stop-aspirated"
+   },
+   "audio": {
+    "reference": "audio/phonemes/tha1.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right thigh",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "R thigh"
+    },
+    "malini": {
+     "regionId": "hands",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ḍa",
@@ -436,7 +1069,30 @@
     "x": 120,
     "y": 300
    },
-   "clip": "da1.ogg"
+   "clip": "da1.ogg",
+   "id": "varna_da",
+   "phonetic": {
+    "class": "ṭa",
+    "quantity_or_manner": "stop-voiced"
+   },
+   "audio": {
+    "reference": "audio/phonemes/da1.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right knee",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "R knee"
+    },
+    "malini": {
+     "regionId": "right arm",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ḍha",
@@ -451,7 +1107,30 @@
     "x": 280,
     "y": 300
    },
-   "clip": "dha1.ogg"
+   "clip": "dha1.ogg",
+   "id": "varna_dha",
+   "phonetic": {
+    "class": "ṭa",
+    "quantity_or_manner": "stop-voiced-aspirated"
+   },
+   "audio": {
+    "reference": "audio/phonemes/dha1.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right shank",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "R shank"
+    },
+    "malini": {
+     "regionId": "left arm",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ṇa",
@@ -466,7 +1145,30 @@
     "x": 200,
     "y": 128
    },
-   "clip": "na_k.ogg"
+   "clip": "na_k.ogg",
+   "id": "varna_na",
+   "phonetic": {
+    "class": "ṭa",
+    "quantity_or_manner": "nasal"
+   },
+   "audio": {
+    "reference": "audio/phonemes/na_k.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right toes",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "R toes"
+    },
+    "malini": {
+     "regionId": "ears",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ta",
@@ -481,7 +1183,30 @@
     "x": 228,
     "y": 510
    },
-   "clip": "ta.ogg"
+   "clip": "ta.ogg",
+   "id": "varna_ta",
+   "phonetic": {
+    "class": "ta",
+    "quantity_or_manner": "stop"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ta.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left hip",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "L buttock"
+    },
+    "malini": {
+     "regionId": "left thigh",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "tha",
@@ -496,7 +1221,30 @@
     "x": 200,
     "y": 70
    },
-   "clip": "tha.ogg"
+   "clip": "tha.ogg",
+   "id": "varna_tha",
+   "phonetic": {
+    "class": "ta",
+    "quantity_or_manner": "stop-aspirated"
+   },
+   "audio": {
+    "reference": "audio/phonemes/tha.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left thigh",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "L thigh"
+    },
+    "malini": {
+     "regionId": "top of head",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "da",
@@ -511,7 +1259,30 @@
     "x": 168,
     "y": 690
    },
-   "clip": "da.ogg"
+   "clip": "da.ogg",
+   "id": "varna_da",
+   "phonetic": {
+    "class": "ta",
+    "quantity_or_manner": "stop-voiced"
+   },
+   "audio": {
+    "reference": "audio/phonemes/da.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left knee",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "L foot"
+    },
+    "malini": {
+     "regionId": "right foot",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "dha",
@@ -526,7 +1297,30 @@
     "x": 219,
     "y": 118
    },
-   "clip": "dha.ogg"
+   "clip": "dha.ogg",
+   "id": "varna_dha",
+   "phonetic": {
+    "class": "ta",
+    "quantity_or_manner": "stop-voiced-aspirated"
+   },
+   "audio": {
+    "reference": "audio/phonemes/dha.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left shank",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "L toes"
+    },
+    "malini": {
+     "regionId": "left eye",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "na",
@@ -541,7 +1335,30 @@
     "x": 200,
     "y": 48
    },
-   "clip": "na.ogg"
+   "clip": "na.ogg",
+   "id": "varna_na",
+   "phonetic": {
+    "class": "ta",
+    "quantity_or_manner": "nasal"
+   },
+   "audio": {
+    "reference": "audio/phonemes/na.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left toes",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "L toenails"
+    },
+    "malini": {
+     "regionId": "crown-flame śikhā",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "pa",
@@ -556,7 +1373,29 @@
     "x": 200,
     "y": 330
    },
-   "clip": "pa.ogg"
+   "clip": "pa.ogg",
+   "id": "varna_pa",
+   "phonetic": {
+    "class": "pa",
+    "quantity_or_manner": "stop"
+   },
+   "audio": {
+    "reference": "audio/phonemes/pa.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "right side",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "heart",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "pha",
@@ -571,7 +1410,29 @@
     "x": 232,
     "y": 690
    },
-   "clip": "pha.ogg"
+   "clip": "pha.ogg",
+   "id": "varna_pha",
+   "phonetic": {
+    "class": "pa",
+    "quantity_or_manner": "stop-aspirated"
+   },
+   "audio": {
+    "reference": "audio/phonemes/pha.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "left side",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "left foot",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ba",
@@ -586,7 +1447,29 @@
     "x": 200,
     "y": 168
    },
-   "clip": "ba.ogg"
+   "clip": "ba.ogg",
+   "id": "varna_ba",
+   "phonetic": {
+    "class": "pa",
+    "quantity_or_manner": "stop-voiced"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ba.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "back",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "mouth",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "bha",
@@ -601,7 +1484,29 @@
     "x": 140,
     "y": 250
    },
-   "clip": "bha.ogg"
+   "clip": "bha.ogg",
+   "id": "varna_bha",
+   "phonetic": {
+    "class": "pa",
+    "quantity_or_manner": "stop-voiced-aspirated"
+   },
+   "audio": {
+    "reference": "audio/phonemes/bha.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "belly",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "right shoulder",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ma",
@@ -616,7 +1521,29 @@
     "x": 200,
     "y": 450
    },
-   "clip": "ma.ogg"
+   "clip": "ma.ogg",
+   "id": "varna_ma",
+   "phonetic": {
+    "class": "pa",
+    "quantity_or_manner": "nasal"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ma.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "heart",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "buttocks / hips",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ya",
@@ -631,7 +1558,29 @@
     "x": 260,
     "y": 250
    },
-   "clip": "ya.ogg"
+   "clip": "ya.ogg",
+   "id": "varna_ya",
+   "phonetic": {
+    "class": "antastha",
+    "quantity_or_manner": "semivowel"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ya.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "skin",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "left shoulder",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ra",
@@ -646,7 +1595,29 @@
     "x": 200,
     "y": 40
    },
-   "clip": "ra.ogg"
+   "clip": "ra.ogg",
+   "id": "varna_ra",
+   "phonetic": {
+    "class": "antastha",
+    "quantity_or_manner": "semivowel"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ra.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "blood",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "trident shaft",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "la",
@@ -661,7 +1632,29 @@
     "x": 225,
     "y": 310
    },
-   "clip": "la.ogg"
+   "clip": "la.ogg",
+   "id": "varna_la",
+   "phonetic": {
+    "class": "antastha",
+    "quantity_or_manner": "semivowel"
+   },
+   "audio": {
+    "reference": "audio/phonemes/la.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "flesh",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "left chest",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "va",
@@ -676,7 +1669,29 @@
     "x": 200,
     "y": 230
    },
-   "clip": "va.ogg"
+   "clip": "va.ogg",
+   "id": "varna_va",
+   "phonetic": {
+    "class": "antastha",
+    "quantity_or_manner": "semivowel"
+   },
+   "audio": {
+    "reference": "audio/phonemes/va.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "sinews",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "throat",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "śa",
@@ -691,7 +1706,29 @@
     "x": 200,
     "y": 470
    },
-   "clip": "sha.ogg"
+   "clip": "sha.ogg",
+   "id": "varna_sha",
+   "phonetic": {
+    "class": "ūṣman",
+    "quantity_or_manner": "sibilant"
+   },
+   "audio": {
+    "reference": "audio/phonemes/sha.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "bone",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "guhya",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ṣa",
@@ -706,7 +1743,29 @@
     "x": 200,
     "y": 400
    },
-   "clip": "shha.ogg"
+   "clip": "shha.ogg",
+   "id": "varna_sha",
+   "phonetic": {
+    "class": "ūṣman",
+    "quantity_or_manner": "sibilant"
+   },
+   "audio": {
+    "reference": "audio/phonemes/shha.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "marrow",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "belly",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "sa",
@@ -721,7 +1780,29 @@
     "x": 200,
     "y": 330
    },
-   "clip": "sa.ogg"
+   "clip": "sa.ogg",
+   "id": "varna_sa",
+   "phonetic": {
+    "class": "ūṣman",
+    "quantity_or_manner": "sibilant"
+   },
+   "audio": {
+    "reference": "audio/phonemes/sa.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "essence",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "jīva / Self",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "ha",
@@ -736,7 +1817,29 @@
     "x": 200,
     "y": 365
    },
-   "clip": "ha.ogg"
+   "clip": "ha.ogg",
+   "id": "varna_ha",
+   "phonetic": {
+    "class": "ūṣman",
+    "quantity_or_manner": "glottal"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ha.ogg",
+    "speaker": "human-grid-v1",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "prāṇa",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified"
+    },
+    "malini": {
+     "regionId": "particular prāṇa",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   },
   {
    "iast": "kṣa",
@@ -751,7 +1854,32 @@
     "x": 200,
     "y": 390
    },
-   "clip": null
+   "clip": "ksa.ogg",
+   "id": "varna_ksha",
+   "phonetic": {
+    "class": "conjunct",
+    "quantity_or_manner": "kṣa"
+   },
+   "audio": {
+    "reference": "audio/phonemes/ksa.ogg",
+    "speaker": "edgesanskrit-v1-unverified",
+    "verified": false
+   },
+   "placements": {
+    "matrika": {
+     "regionId": "generative",
+     "sourceId": "ta15-verse",
+     "status": "attested-unverified",
+     "apparatus_variant": "brahmarandhra cavity"
+    },
+    "malini": {
+     "regionId": "navel",
+     "sourceId": "mv3-37-41",
+     "status": "attested-unverified"
+    }
+   }
   }
- ]
+ ],
+ "schema": "phoneme-record-v1",
+ "note": "Backwards compatible: matrika/malini/clip keys retained. verified:false everywhere = existence is not proof."
 }
