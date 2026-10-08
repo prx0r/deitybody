@@ -1,0 +1,836 @@
+{
+ "id": "phoneme-library-v1",
+ "note": "Canonical stays human-grid-v1 until ear promotion. Engine takes are variants.",
+ "phonemes": {
+  "a": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/a.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "a/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 16800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ā": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/aa.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ā/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "i": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/i.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "i/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 17400
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ī": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ii.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ī/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "u": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/u.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "u/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 16800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ū": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/uu.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ū/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ṛ": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/r.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ṛ/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 19200
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ṝ": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/rr.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ṝ/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 27000
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ḷ": {
+   "variants": [
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ḷ/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 20400
+    }
+   ],
+   "canonical": null,
+   "needs_ear": true
+  },
+  "ḹ": {
+   "variants": [
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": null,
+     "status": "fail",
+     "reason": "null render"
+    }
+   ],
+   "canonical": null,
+   "needs_ear": true
+  },
+  "e": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/e.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "e/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 15600
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ai": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ai.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ai/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 23400
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "o": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/o.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "o/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 16800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "au": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/au.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "au/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22200
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "aṃ": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/anusvara.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "aṃ/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "aḥ": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/visarga.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "aḥ/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 25800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ka": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ka.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ka/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22200
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "kha": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/kha.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "kha/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 24600
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ga": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ga.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ga/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "gha": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/gha.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "gha/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 24600
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ṅa": {
+   "variants": [
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ṅa/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22200
+    }
+   ],
+   "canonical": null,
+   "needs_ear": true
+  },
+  "ca": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ca.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ca/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 24000
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "cha": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/cha.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "cha/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 26400
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ja": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ja.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ja/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 24600
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "jha": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/jha.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "jha/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 28800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ña": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/na_j.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ña/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 20400
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ṭa": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ta1.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ṭa/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 21600
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ṭha": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/tha1.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ṭha/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 24000
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ḍa": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/da1.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ḍa/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 21600
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ḍha": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/dha1.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ḍha/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 24000
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ṇa": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/na_k.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ṇa/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 21600
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ta": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ta.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ta/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "tha": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/tha.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "tha/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 23400
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "da": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/da.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "da/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "dha": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/dha.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "dha/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 24600
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "na": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/na.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "na/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 23400
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "pa": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/pa.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "pa/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 23400
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "pha": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/pha.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "pha/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 24000
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ba": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ba.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ba/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 21000
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "bha": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/bha.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "bha/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 23400
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ma": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ma.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ma/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ya": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ya.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ya/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 21600
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ra": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ra.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ra/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22200
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "la": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/la.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "la/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22200
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "va": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/va.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "va/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 23400
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "śa": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/sha.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "śa/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22200
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ṣa": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/shha.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ṣa/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 20400
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "sa": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/sa.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "sa/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 22800
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "ha": {
+   "variants": [
+    {
+     "id": "human-grid-v1",
+     "file": "../../phonemes/ha.ogg",
+     "status": "reference-unverified"
+    },
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "ha/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 20400
+    }
+   ],
+   "canonical": "human-grid-v1",
+   "needs_ear": true
+  },
+  "kṣa": {
+   "variants": [
+    {
+     "id": "edgesanskrit-v1-hm_omega",
+     "file": "kṣa/v1_hm_omega.ogg",
+     "status": "rendered-unverified",
+     "samples": 25800
+    }
+   ],
+   "canonical": null,
+   "needs_ear": true
+  }
+ }
+}

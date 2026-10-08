@@ -37,7 +37,7 @@ a{color:var(--gold)}
 <header><h1>मन्त्रशरीर</h1><div class="sub">Mantra Body · chant-through · <a href="lab">3D body</a></div>
 <div id="opts">
  <label>map <select id="map"><option value="matrika">Mātṛkā</option><option value="malini">Mālinī</option></select></label>
- <label>sequence <select id="seq"><option value="pair">starter a·ā</option><option value="vowels">vowels 16</option><option value="full">full 50</option></select></label>
+ <label>sequence <select id="seq"><option value="pair">starter a·ā</option><option value="vowels">vowels 16</option><option value="full">full 50</option><option value="mantra:om-namah-shivaya">mantra · oṃ namaḥ śivāya</option><option value="mantra:om">mantra · oṃ</option><option value="mantra:vowels-16">mantra · 16 vowels</option></select></label>
  <label>gap <input id="gap" type="range" min="0.4" max="5" step="0.2" value="1.6"/> <span id="gapV">1.6s</span></label>
  <label><input id="loop" type="checkbox"/> loop</label>
 </div></header>
@@ -56,6 +56,7 @@ a{color:var(--gold)}
 <footer>practice scaffold · clips: human-grid-v1 + EdgeSanskrit-v1(unverified ṅa/kṣa) · ḷ/ḹ silence+flag · no autoplay before tap</footer>
 <script type="module">
 import { ChantPlayer } from './engine/audio/chant-player.js';
+import { MantraPlayer } from './engine/mantra/player.js';
 import { loadRegistry } from './engine/audio/asset-registry.js';
 const $=s=>document.querySelector(s);
 const SEQ16=['a','ā','i','ī','u','ū','ṛ','ṝ','ḷ','ḹ','e','ai','o','au','aṃ','aḥ'];
@@ -64,6 +65,9 @@ const reg=await loadRegistry();
 ChantPlayer.setRecords({phonemes:reg.records});
 const actx=new (window.AudioContext||window.webkitAudioContext)();
 const P=new ChantPlayer(actx);
+const M=new MantraPlayer(actx);
+const MANTRAS=await (await fetch('data/mantras.json')).json();
+let mantraMode=null;
 const seqFor=()=>({pair:['a','ā'],vowels:SEQ16,full:FULL}[$('#seq').value]);
 function show(id,idx){
   const ph=reg.records.find(p=>p.iast===id);
@@ -74,6 +78,33 @@ function show(id,idx){
   $('#flag').textContent=miss?'no verified recording — silence, breathe here':'';
   $('#count').textContent=`item ${idx+1} of ${P.seq.length} · ${$('#map').value}`;
 }
+function showSyllable(def,sy,idx){
+  const ph=reg.records.find(p=>p.iast===sy.node);
+  $('#glyph').textContent=sy.t;
+  $('#iast').textContent=sy.t+(sy.approx?' · approx — breathe':'');
+  $('#locus').textContent=ph?ph.placements[$('#map').value].regionId:'';
+  $('#flag').textContent=(sy.approx?'synth renders wrong — listen, do not imitate':'')+
+    ` · light tied to measured audio (${def.timing})`;
+  $('#count').textContent=`syllable ${idx+1} of ${def.syllables.length} · ${def.title}`;
+}
+M.onSyllable=(sy,idx)=>showSyllable(M.def,sy,idx);
+M.onEnd=()=>{$('#play').textContent='▶ chant';};
+const isMantra=()=>$('#seq').value.startsWith('mantra:');
+async function rebuild(){
+  P.stop(); M.stop(); $('#play').textContent='▶ chant';
+  if(isMantra()){
+    const id=$('#seq').value.slice(7);
+    const def=MANTRAS.mantras.find(m=>m.id===id);
+    const r=await M.load(def);
+    $('#report').textContent=`${def.title} · ${r.duration.toFixed(1)}s audio · ${r.syllables} syllables · light derived from sound · loop ${M.loop?'on':'off'}.`+(def.warn?' '+def.warn+'.':'');
+    showSyllable(def,def.syllables[0],0);
+  }else{
+    const r=await P.load(seqFor(), $('#map').value);
+    const miss=r.silent;
+    $('#report').textContent=miss.length?`silent flagged: ${miss.join(' ')} — breathe, don't substitute.`:`${r.loaded} clips buffered.`;
+    show(P.seq[0],0);
+  }
+}
 P.onPhoneme=(id,ph,idx)=>show(id,idx);
 P.onEnd=()=>{$('#play').textContent='▶ chant'; $('#report').textContent='complete — again, or switch map.';};
 async function rebuild(){
@@ -83,13 +114,17 @@ async function rebuild(){
   $('#report').textContent=miss.length?`silent flagged: ${miss.join(' ')} — breathe, don't substitute.`:`${r.loaded} clips buffered.`;
   show(P.seq[0],0);
 }
-$('#play').onclick=()=>{ if(P.playing){P.pause(); $('#play').textContent='▶ chant';} else {P.play(); $('#play').textContent='⏸ pause';} };
-$('#stop').onclick=()=>{P.stop(); $('#play').textContent='▶ chant'; show(P.seq[P.idx],P.idx);};
-$('#next').onclick=()=>{P.next(); show(P.seq[P.idx],P.idx);};
-$('#prev').onclick=()=>{P.prev(); show(P.seq[P.idx],P.idx);};
-$('#rep').onclick=()=>P.repeat();
-$('#gap').oninput=e=>{P.gap=+e.target.value; $('#gapV').textContent=P.gap.toFixed(1)+'s';};
-$('#loop').onchange=e=>P.loop=e.target.checked;
+$('#play').onclick=()=>{ const on=P.playing||M.playing;
+  if(on){P.pause(); M.pause(); $('#play').textContent='▶ chant';}
+  else { if(isMantra()){M.play();} else {P.play();} $('#play').textContent='⏸ pause';} };
+$('#stop').onclick=()=>{P.stop(); M.stop(); $('#play').textContent='▶ chant';
+  if(isMantra()){const d=MANTRAS.mantras.find(m=>m.id===$('#seq').value.slice(7)); showSyllable(d,d.syllables[0],0);}
+  else show(P.seq[P.idx],P.idx);};
+$('#next').onclick=()=>{ if(isMantra())return; P.next(); show(P.seq[P.idx],P.idx);};
+$('#prev').onclick=()=>{ if(isMantra())return; P.prev(); show(P.seq[P.idx],P.idx);};
+$('#rep').onclick=()=>{ if(isMantra()){M.stop(); M.play();} else P.repeat(); };
+$('#gap').oninput=e=>{P.gap=+e.target.value; M.gap=+e.target.value; $('#gapV').textContent=P.gap.toFixed(1)+'s';};
+$('#loop').onchange=e=>{P.loop=e.target.checked; M.loop=e.target.checked;};
 $('#map').onchange=rebuild; $('#seq').onchange=rebuild;
 await rebuild();
 </script>

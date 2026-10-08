@@ -1,0 +1,208 @@
+{
+ "engine": "edgesanskrit-v1",
+ "voice": "hm_omega",
+ "speed": 1.0,
+ "date": "2026-10-08",
+ "items": {
+  "a": {
+   "status": "rendered-unverified",
+   "samples": 16800
+  },
+  "ā": {
+   "status": "rendered-unverified",
+   "samples": 22800
+  },
+  "i": {
+   "status": "rendered-unverified",
+   "samples": 17400
+  },
+  "ī": {
+   "status": "rendered-unverified",
+   "samples": 22800
+  },
+  "u": {
+   "status": "rendered-unverified",
+   "samples": 16800
+  },
+  "ū": {
+   "status": "rendered-unverified",
+   "samples": 22800
+  },
+  "ṛ": {
+   "status": "rendered-unverified",
+   "samples": 19200
+  },
+  "ṝ": {
+   "status": "rendered-unverified",
+   "samples": 27000
+  },
+  "ḷ": {
+   "status": "rendered-unverified",
+   "samples": 20400
+  },
+  "ḹ": {
+   "status": "fail",
+   "reason": "null render"
+  },
+  "e": {
+   "status": "rendered-unverified",
+   "samples": 15600
+  },
+  "ai": {
+   "status": "rendered-unverified",
+   "samples": 23400
+  },
+  "o": {
+   "status": "rendered-unverified",
+   "samples": 16800
+  },
+  "au": {
+   "status": "rendered-unverified",
+   "samples": 22200
+  },
+  "aṃ": {
+   "status": "rendered-unverified",
+   "samples": 22800
+  },
+  "aḥ": {
+   "status": "rendered-unverified",
+   "samples": 25800
+  },
+  "ka": {
+   "status": "rendered-unverified",
+   "samples": 22200
+  },
+  "kha": {
+   "status": "rendered-unverified",
+   "samples": 24600
+  },
+  "ga": {
+   "status": "rendered-unverified",
+   "samples": 22800
+  },
+  "gha": {
+   "status": "rendered-unverified",
+   "samples": 24600
+  },
+  "ṅa": {
+   "status": "rendered-unverified",
+   "samples": 22200
+  },
+  "ca": {
+   "status": "rendered-unverified",
+   "samples": 24000
+  },
+  "cha": {
+   "status": "rendered-unverified",
+   "samples": 26400
+  },
+  "ja": {
+   "status": "rendered-unverified",
+   "samples": 24600
+  },
+  "jha": {
+   "status": "rendered-unverified",
+   "samples": 28800
+  },
+  "ña": {
+   "status": "rendered-unverified",
+   "samples": 20400
+  },
+  "ṭa": {
+   "status": "rendered-unverified",
+   "samples": 21600
+  },
+  "ṭha": {
+   "status": "rendered-unverified",
+   "samples": 24000
+  },
+  "ḍa": {
+   "status": "rendered-unverified",
+   "samples": 21600
+  },
+  "ḍha": {
+   "status": "rendered-unverified",
+   "samples": 24000
+  },
+  "ṇa": {
+   "status": "rendered-unverified",
+   "samples": 21600
+  },
+  "ta": {
+   "status": "rendered-unverified",
+   "samples": 22800
+  },
+  "tha": {
+   "status": "rendered-unverified",
+   "samples": 23400
+  },
+  "da": {
+   "status": "rendered-unverified",
+   "samples": 22800
+  },
+  "dha": {
+   "status": "rendered-unverified",
+   "samples": 24600
+  },
+  "na": {
+   "status": "rendered-unverified",
+   "samples": 23400
+  },
+  "pa": {
+   "status": "rendered-unverified",
+   "samples": 23400
+  },
+  "pha": {
+   "status": "rendered-unverified",
+   "samples": 24000
+  },
+  "ba": {
+   "status": "rendered-unverified",
+   "samples": 21000
+  },
+  "bha": {
+   "status": "rendered-unverified",
+   "samples": 23400
+  },
+  "ma": {
+   "status": "rendered-unverified",
+   "samples": 22800
+  },
+  "ya": {
+   "status": "rendered-unverified",
+   "samples": 21600
+  },
+  "ra": {
+   "status": "rendered-unverified",
+   "samples": 22200
+  },
+  "la": {
+   "status": "rendered-unverified",
+   "samples": 22200
+  },
+  "va": {
+   "status": "rendered-unverified",
+   "samples": 23400
+  },
+  "śa": {
+   "status": "rendered-unverified",
+   "samples": 22200
+  },
+  "ṣa": {
+   "status": "rendered-unverified",
+   "samples": 20400
+  },
+  "sa": {
+   "status": "rendered-unverified",
+   "samples": 22800
+  },
+  "ha": {
+   "status": "rendered-unverified",
+   "samples": 20400
+  },
+  "kṣa": {
+   "status": "rendered-unverified",
+   "samples": 25800
+  }
+ }
+}

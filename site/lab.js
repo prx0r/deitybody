@@ -166,7 +166,7 @@ if(bloomOn){
 /* ---------- body shell (stylized lathe, NOT anatomy) ---------- */
 const shellPts=[[.02,-4],[.35,-3.9],[.28,-3.2],[.42,-2.4],[.5,-2.2],[.42,-1.2],[.55,-.2],[.62,.4],[.55,1.0],[.7,1.25],[.28,1.6],[.3,1.9],[.62,2.3],[.62,2.9],[.3,3.2],[.02,3.3]]
   .map(p=>new THREE.Vector2(p[0],p[1]));
-const gridMat=new THREE.LineBasicMaterial({color:GOLD,transparent:true,opacity:.2});
+const gridMat=new THREE.LineBasicMaterial({color:GOLD,transparent:true,opacity:.07});
 /* true mathematical grid: clean meridians + parallels, NO triangulation diagonals.
    (LatheGeometry wireframe draws quad diagonals — that was the blockiness.) */
 {
@@ -724,7 +724,7 @@ function toggleScan(){
 }
 function toggleYan(){ yantra.visible=!yantra.visible; }
 function toggleX(){
-  xray=!xray; gridMat.opacity=xray?.04:.2;
+  xray=!xray; gridMat.opacity=xray?.02:.07;
 }
 /* practice actions (also callable via postMessage in embeds) */
 function playOM(){
@@ -799,7 +799,7 @@ function tick(){
   controls.update();
   if(!reduce){
     scan.position.y=-3.4+((t*.5)%7.2); scan.material.opacity=.3+.2*Math.sin(t*2);
-    shellWire.material.opacity=(xray?.04:.2)+.02*Math.sin(t*1.3);
+    shellWire.material.opacity=(xray?.02:.07)+.015*Math.sin(t*1.3);
     ida.rotation.y+=dt*.05; ping.rotation.y-=dt*.05;
     rings.forEach((r,k)=>r.material.opacity=.32+.12*Math.sin(t*1.5+k));
   }
