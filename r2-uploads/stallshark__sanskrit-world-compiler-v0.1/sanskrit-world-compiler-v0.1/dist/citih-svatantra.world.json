@@ -1,0 +1,1075 @@
+{
+  "version": "0.1",
+  "id": "citih-svatantra",
+  "title": "Pratyabhijñāhṛdayam 1 — concept dome",
+  "text": "चितिः स्वतन्त्रा विश्वसिद्धिहेतुः",
+  "nodes": [
+    {
+      "id": "phoneme:k",
+      "kind": "phoneme",
+      "label": "k",
+      "x": -4.4,
+      "y": -4.4,
+      "z": 0,
+      "data": {
+        "place": "velar",
+        "manner": "unvoiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:kh",
+      "kind": "phoneme",
+      "label": "kh",
+      "x": -4.4,
+      "y": -2.2,
+      "z": 0,
+      "data": {
+        "place": "velar",
+        "manner": "unvoiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:g",
+      "kind": "phoneme",
+      "label": "g",
+      "x": -4.4,
+      "y": 0.0,
+      "z": 0,
+      "data": {
+        "place": "velar",
+        "manner": "voiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:gh",
+      "kind": "phoneme",
+      "label": "gh",
+      "x": -4.4,
+      "y": 2.2,
+      "z": 0,
+      "data": {
+        "place": "velar",
+        "manner": "voiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ṅ",
+      "kind": "phoneme",
+      "label": "ṅ",
+      "x": -4.4,
+      "y": 4.4,
+      "z": 0,
+      "data": {
+        "place": "velar",
+        "manner": "nasal",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:c",
+      "kind": "phoneme",
+      "label": "c",
+      "x": -2.2,
+      "y": -4.4,
+      "z": 0,
+      "data": {
+        "place": "palatal",
+        "manner": "unvoiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ch",
+      "kind": "phoneme",
+      "label": "ch",
+      "x": -2.2,
+      "y": -2.2,
+      "z": 0,
+      "data": {
+        "place": "palatal",
+        "manner": "unvoiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:j",
+      "kind": "phoneme",
+      "label": "j",
+      "x": -2.2,
+      "y": 0.0,
+      "z": 0,
+      "data": {
+        "place": "palatal",
+        "manner": "voiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:jh",
+      "kind": "phoneme",
+      "label": "jh",
+      "x": -2.2,
+      "y": 2.2,
+      "z": 0,
+      "data": {
+        "place": "palatal",
+        "manner": "voiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ñ",
+      "kind": "phoneme",
+      "label": "ñ",
+      "x": -2.2,
+      "y": 4.4,
+      "z": 0,
+      "data": {
+        "place": "palatal",
+        "manner": "nasal",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ṭ",
+      "kind": "phoneme",
+      "label": "ṭ",
+      "x": 0.0,
+      "y": -4.4,
+      "z": 0,
+      "data": {
+        "place": "retroflex",
+        "manner": "unvoiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ṭh",
+      "kind": "phoneme",
+      "label": "ṭh",
+      "x": 0.0,
+      "y": -2.2,
+      "z": 0,
+      "data": {
+        "place": "retroflex",
+        "manner": "unvoiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ḍ",
+      "kind": "phoneme",
+      "label": "ḍ",
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0,
+      "data": {
+        "place": "retroflex",
+        "manner": "voiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ḍh",
+      "kind": "phoneme",
+      "label": "ḍh",
+      "x": 0.0,
+      "y": 2.2,
+      "z": 0,
+      "data": {
+        "place": "retroflex",
+        "manner": "voiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ṇ",
+      "kind": "phoneme",
+      "label": "ṇ",
+      "x": 0.0,
+      "y": 4.4,
+      "z": 0,
+      "data": {
+        "place": "retroflex",
+        "manner": "nasal",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:t",
+      "kind": "phoneme",
+      "label": "t",
+      "x": 2.2,
+      "y": -4.4,
+      "z": 0,
+      "data": {
+        "place": "dental",
+        "manner": "unvoiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:th",
+      "kind": "phoneme",
+      "label": "th",
+      "x": 2.2,
+      "y": -2.2,
+      "z": 0,
+      "data": {
+        "place": "dental",
+        "manner": "unvoiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:d",
+      "kind": "phoneme",
+      "label": "d",
+      "x": 2.2,
+      "y": 0.0,
+      "z": 0,
+      "data": {
+        "place": "dental",
+        "manner": "voiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:dh",
+      "kind": "phoneme",
+      "label": "dh",
+      "x": 2.2,
+      "y": 2.2,
+      "z": 0,
+      "data": {
+        "place": "dental",
+        "manner": "voiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:n",
+      "kind": "phoneme",
+      "label": "n",
+      "x": 2.2,
+      "y": 4.4,
+      "z": 0,
+      "data": {
+        "place": "dental",
+        "manner": "nasal",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:p",
+      "kind": "phoneme",
+      "label": "p",
+      "x": 4.4,
+      "y": -4.4,
+      "z": 0,
+      "data": {
+        "place": "labial",
+        "manner": "unvoiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ph",
+      "kind": "phoneme",
+      "label": "ph",
+      "x": 4.4,
+      "y": -2.2,
+      "z": 0,
+      "data": {
+        "place": "labial",
+        "manner": "unvoiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:b",
+      "kind": "phoneme",
+      "label": "b",
+      "x": 4.4,
+      "y": 0.0,
+      "z": 0,
+      "data": {
+        "place": "labial",
+        "manner": "voiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:bh",
+      "kind": "phoneme",
+      "label": "bh",
+      "x": 4.4,
+      "y": 2.2,
+      "z": 0,
+      "data": {
+        "place": "labial",
+        "manner": "voiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:m",
+      "kind": "phoneme",
+      "label": "m",
+      "x": 4.4,
+      "y": 4.4,
+      "z": 0,
+      "data": {
+        "place": "labial",
+        "manner": "nasal",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:a",
+      "kind": "phoneme",
+      "label": "a",
+      "x": 0.0,
+      "y": -7.0,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:i",
+      "kind": "phoneme",
+      "label": "i",
+      "x": 4.49951,
+      "y": -5.36231,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:u",
+      "kind": "phoneme",
+      "label": "u",
+      "x": 6.89365,
+      "y": -1.21554,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ṛ",
+      "kind": "phoneme",
+      "label": "ṛ",
+      "x": 6.06218,
+      "y": 3.5,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ḷ",
+      "kind": "phoneme",
+      "label": "ḷ",
+      "x": 2.39414,
+      "y": 6.57785,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:e",
+      "kind": "phoneme",
+      "label": "e",
+      "x": -2.39414,
+      "y": 6.57785,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:o",
+      "kind": "phoneme",
+      "label": "o",
+      "x": -6.06218,
+      "y": 3.5,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ai",
+      "kind": "phoneme",
+      "label": "ai",
+      "x": -6.89365,
+      "y": -1.21554,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:au",
+      "kind": "phoneme",
+      "label": "au",
+      "x": -4.49951,
+      "y": -5.36231,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "t1",
+      "kind": "token",
+      "label": "citiḥ",
+      "x": 0.0,
+      "y": -10.0,
+      "z": 2,
+      "data": {
+        "lemma": "citi",
+        "root": null,
+        "pos": "NOUN",
+        "morph": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        },
+        "order": 0,
+        "provider": null
+      }
+    },
+    {
+      "id": "t2",
+      "kind": "token",
+      "label": "svatantrā",
+      "x": 8.66025,
+      "y": 5.0,
+      "z": 2,
+      "data": {
+        "lemma": "svatantra",
+        "root": null,
+        "pos": "ADJ",
+        "morph": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "feminine"
+        },
+        "order": 1,
+        "provider": null
+      }
+    },
+    {
+      "id": "t3",
+      "kind": "token",
+      "label": "viśvasiddhihetuḥ",
+      "x": -8.66025,
+      "y": 5.0,
+      "z": 2,
+      "data": {
+        "lemma": "viśva-siddhi-hetu",
+        "root": null,
+        "pos": "NOUN",
+        "morph": {
+          "case": "nominative",
+          "number": "singular",
+          "gender": "masculine",
+          "compound": true
+        },
+        "order": 2,
+        "provider": null
+      }
+    },
+    {
+      "id": "lemma:citi",
+      "kind": "lemma",
+      "label": "citi",
+      "x": 0.0,
+      "y": -6.2,
+      "z": 4.2,
+      "data": {
+        "brunoRole": "stable_lexical_object"
+      }
+    },
+    {
+      "id": "lemma:svatantra",
+      "kind": "lemma",
+      "label": "svatantra",
+      "x": 5.36936,
+      "y": 3.1,
+      "z": 4.2,
+      "data": {
+        "brunoRole": "stable_lexical_object"
+      }
+    },
+    {
+      "id": "lemma:viśva-siddhi-hetu",
+      "kind": "lemma",
+      "label": "viśva-siddhi-hetu",
+      "x": -5.36936,
+      "y": 3.1,
+      "z": 4.2,
+      "data": {
+        "brunoRole": "stable_lexical_object"
+      }
+    },
+    {
+      "id": "c:citi",
+      "kind": "concept",
+      "label": "citi / consciousness",
+      "x": 0.0,
+      "y": -7.5,
+      "z": 7,
+      "data": {}
+    },
+    {
+      "id": "c:hetu",
+      "kind": "concept",
+      "label": "hetu / cause",
+      "x": 7.13292,
+      "y": -2.31763,
+      "z": 7,
+      "data": {}
+    },
+    {
+      "id": "c:siddhi",
+      "kind": "concept",
+      "label": "siddhi / manifestation",
+      "x": 4.40839,
+      "y": 6.06763,
+      "z": 7,
+      "data": {}
+    },
+    {
+      "id": "c:svatantrya",
+      "kind": "concept",
+      "label": "svātantrya / autonomy",
+      "x": -4.40839,
+      "y": 6.06763,
+      "z": 7,
+      "data": {}
+    },
+    {
+      "id": "c:visva",
+      "kind": "concept",
+      "label": "viśva / universe",
+      "x": -7.13292,
+      "y": -2.31763,
+      "z": 7,
+      "data": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "phoneme:k",
+      "target": "phoneme:kh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:kh",
+      "target": "phoneme:g",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:g",
+      "target": "phoneme:gh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:gh",
+      "target": "phoneme:ṅ",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:k",
+      "target": "phoneme:c",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:c",
+      "target": "phoneme:ch",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:kh",
+      "target": "phoneme:ch",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ch",
+      "target": "phoneme:j",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:g",
+      "target": "phoneme:j",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:j",
+      "target": "phoneme:jh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:gh",
+      "target": "phoneme:jh",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:jh",
+      "target": "phoneme:ñ",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṅ",
+      "target": "phoneme:ñ",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:c",
+      "target": "phoneme:ṭ",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṭ",
+      "target": "phoneme:ṭh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ch",
+      "target": "phoneme:ṭh",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṭh",
+      "target": "phoneme:ḍ",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:j",
+      "target": "phoneme:ḍ",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ḍ",
+      "target": "phoneme:ḍh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:jh",
+      "target": "phoneme:ḍh",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ḍh",
+      "target": "phoneme:ṇ",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ñ",
+      "target": "phoneme:ṇ",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṭ",
+      "target": "phoneme:t",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:t",
+      "target": "phoneme:th",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṭh",
+      "target": "phoneme:th",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:th",
+      "target": "phoneme:d",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ḍ",
+      "target": "phoneme:d",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:d",
+      "target": "phoneme:dh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ḍh",
+      "target": "phoneme:dh",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:dh",
+      "target": "phoneme:n",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṇ",
+      "target": "phoneme:n",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:t",
+      "target": "phoneme:p",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:p",
+      "target": "phoneme:ph",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:th",
+      "target": "phoneme:ph",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ph",
+      "target": "phoneme:b",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:d",
+      "target": "phoneme:b",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:b",
+      "target": "phoneme:bh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:dh",
+      "target": "phoneme:bh",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:bh",
+      "target": "phoneme:m",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:n",
+      "target": "phoneme:m",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:a",
+      "target": "phoneme:i",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:i",
+      "target": "phoneme:u",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:u",
+      "target": "phoneme:ṛ",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṛ",
+      "target": "phoneme:ḷ",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ḷ",
+      "target": "phoneme:e",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:e",
+      "target": "phoneme:o",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:o",
+      "target": "phoneme:ai",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ai",
+      "target": "phoneme:au",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t1",
+      "target": "phoneme:c",
+      "kind": "instantiates_sound",
+      "label": "c",
+      "data": {}
+    },
+    {
+      "source": "t1",
+      "target": "phoneme:i",
+      "kind": "instantiates_sound",
+      "label": "i",
+      "data": {}
+    },
+    {
+      "source": "t1",
+      "target": "phoneme:t",
+      "kind": "instantiates_sound",
+      "label": "t",
+      "data": {}
+    },
+    {
+      "source": "t1",
+      "target": "phoneme:i",
+      "kind": "instantiates_sound",
+      "label": "i",
+      "data": {}
+    },
+    {
+      "source": "t2",
+      "target": "phoneme:t",
+      "kind": "instantiates_sound",
+      "label": "t",
+      "data": {}
+    },
+    {
+      "source": "t2",
+      "target": "phoneme:n",
+      "kind": "instantiates_sound",
+      "label": "n",
+      "data": {}
+    },
+    {
+      "source": "t2",
+      "target": "phoneme:t",
+      "kind": "instantiates_sound",
+      "label": "t",
+      "data": {}
+    },
+    {
+      "source": "t3",
+      "target": "phoneme:d",
+      "kind": "instantiates_sound",
+      "label": "d",
+      "data": {}
+    },
+    {
+      "source": "t3",
+      "target": "phoneme:dh",
+      "kind": "instantiates_sound",
+      "label": "dh",
+      "data": {}
+    },
+    {
+      "source": "t3",
+      "target": "phoneme:t",
+      "kind": "instantiates_sound",
+      "label": "t",
+      "data": {}
+    },
+    {
+      "source": "lemma:citi",
+      "target": "t1",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "lemma:svatantra",
+      "target": "t2",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "lemma:viśva-siddhi-hetu",
+      "target": "t3",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "c:citi",
+      "target": "c:svatantrya",
+      "kind": "has_quality",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "c:citi",
+      "target": "c:visva",
+      "kind": "grounds",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "c:hetu",
+      "target": "c:siddhi",
+      "kind": "causes",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "c:siddhi",
+      "target": "c:visva",
+      "kind": "of",
+      "label": "",
+      "data": {}
+    }
+  ],
+  "routes": [
+    {
+      "node": "t1",
+      "action": "hear_then_enter",
+      "prompt": "Enter citiḥ as sound before analysis."
+    },
+    {
+      "node": "t2",
+      "action": "hear_then_enter",
+      "prompt": "Enter svatantrā as sound before analysis."
+    },
+    {
+      "node": "t3",
+      "action": "hear_then_enter",
+      "prompt": "Enter viśvasiddhihetuḥ as sound before analysis."
+    }
+  ],
+  "shell": {
+    "name": "sanskrit-sound-temple-v0.1",
+    "invariant": true,
+    "axes": {
+      "x": "place_of_articulation",
+      "y": "manner_of_articulation",
+      "z": "compiled_layer"
+    },
+    "principle": "same analyzed Sanskrit -> same coordinates; personal imagery never changes canonical coordinates"
+  },
+  "provenance": {
+    "ir": {
+      "text": "Pratyabhijñāhṛdayam 1",
+      "analysis": "starter conceptual graph; philological review recommended"
+    },
+    "compiler": "sanskrit-world-compiler/0.1",
+    "geometryRule": "deterministic structural mapping",
+    "personalOverlayAffectsGeometry": false,
+    "bruno": "representation layer only",
+    "rowe": "formal relation -> inhabitable geometry compiler analogy"
+  }
+}

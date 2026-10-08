@@ -1,0 +1,61 @@
+{
+  "id": "anava-samavesa-mv221",
+  "source": "Mālinīvijayottaratantra 2.21 (Kashmir Series 1922) via Svarodaya.org/upaya + Hareesh Tantrasāra ch.5",
+  "sanskrit": "uccāra-karaṇa-dhyāna-varṇa-sthāna-prakalpanaiḥ / yo bhavet sa samāveśaḥ samyag āṇava ucyate //",
+  "en": "The immersion that comes about through utterance of breath, instruments of body, visualisation, phonemes and fashioning of supports — that is rightly called āṇava.",
+  "components": [
+    {
+      "id": "uccāra",
+      "skt": "उच्चार",
+      "en": "breath / utterance / upward movement of sounded prāṇa",
+      "stage": "V"
+    },
+    {
+      "id": "karana",
+      "skt": "करण",
+      "en": "bodily configuration / instrument / posture",
+      "stage": "III"
+    },
+    {
+      "id": "dhyana",
+      "skt": "ध्यान",
+      "en": "visualization",
+      "stage": "IV"
+    },
+    {
+      "id": "varna",
+      "skt": "वर्ण",
+      "en": "phonemes",
+      "stage": "I"
+    },
+    {
+      "id": "sthana_prakalpana",
+      "skt": "स्थान-प्रकल्पना",
+      "en": "constructing/placing loci — spatial body-map supports",
+      "stage": "II"
+    }
+  ],
+  "tantrasara_ch5": {
+    "source": "Hareesh/Wallis — Tantrasāra Chapter Five Part 1",
+    "note": "Āṇavopāya uses limited supports: imagination (buddhi), vital energy (prāṇa), body, ritual vessels. Five practices: dhyāna · uccāra (grosser) · phoneme (subtler prāṇa) · karaṇa · external objects.",
+    "quote": "relying on those supports that have a specifically defined & limited nature—such as the imagination (buddhi), vital energy (prāṇa), the body, ritual vessels… one enters fully into one's individuated expression of Divinity"
+  },
+  "upaya_order_theory": {
+    "tantraloka_presentation": [
+      "anupāya",
+      "śāmbhavopāya",
+      "śāktopāya",
+      "āṇavopāya"
+    ],
+    "note": "Abhinavagupta presents from immediate recognition downward. Body/sound practice travels the opposite direction.",
+    "practice_direction": [
+      "varṇa/body/sound",
+      "sthāna visualization prep",
+      "internal cognition",
+      "recognition"
+    ],
+    "justification": "You're beginning at the end of his theoretical presentation because that part is designed for embodied practice (āṇava). Not bastardizing the system."
+  },
+  "svarodaya_url": "https://swarodaya.org/upaya/",
+  "hareesh_url": "https://hareesh.org/blog/2019/2/9/the-embodied-method-tantrasaara-chapter-five-part-1"
+}

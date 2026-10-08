@@ -1,0 +1,59 @@
+{
+  "id": "bruno-matrika-wheel-v0",
+  "name": "Bruno–Mātṛkā wheel",
+  "rings": [
+    {
+      "ring": 0,
+      "name": "centre",
+      "content": "awareness / aham",
+      "role": "vimarśa / I-consciousness that operates the wheel"
+    },
+    {
+      "ring": 1,
+      "name": "glyph",
+      "content": "Devanāgarī phoneme",
+      "role": "visual object"
+    },
+    {
+      "ring": 2,
+      "name": "articulation",
+      "content": "sthāna + aspiration + voicing + nasality",
+      "role": "production coordinate (mouth)"
+    },
+    {
+      "ring": 3,
+      "name": "tantric_locus",
+      "content": "Mātṛkā / Mālinī body placement",
+      "role": "ritual/imaginal coordinate"
+    },
+    {
+      "ring": 4,
+      "name": "mnemonic_image",
+      "content": "Bruno imaginal signature that teaches the phonetic property",
+      "role": "compression + vividness"
+    },
+    {
+      "ring": 5,
+      "name": "examples",
+      "content": "Sanskrit words containing that sound",
+      "role": "semantic field later"
+    }
+  ],
+  "ray_example_gha": {
+    "glyph": "घ",
+    "articulation": "kaṇṭhya / velar · voiced + aspirated",
+    "audio": "gha",
+    "animation": "tongue/soft-palate contact + aspiration burst",
+    "tantric_locus": "right wrist (Mātṛkā limb map)",
+    "bruno_image": "cave + actor hums and blows wind",
+    "rule": "image exaggerates voiced+aspirated feature"
+  },
+  "drill_loop": [
+    "reproduce aloud",
+    "eyes closed — generate glyph + sound together",
+    "feel bodily position (tantric locus)",
+    "identify from audio alone",
+    "mouth locus first, tantric locus second"
+  ],
+  "envelope": "Do NOT create fifty arbitrary mythological characters harder than Sanskrit itself. Use Bruno only where he gives compression and vividness."
+}

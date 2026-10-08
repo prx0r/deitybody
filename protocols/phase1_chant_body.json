@@ -1,0 +1,264 @@
+{
+  "id": "deitybody-phase1-chant-body-v1",
+  "name": "Phase 1 — Chant phonemes at body points",
+  "phase": 1,
+  "os": "Abhinavagupta/Trika",
+  "nyasa_meaning": "Reconstructing the biological body as the body of Śakti by installing the matrix from which articulated experience arises.",
+  "arc": [
+    "ordinary body",
+    "mapped body",
+    "mantra-body",
+    "deity-body",
+    "cosmos-body"
+  ],
+  "duration_sec": 1800,
+  "risk_level": "low",
+  "claims_policy": "practice_scaffold_not_medical_not_hz_per_phoneme",
+  "breath_policy": "Natural breath. Phonation may lengthen exhale. Do not force ratios. TĀ 4.91 — do not torment the body.",
+  "data": {
+    "matrika_map": "data/matrika_body_map.json",
+    "phoneme_objects": "data/phoneme_objects.json",
+    "articulation": "data/articulation_matrix.json",
+    "malini": "data/malini_order.json",
+    "audio_root": "/root/sanskrithelp/public/audio/phonemes/"
+  },
+  "principle": "Totalization — fill the body with the alphabet a→kṣa from head/sensory → limbs → torso → internal constituents. Don't invent physiology the texts don't claim.",
+  "steps": [
+    {
+      "type": "seat",
+      "label": "Seat + Flood frame (1 min)",
+      "seconds": 60,
+      "detail": "Spine long. Intention: 'I am installing the phonemic matrix on this body as a tradition-inscribed practice, not as anatomy.' Read one line: ordinary body → mapped body → mantra-body → deity-body → cosmos-body."
+    },
+    {
+      "type": "breath",
+      "label": "Natural breath + voice readiness (2 min)",
+      "seconds": 120,
+      "detail": "5–10 easy breaths. Soften jaw. Feel that speech will ride prāṇa. No ratio forcing."
+    },
+    {
+      "type": "vowel_install_head",
+      "label": "Vowels on head/face — chant + touch (8 min)",
+      "seconds": 480,
+      "order": [
+        {
+          "iast": "a",
+          "devanagari": "अ",
+          "locus": "forehead",
+          "ptv": "anuttara / cit"
+        },
+        {
+          "iast": "ā",
+          "devanagari": "आ",
+          "locus": "mouth/face",
+          "ptv": "ānanda"
+        },
+        {
+          "iast": "i",
+          "devanagari": "इ",
+          "locus": "right eye",
+          "ptv": "icchā"
+        },
+        {
+          "iast": "ī",
+          "devanagari": "ई",
+          "locus": "left eye",
+          "ptv": "icchā (long)"
+        },
+        {
+          "iast": "u",
+          "devanagari": "उ",
+          "locus": "right ear",
+          "ptv": "jñāna / unmeṣa"
+        },
+        {
+          "iast": "ū",
+          "devanagari": "ऊ",
+          "locus": "left ear",
+          "ptv": "jñāna (long)"
+        },
+        {
+          "iast": "ṛ",
+          "devanagari": "ऋ",
+          "locus": "right nostril",
+          "ptv": "r-coloured"
+        },
+        {
+          "iast": "ṝ",
+          "devanagari": "ॠ",
+          "locus": "left nostril",
+          "ptv": "long r"
+        },
+        {
+          "iast": "ḷ",
+          "devanagari": "ऌ",
+          "locus": "right cheek",
+          "ptv": "l-coloured"
+        },
+        {
+          "iast": "ḹ",
+          "devanagari": "ॡ",
+          "locus": "left cheek",
+          "ptv": "long l"
+        },
+        {
+          "iast": "e",
+          "devanagari": "ए",
+          "locus": "lower teeth",
+          "ptv": "kriyā a+i"
+        },
+        {
+          "iast": "ai",
+          "devanagari": "ऐ",
+          "locus": "upper teeth",
+          "ptv": "kriyā long"
+        },
+        {
+          "iast": "o",
+          "devanagari": "ओ",
+          "locus": "lower lip",
+          "ptv": "kriyā a+u"
+        },
+        {
+          "iast": "au",
+          "devanagari": "औ",
+          "locus": "upper lip",
+          "ptv": "kriyā long"
+        },
+        {
+          "iast": "aṃ",
+          "devanagari": "अं",
+          "locus": "crown / śikhā",
+          "ptv": "bindu mark"
+        },
+        {
+          "iast": "aḥ",
+          "devanagari": "अः",
+          "locus": "tongue",
+          "ptv": "visarga / breath"
+        }
+      ],
+      "for_each": [
+        "See Devanāgarī glyph internally",
+        "Touch locus lightly with right hand",
+        "Chant once clearly (vaikharī)",
+        "Feel location — no forced visualization",
+        "Optional: note PTV power name as secondary layer only"
+      ],
+      "short_variant": "If time short: a · ā · i · ī · aṃ · aḥ only"
+    },
+    {
+      "type": "varga_chant_right",
+      "label": "ka-varga — right upper limb (4 min)",
+      "seconds": 240,
+      "sequence": [
+        "ka",
+        "kha",
+        "ga",
+        "gha",
+        "ṅa"
+      ],
+      "loci": [
+        "right shoulder",
+        "right arm",
+        "right elbow",
+        "right wrist",
+        "fingers right hand"
+      ],
+      "mouth": "Feel velar closure back of mouth. Manner: plain stop → wind → glow → glow+wind → nasal tunnel.",
+      "detail": "Chant each phoneme once while touching its tantric locus. Then chant the five as one arc without stopping — continuous right-arm trajectory."
+    },
+    {
+      "type": "varga_chant_left",
+      "label": "ca-varga — left upper limb (4 min)",
+      "seconds": 240,
+      "sequence": [
+        "ca",
+        "cha",
+        "ja",
+        "jha",
+        "ña"
+      ],
+      "loci": [
+        "left shoulder",
+        "left arm",
+        "left elbow",
+        "left wrist",
+        "fingers left hand"
+      ],
+      "mouth": "Palate. Tongue blade. Same manner ladder.",
+      "detail": "Mirror of ka-varga. Then both vargas: right arc then left arc on natural breath."
+    },
+    {
+      "type": "lower_limbs",
+      "label": "ṭa-varga + ta-varga — lower limbs (4 min)",
+      "seconds": 240,
+      "detail": "Retroflex right lower limb; dental left lower limb. Chant + touch. If too long, do one varga only."
+    },
+    {
+      "type": "torso_deep",
+      "label": "pa-varga + deep constituents (3 min)",
+      "seconds": 180,
+      "sequence": [
+        "pa",
+        "pha",
+        "ba",
+        "bha",
+        "ma",
+        "ya",
+        "ra",
+        "la",
+        "va",
+        "śa",
+        "ṣa",
+        "sa",
+        "ha",
+        "kṣa"
+      ],
+      "loci": [
+        "right side",
+        "left side",
+        "spine/back",
+        "belly",
+        "heart",
+        "skin",
+        "blood",
+        "flesh",
+        "sinews",
+        "bone",
+        "marrow",
+        "essence",
+        "prāṇa",
+        "generative"
+      ],
+      "detail": "Shorten if needed: pa-pha-ba-bha-ma then ha kṣa. Heart (ma) gets longer pause."
+    },
+    {
+      "type": "totalization_pass",
+      "label": "Totalization pass — full a→kṣa once (5 min)",
+      "seconds": 300,
+      "detail": "One continuous chant through the full Mātṛkā order (vowels then consonants). Touch optional. Goal: body feels filled as a field, not as disconnected points. End on silence at crown/tongue (aṃ / aḥ)."
+    },
+    {
+      "type": "aham_contraction",
+      "label": "aham contraction (3 min)",
+      "seconds": 180,
+      "detail": "Stop chanting. Natural breath. Mentally: a (forehead/emergence) → ha (terminal edge / prāṇa) → ṃ (bindu, crown). Let a…kṣa field contract toward aham. Rest in reflexive 'I'. Then if it rises, let a…kṣa expand again once. This is the master rhythm — not occult collecting."
+    },
+    {
+      "type": "silence",
+      "label": "Silence / recognition seed (2 min)",
+      "seconds": 120,
+      "detail": "No manipulation. One recognition question only: are the phonemic locations mechanisms outside me, or expressions of the awareness that is installing them? Don't answer philosophically — feel. Stop always available."
+    },
+    {
+      "type": "log",
+      "label": "One-line log",
+      "seconds": 30,
+      "detail": "phase | which install completed | easiest locus | totalization felt? y/n | any tension"
+    }
+  ],
+  "daily_card": "practice/PHASE1_CHANT_BODY.md",
+  "progression_after": "Phase 2 — dual-coordinate objects + random locate drill",
+  "audio_models": "/root/sanskrithelp/public/audio/phonemes/*.ogg"
+}

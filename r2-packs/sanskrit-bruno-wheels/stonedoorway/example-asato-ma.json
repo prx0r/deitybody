@@ -1,0 +1,47 @@
+{
+  "version": "0.1",
+  "kind": "sanskrit-memory-world",
+  "source": "sanskrithelp-bruno",
+  "generatedAt": "EXAMPLE",
+  "associations": [
+    {
+      "primitiveId": "dhatu:gam",
+      "motion": "directed movement",
+      "rhythm": "user-defined",
+      "sourceAttested": false
+    },
+    {
+      "primitiveId": "operator:nic",
+      "motion": "cause/impel the event",
+      "sourceAttested": false
+    }
+  ],
+  "wheelStates": [
+    {
+      "wheel": "verse-compiler",
+      "verse": "asato mā sad gamaya / tamaso mā jyotir gamaya / mṛtyor mā amṛtaṃ gamaya",
+      "discoveries": [
+        "gamaya = 2sg imperative of causative gamayati from √gam",
+        "sat + gamaya → sad gamaya: final t voices before g",
+        "asataḥ + mā → asato mā; tamasaḥ + mā → tamaso mā",
+        "mṛtyoḥ + mā → mṛtyor mā"
+      ]
+    }
+  ],
+  "nightHandoff": {
+    "installed": [
+      "dhatu:gam",
+      "operator:nic",
+      "sandhi:t-to-d-before-voiced",
+      "visarga-before-m"
+    ],
+    "soundSequence": [
+      "asato mā sad gamaya",
+      "tamaso mā jyotir gamaya",
+      "mṛtyor mā amṛtaṃ gamaya"
+    ],
+    "recallPrompt": "Reconstruct the three source→destination transformations without English.",
+    "dreamPrompt": "What is invariant across all three movements?",
+    "provenanceNote": "Grammar facts and personal mnemonic bindings must remain distinct."
+  }
+}

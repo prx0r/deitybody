@@ -1,0 +1,262 @@
+{
+  "id": "deitybody-pathway-v1",
+  "name": "Sanskrit as Abhinavagupta practice — full structured pathway",
+  "date": "2026-10-04",
+  "principle": "Don't learn Sanskrit merely so you can eventually read Abhinavagupta. Use learning Sanskrit itself as training in Abhinavagupta's model of consciousness.",
+  "nyasa_meaning": {
+    "literal": "placing, depositing, installing",
+    "not": "My right shoulder anatomically emits the frequency ka.",
+    "is": "I am reconstructing this apparently ordinary biological body as the body of Śakti by installing within it the entire matrix from which articulated experience arises.",
+    "system_rationale": "Totalization — the alphabet a→kṣa fills the body until virtually nothing remains outside it. Head/sensory interface → limbs/action → torso → internal constituents.",
+    "caution": "Do not invent physiological explanations where the texts don't provide them. Some assignments are inherited ritual correspondences. Abhinavagupta is more interested in what the complete configuration accomplishes."
+  },
+  "body_transformation_arc": [
+    "ordinary body",
+    "mapped body",
+    "mantra-body",
+    "deity-body",
+    "cosmos-body"
+  ],
+  "flood_frame": {
+    "term": "entextualisation of the body",
+    "claim": "The tantric body is constructed, not discovered. Tradition is inscribed on body through ritual, yoga, reading. Body becomes text.",
+    "caveat": "Text-specific, not biomedical anatomy. Process invariance, content particularity. No mixing rites across texts."
+  },
+  "multi_identity_phoneme": {
+    "example_a": {
+      "glyph": "अ",
+      "linguistics": "vowel",
+      "phonetics": "articulatory/acoustic event",
+      "tantric_semiotics": "a power",
+      "abhinavagupta_metaphysics": "anuttara — the unsurpassable ground",
+      "ptv_series": {
+        "a": "anuttara / cit",
+        "ā": "ānanda",
+        "i": "icchā",
+        "u": "jñāna / unmeṣa",
+        "e_ai_o_au": "progressively articulated kriyā"
+      }
+    },
+    "bundle": [
+      "sound",
+      "articulatory possibility",
+      "first phonemic emergence",
+      "power of consciousness",
+      "cosmological procession"
+    ],
+    "bruno_use": "Dense bundle of relations, not one English gloss."
+  },
+  "sadadhvan": {
+    "name": "ṣaḍadhvan — six courses",
+    "pairs": [
+      {
+        "vācaka": "varṇa",
+        "vācya": "kalā",
+        "en_sign": "phoneme",
+        "en_world": "cosmic power/division"
+      },
+      {
+        "vācaka": "mantra",
+        "vācya": "tattva",
+        "en_sign": "mantra",
+        "en_world": "principle of reality"
+      },
+      {
+        "vācaka": "pada",
+        "vācya": "bhuvana",
+        "en_sign": "word/expression",
+        "en_world": "world/domain"
+      }
+    ],
+    "flood": "For monistic Śaivas these are paired manifestations of consciousness; each path interpenetrates the others.",
+    "implication": "Language-space and world-space are two articulations of the same Śakti. Transformations of language = transformations of ontology."
+  },
+  "levels_of_speech": {
+    "order_manifest": [
+      "parā",
+      "paśyantī",
+      "madhyamā",
+      "vaikharī"
+    ],
+    "vaikharī": "actually speaking the verse — breath, tongue, palate, lips, glottis; meter organizes time",
+    "madhyamā": "verse runs internally without audible speech; words, syntax, sequence known",
+    "paśyantī": "differentiation between sound-units and meaning much less developed",
+    "parā": "undifferentiated speech-power prior to articulated subject/object structure",
+    "verse_practice": {
+      "not": "syllable 1 = forehead, syllable 2 = eye...",
+      "is": "encounter verse at progressively deeper resolutions",
+      "srsti": "awareness → intention/meaning → inner language → articulated Sanskrit → vibrating body/world",
+      "samhara": "audible verse → silently heard → semantic/intuitive whole → pre-articulated impulse → awareness from which expression arises"
+    }
+  },
+  "matrka_vs_malini": {
+    "matrka": "articulated order — pedagogically useful because Sanskrit phonetic order already has intelligible articulatory architecture",
+    "malini": "Śakti's esoteric reconfiguration of that articulated order — different bodily installation; correlates with levels of consciousness and tattvas (PTv)",
+    "rule": "Master ordinary varṇamālā first. Once you know a stable coordinate system, you can deliberately permute it."
+  },
+  "overlays_not_one_chart": {
+    "principle": "Abhinavagupta does NOT have one canonical anatomical diagram reducing to modern seven-chakra scheme. Multilayered coordinates — different projections of one multidimensional system.",
+    "overlays": [
+      "phonemic anatomy (Mātṛkā/Mālinī)",
+      "sensory-deity anatomy (dehasthadevatācakra)",
+      "prāṇic anatomy",
+      "tattva anatomy",
+      "mantric anatomy",
+      "cosmic anatomy",
+      "central-axis yoga"
+    ],
+    "ui_rule": "Don't make one 2D chakra chart. Make selectable overlays.",
+    "flood_support": "Systems with five knots, nine/eleven wheels, sixteen loci, twenty-eight vital points; six-cakra arrangement is comparatively late."
+  },
+  "sensory_goddess_overlay": {
+    "source": "Dehasthadevatācakrastotra tradition (Flood ch.7)",
+    "center": "Bhairava/Bhairavī in the heart",
+    "ring": [
+      "higher intelligence",
+      "ego",
+      "mind",
+      "hearing",
+      "touch",
+      "vision",
+      "taste",
+      "smell"
+    ],
+    "function": "sensory goddesses continually offer their objects to Bhairava",
+    "practice_move": "Decompose ordinary experience into its powers, then recognize their common source.",
+    "example": "Ordinary: 'I am here looking at an object over there.' Tantric: the goddess of vision is presenting rūpa to consciousness. Deeper: goddess + seeing + visible thing + Bhairava are modalities of the same consciousness."
+  },
+  "chanting_progression": {
+    "name": "namaḥ śivāya as worked example",
+    "levels": [
+      {
+        "level": 1,
+        "name": "crude",
+        "content": "mouth making noises"
+      },
+      {
+        "level": 2,
+        "name": "micro-somatic articulation",
+        "content": "na dental/nasal · ma labial/nasal · ḥ visarga · śi palatal sibilant + vowel"
+      },
+      {
+        "level": 3,
+        "name": "breath",
+        "content": "whole phrase rides on prāṇa"
+      },
+      {
+        "level": 4,
+        "name": "auditory",
+        "content": "simultaneously produce and hear the mantra"
+      },
+      {
+        "level": 5,
+        "name": "mātṛkā awareness",
+        "content": "not merely sounds — manifestations of phonemic Śaktis"
+      },
+      {
+        "level": 6,
+        "name": "semantic",
+        "content": "namaḥ and śiva semantic field directly present, not English dictionary entries"
+      },
+      {
+        "level": 7,
+        "name": "internalize",
+        "content": "spoken → internal sound → felt articulatory intention → preverbal meaning → awareness"
+      }
+    ],
+    "watch": "You are watching language be born. And then watching it dissolve."
+  },
+  "aham_master_key": {
+    "word": "aham",
+    "en": "I",
+    "role": "mantra representing total subjectivity",
+    "phonematics": {
+      "a": "beginning / emergence",
+      "ha": "terminal edge of alphabetic manifestation / Śakti",
+      "ṃ": "bindu, contraction/reabsorption"
+    },
+    "flood_tā": "cosmos emerges from and returns to this absolute I; aham as animating power of mantra",
+    "wheel_rhythm": "a…kṣa → Śakti-cakra → aham → pure reflexive awareness → a…kṣa expands again",
+    "practice_guard": "Mātṛkā practice should not leave you thinking 'fifty little energies live inside my body.' It should lead toward: all fifty differentiations arise within the single field denoted by aham."
+  },
+  "spanda_recursion": {
+    "spanda": "primordial dynamism — consciousness inherently dynamic, source of manifestation (Dyczkowski)",
+    "chain": [
+      "spanda",
+      "vāk",
+      "Mātṛkā",
+      "mantra",
+      "pada",
+      "world"
+    ],
+    "laya_reverses": "dissolve paths into sustaining deities → body → breath → mind → consciousness",
+    "scale": "same basic recursion at multiple scales"
+  },
+  "pratyabhijna_endpoint": {
+    "name": "recognition",
+    "claim": "The powers you've been invoking and mapping aren't ultimately external mechanisms controlling consciousness. They are expressions of consciousness.",
+    "flood": "On recognition of absolute subjectivity, the goddesses animating both body and cosmos are recognized as expansions of one's own consciousness.",
+    "arc": [
+      "learn differentiation extremely precisely",
+      "feel differentiation somatically",
+      "see its internal relationships",
+      "deliberately manipulate/withdraw it",
+      "discover the undifferentiated basis",
+      "let differentiation return",
+      "recognize it as that same basis"
+    ]
+  },
+  "phases": [
+    {
+      "id": 1,
+      "title": "Chant phonemes at body points",
+      "goal": "Install Mātṛkā by voice + touch + locus. Totalization of the mapped body.",
+      "duration": "weeks 1–4",
+      "entry": "true"
+    },
+    {
+      "id": 2,
+      "title": "Articulation instrument + dual coordinates",
+      "goal": "5×5 mouth matrix + production/tantric dual locus per phoneme.",
+      "duration": "weeks 2–6"
+    },
+    {
+      "id": 3,
+      "title": "Levels of speech on one seed / short verse",
+      "goal": "vaikharī → madhyamā → paśyantī → parā on a controlled text.",
+      "duration": "weeks 4–8"
+    },
+    {
+      "id": 4,
+      "title": "Mātṛkā full procession + aham contraction",
+      "goal": "a…kṣa → aham → expand. Expansion/contraction rhythm.",
+      "duration": "weeks 6–10"
+    },
+    {
+      "id": 5,
+      "title": "Ṣaḍadhvan pairing + word/mantra work",
+      "goal": "varṇa↔kalā, mantra↔tattva, pada↔bhuvana as paired consciousness.",
+      "duration": "weeks 8–14"
+    },
+    {
+      "id": 6,
+      "title": "Mālinī reconfiguration",
+      "goal": "After Mātṛkā automatic — permute the stable system.",
+      "duration": "months 3–4"
+    },
+    {
+      "id": 7,
+      "title": "Sandhi as felt transformation + verse resolutions",
+      "goal": "Grammar as animated transformation; verse at multiple depths.",
+      "duration": "ongoing"
+    },
+    {
+      "id": 8,
+      "title": "Sensory-deity overlay + Pratyabhijñā recognition",
+      "goal": "Decompose experience into powers; recognize as consciousness.",
+      "duration": "ongoing"
+    }
+  ],
+  "goswami_role": "TOOL_NOT_BACKBONE — later: fine breath, elemental geometry, bindu-concentration. Natural breath during chanting phases.",
+  "claims_policy": "practice_scaffold_not_medical; maps are tradition-specific entextualisation not biomedical anatomy; no Hz doctrine"
+}

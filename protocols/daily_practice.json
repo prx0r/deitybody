@@ -1,0 +1,76 @@
+{
+  "id": "deitybody-daily-v0",
+  "name": "Daily phonemic-body practice (30–40 min)",
+  "os": "Abhinavagupta/Trika",
+  "duration_sec": 2100,
+  "risk_level": "low",
+  "claims_policy": "practice_scaffold_not_medical_not_hz_per_phoneme",
+  "breath_policy": "Do not force 1:4:2 during nyāsa. Let phonation lengthen the exhale. Separate prāṇāyāma only if completely comfortable (TĀ 4.91).",
+  "steps": [
+    {
+      "type": "seat",
+      "label": "Seat + stillness",
+      "seconds": 120,
+      "detail": "Spine long, jaw soft, teeth not clenched. One intention: install sound-objects in the body."
+    },
+    {
+      "type": "phonetic_embodiment",
+      "label": "Phonetic embodiment — feel articulation",
+      "seconds": 480,
+      "detail": "Speak each varga slowly. Ask: where is this sound physically made? Train phonemic interoception. Do NOT start with subtle-body visualization.",
+      "rows": [
+        "ka kha ga gha ṅa",
+        "ca cha ja jha ña",
+        "ṭa ṭha ḍa ḍha ṇa",
+        "ta tha da dha na",
+        "pa pha ba bha ma"
+      ],
+      "audio_models": "/root/sanskrithelp/public/audio/phonemes/*.ogg"
+    },
+    {
+      "type": "vbt_breath_axis",
+      "label": "VBT breath axis — saḥ / haṃ",
+      "seconds": 300,
+      "detail": "Comfortable breath only. Out: heart → saḥ → external dvādaśānta. Natural turn. In: haṃ → heart. Natural turn. Establish audio-respiratory carrier. No heroic retention.",
+      "source": "Vijñānabhairava 24–25 (Lakshmanjoo oral: outward saḥ, inward haṃ)"
+    },
+    {
+      "type": "nyasa_external",
+      "label": "Mātṛkā nyāsa — external (touch + glyph + sound + locus)",
+      "seconds": 900,
+      "detail": "Right hand lightly indicates each locus. At each: see Devanāgarī glyph internally + pronounce once + feel location. Primary visual object = the Sanskrit character.",
+      "month": "1 — vowels across head/face first, then one varga every few days",
+      "data": "data/matrika_body_map.json"
+    },
+    {
+      "type": "nyasa_internal",
+      "label": "Internal nyāsa — no touching",
+      "seconds": 300,
+      "detail": "Eyes closed. Run the same procession mentally. Glyph lights the locus. Goal: whole alphabet like a scale on an instrument."
+    },
+    {
+      "type": "silence",
+      "label": "Laya / absorption — stop manipulating",
+      "seconds": 120,
+      "detail": "Natural breath. One locus or the residual glyph field. Return without drama when mind wanders."
+    },
+    {
+      "type": "log",
+      "label": "One-line log",
+      "seconds": 30,
+      "detail": "phoneme/row worked | easiest locus | vocal depth reached | any tension"
+    }
+  ],
+  "short_variant": {
+    "id": "deitybody-daily-short-v0",
+    "duration_sec": 900,
+    "steps": [
+      "phonetic embodiment 1 varga",
+      "VBT saḥ/haṃ 3 min",
+      "nyāsa vowels head/face only",
+      "internal 2 min",
+      "silence 1 min",
+      "log"
+    ]
+  }
+}

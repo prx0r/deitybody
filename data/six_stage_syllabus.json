@@ -1,0 +1,89 @@
+{
+  "id": "six-stage-syllabus-v0",
+  "status": "PEDAGOGICAL_RECONSTRUCTION — not a quote from Abhinavagupta. Every component except ordering is grounded in the system.",
+  "objective": "Visual + phonetic + respiratory + tactile + attentional embodiment of Sanskrit as Abhinavagupta practice.",
+  "rule_first": "Sound + articulation + touch + body locus FIRST. Visualization comes after association is stable. Otherwise vague fantasy-map, not precise sensorimotor map.",
+  "stages": [
+    {
+      "id": "I",
+      "name": "Varṇa",
+      "goal": "Extraordinary sensitivity to Sanskrit phonetics. Don't worry about Tantra yet.",
+      "component": "varṇa",
+      "entry": true,
+      "pace": "2 phonemes/night"
+    },
+    {
+      "id": "II",
+      "name": "Sthāna",
+      "goal": "Mālinī/ Mātṛkā body coordinates using touch.",
+      "component": "sthāna-prakalpanā",
+      "entry": true,
+      "pace": "same 2 phonemes — add locus"
+    },
+    {
+      "id": "III",
+      "name": "Karaṇa",
+      "goal": "Body reproduces map without needing touch; posture quiet enough that each locus is distinct.",
+      "component": "karaṇa",
+      "depends_on": "I+II stable"
+    },
+    {
+      "id": "IV",
+      "name": "Dhyāna",
+      "goal": "Add Devanāgarī glyph, later traditional visual qualities.",
+      "component": "dhyāna",
+      "rule": "Only after sound+touch association stable"
+    },
+    {
+      "id": "V",
+      "name": "Uccāra",
+      "goal": "Utterance rides breath; sound shifts audible → subtle → purely mental.",
+      "component": "uccāra",
+      "note": "vaikharī → madhyamā path"
+    },
+    {
+      "id": "VI",
+      "name": "Saṃhāra / Sṛṣṭi",
+      "goal": "Run map inward toward undifferentiated awareness and back outward into articulated sound/body/world.",
+      "component": "advanced",
+      "not_for_beginners": true
+    }
+  ],
+  "touch_ladder": [
+    "external touch (hand on locus while uttering)",
+    "proprioceptive memory (touch then release)",
+    "imagined touch",
+    "effortless localisation (sound alone evokes locus)",
+    "glyph joins the event"
+  ],
+  "progression_per_phoneme": [
+    "hear X → touch locus → say X",
+    "hear X → feel locus without touch → say X",
+    "internally generate X → locus immediately salient",
+    "add glyph: न + na + articulation + crown + felt attention"
+  ],
+  "target_event": "A single event contains glyph + sound + articulation + body-locus + felt attention.",
+  "two_directions": {
+    "status": "LATER — not for Stage I–II",
+    "saṃhara": "Mālinī reverse roughly feet→head; fiery imagery consuming ordinary body-construction",
+    "srsti": "normal head→feet; nectarean/luminous imagery reconstructing divine Śakti-body",
+    "boundary": "Do not start with secret mantra-framing or initiation ritual — those assume initiated practitioner/teacher. Self-study layer: phonemes + pronunciation + published Mālinī sequence + body map."
+  },
+  "role_map": {
+    "flood": "theory of what you're doing (entextualisation) — not a daily syllabus",
+    "malinivijayottara": "technical substrate (order, body map, samāveśa components)",
+    "abhinavagupta": "gigantic synthesis and interpretation",
+    "somadeva_vasudeva": "scholarly check for yoga mechanics (EFEO 2004)"
+  },
+  "openers_rationale": {
+    "night1": "a + ā",
+    "why": [
+      "First two phonemes of the normal alphabet (Stage I varṇa order)",
+      "Head/face loci are easiest precise touch targets (forehead, mouth/face)",
+      "PTv: a=anuttara/cit · ā=ānanda — powers as secondary layer only",
+      "a is the aham master-key phoneme (emergence)",
+      "Short session possible; depth over volume"
+    ],
+    "next_pairs": "i ī → u ū → e o → aṃ aḥ → then consonant pairs ka+kha, ga+gha, etc."
+  }
+}

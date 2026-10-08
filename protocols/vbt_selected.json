@@ -1,0 +1,58 @@
+{
+  "id": "deitybody-vbt-selected-v0",
+  "role": "Selected Vijñānabhairava dhāraṇās that serve the phonemic-body OS",
+  "spine_note": "VBT is tier-3 technique catalog, not the metaphysical OS. OS = Abhinavagupta.",
+  "selected": [
+    {
+      "dhāraṇā": 4,
+      "verse": 27,
+      "use": "Watch the turn — pause between out and in",
+      "pair_with": "after nyāsa breath axis"
+    },
+    {
+      "dhāraṇā": 14,
+      "verse": 37,
+      "use": "Heart → 12 fingers above (dvādaśānta traversal)",
+      "pair_with": "saḥ/haṃ axis"
+    },
+    {
+      "dhāraṇā": 24,
+      "verse": 45,
+      "use": "Chant 50 phonemes as body of the goddess",
+      "pair_with": "full Mātṛkā nyāsa"
+    },
+    {
+      "dhāraṇā": 8,
+      "verse": 31,
+      "use": "Vibrate a phoneme — feel resonance in nāḍīs",
+      "pair_with": "single-locus install"
+    },
+    {
+      "dhāraṇā": 31,
+      "verse": 54,
+      "use": "Inhale phonemes / exhale reverse (advanced Month 3+)",
+      "pair_with": "only after Month 1–2 stable"
+    },
+    {
+      "dhāraṇā": 10,
+      "verse": 33,
+      "use": "Hear unstruck sound (anāhata)",
+      "pair_with": "silence after chant"
+    },
+    {
+      "dhāraṇā": 22,
+      "verse": 45,
+      "use": "Alphabet as universe (varṇa as pramā)",
+      "pair_with": "reading Tantrāloka Āhnika 11"
+    },
+    {
+      "dhāraṇā": 25,
+      "verse": 45,
+      "use": "Void/gap awareness at breath reversals",
+      "pair_with": "VBT 24–25 axis"
+    }
+  ],
+  "lakshmanjoo_caution": "Some VB techniques are for masters. Use breath-based ones gently.",
+  "mapping_source": "/root/sanskrithelp/data/rag/vijnana-bhairava-mapping.md",
+  "corpus": "/mnt/HC_Volume_106959365/root/projects/source-library/tantra/lakshmanjoo/"
+}

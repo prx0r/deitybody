@@ -1,0 +1,486 @@
+{
+  "id": "two-phoneme-night-starter-v1",
+  "name": "2 phonemes per night — Stage I–II starter",
+  "pace": "2 per night · do not chase altered states",
+  "where_to_begin": {
+    "night": 1,
+    "pair": [
+      "a",
+      "ā"
+    ],
+    "loci": [
+      "forehead",
+      "mouth/face"
+    ],
+    "answer": "Begin with **a + ā**. Not Mālinī na yet — normal varṇamālā first, head/face first, touch first."
+  },
+  "rule": "Sound + articulation + touch + locus first. Glyph later. Visualization only after association is stable.",
+  "per_night_loop": [
+    "1. Listen to each phoneme (or say it cleanly yourself) — attention on mouth/breath",
+    "2. Hear → touch locus → say it yourself",
+    "3. Hear → feel locus without touch → say it",
+    "4. Internally generate sound → locus salient",
+    "5. Add glyph only if 2–4 are stable tonight",
+    "6. One-line log"
+  ],
+  "audio": {
+    "phonetics_recording": "Clean accurate pronunciation, no music/drone. Attention on mouth and breath.",
+    "body_recording_later": "Mālinī/Mātṛkā sequence with silence after each sound for touch/attend locus.",
+    "local_models": "/root/sanskrithelp/public/audio/phonemes/*.ogg",
+    "note": "Start with your own voice or local .ogg models. Two formal recordings can come later."
+  },
+  "nights": [
+    {
+      "night": 1,
+      "pair": [
+        "a",
+        "ā"
+      ],
+      "items": [
+        {
+          "iast": "a",
+          "devanagari": "अ",
+          "locus": "forehead",
+          "note": "open unmodified",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        },
+        {
+          "iast": "ā",
+          "devanagari": "आ",
+          "locus": "mouth/face",
+          "note": "long open",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        }
+      ],
+      "duration_min": 15,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 2,
+      "pair": [
+        "i",
+        "ī"
+      ],
+      "items": [
+        {
+          "iast": "i",
+          "devanagari": "इ",
+          "locus": "right eye",
+          "note": "frontal directed",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        },
+        {
+          "iast": "ī",
+          "devanagari": "ई",
+          "locus": "left eye",
+          "note": "long frontal",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        }
+      ],
+      "duration_min": 15,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 3,
+      "pair": [
+        "u",
+        "ū"
+      ],
+      "items": [
+        {
+          "iast": "u",
+          "devanagari": "उ",
+          "locus": "right ear",
+          "note": "rounded",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        },
+        {
+          "iast": "ū",
+          "devanagari": "ऊ",
+          "locus": "left ear",
+          "note": "long rounded",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        }
+      ],
+      "duration_min": 15,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 4,
+      "pair": [
+        "ṛ",
+        "ṝ"
+      ],
+      "items": [
+        {
+          "iast": "ṛ",
+          "devanagari": "ऋ",
+          "locus": "right nostril (piṅgalā)",
+          "note": "r-coloured",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        },
+        {
+          "iast": "ṝ",
+          "devanagari": "ॠ",
+          "locus": "left nostril (iḍā)",
+          "note": "long r-coloured",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        }
+      ],
+      "duration_min": 15,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 5,
+      "pair": [
+        "ḷ",
+        "ḹ"
+      ],
+      "items": [
+        {
+          "iast": "ḷ",
+          "devanagari": "ऌ",
+          "locus": "right cheek",
+          "note": "l-coloured",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        },
+        {
+          "iast": "ḹ",
+          "devanagari": "ॡ",
+          "locus": "left cheek",
+          "note": "long l-coloured",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        }
+      ],
+      "duration_min": 15,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 6,
+      "pair": [
+        "e",
+        "ai"
+      ],
+      "items": [
+        {
+          "iast": "e",
+          "devanagari": "ए",
+          "locus": "lower teeth",
+          "note": "compound a+i",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        },
+        {
+          "iast": "ai",
+          "devanagari": "ऐ",
+          "locus": "upper teeth",
+          "note": "compound a+i long",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        }
+      ],
+      "duration_min": 15,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 7,
+      "pair": [
+        "o",
+        "au"
+      ],
+      "items": [
+        {
+          "iast": "o",
+          "devanagari": "ओ",
+          "locus": "lower lip",
+          "note": "compound a+u",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        },
+        {
+          "iast": "au",
+          "devanagari": "औ",
+          "locus": "upper lip",
+          "note": "compound a+u long",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        }
+      ],
+      "duration_min": 15,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 8,
+      "pair": [
+        "aṃ",
+        "aḥ"
+      ],
+      "items": [
+        {
+          "iast": "aṃ",
+          "devanagari": "अं",
+          "locus": "crown / śikhā",
+          "note": "nasal mark / bindu mark",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        },
+        {
+          "iast": "aḥ",
+          "devanagari": "अः",
+          "locus": "tongue",
+          "note": "visarga / breath mark",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana"
+          ]
+        }
+      ],
+      "duration_min": 15,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 9,
+      "pair": [
+        "ka",
+        "kha"
+      ],
+      "items": [
+        {
+          "iast": "ka",
+          "devanagari": "क",
+          "locus": "right shoulder",
+          "note": "velar plain stop",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        },
+        {
+          "iast": "kha",
+          "devanagari": "ख",
+          "locus": "right arm",
+          "note": "velar + aspiration",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        }
+      ],
+      "duration_min": 18,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 10,
+      "pair": [
+        "ga",
+        "gha"
+      ],
+      "items": [
+        {
+          "iast": "ga",
+          "devanagari": "ग",
+          "locus": "right elbow",
+          "note": "velar voiced",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        },
+        {
+          "iast": "gha",
+          "devanagari": "घ",
+          "locus": "right wrist",
+          "note": "velar voiced+asp",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        }
+      ],
+      "duration_min": 18,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 11,
+      "pair": [
+        "ca",
+        "cha"
+      ],
+      "items": [
+        {
+          "iast": "ca",
+          "devanagari": "च",
+          "locus": "left shoulder",
+          "note": "palate plain stop",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        },
+        {
+          "iast": "cha",
+          "devanagari": "छ",
+          "locus": "left arm",
+          "note": "palate + aspiration",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        }
+      ],
+      "duration_min": 18,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 12,
+      "pair": [
+        "ja",
+        "jha"
+      ],
+      "items": [
+        {
+          "iast": "ja",
+          "devanagari": "ज",
+          "locus": "left elbow",
+          "note": "palate voiced",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        },
+        {
+          "iast": "jha",
+          "devanagari": "झ",
+          "locus": "left wrist",
+          "note": "palate voiced+asp",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        }
+      ],
+      "duration_min": 18,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 13,
+      "pair": [
+        "ta",
+        "tha"
+      ],
+      "items": [
+        {
+          "iast": "ta",
+          "devanagari": "त",
+          "locus": "left buttock",
+          "note": "dental plain stop",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        },
+        {
+          "iast": "tha",
+          "devanagari": "थ",
+          "locus": "left thigh",
+          "note": "dental + aspiration",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        }
+      ],
+      "duration_min": 18,
+      "mode": "2_phonemes_only"
+    },
+    {
+      "night": 14,
+      "pair": [
+        "da",
+        "dha"
+      ],
+      "items": [
+        {
+          "iast": "da",
+          "devanagari": "द",
+          "locus": "left knee",
+          "note": "dental voiced",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        },
+        {
+          "iast": "dha",
+          "devanagari": "ध",
+          "locus": "left shank",
+          "note": "dental voiced+asp",
+          "stage_focus": [
+            "I_varna",
+            "II_sthana",
+            "contrast"
+          ]
+        }
+      ],
+      "duration_min": 18,
+      "mode": "2_phonemes_only"
+    }
+  ],
+  "after_starter": {
+    "when": "After night 8 (all 16 vowels) feel stable as glyph+locus events",
+    "next": "Continue consonant pairs from night 9, or run Phase 1 full install with known sounds only",
+    "then": "Full Mātṛkā totalization · aham contraction · later Mālinī after order automatic"
+  },
+  "claims_policy": "practice_scaffold_not_medical; maps tradition-specific; no Hz doctrine"
+}

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+<title>Body — Mātṛkā Homescreen</title>
+<style>
+:root{
+  --bg:#0b0d12; --panel:#12161f; --ink:#f0ebe0; --mut:#a8a294;
+  --gold:#c9a45c; --teal:#5ec4b6; --rose:#d4899a; --line:#2a3142;
+  --node:#1c2333; --node-on:#c9a45c;
+}
+*{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+html,body{margin:0; background:var(--bg); color:var(--ink);
+  font:17px/1.5 Georgia,'Times New Roman',serif; min-height:100%}
+header{max-width:860px; margin:0 auto; padding:1rem 1rem .4rem; text-align:center}
+h1{font-size:clamp(1.3rem,4vw,1.8rem); margin:.2rem 0; letter-spacing:.02em}
+.sub{color:var(--mut); font-size:.95rem; margin:.1rem 0 .6rem}
+.controls{display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin:.4rem 0}
+.controls button, .sutra-row button{
+  font-family:ui-sans-serif,system-ui,sans-serif; font-size:.95rem;
+  padding:.65rem 1.1rem; min-height:44px; border-radius:999px;
+  border:1px solid var(--line); background:var(--panel); color:var(--ink); cursor:pointer}
+.controls button.on{background:var(--gold); border-color:var(--gold); color:#0b0d12; font-weight:700}
+main{max-width:860px; margin:0 auto; padding:0 1rem 3rem}
+#stage{background:var(--panel); border:1px solid var(--line); border-radius:18px;
+  padding:.5rem; position:relative; overflow:hidden}
+svg#body{width:100%; height:auto; display:block; touch-action:manipulation}
+.node{cursor:pointer}
+.node .halo{fill:transparent; transition:fill .25s}
+.node circle.dot{fill:var(--node); stroke:var(--line); stroke-width:1.5; transition:fill .25s, stroke .25s, r .25s}
+.node text{fill:var(--ink); font-size:13px; text-anchor:middle; dominant-baseline:central;
+  font-family:'Noto Sans Devanagari','Mangal','Kokila',Georgia,serif; pointer-events:none}
+.node.lit circle.dot{fill:var(--node-on); stroke:var(--gold)}
+.node.lit text{fill:#0b0d12; font-weight:700}
+.node .pulse{fill:none; stroke:var(--gold); stroke-width:2; opacity:0; pointer-events:none}
+.node.lit .pulse{animation:ping 1s ease-out}
+@keyframes ping{0%{opacity:.9; r:14}100%{opacity:0; r:30}}
+.axis{fill:none; stroke:var(--line); stroke-width:3; stroke-linecap:round}
+.flow{fill:none; stroke:var(--teal); stroke-width:3.5; stroke-linecap:round;
+  stroke-dasharray:100 200; stroke-dashoffset:100; opacity:0}
+.flow.go{opacity:1; transition:opacity .3s}
+#silhouette{fill:rgba(201,164,92,.05); stroke:var(--line); stroke-width:2}
+#info{background:var(--panel); border:1px solid var(--line); border-radius:14px;
+  padding:.9rem 1.1rem; margin-top:.8rem; min-height:88px}
+#info .dev{font-size:1.6rem}
+#info .iast{color:var(--gold); font-family:ui-sans-serif,system-ui,sans-serif}
+#info .locus{color:var(--mut); font-size:.92rem}
+.sutra-row{display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin:.8rem 0}
+footer{color:var(--mut); font-size:.8rem; text-align:center; padding:1rem; font-family:ui-sans-serif,system-ui,sans-serif}
+.src{font-size:.75rem; color:var(--mut)}
+@media (min-width:700px){ #wrap{display:grid; grid-template-columns:1.2fr .8fr; gap:.8rem; align-items:start} }
+</style>
+</head>
+<body>
+<header>
+  <h1>शरीर — the body as homescreen</h1>
+  <div class="sub">50 phonemes live on the body. Tap any glyph to hear + feel it.<br/>Everything installs over this.</div>
+  <div class="controls" role="tablist" aria-label="Configuration">
+    <button id="bMatrika" class="on" role="tab" aria-selected="true">Mātṛkā · base</button>
+    <button id="bMalini" role="tab" aria-selected="false">Mālinī · infusion</button>
+    <button id="bOm" title="OM ascent + nectar descent">▶ OM trajectory</button>
+    <button id="bNamah" title="Om Namah Shivaya ascent">▶ Om Namaḥ Śivāya</button>
+  </div>
+</header>
+<main>
+<div id="wrap">
+  <div id="stage">
+    <svg id="body" viewBox="0 0 400 780" role="img" aria-label="Interactive phonemic body">
+      <!-- subtle silhouette -->
+      <g id="silhouette-g">
+        <ellipse id="silhouette" cx="200" cy="400" rx="105" ry="330"/>
+        <circle id="head" cx="200" cy="120" r="62" fill="rgba(201,164,92,.05)" stroke="#2a3142" stroke-width="2"/>
+      </g>
+      <!-- axis: dvadasanta -> crown -> base -->
+      <line class="axis" x1="200" y1="18" x2="200" y2="740"/>
+      <circle cx="200" cy="18" r="4" fill="none" stroke="#5ec4b6" stroke-width="1.5"/>
+      <text x="212" y="22" fill="#a8a294" font-size="10" font-family="ui-sans-serif,system-ui">dvādaśānta</text>
+      <!-- trajectory flows -->
+      <path id="flowOm" class="flow" d="M200,330 C200,250 200,150 200,62 C200,40 200,28 200,18 C200,60 200,150 200,330"/>
+      <path id="flowNamah" class="flow" d="M168,690 C170,560 175,450 200,330 C200,300 190,250 200,200 C210,150 205,100 200,62 C200,150 200,250 232,330 C240,420 235,560 232,690"/>
+      <g id="nodes"></g>
+    </svg>
+  </div>
+  <div>
+    <div id="info" aria-live="polite">
+      <div class="dev">अ</div>
+      <div class="iast">a · forehead</div>
+      <div class="locus">Tap any glyph. Mātṛkā = base install · Mālinī = infusion after base is automatic.</div>
+      <div class="src">v2 verse-literal TĀ 15 · Mālinī MV 3.37–41 · one map per sitting</div>
+    </div>
+    <div class="sutra-row" aria-label="Sutra playback">
+      <button data-sutra="sutra">▶ caitanyam ātmā</button>
+      <button data-sutra="hrdaye">▶ hṛdaye</button>
+      <button data-sutra="namah">▶ oṃ namaḥ śivāya</button>
+    </div>
+    <div class="src" style="padding:0 .4rem">Voice: EdgeSanskrit v1 (Kokoro 82M + Sanskrit phonemizer, local CPU) for phrases · human grid clips for phonemes · <span id="cfgNote">config: Mātṛkā</span></div>
+  </div>
+</div>
+</main>
+<footer>practice scaffold — not medical · no Hz doctrine · glyph + sound + locus · provenance: SOURCE_ATTESTED maps, PEDAGOGICAL pacing</footer>
+<script src="app.js"></script>
+</body>
+</html>

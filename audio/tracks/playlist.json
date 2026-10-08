@@ -1,0 +1,264 @@
+{
+  "id": "nyasa-audio-v1",
+  "pattern": "phoneme_clip \u2192 locus_TTS \u2192 gap",
+  "phoneme_source": "/root/sanskrithelp/public/audio/phonemes",
+  "locus_tts": "espeak en-us (CF aura-1 available: POST text field)",
+  "tracks": [
+    {
+      "file": "night1_a_aa_deep.mp3",
+      "use": "Night 1 deep practice",
+      "structure": "per phoneme: 24\u00d7 (clip + 0.8s + locus + 1.2s); 5s gap between phonemes"
+    },
+    {
+      "file": "demo_a_forehead_8reps.mp3",
+      "use": "Quick pattern demo",
+      "structure": "8\u00d7 (a + forehead)"
+    },
+    {
+      "file": "vowels_sequence_sound_locus.mp3",
+      "use": "Guided pass nights 1\u20138",
+      "structure": "each: clip \u2192 0.7s \u2192 locus \u2192 5.0s gap"
+    },
+    {
+      "file": "consonants_sequence_sound_locus.mp3",
+      "use": "Guided pass nights 9\u201314",
+      "structure": "each: clip \u2192 0.7s \u2192 locus \u2192 5.0s gap"
+    }
+  ],
+  "items": [
+    {
+      "night": 1,
+      "iast": "a",
+      "ogg": "a.ogg",
+      "locus_en": "forehead",
+      "locus_key": "forehead",
+      "clip": "/root/deitybody/audio/phoneme_clips/a_a.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/forehead.wav"
+    },
+    {
+      "night": 1,
+      "iast": "\u0101",
+      "ogg": "aa.ogg",
+      "locus_en": "mouth and face",
+      "locus_key": "mouth_face",
+      "clip": "/root/deitybody/audio/phoneme_clips/aa_aa.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/mouth_face.wav"
+    },
+    {
+      "night": 2,
+      "iast": "i",
+      "ogg": "i.ogg",
+      "locus_en": "right eye",
+      "locus_key": "right_eye",
+      "clip": "/root/deitybody/audio/phoneme_clips/i_i.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/right_eye.wav"
+    },
+    {
+      "night": 2,
+      "iast": "\u012b",
+      "ogg": "ii.ogg",
+      "locus_en": "left eye",
+      "locus_key": "left_eye",
+      "clip": "/root/deitybody/audio/phoneme_clips/ii_ii.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/left_eye.wav"
+    },
+    {
+      "night": 3,
+      "iast": "u",
+      "ogg": "u.ogg",
+      "locus_en": "right ear",
+      "locus_key": "right_ear",
+      "clip": "/root/deitybody/audio/phoneme_clips/u_u.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/right_ear.wav"
+    },
+    {
+      "night": 3,
+      "iast": "\u016b",
+      "ogg": "uu.ogg",
+      "locus_en": "left ear",
+      "locus_key": "left_ear",
+      "clip": "/root/deitybody/audio/phoneme_clips/uu_uu.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/left_ear.wav"
+    },
+    {
+      "night": 4,
+      "iast": "\u1e5b",
+      "ogg": "r.ogg",
+      "locus_en": "right nostril",
+      "locus_key": "right_nostril",
+      "clip": "/root/deitybody/audio/phoneme_clips/r_r.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/right_nostril.wav"
+    },
+    {
+      "night": 4,
+      "iast": "\u1e5d",
+      "ogg": "rr.ogg",
+      "locus_en": "left nostril",
+      "locus_key": "left_nostril",
+      "clip": "/root/deitybody/audio/phoneme_clips/rr_rr.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/left_nostril.wav"
+    },
+    {
+      "night": 6,
+      "iast": "e",
+      "ogg": "e.ogg",
+      "locus_en": "lower teeth",
+      "locus_key": "lower_teeth",
+      "clip": "/root/deitybody/audio/phoneme_clips/e_e.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/lower_teeth.wav"
+    },
+    {
+      "night": 6,
+      "iast": "ai",
+      "ogg": "ai.ogg",
+      "locus_en": "upper teeth",
+      "locus_key": "upper_teeth",
+      "clip": "/root/deitybody/audio/phoneme_clips/ai_ai.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/upper_teeth.wav"
+    },
+    {
+      "night": 7,
+      "iast": "o",
+      "ogg": "o.ogg",
+      "locus_en": "lower lip",
+      "locus_key": "lower_lip",
+      "clip": "/root/deitybody/audio/phoneme_clips/o_o.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/lower_lip.wav"
+    },
+    {
+      "night": 7,
+      "iast": "au",
+      "ogg": "au.ogg",
+      "locus_en": "upper lip",
+      "locus_key": "upper_lip",
+      "clip": "/root/deitybody/audio/phoneme_clips/au_au.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/upper_lip.wav"
+    },
+    {
+      "night": 8,
+      "iast": "a\u1e43",
+      "ogg": "anusvara.ogg",
+      "locus_en": "crown",
+      "locus_key": "crown",
+      "clip": "/root/deitybody/audio/phoneme_clips/am_anusvara.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/crown.wav"
+    },
+    {
+      "night": 8,
+      "iast": "a\u1e25",
+      "ogg": "visarga.ogg",
+      "locus_en": "tongue",
+      "locus_key": "tongue",
+      "clip": "/root/deitybody/audio/phoneme_clips/ah_visarga.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/tongue.wav"
+    },
+    {
+      "night": 9,
+      "iast": "ka",
+      "ogg": "ka.ogg",
+      "locus_en": "right shoulder",
+      "locus_key": "right_shoulder",
+      "clip": "/root/deitybody/audio/phoneme_clips/ka_ka.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/right_shoulder.wav"
+    },
+    {
+      "night": 9,
+      "iast": "kha",
+      "ogg": "kha.ogg",
+      "locus_en": "right arm",
+      "locus_key": "right_arm",
+      "clip": "/root/deitybody/audio/phoneme_clips/kha_kha.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/right_arm.wav"
+    },
+    {
+      "night": 10,
+      "iast": "ga",
+      "ogg": "ga.ogg",
+      "locus_en": "right elbow",
+      "locus_key": "right_elbow",
+      "clip": "/root/deitybody/audio/phoneme_clips/ga_ga.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/right_elbow.wav"
+    },
+    {
+      "night": 10,
+      "iast": "gha",
+      "ogg": "gha.ogg",
+      "locus_en": "right wrist",
+      "locus_key": "right_wrist",
+      "clip": "/root/deitybody/audio/phoneme_clips/gha_gha.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/right_wrist.wav"
+    },
+    {
+      "night": 11,
+      "iast": "ca",
+      "ogg": "ca.ogg",
+      "locus_en": "left shoulder",
+      "locus_key": "left_shoulder",
+      "clip": "/root/deitybody/audio/phoneme_clips/ca_ca.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/left_shoulder.wav"
+    },
+    {
+      "night": 11,
+      "iast": "cha",
+      "ogg": "cha.ogg",
+      "locus_en": "left arm",
+      "locus_key": "left_arm",
+      "clip": "/root/deitybody/audio/phoneme_clips/cha_cha.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/left_arm.wav"
+    },
+    {
+      "night": 12,
+      "iast": "ja",
+      "ogg": "ja.ogg",
+      "locus_en": "left elbow",
+      "locus_key": "left_elbow",
+      "clip": "/root/deitybody/audio/phoneme_clips/ja_ja.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/left_elbow.wav"
+    },
+    {
+      "night": 12,
+      "iast": "jha",
+      "ogg": "jha.ogg",
+      "locus_en": "left wrist",
+      "locus_key": "left_wrist",
+      "clip": "/root/deitybody/audio/phoneme_clips/jha_jha.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/left_wrist.wav"
+    },
+    {
+      "night": 13,
+      "iast": "ta",
+      "ogg": "ta.ogg",
+      "locus_en": "left buttock",
+      "locus_key": "left_buttock",
+      "clip": "/root/deitybody/audio/phoneme_clips/ta_ta.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/left_buttock.wav"
+    },
+    {
+      "night": 13,
+      "iast": "tha",
+      "ogg": "tha.ogg",
+      "locus_en": "left thigh",
+      "locus_key": "left_thigh",
+      "clip": "/root/deitybody/audio/phoneme_clips/tha_tha.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/left_thigh.wav"
+    },
+    {
+      "night": 14,
+      "iast": "da",
+      "ogg": "da.ogg",
+      "locus_en": "left knee",
+      "locus_key": "left_knee",
+      "clip": "/root/deitybody/audio/phoneme_clips/da_da.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/left_knee.wav"
+    },
+    {
+      "night": 14,
+      "iast": "dha",
+      "ogg": "dha.ogg",
+      "locus_en": "left shank",
+      "locus_key": "left_shank",
+      "clip": "/root/deitybody/audio/phoneme_clips/dha_dha.ogg",
+      "locus_wav": "/root/deitybody/audio/loci/left_shank.wav"
+    }
+  ]
+}

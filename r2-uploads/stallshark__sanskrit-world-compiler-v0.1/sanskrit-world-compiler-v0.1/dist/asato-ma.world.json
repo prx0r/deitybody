@@ -1,0 +1,2079 @@
+{
+  "version": "0.1",
+  "id": "asato-ma",
+  "title": "Asato Mā — movement architecture",
+  "text": "असतो मा सद्गमय । तमसो मा ज्योतिर्गमय । मृत्योर्मा अमृतं गमय ॥",
+  "nodes": [
+    {
+      "id": "phoneme:k",
+      "kind": "phoneme",
+      "label": "k",
+      "x": -4.4,
+      "y": -4.4,
+      "z": 0,
+      "data": {
+        "place": "velar",
+        "manner": "unvoiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:kh",
+      "kind": "phoneme",
+      "label": "kh",
+      "x": -4.4,
+      "y": -2.2,
+      "z": 0,
+      "data": {
+        "place": "velar",
+        "manner": "unvoiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:g",
+      "kind": "phoneme",
+      "label": "g",
+      "x": -4.4,
+      "y": 0.0,
+      "z": 0,
+      "data": {
+        "place": "velar",
+        "manner": "voiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:gh",
+      "kind": "phoneme",
+      "label": "gh",
+      "x": -4.4,
+      "y": 2.2,
+      "z": 0,
+      "data": {
+        "place": "velar",
+        "manner": "voiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ṅ",
+      "kind": "phoneme",
+      "label": "ṅ",
+      "x": -4.4,
+      "y": 4.4,
+      "z": 0,
+      "data": {
+        "place": "velar",
+        "manner": "nasal",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:c",
+      "kind": "phoneme",
+      "label": "c",
+      "x": -2.2,
+      "y": -4.4,
+      "z": 0,
+      "data": {
+        "place": "palatal",
+        "manner": "unvoiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ch",
+      "kind": "phoneme",
+      "label": "ch",
+      "x": -2.2,
+      "y": -2.2,
+      "z": 0,
+      "data": {
+        "place": "palatal",
+        "manner": "unvoiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:j",
+      "kind": "phoneme",
+      "label": "j",
+      "x": -2.2,
+      "y": 0.0,
+      "z": 0,
+      "data": {
+        "place": "palatal",
+        "manner": "voiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:jh",
+      "kind": "phoneme",
+      "label": "jh",
+      "x": -2.2,
+      "y": 2.2,
+      "z": 0,
+      "data": {
+        "place": "palatal",
+        "manner": "voiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ñ",
+      "kind": "phoneme",
+      "label": "ñ",
+      "x": -2.2,
+      "y": 4.4,
+      "z": 0,
+      "data": {
+        "place": "palatal",
+        "manner": "nasal",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ṭ",
+      "kind": "phoneme",
+      "label": "ṭ",
+      "x": 0.0,
+      "y": -4.4,
+      "z": 0,
+      "data": {
+        "place": "retroflex",
+        "manner": "unvoiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ṭh",
+      "kind": "phoneme",
+      "label": "ṭh",
+      "x": 0.0,
+      "y": -2.2,
+      "z": 0,
+      "data": {
+        "place": "retroflex",
+        "manner": "unvoiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ḍ",
+      "kind": "phoneme",
+      "label": "ḍ",
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0,
+      "data": {
+        "place": "retroflex",
+        "manner": "voiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ḍh",
+      "kind": "phoneme",
+      "label": "ḍh",
+      "x": 0.0,
+      "y": 2.2,
+      "z": 0,
+      "data": {
+        "place": "retroflex",
+        "manner": "voiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ṇ",
+      "kind": "phoneme",
+      "label": "ṇ",
+      "x": 0.0,
+      "y": 4.4,
+      "z": 0,
+      "data": {
+        "place": "retroflex",
+        "manner": "nasal",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:t",
+      "kind": "phoneme",
+      "label": "t",
+      "x": 2.2,
+      "y": -4.4,
+      "z": 0,
+      "data": {
+        "place": "dental",
+        "manner": "unvoiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:th",
+      "kind": "phoneme",
+      "label": "th",
+      "x": 2.2,
+      "y": -2.2,
+      "z": 0,
+      "data": {
+        "place": "dental",
+        "manner": "unvoiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:d",
+      "kind": "phoneme",
+      "label": "d",
+      "x": 2.2,
+      "y": 0.0,
+      "z": 0,
+      "data": {
+        "place": "dental",
+        "manner": "voiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:dh",
+      "kind": "phoneme",
+      "label": "dh",
+      "x": 2.2,
+      "y": 2.2,
+      "z": 0,
+      "data": {
+        "place": "dental",
+        "manner": "voiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:n",
+      "kind": "phoneme",
+      "label": "n",
+      "x": 2.2,
+      "y": 4.4,
+      "z": 0,
+      "data": {
+        "place": "dental",
+        "manner": "nasal",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:p",
+      "kind": "phoneme",
+      "label": "p",
+      "x": 4.4,
+      "y": -4.4,
+      "z": 0,
+      "data": {
+        "place": "labial",
+        "manner": "unvoiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ph",
+      "kind": "phoneme",
+      "label": "ph",
+      "x": 4.4,
+      "y": -2.2,
+      "z": 0,
+      "data": {
+        "place": "labial",
+        "manner": "unvoiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:b",
+      "kind": "phoneme",
+      "label": "b",
+      "x": 4.4,
+      "y": 0.0,
+      "z": 0,
+      "data": {
+        "place": "labial",
+        "manner": "voiced",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:bh",
+      "kind": "phoneme",
+      "label": "bh",
+      "x": 4.4,
+      "y": 2.2,
+      "z": 0,
+      "data": {
+        "place": "labial",
+        "manner": "voiced_aspirated",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:m",
+      "kind": "phoneme",
+      "label": "m",
+      "x": 4.4,
+      "y": 4.4,
+      "z": 0,
+      "data": {
+        "place": "labial",
+        "manner": "nasal",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:a",
+      "kind": "phoneme",
+      "label": "a",
+      "x": 0.0,
+      "y": -7.0,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:i",
+      "kind": "phoneme",
+      "label": "i",
+      "x": 4.49951,
+      "y": -5.36231,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:u",
+      "kind": "phoneme",
+      "label": "u",
+      "x": 6.89365,
+      "y": -1.21554,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ṛ",
+      "kind": "phoneme",
+      "label": "ṛ",
+      "x": 6.06218,
+      "y": 3.5,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ḷ",
+      "kind": "phoneme",
+      "label": "ḷ",
+      "x": 2.39414,
+      "y": 6.57785,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:e",
+      "kind": "phoneme",
+      "label": "e",
+      "x": -2.39414,
+      "y": 6.57785,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:o",
+      "kind": "phoneme",
+      "label": "o",
+      "x": -6.06218,
+      "y": 3.5,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:ai",
+      "kind": "phoneme",
+      "label": "ai",
+      "x": -6.89365,
+      "y": -1.21554,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "phoneme:au",
+      "kind": "phoneme",
+      "label": "au",
+      "x": -4.49951,
+      "y": -5.36231,
+      "z": 0.8,
+      "data": {
+        "series": "maheshvara-vowel-base",
+        "sharedShell": true
+      }
+    },
+    {
+      "id": "t1",
+      "kind": "token",
+      "label": "asato",
+      "x": 0.0,
+      "y": -10.0,
+      "z": 2,
+      "data": {
+        "lemma": "asat",
+        "root": null,
+        "pos": "NOUN",
+        "morph": {
+          "case": "ablative",
+          "number": "singular"
+        },
+        "order": 0,
+        "provider": null
+      }
+    },
+    {
+      "id": "t2",
+      "kind": "token",
+      "label": "mā",
+      "x": 5.0,
+      "y": -8.66025,
+      "z": 2,
+      "data": {
+        "lemma": "mā",
+        "root": null,
+        "pos": "PART",
+        "morph": {},
+        "order": 1,
+        "provider": null
+      }
+    },
+    {
+      "id": "t3",
+      "kind": "token",
+      "label": "sad",
+      "x": 8.66025,
+      "y": -5.0,
+      "z": 2,
+      "data": {
+        "lemma": "sat",
+        "root": null,
+        "pos": "NOUN",
+        "morph": {
+          "case": "accusative",
+          "number": "singular"
+        },
+        "order": 2,
+        "provider": null
+      }
+    },
+    {
+      "id": "t4",
+      "kind": "token",
+      "label": "gamaya",
+      "x": 10.0,
+      "y": 0.0,
+      "z": 2,
+      "data": {
+        "lemma": null,
+        "root": "gam",
+        "pos": "VERB",
+        "morph": {
+          "derivation": "causative",
+          "mood": "imperative",
+          "person": "2",
+          "number": "singular"
+        },
+        "order": 3,
+        "provider": null
+      }
+    },
+    {
+      "id": "t5",
+      "kind": "token",
+      "label": "tamaso",
+      "x": 8.66025,
+      "y": 5.0,
+      "z": 2,
+      "data": {
+        "lemma": "tamas",
+        "root": null,
+        "pos": "NOUN",
+        "morph": {
+          "case": "ablative",
+          "number": "singular"
+        },
+        "order": 4,
+        "provider": null
+      }
+    },
+    {
+      "id": "t6",
+      "kind": "token",
+      "label": "mā",
+      "x": 5.0,
+      "y": 8.66025,
+      "z": 2,
+      "data": {
+        "lemma": "mā",
+        "root": null,
+        "pos": "PART",
+        "morph": {},
+        "order": 5,
+        "provider": null
+      }
+    },
+    {
+      "id": "t7",
+      "kind": "token",
+      "label": "jyotir",
+      "x": 0.0,
+      "y": 10.0,
+      "z": 2,
+      "data": {
+        "lemma": "jyotis",
+        "root": null,
+        "pos": "NOUN",
+        "morph": {
+          "case": "accusative",
+          "number": "singular"
+        },
+        "order": 6,
+        "provider": null
+      }
+    },
+    {
+      "id": "t8",
+      "kind": "token",
+      "label": "gamaya",
+      "x": -5.0,
+      "y": 8.66025,
+      "z": 2,
+      "data": {
+        "lemma": null,
+        "root": "gam",
+        "pos": "VERB",
+        "morph": {
+          "derivation": "causative",
+          "mood": "imperative",
+          "person": "2",
+          "number": "singular"
+        },
+        "order": 7,
+        "provider": null
+      }
+    },
+    {
+      "id": "t9",
+      "kind": "token",
+      "label": "mṛtyor",
+      "x": -8.66025,
+      "y": 5.0,
+      "z": 2,
+      "data": {
+        "lemma": "mṛtyu",
+        "root": null,
+        "pos": "NOUN",
+        "morph": {
+          "case": "ablative",
+          "number": "singular"
+        },
+        "order": 8,
+        "provider": null
+      }
+    },
+    {
+      "id": "t10",
+      "kind": "token",
+      "label": "mā",
+      "x": -10.0,
+      "y": 0.0,
+      "z": 2,
+      "data": {
+        "lemma": "mā",
+        "root": null,
+        "pos": "PART",
+        "morph": {},
+        "order": 9,
+        "provider": null
+      }
+    },
+    {
+      "id": "t11",
+      "kind": "token",
+      "label": "amṛtaṃ",
+      "x": -8.66025,
+      "y": -5.0,
+      "z": 2,
+      "data": {
+        "lemma": "amṛta",
+        "root": null,
+        "pos": "NOUN",
+        "morph": {
+          "case": "accusative",
+          "number": "singular"
+        },
+        "order": 10,
+        "provider": null
+      }
+    },
+    {
+      "id": "t12",
+      "kind": "token",
+      "label": "gamaya",
+      "x": -5.0,
+      "y": -8.66025,
+      "z": 2,
+      "data": {
+        "lemma": null,
+        "root": "gam",
+        "pos": "VERB",
+        "morph": {
+          "derivation": "causative",
+          "mood": "imperative",
+          "person": "2",
+          "number": "singular"
+        },
+        "order": 11,
+        "provider": null
+      }
+    },
+    {
+      "id": "lemma:asat",
+      "kind": "lemma",
+      "label": "asat",
+      "x": 0.0,
+      "y": -6.2,
+      "z": 4.2,
+      "data": {
+        "brunoRole": "stable_lexical_object"
+      }
+    },
+    {
+      "id": "t1:step:1",
+      "kind": "derivation_step",
+      "label": "visarga-sandhi",
+      "x": 0.0,
+      "y": -7.75,
+      "z": 3.5,
+      "data": {
+        "provider": "manual-reviewed",
+        "operation": "visarga-sandhi",
+        "underlying": "asataḥ",
+        "surface": "asato"
+      }
+    },
+    {
+      "id": "lemma:mā",
+      "kind": "lemma",
+      "label": "mā",
+      "x": 3.1,
+      "y": -5.36936,
+      "z": 4.2,
+      "data": {
+        "brunoRole": "stable_lexical_object"
+      }
+    },
+    {
+      "id": "lemma:sat",
+      "kind": "lemma",
+      "label": "sat",
+      "x": 5.36936,
+      "y": -3.1,
+      "z": 4.2,
+      "data": {
+        "brunoRole": "stable_lexical_object"
+      }
+    },
+    {
+      "id": "t3:step:1",
+      "kind": "derivation_step",
+      "label": "consonant-voicing",
+      "x": 6.7117,
+      "y": -3.875,
+      "z": 3.5,
+      "data": {
+        "provider": "manual-reviewed",
+        "operation": "consonant-voicing",
+        "underlying": "sat",
+        "surface": "sad",
+        "environment": "before g"
+      }
+    },
+    {
+      "id": "dhatu:gam",
+      "kind": "dhatu",
+      "label": "√gam",
+      "x": 5.5,
+      "y": 0.0,
+      "z": 4.8,
+      "data": {
+        "meaning": "go, move",
+        "brunoRole": "persistent_agent"
+      }
+    },
+    {
+      "id": "t4:step:1",
+      "kind": "derivation_step",
+      "label": "causative",
+      "x": 7.0,
+      "y": 0.0,
+      "z": 3.93333,
+      "data": {
+        "provider": "manual-reviewed",
+        "operation": "causative",
+        "label": "ṇic",
+        "result": "gamay-"
+      }
+    },
+    {
+      "id": "t4:step:2",
+      "kind": "derivation_step",
+      "label": "imperative-2sg",
+      "x": 8.5,
+      "y": 0.0,
+      "z": 3.06667,
+      "data": {
+        "provider": "manual-reviewed",
+        "operation": "imperative-2sg",
+        "result": "gamaya"
+      }
+    },
+    {
+      "id": "lemma:tamas",
+      "kind": "lemma",
+      "label": "tamas",
+      "x": 5.36936,
+      "y": 3.1,
+      "z": 4.2,
+      "data": {
+        "brunoRole": "stable_lexical_object"
+      }
+    },
+    {
+      "id": "t5:step:1",
+      "kind": "derivation_step",
+      "label": "visarga-sandhi",
+      "x": 6.7117,
+      "y": 3.875,
+      "z": 3.5,
+      "data": {
+        "provider": "manual-reviewed",
+        "operation": "visarga-sandhi",
+        "underlying": "tamasaḥ",
+        "surface": "tamaso"
+      }
+    },
+    {
+      "id": "lemma:jyotis",
+      "kind": "lemma",
+      "label": "jyotis",
+      "x": 0.0,
+      "y": 6.2,
+      "z": 4.2,
+      "data": {
+        "brunoRole": "stable_lexical_object"
+      }
+    },
+    {
+      "id": "t8:step:1",
+      "kind": "derivation_step",
+      "label": "same_as_t4",
+      "x": -3.875,
+      "y": 6.7117,
+      "z": 3.5,
+      "data": {
+        "provider": "shared",
+        "operation": "same_as_t4"
+      }
+    },
+    {
+      "id": "lemma:mṛtyu",
+      "kind": "lemma",
+      "label": "mṛtyu",
+      "x": -5.36936,
+      "y": 3.1,
+      "z": 4.2,
+      "data": {
+        "brunoRole": "stable_lexical_object"
+      }
+    },
+    {
+      "id": "lemma:amṛta",
+      "kind": "lemma",
+      "label": "amṛta",
+      "x": -5.36936,
+      "y": -3.1,
+      "z": 4.2,
+      "data": {
+        "brunoRole": "stable_lexical_object"
+      }
+    },
+    {
+      "id": "t12:step:1",
+      "kind": "derivation_step",
+      "label": "same_as_t4",
+      "x": -3.875,
+      "y": -6.7117,
+      "z": 3.5,
+      "data": {
+        "provider": "shared",
+        "operation": "same_as_t4"
+      }
+    },
+    {
+      "id": "s1",
+      "kind": "sandhi_gate",
+      "label": "asataḥ + mā → asato mā",
+      "x": 2.5,
+      "y": -9.33013,
+      "z": 1.25,
+      "data": {
+        "id": "s1",
+        "left": "t1",
+        "right": "t2",
+        "label": "asataḥ + mā → asato mā"
+      }
+    },
+    {
+      "id": "s2",
+      "kind": "sandhi_gate",
+      "label": "sat + gamaya → sad gamaya",
+      "x": 9.33013,
+      "y": -2.5,
+      "z": 1.25,
+      "data": {
+        "id": "s2",
+        "left": "t3",
+        "right": "t4",
+        "label": "sat + gamaya → sad gamaya"
+      }
+    },
+    {
+      "id": "s3",
+      "kind": "sandhi_gate",
+      "label": "tamasaḥ + mā → tamaso mā",
+      "x": 6.83013,
+      "y": 6.83013,
+      "z": 1.25,
+      "data": {
+        "id": "s3",
+        "left": "t5",
+        "right": "t6",
+        "label": "tamasaḥ + mā → tamaso mā"
+      }
+    },
+    {
+      "id": "s4",
+      "kind": "sandhi_gate",
+      "label": "mṛtyoḥ + mā → mṛtyor mā",
+      "x": -9.33013,
+      "y": 2.5,
+      "z": 1.25,
+      "data": {
+        "id": "s4",
+        "left": "t9",
+        "right": "t10",
+        "label": "mṛtyoḥ + mā → mṛtyor mā"
+      }
+    },
+    {
+      "id": "predicate:t12",
+      "kind": "predicate",
+      "label": "event:t12",
+      "x": 0,
+      "y": 0,
+      "z": 3.0,
+      "data": {
+        "surfaceToken": "t12"
+      }
+    },
+    {
+      "id": "projection:t12:t9:apādāna",
+      "kind": "operator",
+      "label": "apādāna",
+      "x": -2.1,
+      "y": -3.63731,
+      "z": 3,
+      "data": {
+        "relation": "apādāna",
+        "sourceToken": "t9",
+        "targetPredicate": "t12"
+      }
+    },
+    {
+      "id": "projection:t12:t11:karman",
+      "kind": "operator",
+      "label": "karman",
+      "x": 2.1,
+      "y": 3.63731,
+      "z": 3,
+      "data": {
+        "relation": "karman",
+        "sourceToken": "t11",
+        "targetPredicate": "t12"
+      }
+    },
+    {
+      "id": "predicate:t4",
+      "kind": "predicate",
+      "label": "event:t4",
+      "x": 0,
+      "y": 0,
+      "z": 3.35,
+      "data": {
+        "surfaceToken": "t4"
+      }
+    },
+    {
+      "id": "projection:t4:t1:apādāna",
+      "kind": "operator",
+      "label": "apādāna",
+      "x": -2.25,
+      "y": -3.89711,
+      "z": 3,
+      "data": {
+        "relation": "apādāna",
+        "sourceToken": "t1",
+        "targetPredicate": "t4"
+      }
+    },
+    {
+      "id": "projection:t4:t3:karman",
+      "kind": "operator",
+      "label": "karman",
+      "x": 2.25,
+      "y": 3.89711,
+      "z": 3,
+      "data": {
+        "relation": "karman",
+        "sourceToken": "t3",
+        "targetPredicate": "t4"
+      }
+    },
+    {
+      "id": "predicate:t8",
+      "kind": "predicate",
+      "label": "event:t8",
+      "x": 0,
+      "y": 0,
+      "z": 3.7,
+      "data": {
+        "surfaceToken": "t8"
+      }
+    },
+    {
+      "id": "projection:t8:t5:apādāna",
+      "kind": "operator",
+      "label": "apādāna",
+      "x": -2.4,
+      "y": -4.15692,
+      "z": 3,
+      "data": {
+        "relation": "apādāna",
+        "sourceToken": "t5",
+        "targetPredicate": "t8"
+      }
+    },
+    {
+      "id": "projection:t8:t7:karman",
+      "kind": "operator",
+      "label": "karman",
+      "x": 2.4,
+      "y": 4.15692,
+      "z": 3,
+      "data": {
+        "relation": "karman",
+        "sourceToken": "t7",
+        "targetPredicate": "t8"
+      }
+    },
+    {
+      "id": "c:amrta",
+      "kind": "concept",
+      "label": "amṛta",
+      "x": 0.0,
+      "y": -7.5,
+      "z": 7,
+      "data": {}
+    },
+    {
+      "id": "c:asat",
+      "kind": "concept",
+      "label": "asat",
+      "x": 5.86374,
+      "y": -4.67617,
+      "z": 7,
+      "data": {}
+    },
+    {
+      "id": "c:jyotis",
+      "kind": "concept",
+      "label": "jyotis",
+      "x": 7.31196,
+      "y": 1.66891,
+      "z": 7,
+      "data": {}
+    },
+    {
+      "id": "c:motion",
+      "kind": "concept",
+      "label": "directed transformation / gamaya",
+      "x": 3.25413,
+      "y": 6.75727,
+      "z": 7,
+      "data": {}
+    },
+    {
+      "id": "c:mrtyu",
+      "kind": "concept",
+      "label": "mṛtyu",
+      "x": -3.25413,
+      "y": 6.75727,
+      "z": 7,
+      "data": {}
+    },
+    {
+      "id": "c:sat",
+      "kind": "concept",
+      "label": "sat",
+      "x": -7.31196,
+      "y": 1.66891,
+      "z": 7,
+      "data": {}
+    },
+    {
+      "id": "c:tamas",
+      "kind": "concept",
+      "label": "tamas",
+      "x": -5.86374,
+      "y": -4.67617,
+      "z": 7,
+      "data": {}
+    }
+  ],
+  "edges": [
+    {
+      "source": "phoneme:k",
+      "target": "phoneme:kh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:kh",
+      "target": "phoneme:g",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:g",
+      "target": "phoneme:gh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:gh",
+      "target": "phoneme:ṅ",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:k",
+      "target": "phoneme:c",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:c",
+      "target": "phoneme:ch",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:kh",
+      "target": "phoneme:ch",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ch",
+      "target": "phoneme:j",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:g",
+      "target": "phoneme:j",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:j",
+      "target": "phoneme:jh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:gh",
+      "target": "phoneme:jh",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:jh",
+      "target": "phoneme:ñ",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṅ",
+      "target": "phoneme:ñ",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:c",
+      "target": "phoneme:ṭ",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṭ",
+      "target": "phoneme:ṭh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ch",
+      "target": "phoneme:ṭh",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṭh",
+      "target": "phoneme:ḍ",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:j",
+      "target": "phoneme:ḍ",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ḍ",
+      "target": "phoneme:ḍh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:jh",
+      "target": "phoneme:ḍh",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ḍh",
+      "target": "phoneme:ṇ",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ñ",
+      "target": "phoneme:ṇ",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṭ",
+      "target": "phoneme:t",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:t",
+      "target": "phoneme:th",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṭh",
+      "target": "phoneme:th",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:th",
+      "target": "phoneme:d",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ḍ",
+      "target": "phoneme:d",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:d",
+      "target": "phoneme:dh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ḍh",
+      "target": "phoneme:dh",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:dh",
+      "target": "phoneme:n",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṇ",
+      "target": "phoneme:n",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:t",
+      "target": "phoneme:p",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:p",
+      "target": "phoneme:ph",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:th",
+      "target": "phoneme:ph",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ph",
+      "target": "phoneme:b",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:d",
+      "target": "phoneme:b",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:b",
+      "target": "phoneme:bh",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:dh",
+      "target": "phoneme:bh",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:bh",
+      "target": "phoneme:m",
+      "kind": "manner_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:n",
+      "target": "phoneme:m",
+      "kind": "place_neighbor",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:a",
+      "target": "phoneme:i",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:i",
+      "target": "phoneme:u",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:u",
+      "target": "phoneme:ṛ",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ṛ",
+      "target": "phoneme:ḷ",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ḷ",
+      "target": "phoneme:e",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:e",
+      "target": "phoneme:o",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:o",
+      "target": "phoneme:ai",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "phoneme:ai",
+      "target": "phoneme:au",
+      "kind": "maheshvara_sequence",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t1",
+      "target": "phoneme:a",
+      "kind": "instantiates_sound",
+      "label": "a",
+      "data": {}
+    },
+    {
+      "source": "t1",
+      "target": "phoneme:a",
+      "kind": "instantiates_sound",
+      "label": "a",
+      "data": {}
+    },
+    {
+      "source": "t1",
+      "target": "phoneme:t",
+      "kind": "instantiates_sound",
+      "label": "t",
+      "data": {}
+    },
+    {
+      "source": "t1",
+      "target": "phoneme:o",
+      "kind": "instantiates_sound",
+      "label": "o",
+      "data": {}
+    },
+    {
+      "source": "t2",
+      "target": "phoneme:m",
+      "kind": "instantiates_sound",
+      "label": "m",
+      "data": {}
+    },
+    {
+      "source": "t3",
+      "target": "phoneme:a",
+      "kind": "instantiates_sound",
+      "label": "a",
+      "data": {}
+    },
+    {
+      "source": "t3",
+      "target": "phoneme:d",
+      "kind": "instantiates_sound",
+      "label": "d",
+      "data": {}
+    },
+    {
+      "source": "t4",
+      "target": "phoneme:g",
+      "kind": "instantiates_sound",
+      "label": "g",
+      "data": {}
+    },
+    {
+      "source": "t4",
+      "target": "phoneme:m",
+      "kind": "instantiates_sound",
+      "label": "m",
+      "data": {}
+    },
+    {
+      "source": "t5",
+      "target": "phoneme:t",
+      "kind": "instantiates_sound",
+      "label": "t",
+      "data": {}
+    },
+    {
+      "source": "t5",
+      "target": "phoneme:m",
+      "kind": "instantiates_sound",
+      "label": "m",
+      "data": {}
+    },
+    {
+      "source": "t5",
+      "target": "phoneme:o",
+      "kind": "instantiates_sound",
+      "label": "o",
+      "data": {}
+    },
+    {
+      "source": "t6",
+      "target": "phoneme:m",
+      "kind": "instantiates_sound",
+      "label": "m",
+      "data": {}
+    },
+    {
+      "source": "t7",
+      "target": "phoneme:j",
+      "kind": "instantiates_sound",
+      "label": "j",
+      "data": {}
+    },
+    {
+      "source": "t7",
+      "target": "phoneme:o",
+      "kind": "instantiates_sound",
+      "label": "o",
+      "data": {}
+    },
+    {
+      "source": "t7",
+      "target": "phoneme:t",
+      "kind": "instantiates_sound",
+      "label": "t",
+      "data": {}
+    },
+    {
+      "source": "t7",
+      "target": "phoneme:i",
+      "kind": "instantiates_sound",
+      "label": "i",
+      "data": {}
+    },
+    {
+      "source": "t8",
+      "target": "phoneme:g",
+      "kind": "instantiates_sound",
+      "label": "g",
+      "data": {}
+    },
+    {
+      "source": "t8",
+      "target": "phoneme:m",
+      "kind": "instantiates_sound",
+      "label": "m",
+      "data": {}
+    },
+    {
+      "source": "t9",
+      "target": "phoneme:m",
+      "kind": "instantiates_sound",
+      "label": "m",
+      "data": {}
+    },
+    {
+      "source": "t9",
+      "target": "phoneme:t",
+      "kind": "instantiates_sound",
+      "label": "t",
+      "data": {}
+    },
+    {
+      "source": "t9",
+      "target": "phoneme:u",
+      "kind": "instantiates_sound",
+      "label": "u",
+      "data": {}
+    },
+    {
+      "source": "t10",
+      "target": "phoneme:m",
+      "kind": "instantiates_sound",
+      "label": "m",
+      "data": {}
+    },
+    {
+      "source": "t11",
+      "target": "phoneme:m",
+      "kind": "instantiates_sound",
+      "label": "m",
+      "data": {}
+    },
+    {
+      "source": "t11",
+      "target": "phoneme:t",
+      "kind": "instantiates_sound",
+      "label": "t",
+      "data": {}
+    },
+    {
+      "source": "t12",
+      "target": "phoneme:g",
+      "kind": "instantiates_sound",
+      "label": "g",
+      "data": {}
+    },
+    {
+      "source": "t12",
+      "target": "phoneme:m",
+      "kind": "instantiates_sound",
+      "label": "m",
+      "data": {}
+    },
+    {
+      "source": "lemma:asat",
+      "target": "t1:step:1",
+      "kind": "derives",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t1:step:1",
+      "target": "t1",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "lemma:mā",
+      "target": "t2",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "lemma:sat",
+      "target": "t3:step:1",
+      "kind": "derives",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t3:step:1",
+      "target": "t3",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "dhatu:gam",
+      "target": "t4:step:1",
+      "kind": "derives",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t4:step:1",
+      "target": "t4:step:2",
+      "kind": "derives",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t4:step:2",
+      "target": "t4",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "lemma:tamas",
+      "target": "t5:step:1",
+      "kind": "derives",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t5:step:1",
+      "target": "t5",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "lemma:mā",
+      "target": "t6",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "lemma:jyotis",
+      "target": "t7",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "dhatu:gam",
+      "target": "t8:step:1",
+      "kind": "derives",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t8:step:1",
+      "target": "t8",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "lemma:mṛtyu",
+      "target": "t9",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "lemma:mā",
+      "target": "t10",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "lemma:amṛta",
+      "target": "t11",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "dhatu:gam",
+      "target": "t12:step:1",
+      "kind": "derives",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t12:step:1",
+      "target": "t12",
+      "kind": "surfaces_as",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t1",
+      "target": "s1",
+      "kind": "boundary_in",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "s1",
+      "target": "t2",
+      "kind": "boundary_out",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t3",
+      "target": "s2",
+      "kind": "boundary_in",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "s2",
+      "target": "t4",
+      "kind": "boundary_out",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t5",
+      "target": "s3",
+      "kind": "boundary_in",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "s3",
+      "target": "t6",
+      "kind": "boundary_out",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "t9",
+      "target": "s4",
+      "kind": "boundary_in",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "s4",
+      "target": "t10",
+      "kind": "boundary_out",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "predicate:t12",
+      "target": "t12",
+      "kind": "predicate_surface",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "predicate:t12",
+      "target": "projection:t12:t9:apādāna",
+      "kind": "karaka_slot",
+      "label": "apādāna",
+      "data": {}
+    },
+    {
+      "source": "projection:t12:t9:apādāna",
+      "target": "t9",
+      "kind": "realized_by",
+      "label": "apādāna",
+      "data": {}
+    },
+    {
+      "source": "predicate:t12",
+      "target": "projection:t12:t11:karman",
+      "kind": "karaka_slot",
+      "label": "karman",
+      "data": {}
+    },
+    {
+      "source": "projection:t12:t11:karman",
+      "target": "t11",
+      "kind": "realized_by",
+      "label": "karman",
+      "data": {}
+    },
+    {
+      "source": "predicate:t4",
+      "target": "t4",
+      "kind": "predicate_surface",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "predicate:t4",
+      "target": "projection:t4:t1:apādāna",
+      "kind": "karaka_slot",
+      "label": "apādāna",
+      "data": {}
+    },
+    {
+      "source": "projection:t4:t1:apādāna",
+      "target": "t1",
+      "kind": "realized_by",
+      "label": "apādāna",
+      "data": {}
+    },
+    {
+      "source": "predicate:t4",
+      "target": "projection:t4:t3:karman",
+      "kind": "karaka_slot",
+      "label": "karman",
+      "data": {}
+    },
+    {
+      "source": "projection:t4:t3:karman",
+      "target": "t3",
+      "kind": "realized_by",
+      "label": "karman",
+      "data": {}
+    },
+    {
+      "source": "predicate:t8",
+      "target": "t8",
+      "kind": "predicate_surface",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "predicate:t8",
+      "target": "projection:t8:t5:apādāna",
+      "kind": "karaka_slot",
+      "label": "apādāna",
+      "data": {}
+    },
+    {
+      "source": "projection:t8:t5:apādāna",
+      "target": "t5",
+      "kind": "realized_by",
+      "label": "apādāna",
+      "data": {}
+    },
+    {
+      "source": "predicate:t8",
+      "target": "projection:t8:t7:karman",
+      "kind": "karaka_slot",
+      "label": "karman",
+      "data": {}
+    },
+    {
+      "source": "projection:t8:t7:karman",
+      "target": "t7",
+      "kind": "realized_by",
+      "label": "karman",
+      "data": {}
+    },
+    {
+      "source": "c:asat",
+      "target": "c:sat",
+      "kind": "opposition_and_transition",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "c:tamas",
+      "target": "c:jyotis",
+      "kind": "opposition_and_transition",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "c:mrtyu",
+      "target": "c:amrta",
+      "kind": "opposition_and_transition",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "c:motion",
+      "target": "c:sat",
+      "kind": "destination",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "c:motion",
+      "target": "c:jyotis",
+      "kind": "destination",
+      "label": "",
+      "data": {}
+    },
+    {
+      "source": "c:motion",
+      "target": "c:amrta",
+      "kind": "destination",
+      "label": "",
+      "data": {}
+    }
+  ],
+  "routes": [
+    {
+      "node": "t1",
+      "action": "hear_then_enter",
+      "prompt": "Enter asato as sound before analysis."
+    },
+    {
+      "node": "t1:step:1",
+      "action": "transform",
+      "prompt": "Predict the transformation before revealing it."
+    },
+    {
+      "node": "t2",
+      "action": "hear_then_enter",
+      "prompt": "Enter mā as sound before analysis."
+    },
+    {
+      "node": "t3",
+      "action": "hear_then_enter",
+      "prompt": "Enter sad as sound before analysis."
+    },
+    {
+      "node": "t3:step:1",
+      "action": "transform",
+      "prompt": "Predict the transformation before revealing it."
+    },
+    {
+      "node": "t4",
+      "action": "hear_then_enter",
+      "prompt": "Enter gamaya as sound before analysis."
+    },
+    {
+      "node": "t4:step:1",
+      "action": "transform",
+      "prompt": "Predict the transformation before revealing it."
+    },
+    {
+      "node": "t4:step:2",
+      "action": "transform",
+      "prompt": "Predict the transformation before revealing it."
+    },
+    {
+      "node": "t5",
+      "action": "hear_then_enter",
+      "prompt": "Enter tamaso as sound before analysis."
+    },
+    {
+      "node": "t5:step:1",
+      "action": "transform",
+      "prompt": "Predict the transformation before revealing it."
+    },
+    {
+      "node": "t6",
+      "action": "hear_then_enter",
+      "prompt": "Enter mā as sound before analysis."
+    },
+    {
+      "node": "t7",
+      "action": "hear_then_enter",
+      "prompt": "Enter jyotir as sound before analysis."
+    },
+    {
+      "node": "t8",
+      "action": "hear_then_enter",
+      "prompt": "Enter gamaya as sound before analysis."
+    },
+    {
+      "node": "t8:step:1",
+      "action": "transform",
+      "prompt": "Predict the transformation before revealing it."
+    },
+    {
+      "node": "t9",
+      "action": "hear_then_enter",
+      "prompt": "Enter mṛtyor as sound before analysis."
+    },
+    {
+      "node": "t10",
+      "action": "hear_then_enter",
+      "prompt": "Enter mā as sound before analysis."
+    },
+    {
+      "node": "t11",
+      "action": "hear_then_enter",
+      "prompt": "Enter amṛtaṃ as sound before analysis."
+    },
+    {
+      "node": "t12",
+      "action": "hear_then_enter",
+      "prompt": "Enter gamaya as sound before analysis."
+    },
+    {
+      "node": "t12:step:1",
+      "action": "transform",
+      "prompt": "Predict the transformation before revealing it."
+    },
+    {
+      "node": "s1",
+      "action": "cross_boundary",
+      "prompt": "Reconstruct both sides of the sandhi gate."
+    },
+    {
+      "node": "s2",
+      "action": "cross_boundary",
+      "prompt": "Reconstruct both sides of the sandhi gate."
+    },
+    {
+      "node": "s3",
+      "action": "cross_boundary",
+      "prompt": "Reconstruct both sides of the sandhi gate."
+    },
+    {
+      "node": "s4",
+      "action": "cross_boundary",
+      "prompt": "Reconstruct both sides of the sandhi gate."
+    }
+  ],
+  "shell": {
+    "name": "sanskrit-sound-temple-v0.1",
+    "invariant": true,
+    "axes": {
+      "x": "place_of_articulation",
+      "y": "manner_of_articulation",
+      "z": "compiled_layer"
+    },
+    "principle": "same analyzed Sanskrit -> same coordinates; personal imagery never changes canonical coordinates"
+  },
+  "provenance": {
+    "ir": {
+      "analysis": "starter manually reviewed pedagogical analysis; replace or augment with Vidyut/Sanskrit Heritage outputs"
+    },
+    "compiler": "sanskrit-world-compiler/0.1",
+    "geometryRule": "deterministic structural mapping",
+    "personalOverlayAffectsGeometry": false,
+    "bruno": "representation layer only",
+    "rowe": "formal relation -> inhabitable geometry compiler analogy"
+  }
+}

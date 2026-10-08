@@ -1,0 +1,92 @@
+{
+  "id": "body-overlays-v0",
+  "principle": "Selectable overlays — not one 2D chakra chart. Different projections of one multidimensional system.",
+  "flood_support": "Many historical maps: five knots, nine/eleven wheels, sixteen loci, twenty-eight vital points; six-cakra model post-11th century.",
+  "overlays": [
+    {
+      "id": "phonemic",
+      "name": "Phonemic anatomy",
+      "maps": [
+        "data/matrika_body_map.json",
+        "data/malini_order.json",
+        "data/phoneme_objects.json"
+      ],
+      "primary_for": "Phase 1–6"
+    },
+    {
+      "id": "articulatory",
+      "name": "Articulatory / production",
+      "maps": [
+        "data/articulation_matrix.json"
+      ],
+      "primary_for": "Phase 2"
+    },
+    {
+      "id": "sensory_deity",
+      "name": "Sensory-deity (dehasthadevatācakra)",
+      "center": "Bhairava/Bhairavī heart",
+      "ring": [
+        "buddhi",
+        "ahaṃkāra",
+        "manas",
+        "śrotra",
+        "spṛśana",
+        "cakṣus",
+        "rasana",
+        "ghrāṇa"
+      ],
+      "function": "senses offer objects to Bhairava",
+      "primary_for": "Phase 8",
+      "source": "Flood ch.7"
+    },
+    {
+      "id": "speech_levels",
+      "name": "Levels of speech",
+      "levels": [
+        "parā",
+        "paśyantī",
+        "madhyamā",
+        "vaikharī"
+      ],
+      "primary_for": "Phase 3"
+    },
+    {
+      "id": "sadadhvan",
+      "name": "Ṣaḍadhvan pairs",
+      "pairs": [
+        {
+          "vācaka": "varṇa",
+          "vācya": "kalā",
+          "en_sign": "phoneme",
+          "en_world": "cosmic power/division"
+        },
+        {
+          "vācaka": "mantra",
+          "vācya": "tattva",
+          "en_sign": "mantra",
+          "en_world": "principle of reality"
+        },
+        {
+          "vācaka": "pada",
+          "vācya": "bhuvana",
+          "en_sign": "word/expression",
+          "en_world": "world/domain"
+        }
+      ],
+      "primary_for": "Phase 5"
+    },
+    {
+      "id": "pranic",
+      "name": "Prāṇic (later tool)",
+      "note": "Goswami overlay only after phonemic body stable. Natural breath in Phases 1–7.",
+      "primary_for": "later"
+    },
+    {
+      "id": "tattvic",
+      "name": "Tattva anatomy",
+      "note": "36 tattvas via PTv/TĀ — advanced; do not collapse into chakra chart.",
+      "primary_for": "later"
+    }
+  ],
+  "ui_rule": "When building practice UI, expose overlays as selectable layers. Never ship one universal chart as 'Abhinavagupta's body.'"
+}

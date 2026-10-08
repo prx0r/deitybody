@@ -1,0 +1,73 @@
+{
+  "id": "deitybody-curriculum-v0",
+  "name": "Month 1–3 curriculum",
+  "principle": "Become the Sanskrit alphabet first. Mālinī second. Breath groups third. Goswami tools later.",
+  "months": [
+    {
+      "month": 1,
+      "title": "Become the Sanskrit alphabet (Mātṛkā only)",
+      "goal": "Perfect pronunciation + Devanāgarī recognition while installing letters in the body.",
+      "success": "Someone says gha and three things fire instantly: घ, its articulation, its bodily location.",
+      "weeks": [
+        {
+          "week": 1,
+          "focus": "16 vowels across head and face",
+          "target": "इ/ई instantly means eyes; ऋ/ॠ instantly means nostrils"
+        },
+        {
+          "week": 2,
+          "focus": "ka-varga (right upper limb)"
+        },
+        {
+          "week": 3,
+          "focus": "ca-varga + ṭa-varga"
+        },
+        {
+          "week": 4,
+          "focus": "ta-varga + pa-varga + remaining"
+        }
+      ],
+      "daily": "30–40 min daily_practice.json Month-1 nyāsa"
+    },
+    {
+      "month": 2,
+      "title": "Mālinī — scrambled Śākta body",
+      "goal": "Memorize Mālinī order na→pha not just verbally but as one bodily procession.",
+      "weeks": [
+        {
+          "week": 1,
+          "zone": "head",
+          "sequence_ref": "malini_order.json zones_for_month2.week1_head"
+        },
+        {
+          "week": 2,
+          "zone": "mouth + shoulders + arms"
+        },
+        {
+          "week": 3,
+          "zone": "heart + torso"
+        },
+        {
+          "week": 4,
+          "zone": "pelvis + legs"
+        }
+      ],
+      "end_state": "Run na → … → pha as one uninterrupted procession.",
+      "note": "Abhinavagupta: nyāsa may be made with Mātṛkā, Mālinī, or both; Mālinī nyāsa brings the Śākta body into predominance."
+    },
+    {
+      "month": 3,
+      "title": "Add breath properly",
+      "goal": "Groups on single exhalations; continuous trajectory, not five disconnected spots.",
+      "examples": [
+        "exhale: ka kha ga gha ṅa — feel complete right-arm sequence",
+        "exhale: ca cha ja jha ña — feel left"
+      ],
+      "then": "Change vocal depth: audible → quiet → whisper → mental → soundless recognition."
+    },
+    {
+      "later": "Goswami tools only — fine breath control, elemental geometry, bindu-concentration, visualization contraction. Two coordinate systems: Mātṛkā/Mālinī phonemic body + bhūta/cakra elemental-axial body. Investigate superimposition only after both are stable."
+    }
+  ],
+  "decoupled_for_now": "1:4:2 nāḍī śodhana may continue as separate session if completely comfortable; not a prerequisite for Month 1–2 nyāsa."
+}

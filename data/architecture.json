@@ -1,0 +1,245 @@
+{
+  "id": "deitybody-os-v0",
+  "name": "DeityBody — Trika phonemic-body operating system",
+  "version": "0.1.0",
+  "date": "2026-10-04",
+  "principle": "Abhinavagupta/Trika is the operating system (embodied phonemic ontology). Bruno is the combinatorial memory machinery. Goswami is a tool. Never learn a sound as an abstract letter — learn it as a coordinated event: glyph + articulation + felt vibration + body-location + imaginal signature.",
+  "textual_spine": [
+    {
+      "tier": 1,
+      "text": "Mālinīvijayottaratantra (MV)",
+      "role": "Essential Trika scripture for Mātṛkā/Mālinī order and nyāsa",
+      "critical_edition": "Somadeva Vasudeva",
+      "key_loci": [
+        "MV 3/37-41 (Mālinī order)",
+        "MV 4/114cd-118ab (Mālinī as tattva-body)",
+        "MV 8/27-32 (nyāsa base)"
+      ]
+    },
+    {
+      "tier": 2,
+      "text": "Abhinavagupta — Tantrāloka (TĀ)",
+      "role": "CANONICAL practice spine — volume Dyczkowski corpus on attached disk",
+      "translator_ref": "Dyczkowski",
+      "key_loci": [
+        "TĀ 3.198-199 (śabdarāśi / Mātṛkā / Mālinī)",
+        "TĀ 4.91 (prāṇāyāma without tormenting the body)",
+        "TĀ 15/115cd-145 (three nyāsas)",
+        "TĀ 15/121-125 (Mālinī alphabet)"
+      ],
+      "canonical": true
+    },
+    {
+      "tier": 2,
+      "text": "Abhinavagupta — Tantrasāra",
+      "role": "Practice grammar; varṇa-uccāra; phonemes developed from powers (anuttara, ānanda, icchā, unmeṣa)",
+      "edition_ref": "Ishwar Ashram Trust / Chakravarty–Marjanovic"
+    },
+    {
+      "tier": 2,
+      "text": "Abhinavagupta — Parātrīśikāvivaraṇa (PTv)",
+      "role": "Mālinī order explained at madhyamā-vāc; vowel–consonant interpenetration as Śakti-body",
+      "edition_ref": "Jaideva Singh / Bettina Bäumer"
+    },
+    {
+      "tier": 3,
+      "text": "Vijñānabhairava (selected dhāraṇās)",
+      "role": "Self-executing techniques; breath axis; phoneme resonance; void/gap awareness",
+      "oral_ref": "Lakshmanjoo",
+      "selected": [
+        4,
+        14,
+        24,
+        25,
+        31,
+        54,
+        8,
+        22
+      ]
+    }
+  ],
+  "goswami_role": {
+    "status": "TOOL_NOT_BACKBONE",
+    "borrow_for": [
+      "fine breath control",
+      "subtle pelvic/abdominal/throat sensitivity",
+      "elemental geometry",
+      "bindu-concentration",
+      "contracting complex visualization into a point"
+    ],
+    "do_not": [
+      "replace Mātṛkā/Mālinī phonemic anatomy with Goswami chakra chart",
+      "make 1:4:2 a prerequisite for nyāsa training",
+      "treat perspiration/shaking/levitation as goals"
+    ],
+    "later_overlay": "bhūta/cakra = elemental-axial body; investigate superimposition only after phonemic body is stable"
+  },
+  "training_target": "visual + phonetic + respiratory + tactile + attentional embodiment of Sanskrit",
+  "core_move": "क → /ka/ → articulation → bodily location → Devanāgarī glyph → felt resonance → place in larger Śakti-body",
+  "success_signal": "hearing or thinking 'ka' fires glyph + articulation + bodily location simultaneously",
+  "breath_policy": {
+    "matrika_practice": "let phonation naturally lengthen the exhalation; do not force 1:4:2 while memorizing locations",
+    "separate_pranayama": "established 1:4:2 may continue separately if completely comfortable",
+    "authority": "TĀ 4.91 — prāṇāyāma that torments the body is not to be practised",
+    "vbt_carrier": "saḥ (out) / haṃ (in) heart ↔ dvādaśānta — comfortable breath only, no heroic retention"
+  },
+  "vocal_depth_ladder": [
+    "vaikharī — audible speech",
+    "quiet speech",
+    "whisper / subvocalization",
+    "madhyamā — purely mental sound",
+    "soundless recognition of the letter"
+  ],
+  "end_state": [
+    "natural breath",
+    "saḥ/haṃ establishes respiratory field",
+    "Mātṛkā manifests ordered phonemic body",
+    "Mālinī interpenetrates order into Śākta body",
+    "external chanting becomes mental sound",
+    "mental phonemes contract toward undifferentiated śabdarāśi",
+    "sound and body recognized as modes of awareness, not external things"
+  ],
+  "boundaries": {
+    "no_hz_doctrine": true,
+    "no_medical_claims": true,
+    "color_chakra_chart": "PEDAGOGICAL scaffold only; primary visual object is the Devanāgarī glyph",
+    "goddess_names_in_nyasa": "source-attested in TĀ/MV apparatus; optional for secular phonemic training",
+    "stop_always_available": true
+  },
+  "bruno_role": {
+    "status": "COMBINATORIAL_MACHINERY_NOT_ONTOLOGY",
+    "supplies": [
+      "memory wheels / volvelles",
+      "combinatorial vividness",
+      "imaginal signatures that teach phonetic properties",
+      "cross-linked dual-coordinate retrieval"
+    ],
+    "does_not_supply": [
+      "embodied phonemic ontology",
+      "nyāsa body maps",
+      "Śakti-body metaphysics"
+    ],
+    "historical_note": "Bruno and Abhinavagupta had no historical connection. Synthetic pedagogy only.",
+    "warburg": "De umbris wheels as phonetic encoding of foreign words (Sturlese/Warburg) — combinatorial vividness borrowed, not a Trika lineage claim",
+    "rule": "The image must teach the property. Never invent mnemonics harder than the Sanskrit itself.",
+    "primary_visual_object": "Devanāgarī glyph",
+    "dual_coordinates": [
+      "production (mouth articulation)",
+      "tantric/imaginal (Mātṛkā/Mālinī nyāsa)"
+    ]
+  },
+  "learning_direction": "shape → movement → sound → bodily pattern → imaginal pattern → semantic field",
+  "curriculum_order": [
+    "varṇamālā (5×5 mouth instrument)",
+    "Mātṛkā (ordered alphabet + nyāsa)",
+    "words as gesture sequences",
+    "sandhi as felt transformation",
+    "Mālinī (advanced wheel)",
+    "mantra"
+  ],
+  "texts_extra": [
+    {
+      "text": "Parātrīśikāvivaraṇa (PTv)",
+      "role": "Abhinavagupta on madhyamā-vāc / Mālinī / phonemes as powers",
+      "local": "corpus/primary/paratrisika_jaideva_singh_text.pdf"
+    },
+    {
+      "text": "Mālinīvijayottaratantra ch.3",
+      "role": "bhinna-yoni + śākta-śarīra nyāsa + body chart",
+      "url": "https://www.sanskrit-trikashaivism.sanskrit-sanscrito.com/en/malinivijayottaratantra-chapter-3-trika-scriptures-non-dual-shaivism-of-kashmir/833"
+    }
+  ],
+  "corpus_support": {
+    "flood_tantric_body": {
+      "path": "corpus/primary/the_tantric_body.pdf",
+      "extract": "corpus/extracts/FLOOD_TANTRIC_BODY.md",
+      "adds": [
+        "entextualisation — body becomes text through tradition inscribed on it",
+        "nyāsa etymology + cross-tradition process skeleton",
+        "mantra = sonic form of deity; japa = body-formation",
+        "aham contains alphabet a…ha…ṃ",
+        "śakticakra = letters a to kṣa",
+        "epistemic caveats: no reification; late cakras; source-specificity"
+      ],
+      "does_not_add": [
+        "Mātṛkā/Mālinī phoneme-to-location maps",
+        "breath-ratio doctrine"
+      ]
+    }
+  },
+  "epistemic_hygiene": {
+    "flood_law": "The tantric body is constructed, not discovered. Maps are tradition-specific entextualisation, not biomedical anatomy.",
+    "locks": [
+      "SOURCE_ATTESTED vs PEDAGOGICAL on every map",
+      "no medical claims",
+      "no Hz-per-phoneme doctrine",
+      "do not mix rites across texts",
+      "cakra charts are late/variable — not early Trika OS",
+      "Trika ritual = action within consciousness, not only muscle memory"
+    ]
+  },
+  "pathway": {
+    "doc": "docs/PATHWAY.md",
+    "data": "data/pathway.json",
+    "phase1_protocol": "protocols/phase1_chant_body.json",
+    "phase1_card": "practice/PHASE1_CHANT_BODY.md",
+    "overlays": "data/body_overlays.json",
+    "governing_principle": "Use learning Sanskrit itself as training in Abhinavagupta's model of consciousness.",
+    "nyasa_is": "Reconstructing the biological body as the body of Śakti by installing the matrix from which articulated experience arises.",
+    "start": "Phase 1 — chant phonemes at body points",
+    "endpoint": "Pratyabhijñā recognition — powers are expressions of consciousness",
+    "phases": 8
+  },
+  "integrated_theory": {
+    "sadadhvan": "varṇa↔kalā · mantra↔tattva · pada↔bhuvana — paired manifestations of consciousness",
+    "levels_of_speech": "parā → paśyantī → madhyamā → vaikharī",
+    "aham": "a=emergence · ha=terminal/Śakti · ṃ=bindu — master contraction/expansion rhythm",
+    "spanda": "consciousness dynamic → vāk → Mātṛkā → mantra → pada → world; laya reverses",
+    "matrika_vs_malini": "Mātṛkā=articulated order; Mālinī=Śakti's reconfiguration — permute only after stable",
+    "overlays": "Selectable projections — never one universal chakra chart",
+    "sensory_deity": "Senses offer objects to Bhairava — decompose experience into powers, recognize common source"
+  },
+  "starter": {
+    "where_to_begin": "Night 1 = a + ā (forehead · mouth/face)",
+    "pace": "2 phonemes per night",
+    "cards": [
+      "practice/START_HERE_TWO_PHONEMES.md",
+      "practice/NIGHT1_A_AA.md"
+    ],
+    "calendar": "protocols/two_phoneme_nights.json",
+    "stages": "data/six_stage_syllabus.json",
+    "mv221": "data/anava_samavesa.json",
+    "rule": "Sound+articulation+touch+locus first; visualization after association stable",
+    "six_stages": [
+      "I Varṇa",
+      "II Sthāna",
+      "III Karaṇa",
+      "IV Dhyāna",
+      "V Uccāra",
+      "VI Saṃhāra/sṛṣṭi"
+    ],
+    "upaya_note": "Theory order anupāya→…→āṇava; practice order body/sound→recognition (āṇava first for embodiment)"
+  },
+  "common_confusion": {
+    "issue": "Chanting a while attending forehead naturally elongates into ā",
+    "rule": "Mouth decides how it sounds. Locus decides where it is installed.",
+    "a_vs_aa": "Same open quality; difference is duration (short tap vs held mātrās)",
+    "locus_role": "Nyāsa install site — not articulatory place for the vowel",
+    "drill": "short a on forehead · held ā on mouth/face · alternate without touch"
+  },
+  "canonical": {
+    "decision": "Tantrāloka (volume Dyczkowski corpus) = CANONICAL practice spine",
+    "root_scripture": "Mālinīvijayottaratantra — content Abhinavagupta unfolds",
+    "commentary": "Parātrīśikāvivaraṇa — madhyamā / Mālinī letters",
+    "digest": "Tantrasāra ch.5 āṇava",
+    "techniques": "Vijñānabhairava selected dhāraṇās only",
+    "volume_root": "/mnt/HC_Volume_106959365/root/projects/source-library/tantra",
+    "canonical_extract": "corpus/canonical/TANTRALOKA_CANONICAL.md",
+    "volume_index": "corpus/canonical/volume_index.json",
+    "encoded_maps": [
+      "data/matrika_body_map.json",
+      "data/malini_order.json"
+    ],
+    "breath_policy_ref": "TĀ 4.91"
+  }
+}
