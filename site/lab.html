@@ -13,7 +13,9 @@
 html,body{margin:0; height:100%; background:var(--bg); color:var(--ink);
  font:16px/1.5 Georgia,serif; overflow:hidden}
 #scene{position:fixed; inset:0; z-index:1}
-#fluid{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.55}
+#fluid{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.55;
+ -webkit-mask-image:radial-gradient(ellipse 62% 68% at 50% 44%, #000 42%, transparent 78%);
+ mask-image:radial-gradient(ellipse 62% 68% at 50% 44%, #000 42%, transparent 78%)}
 #vitruv{position:fixed; inset:0; margin:auto; height:94vh; z-index:0; opacity:.16;
  filter:sepia(.55) saturate(.85); pointer-events:none; display:none}
 body.split #scene{right:50%}

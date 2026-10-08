@@ -6,6 +6,9 @@
    Closest prior art: ZPEVC/zpe-vc (click-catalyst vacuum, energy→phase events). */
 import * as THREE from 'three';
 
+/* Vitruvian bounds: the square (earthly measure) contains the field.
+   Scene units: x∈[-3.6,3.6], y∈[-3.9,3.3]. Soft reflect at the walls. */
+const BX=3.6, Y0=-3.9, Y1=3.3;
 export function buildGridField(opts){
   const { scene } = opts;
   const N = opts.count ?? 900;
@@ -15,9 +18,7 @@ export function buildGridField(opts){
   const live = new Float32Array(N);     // 0..1 lifecycle position
   const excite = new Float32Array(N);   // coherent excitation 0..1
   for(let k=0;k<N;k++){
-    const r = R*Math.cbrt(Math.random());
-    const th = Math.random()*Math.PI*2, ph = Math.acos(2*Math.random()-1);
-    pos[k*3]=r*Math.sin(ph)*Math.cos(th); pos[k*3+1]=(Math.random()-.5)*9; pos[k*3+2]=r*Math.sin(ph)*Math.sin(th);
+    pos[k*3]=(Math.random()*2-1)*BX; pos[k*3+1]=Y0+Math.random()*(Y1-Y0); pos[k*3+2]=(Math.random()*2-1)*1.2;
     seed[k*2]=Math.random()*Math.PI*2; seed[k*2+1]=0.3+Math.random()*0.7;
     live[k]=Math.random();
   }
@@ -55,8 +56,7 @@ export function buildGridField(opts){
         /* lifecycle: bright = brief */
         live[k]+=dt*(0.25+seed[k*2+1]*0.6);
         if(live[k]>1){ live[k]=0;
-          const r=R*Math.cbrt(Math.random()), th=Math.random()*Math.PI*2;
-          a[k*3]=r*Math.cos(th)*0.6; a[k*3+1]=(Math.random()-.5)*9; a[k*3+2]=r*Math.sin(th)*0.6;
+          pos[k*3]=(Math.random()*2-1)*BX; pos[k*3+1]=Y0+Math.random()*(Y1-Y0); pos[k*3+2]=(Math.random()*2-1)*1.2;
         }
         const e=seed[k*2+1], L=1-Math.abs(1-live[k]*2);       // triangle envelope
         const glow=Math.min(1, L*(0.2+e*0.5));
@@ -65,9 +65,11 @@ export function buildGridField(opts){
         col[k*3]=0.42*glow+0.35*ex;
         col[k*3+1]=0.44*glow+0.22*ex;
         col[k*3+2]=0.5*glow+0.02*ex;
-        /* drift + shimmer */
+        /* drift + shimmer + square walls */
         pos[k*3]+=Math.sin(t*0.7+seed[k*2])*dt*0.05;
         pos[k*3+1]+=Math.cos(t*0.5+seed[k*2]*1.7)*dt*0.04;
+        if(pos[k*3]<-BX||pos[k*3]>BX) pos[k*3]=Math.max(-BX,Math.min(BX,pos[k*3]));
+        if(pos[k*3+1]<Y0||pos[k*3+1]>Y1) pos[k*3+1]=Math.max(Y0,Math.min(Y1,pos[k*3+1]));
         excite[k]*=Math.pow(0.35,dt);
       }
       geo.attributes.position.needsUpdate=true;

@@ -28,7 +28,8 @@
       "foot.length = H/6 AND forearm = H/4 AND head = H/8"
     ]
   },
-  "geometry": {
+  "canon_frame": {
+    "note": "Vitruvian dimensions are the canonical body frame: all loci and effects live inside the square (loci) or ascend past it only where doctrine says so (dvādaśānta above crown). Local H=4 maps to scene: y_scene = -3.9 + local*1.8; square x∈[-3.6,3.6]. Grid-field particles clamp to the square; fluid is centre-masked.",
     "square": {"side": "H", "centre": "groin", "meaning": "earth · measured microcosm"},
     "circle": {"centre": "navel", "radius": "navel→crown", "meaning": "heavens · macrocosm"},
     "span": {"meaning": "arm span = H (square construction)"},

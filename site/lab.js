@@ -803,10 +803,19 @@ function cycleVit(){
 }
 function vitStill(){
   morphOn=false;
-  vitFig.show(true); vitFig.pose(0);
+  vitFig.show(true); vitFig.setPose('standing'); vitFig.pose(0);
   if(vitLayer) vitLayer.group.visible=false;
   document.getElementById('vitruv').style.display='';
   readout.innerHTML='<b>earthly pose</b> · square · centre groin';
+}
+function vitPose(name){
+  morphOn=false;
+  vitFig.show(true); vitFig.setPose(name);
+  if(vitLayer) vitLayer.group.visible=false;
+  document.getElementById('vitruv').style.display = name==='standing' ? '' : 'none';
+  readout.innerHTML = name==='seated'
+    ? '<b>seated lotus</b> · same canon, folded'
+    : '<b>lying down</b> · same canon, horizontal';
 }
 function vitMorph(){
   vitStill(); morphOn=true; morphT=0; morphDir=1;
@@ -842,7 +851,7 @@ function tick(){
     rings.forEach((r,k)=>r.material.opacity=.32+.12*Math.sin(t*1.5+k));
   }
   updateEdges();
-  if(morphOn&&vitFig&&!reduce){
+  if(morphOn&&vitFig&&vitFig.getPose()==='standing'&&!reduce){
     morphT+=morphDir*dt*0.14;
     if(morphT>=1){morphT=1;morphDir=-1;} if(morphT<=0){morphT=0;morphDir=1;}
     const st=vitFig.pose(morphT);
@@ -955,4 +964,6 @@ window.addEventListener('message',ev=>{
   const fw=q.get('fw');
   if(fw&&['trika','mp','layayoga','kalachakra'].includes(fw)) setFw(fw);
 })();
-addEventListener('resize',resize); resize(); tick();
+addEventListener('resize',resize); resize();
+try{ vitEnsure(); vitStill(); }catch(e){}
+tick();
