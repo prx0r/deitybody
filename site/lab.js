@@ -567,7 +567,10 @@ function toggleNadis(){
     pathReg.rebuild((x,y)=>xfPos(x,y));
   }
   if(!nadis) return;
-  setVisibleDeep(nadis.group,!nadis.group.visible);
+  const v=!nadis.group.visible;
+  setVisibleDeep(nadis.group,v);
+  if(hubMesh) hubMesh.visible=v;
+  if(branchGroup) branchGroup.visible=v;
   if(nadis.group.visible){
     info.querySelector('.dev').textContent='नाडी';
     info.querySelector('.iast').textContent='ten principals · endpoints per SSP/Darśana/Yājñavalkya';
@@ -587,8 +590,9 @@ function buildHubAndBranches(){
   hubMesh=new THREE.Mesh(new THREE.SphereGeometry(.3,18,14),
     new THREE.MeshBasicMaterial({color:0xc77f1a,transparent:true,opacity:.28}));
   hubMesh.scale.set(1.1,2.2,0.8); hubMesh.position.set(hx,hy,0);
+  hubMesh.visible=false;
   scene.add(hubMesh);
-  branchGroup=new THREE.Group(); scene.add(branchGroup);
+  branchGroup=new THREE.Group(); branchGroup.visible=false; scene.add(branchGroup);
   if(!nadisCfg) return;
   const bmat=new THREE.LineBasicMaterial({color:0xa86f14,transparent:true,opacity:.22});
   /* L-system branching (engine/dynamics/fractals): deterministic, rule-grown */
