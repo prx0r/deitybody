@@ -50,7 +50,6 @@ function fxFlashRegion(regionId, ids){ (ids||[]).slice(0,6).forEach((id,k)=>{
 function bindTools(){ tools=makeTools({session, graph, fx:{flashRegion:fxFlashRegion}});
   if(window.deitybody) window.deitybody.tools=tools; }
 window.deitybody={session, tools:null, get graph(){return graph;}};
-Object.defineProperty(window.deitybody,'tools',{get:()=>tools});
 bindTools();
 loadGraph().then(g=>{graph=g; bindTools();}).catch(()=>{});
 session.render=(e)=>exec(e);
@@ -572,7 +571,7 @@ const PANELS={
   trika:{t:'☸ Trika',d:'Mātṛkā base install, Mālinī infusion after automatic. One map per sitting.',
     opts:[['Mātṛkā · base',()=>setCfg('matrika')],['Mālinī · infusion',()=>setCfg('malini')],
       ['VBT 24 · heart↔12 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'}))],
-      ['Chladni plate: off',e=>{toggleChladni(); e.target.textContent=`Chladni plate: ${chladniOn?'on':'off'}`;}]]},
+      ['Chladni plate: off',e=>{toggleChladni(); e.target.textContent=`Chladni plate: ${chladniOn?'on':'off'}`;}],
       ['Guide voice: off',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;}]]},
   pillar:{t:'☩ Middle Pillar',d:'Hermetic descent + circulation over the same body. Separate layer — never mixed with nyāsa.',
     opts:[['Enter Pillar',()=>setFw('mp')],['Back to Trika',()=>setFw('trika')]]},
