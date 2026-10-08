@@ -9,6 +9,7 @@ import { makeTools } from './engine/agent.js';
 import { buildLotus } from './engine/primitives/lotus.js';
 import { buildSpokes } from './engine/primitives/spokes.js';
 import { buildVitruvian } from './engine/primitives/vitruvian.js';
+import { buildVitruvianFigure } from './engine/primitives/vitruvian-figure.js';
 import { buildGridField } from './engine/primitives/grid-field.js';
 import { renderChladni } from './engine/mxth/chladni.js';
 
@@ -679,7 +680,7 @@ function buildMenu(){
   r=sec('Layers');
   btn(r,'◉ scan',()=>toggleScan(),'mScan');
   btn(r,'△ yantra',()=>toggleYan(),'mYan');
-  btn(r,'✦ vitruvian',()=>toggleVit(),'mVit');
+  btn(r,'✦ figure',e=>{cycleVit(); e.target.textContent='✦ '+vitModeLabel();},'mVit');
   btn(r,'◈ lines',()=>toggleX(),'mX');
   btn(r,'🌊 fluid',()=>{fluidOn=!fluidOn; fluidCanvas.style.display=fluidOn?'':'none';},'mFluid');
   btn(r,'≋ chladni',()=>toggleChladni(),'mChlad');
@@ -780,6 +781,40 @@ function toggleVit(){
   }
   markRail();
 }
+/* ---------- vitruvian figure: two poses, two centres, one morph ---------- */
+let vitFig=null, morphOn=false, morphT=0, morphDir=1, lastPhase='';
+function vitEnsure(){
+  if(!vitFig) vitFig=buildVitruvianFigure({scene});
+  if(!vitLayer && vitCfg) vitLayer=buildVitruvian(vitCfg,{scene});
+  const img=document.getElementById('vitruv');
+  if(!img.src) img.src='assets/vitruvian.svg';
+}
+function vitModeLabel(){
+  if(morphOn) return 'morph';
+  if(vitFig&&vitFig.group.visible) return 'still';
+  return 'figure';
+}
+function cycleVit(){
+  vitEnsure();
+  if(morphOn){ vitHide(); }
+  else if(vitFig&&vitFig.group.visible){ morphOn=true; morphT=0; morphDir=1; }
+  else vitStill();
+  menuMark();
+}
+function vitStill(){
+  morphOn=false;
+  vitFig.show(true); vitFig.pose(0);
+  if(vitLayer) vitLayer.group.visible=false;
+  document.getElementById('vitruv').style.display='';
+  readout.innerHTML='<b>earthly pose</b> · square · centre groin';
+}
+function vitMorph(){ vitStill(); morphOn=true; morphT=0; morphDir=1; }
+function vitHide(){
+  morphOn=false;
+  if(vitFig) vitFig.show(false);
+  if(vitLayer) vitLayer.group.visible=false;
+  document.getElementById('vitruv').style.display='none';
+}
 /* ---------- vipassana-style scan (driven from the rail → toggleScan) ---------- */
 let scanMode=null;
 const scanBand=new THREE.Mesh(new THREE.TorusGeometry(.72,.03,8,48),
@@ -804,6 +839,15 @@ function tick(){
     rings.forEach((r,k)=>r.material.opacity=.32+.12*Math.sin(t*1.5+k));
   }
   updateEdges();
+  if(morphOn&&vitFig&&!reduce){
+    morphT+=morphDir*dt*0.14;
+    if(morphT>=1){morphT=1;morphDir=-1;} if(morphT<=0){morphT=0;morphDir=1;}
+    const st=vitFig.pose(morphT);
+    if(st.pose!==lastPhase){lastPhase=st.pose;
+      readout.innerHTML = st.pose==='earthly'
+        ? '<b>earthly pose</b> · square · centre groin — earth, measure'
+        : '<b>cosmic pose</b> · circle · centre navel — heavens, infinite';}
+  }
   for(let i=tweens.length-1;i>=0;i--){const tw=tweens[i]; tw.t+=dt;
     const k=Math.min(1,tw.t/tw.dur); tw.fn(k); if(k>=1){tweens.splice(i,1); tw.done&&tw.done();}}
   for(let i=pulses.length-1;i>=0;i--){const pu=pulses[i]; pu.t+=dt;
