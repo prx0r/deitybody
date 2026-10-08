@@ -1,0 +1,433 @@
+{
+ "loci": [
+  {
+   "term": "body",
+   "lines": [
+    37,
+    49,
+    49,
+    53,
+    71,
+    82
+   ],
+   "count": 363
+  },
+  {
+   "term": "ears",
+   "lines": [
+    37,
+    40,
+    54,
+    126,
+    209,
+    209
+   ],
+   "count": 59
+  },
+  {
+   "term": "eyes",
+   "lines": [
+    37,
+    40,
+    46,
+    82,
+    106,
+    117
+   ],
+   "count": 52
+  },
+  {
+   "term": "heart",
+   "lines": [
+    25,
+    39,
+    40,
+    89,
+    110,
+    117
+   ],
+   "count": 45
+  },
+  {
+   "term": "tongue",
+   "lines": [
+    181,
+    191,
+    297,
+    297,
+    358,
+    404
+   ],
+   "count": 36
+  },
+  {
+   "term": "hands",
+   "lines": [
+    37,
+    126,
+    415,
+    447,
+    477,
+    477
+   ],
+   "count": 35
+  },
+  {
+   "term": "legs",
+   "lines": [
+    116,
+    116,
+    116,
+    116,
+    248,
+    384
+   ],
+   "count": 33
+  },
+  {
+   "term": "anus",
+   "lines": [
+    87,
+    117,
+    243,
+    256,
+    316,
+    316
+   ],
+   "count": 31
+  },
+  {
+   "term": "spine",
+   "lines": [
+    116,
+    116,
+    119,
+    122,
+    246,
+    246
+   ],
+   "count": 27
+  },
+  {
+   "term": "mouth",
+   "lines": [
+    40,
+    40,
+    380,
+    410,
+    411,
+    411
+   ],
+   "count": 24
+  },
+  {
+   "term": "throat",
+   "lines": [
+    40,
+    90,
+    93,
+    117,
+    335,
+    399
+   ],
+   "count": 21
+  },
+  {
+   "term": "neck",
+   "lines": [
+    230,
+    394,
+    506,
+    517,
+    525,
+    525
+   ],
+   "count": 21
+  },
+  {
+   "term": "nose",
+   "lines": [
+    358,
+    409,
+    410,
+    410,
+    411,
+    412
+   ],
+   "count": 21
+  },
+  {
+   "term": "feet",
+   "lines": [
+    37,
+    97,
+    116,
+    210,
+    296,
+    399
+   ],
+   "count": 20
+  },
+  {
+   "term": "nostrils",
+   "lines": [
+    408,
+    408,
+    408,
+    409,
+    410,
+    473
+   ],
+   "count": 20
+  },
+  {
+   "term": "navel",
+   "lines": [
+    40,
+    40,
+    88,
+    329,
+    541,
+    586
+   ],
+   "count": 19
+  },
+  {
+   "term": "eyebrows",
+   "lines": [
+    82,
+    91,
+    431,
+    439,
+    590,
+    597
+   ],
+   "count": 19
+  },
+  {
+   "term": "fingers",
+   "lines": [
+    94,
+    316,
+    316,
+    316,
+    406,
+    463
+   ],
+   "count": 18
+  },
+  {
+   "term": "knees",
+   "lines": [
+    406,
+    406,
+    447,
+    518,
+    518,
+    518
+   ],
+   "count": 16
+  },
+  {
+   "term": "whole body",
+   "lines": [
+    116,
+    117,
+    124,
+    126,
+    130,
+    136
+   ],
+   "count": 12
+  },
+  {
+   "term": "chest",
+   "lines": [
+    117,
+    466,
+    470,
+    474,
+    518,
+    525
+   ],
+   "count": 12
+  },
+  {
+   "term": "lungs",
+   "lines": [
+    278,
+    414,
+    446,
+    469,
+    493,
+    503
+   ],
+   "count": 11
+  },
+  {
+   "term": "thighs",
+   "lines": [
+    415,
+    513,
+    515,
+    518,
+    531,
+    542
+   ],
+   "count": 10
+  },
+  {
+   "term": "belly",
+   "lines": [
+    421,
+    421,
+    536,
+    589,
+    739,
+    861
+   ],
+   "count": 10
+  },
+  {
+   "term": "forehead",
+   "lines": [
+    25,
+    117,
+    536,
+    536,
+    536,
+    594
+   ],
+   "count": 8
+  },
+  {
+   "term": "crown",
+   "lines": [
+    42,
+    266,
+    360,
+    364,
+    857,
+    894
+   ],
+   "count": 8
+  },
+  {
+   "term": "toes",
+   "lines": [
+    200,
+    406,
+    436,
+    531,
+    536,
+    541
+   ],
+   "count": 8
+  },
+  {
+   "term": "skull",
+   "lines": [
+    122,
+    358,
+    412,
+    446,
+    911,
+    917
+   ],
+   "count": 7
+  },
+  {
+   "term": "lips",
+   "lines": [
+    216,
+    543,
+    575,
+    608,
+    608,
+    714
+   ],
+   "count": 7
+  },
+  {
+   "term": "palate",
+   "lines": [
+    313,
+    551,
+    584,
+    595,
+    598,
+    618
+   ],
+   "count": 7
+  }
+ ],
+ "breath_terms": [
+  "apana",
+  "breathe",
+  "breathing",
+  "exhalation",
+  "exhale",
+  "hold the breath",
+  "inhalation",
+  "inhale",
+  "kumbhaka",
+  "prana",
+  "puraka",
+  "rechaka",
+  "retain",
+  "retention",
+  "suspend"
+ ],
+ "channel_terms": [
+  "chakra",
+  "channel",
+  "granthis",
+  "ida",
+  "kanda",
+  "knot",
+  "lotus",
+  "nadi",
+  "pingala",
+  "spine",
+  "sushumna",
+  "vessel"
+ ],
+ "sense_terms": [
+  "attention",
+  "awareness",
+  "behold",
+  "concentrate",
+  "contemplate",
+  "feel",
+  "focus",
+  "imagine",
+  "meditate",
+  "observe",
+  "picture",
+  "think of",
+  "visualise",
+  "witness"
+ ],
+ "counts_found": [
+  "10 minutes",
+  "10 seconds",
+  "12 Oms",
+  "12 seconds",
+  "12 times",
+  "15 minutes",
+  "15 seconds",
+  "16 times",
+  "1:2",
+  "1:4:2",
+  "20 minutes",
+  "20 rounds",
+  "20 seconds",
+  "20 times",
+  "3 Oms",
+  "3 minutes",
+  "3 rounds",
+  "3 times",
+  "32 times",
+  "4 seconds"
+ ]
+}

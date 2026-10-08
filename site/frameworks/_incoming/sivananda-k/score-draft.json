@@ -1,0 +1,102 @@
+{
+ "id": "sivananda-k-v1",
+ "title": "sivananda-k-syllabus",
+ "provenance": "compiled from syllabus draft \u2014 REVIEW REQUIRED",
+ "events": [
+  {
+   "t": 0.0,
+   "do": "info",
+   "dev": "?",
+   "iast": "s1",
+   "cue": "TODO-classify"
+  },
+  {
+   "t": 6.5,
+   "do": "info",
+   "dev": "?",
+   "iast": "s2",
+   "cue": "TODO-classify"
+  },
+  {
+   "t": 13.0,
+   "do": "ring",
+   "at": "TODO",
+   "cue": "TODO-cue"
+  },
+  {
+   "t": 22.5,
+   "do": "info",
+   "dev": "?",
+   "iast": "s4",
+   "cue": "TODO-classify"
+  },
+  {
+   "t": 29.0,
+   "do": "info",
+   "dev": "?",
+   "iast": "s5",
+   "cue": "TODO-classify"
+  },
+  {
+   "t": 35.5,
+   "do": "info",
+   "dev": "?",
+   "iast": "s6",
+   "cue": "TODO-classify"
+  },
+  {
+   "t": 42.0,
+   "do": "info",
+   "dev": "?",
+   "iast": "s7",
+   "cue": "TODO-classify"
+  },
+  {
+   "t": 48.5,
+   "do": "info",
+   "dev": "?",
+   "iast": "s8",
+   "cue": "TODO-classify"
+  },
+  {
+   "t": 55.0,
+   "do": "info",
+   "dev": "?",
+   "iast": "s9",
+   "cue": "TODO-classify"
+  },
+  {
+   "t": 61.5,
+   "do": "ring",
+   "at": "TODO",
+   "cue": "TODO-cue"
+  },
+  {
+   "t": 71.0,
+   "do": "ring",
+   "at": "TODO",
+   "cue": "TODO-cue"
+  },
+  {
+   "t": 80.5,
+   "do": "info",
+   "dev": "?",
+   "iast": "s12",
+   "cue": "TODO-classify"
+  },
+  {
+   "t": 87.0,
+   "do": "info",
+   "dev": "?",
+   "iast": "s13",
+   "cue": "TODO-classify"
+  },
+  {
+   "t": 93.5,
+   "do": "info",
+   "dev": "?",
+   "iast": "s14",
+   "cue": "TODO-classify"
+  }
+ ]
+}
