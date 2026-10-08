@@ -1,0 +1,7 @@
+# deitybody — body homescreen on body.stonedoorway.com
+# Static assets only (zero-dep SVG + Web Audio). Same account/pattern as stonedoorway worker.
+name = "deitybody"
+compatibility_date = "2025-06-01"
+
+[assets]
+directory = "./site"
