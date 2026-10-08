@@ -1,0 +1,9 @@
+{
+  "id": "body-scan",
+  "title": "Body scan · crown → feet → crown",
+  "provenance": "Vipassanā body-sweep structure (Goenka-style order) as attention score; breath natural (TĀ 4.91). PEDAGOGICAL pacing.",
+  "sweep": {"regions": ["crown", "face", "throat", "shoulders", "arms", "hands", "chest", "heart", "belly", "navel", "hips", "thighs", "knees", "shanks", "feet"], "per_region": 3.0},
+  "events": [
+    {"t": 0.0, "do": "info", "dev": "स्मृति", "iast": "body scan — crown → feet → crown"}
+  ]
+}

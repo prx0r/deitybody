@@ -1,0 +1,33 @@
+{
+  "id": "canonical-body-v1",
+  "note": "Address space for the subtle-body renderer. y in scene units (feet≈-3.9, dvadasanta≈4.3). PEDAGOGICAL geometry; loci from matrika-body-map-v2.",
+  "regions": {
+    "crown": {"y": 3.3, "nodes": ["aṃ"]},
+    "forehead": {"y": 2.95, "nodes": ["a"]},
+    "face": {"y": 2.6, "nodes": ["a", "ā", "i", "ī", "u", "ū", "ṛ", "ṝ", "ḷ", "ḹ", "e", "ai", "o", "au", "aḥ"]},
+    "throat": {"y": 1.6, "nodes": ["va"]},
+    "shoulders": {"y": 1.1, "nodes": ["ka", "ca", "bha", "ya"]},
+    "arms": {"y": 0.4, "nodes": ["kha", "ga", "gha", "cha", "ja", "jha", "ḍa", "ḍha"]},
+    "hands": {"y": -0.3, "nodes": ["ga", "ja", "ṭha", "jha", "ña"]},
+    "chest": {"y": 0.5, "nodes": ["cha", "la", "pa"]},
+    "heart": {"y": 0.78, "nodes": ["ma", "pa", "sa"]},
+    "belly": {"y": -0.6, "nodes": ["bha", "ṣa"]},
+    "navel": {"y": -0.9, "nodes": ["kṣa"]},
+    "hips": {"y": -1.7, "nodes": ["ṭa", "ta", "ma"]},
+    "thighs": {"y": -2.4, "nodes": ["ṭha", "tha", "aṃ", "ta"]},
+    "knees": {"y": -3.0, "nodes": ["ḍa", "da", "e", "ai"]},
+    "shanks": {"y": -3.5, "nodes": ["ḍha", "dha", "o", "au"]},
+    "feet": {"y": -3.9, "nodes": ["ṇa", "na", "da", "pha"]},
+    "whole_body": {"y": 0.0, "nodes": []}
+  },
+  "centers": {
+    "root": {"y": -3.2}, "sacral": {"y": -2.3}, "solar": {"y": -1.2},
+    "heart": {"y": 0.78}, "throat": {"y": 1.6}, "brow": {"y": 2.75},
+    "crown": {"y": 3.3}, "dvadasanta": {"y": 4.3}
+  },
+  "channels": {
+    "spine": {"points": [[0, -3.9], [0, 4.3]]},
+    "ida": {"points": "helix:phase0"},
+    "pingala": {"points": "helix:phasePI"}
+  }
+}

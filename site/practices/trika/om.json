@@ -1,0 +1,15 @@
+{
+  "id": "om-ascent",
+  "title": "OM · ascent + nectar descent",
+  "provenance": "OM 11-stage spine (Padoux pp.422-425, ped encoding) + Netra amṛta down-flood",
+  "addresses": ["heart", "crown", "dvadasanta"],
+  "events": [
+    {"t": 0.0, "do": "info", "dev": "ॐ", "iast": "OM · heart → crown → dvādaśānta → rain to heart"},
+    {"t": 0.1, "do": "pulse", "from": "heart", "to": "dvadasanta", "dur": 1.4},
+    {"t": 0.2, "do": "flash", "node": "ma"},
+    {"t": 0.65, "do": "flash", "node": "ha"},
+    {"t": 1.1, "do": "flash", "node": "aṃ"},
+    {"t": 1.55, "do": "flash", "node": "a"},
+    {"t": 1.7, "do": "pulse", "from": "dvadasanta", "to": "heart", "dur": 1.2, "color": "teal"}
+  ]
+}

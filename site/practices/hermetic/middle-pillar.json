@@ -1,0 +1,26 @@
+{
+  "id": "middle-pillar",
+  "title": "Middle Pillar · descent + circulation",
+  "provenance": "Regardie Middle Pillar (centers in data/frameworks/middle-pillar.json). PEDAGOGICAL encoding, not initiatory instruction.",
+  "trajectories": {
+    "descent": [
+      {"t": 0.0, "do": "info", "dev": "☩", "iast": "Descent of Light · crown → feet"},
+      {"t": 0.1, "do": "sweep", "from": "crown", "to": "feet", "dur": 2.2},
+      {"t": 0.4, "do": "mpfire", "id": "kether"},
+      {"t": 0.8, "do": "mpfire", "id": "daath"},
+      {"t": 1.2, "do": "mpfire", "id": "tiphareth"},
+      {"t": 1.6, "do": "mpfire", "id": "yesod"},
+      {"t": 2.0, "do": "mpfire", "id": "malkuth"}
+    ],
+    "circulation": [
+      {"t": 0.0, "do": "info", "dev": "☩", "iast": "Circulation · feet → crown → feet"},
+      {"t": 0.1, "do": "sweep", "from": "feet", "to": "crown", "dur": 2.4},
+      {"t": 2.6, "do": "sweep", "from": "crown", "to": "feet", "dur": 2.4},
+      {"t": 0.5, "do": "mpfire", "id": "malkuth"},
+      {"t": 1.3, "do": "mpfire", "id": "tiphareth"},
+      {"t": 2.1, "do": "mpfire", "id": "kether"},
+      {"t": 3.2, "do": "mpfire", "id": "tiphareth"},
+      {"t": 4.2, "do": "mpfire", "id": "malkuth"}
+    ]
+  }
+}

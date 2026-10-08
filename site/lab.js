@@ -2,6 +2,52 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import { PracticeClock } from './engine/clock.js';
+import { loadBody } from './engine/body.js';
+let BD=null; loadBody().then(b=>BD=b).catch(()=>{});
+const scoreClock=new PracticeClock();
+const SCORES={};
+async function score(url){
+  if(!SCORES[url]) SCORES[url]=await (await fetch(url)).json();
+  return SCORES[url];
+}
+/* one player: every trajectory is a score of address-space events */
+function runScore(events){
+  scoreClock.clear();
+  for(const e of events) scoreClock.at(e.t, ()=>exec(e));
+  scoreClock.play();
+}
+function exec(e){
+  const Y=a=>BD?BD.regionY(a):({heart:.78,crown:3.3,dvadasanta:4.3,feet:-3.9}[a]??0);
+  switch(e.do){
+    case 'info':
+      info.querySelector('.dev').textContent=e.dev||'';
+      info.querySelector('.iast').textContent=e.iast||'';
+      if(e.locus) info.querySelector('.locus').textContent=e.locus;
+      break;
+    case 'flash': {
+      const k=P.findIndex(p=>p[0]===e.node); if(k<0) break;
+      show(P[k]); pop(k); if(e.sound&&P[k][8]) play('audio/phonemes/'+P[k][8]);
+      break; }
+    case 'pulse': case 'sweep': {
+      const y0=Y(e.from), y1=Y(e.to);
+      pulse(y0,y1,e.dur||1.2,()=>ringPing(y1,e.color==='teal'?TEAL:GOLD));
+      if(e.do==='sweep'&&BD){
+        for(const r of [e.from,e.to]){
+          (BD.regionNodes(r)||[]).slice(0,3).forEach((id,kk)=>{
+            const k=P.findIndex(p=>p[0]===id); if(k>=0) setTimeout(()=>{show(P[k]); pop(k);},kk*300);
+          });
+        }
+      }
+      break; }
+    case 'ring': ringPing(Y(e.at),TEAL); break;
+    case 'splat': {
+      const k=P.findIndex(p=>p[0]===e.node); if(k<0) break;
+      const [sx,sy]=locusScreen(k); fluidSplat(sx,sy,e.dx||0,e.dy||-24); break; }
+    case 'audio': play(e.url); break;
+    case 'mpfire': mpFire(e.id); break;
+  }
+}
 import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
@@ -272,13 +318,7 @@ function mpFire(id){
   pulse(Math.max(c.y3-.4,channelY0),Math.min(c.y3+.9,channelY1),.55,()=>ringPing(Math.min(c.y3+.9,channelY1),TEAL));
 }
 function mpRun(trajId){
-  const t=MP.data.trajectories.find(t=>t.id===trajId);
-  info.querySelector('.dev').textContent='☩';
-  info.querySelector('.iast').textContent='Middle Pillar · '+t.name;
-  info.querySelector('.locus').textContent=t.desc;
-  pulse(channelY0,channelY1,trajId==='descent'?2.2:2.8,()=>{
-    t.stops.forEach((id,k)=>setTimeout(()=>mpFire(id),k*420));
-  });
+  score('practices/hermetic/middle-pillar.json').then(j=>runScore(j.trajectories[trajId]));
 }
 let actx=null, analyser=null, _fq=null; const bufCache={};
 async function audioBuf(url){
@@ -444,16 +484,14 @@ document.getElementById('rScan').onclick=()=>{toggleScan(); openPanel('scan');};
 document.getElementById('rYan').onclick=()=>{toggleYan(); openPanel('yantra');};
 document.getElementById('rX').onclick=()=>toggleX();
 /* (x-ray handler lives with the scan block below) */
-document.getElementById('bOm').onclick=()=>{
+document.getElementById('bOm').onclick=async ()=>{
   if(fw!=='trika'){ if(MP)mpRun('descent'); return; }
-  show(['oṃ','ॐ','heart → crown → dvādaśānta → rain','',0,'','',0,null]);
-  pulse(.78,channelY1,1.4,()=>{ringPing(channelY1,TEAL); pulse(channelY1,.78,1.2,()=>ringPing(.78));});
-  ['ma','ha','aṃ','a'].forEach((id,k)=>setTimeout(()=>{const j=byIast[id]; if(j!=null)pop(j);},k*450));
+  runScore((await score('practices/trika/om.json')).events);
 };
-document.getElementById('bNam').onclick=()=>{
+document.getElementById('bNam').onclick=async ()=>{
   if(fw!=='trika'){ if(MP)mpRun('circulation'); return; }
-  const seq=cfg==='matrika'?['na','ma','aḥ','śa','i','va','ā','ya']:['na','ma','śa','va','ya'];
-  pulse(-3.2,.78,1.2,()=>{ringPing(.78); seq.forEach((id,k)=>setTimeout(()=>fire(id,false),k*380));});
+  const j=await score('practices/trika/namah-shivaya.json');
+  runScore(j.variants[cfg]);
 };
 document.getElementById('bHa').onclick=()=>{
   show(['ha','ह','prāṇa — full-channel flash','',0,'','',0,'ha.ogg']);
@@ -469,9 +507,14 @@ const SEQ={sutra:['sa','u','a','i','ta','a','ña','ma','ā','ta','ma','ā'],
  hrdaye:['ha','ṛ','da','ya','e']};
 const WAV={sutra:'audio/edge_test_sutra.wav',hrdaye:'audio/edge_test_hrdaye.wav'};
 document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{
-  play(WAV[b.dataset.s]);
-  SEQ[b.dataset.s].forEach((id,k)=>{const kk=P.findIndex(p=>p[0]===id); if(kk>=0)setTimeout(()=>{show(P[kk]); pop(kk);
-    const [sx,sy]=locusScreen(kk); fluidSplat(sx,sy,0,-26);},k*450);});
+  const key=b.dataset.s;
+  const evs=[{t:0,do:'audio',url:WAV[key]},
+    {t:.05,do:'info',dev:b.textContent.replace('▶ ',''),
+      iast:key==='sutra'?'caitanyam ātmā — Consciousness is Self':'hṛdaye — in the Heart'}];
+  SEQ[key].forEach((id,kk)=>{const n=P.findIndex(p=>p[0]===id); if(n>=0){
+    evs.push({t:.15+kk*.45,do:'flash',node:id});
+    evs.push({t:.15+kk*.45,do:'splat',node:id,dy:-26});}});
+  runScore(evs);
 });
 
 /* ---------- vipassana-style scan (driven from the rail → toggleScan) ---------- */
