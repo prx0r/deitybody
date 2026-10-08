@@ -716,7 +716,7 @@ function buildMenu(){
   r=sec('Layers');
   btn(r,'◉ scan',()=>toggleScan(),'mScan');
   btn(r,'△ yantra',()=>toggleYan(),'mYan');
-  btn(r,'✦ Vitruvian',e=>{cycleVit(); e.target.textContent='✦ '+vitModeLabel();},'mVit');
+  btn(r,'✦ figure',e=>{cycleVitFig(); e.target.textContent='✦ '+vitFigLabel();},'mVit');
   btn(r,'◈ lines',()=>toggleX(),'mX');
   btn(r,'◍ avatar',()=>cycleAvatar(),'mAva');
   btn(r,'🌊 fluid',()=>{fluidOn=!fluidOn; fluidCanvas.style.display=fluidOn?'':'none';},'mFluid');
@@ -828,16 +828,30 @@ function vitEnsure(){
   const img=document.getElementById('vitruv');
   if(!img.src) img.src='assets/vitruvian.svg';
 }
-function vitModeLabel(){
-  if(morphOn) return 'morph';
-  if(vitFig&&vitFig.group.visible) return 'still';
-  return 'figure';
+/* figure poses: off → still → morph → seated → lying → off */
+let vitPoseIdx=0;
+function vitFigLabel(){
+  return ['figure','still','morph','seated','lying'][vitPoseIdx];
 }
-function cycleVit(){
+function cycleVitFig(){
   vitEnsure();
-  if(morphOn){ vitHide(); }
-  else if(vitFig&&vitFig.group.visible){ morphOn=true; morphT=0; morphDir=1; }
-  else vitStill();
+  vitPoseIdx=(vitPoseIdx+1)%5;
+  morphOn=false;
+  const img=document.getElementById('vitruv');
+  if(vitPoseIdx===0){ vitHide(); }
+  else{
+    vitFig.show(true);
+    if(vitPoseIdx===1){ vitFig.setPose('standing'); vitFig.pose(0);
+      readout.innerHTML='<b>earthly pose</b> · square · centre groin'; }
+    else if(vitPoseIdx===2){ vitFig.setPose('standing'); morphOn=true; morphT=0; morphDir=1;
+      readout.innerHTML='<b>morphing</b> · groin ↔ navel'; }
+    else if(vitPoseIdx===3){ vitFig.setPose('seated');
+      readout.innerHTML='<b>seated lotus</b> · same canon, folded'; }
+    else { vitFig.setPose('lying');
+      readout.innerHTML='<b>lying down</b> · same canon, horizontal'; }
+    if(vitLayer) vitLayer.group.visible=false;
+    img.style.display='';
+  }
   menuMark();
 }
 function vitStill(){
@@ -855,10 +869,6 @@ function vitPose(name){
   readout.innerHTML = name==='seated'
     ? '<b>seated lotus</b> · same canon, folded'
     : '<b>lying down</b> · same canon, horizontal';
-}
-function vitMorph(){
-  vitStill(); morphOn=true; morphT=0; morphDir=1;
-  readout.innerHTML='<b>morphing</b> · groin ↔ navel — the body moves, not the shapes';
 }
 function vitHide(){
   morphOn=false;
