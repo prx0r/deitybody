@@ -15,7 +15,7 @@ const canvas = document.getElementById('scene');
 const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 const scene = new THREE.Scene();
-scene.fog = new THREE.FogExp2(0x0b0d12, 0.055);
+scene.fog = new THREE.FogExp2(0x0b0d12, 0.022);
 const camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, .1, 100);
 camera.position.set(2.6, 1.1, 7.2);
 const controls = new OrbitControls(camera, canvas);
@@ -33,7 +33,7 @@ let composer=null, bloomOn=innerWidth>=640 && !reduce;
 if(bloomOn){
   composer=new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene,camera));
-  const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.55,.65,.78);
+  const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.32,.5,.87);
   composer.addPass(bloom); composer.addPass(new OutputPass());
 }
 
@@ -58,7 +58,7 @@ if(bloomOn){
 /* ---------- body shell (stylized lathe, NOT anatomy) ---------- */
 const shellPts=[[.02,-4],[.35,-3.9],[.28,-3.2],[.42,-2.4],[.5,-2.2],[.42,-1.2],[.55,-.2],[.62,.4],[.55,1.0],[.7,1.25],[.28,1.6],[.3,1.9],[.62,2.3],[.62,2.9],[.3,3.2],[.02,3.3]]
   .map(p=>new THREE.Vector2(p[0],p[1]));
-const shellGeo=new THREE.LatheGeometry(shellPts,28);
+const shellGeo=new THREE.LatheGeometry(shellPts,64);
 const shellSolid=new THREE.Mesh(shellGeo,new THREE.MeshBasicMaterial({color:GOLD,transparent:true,opacity:.05,depthWrite:false,side:THREE.DoubleSide}));
 const shellWire=new THREE.Mesh(shellGeo,new THREE.MeshBasicMaterial({color:GOLD,wireframe:true,transparent:true,opacity:.13}));
 scene.add(shellSolid,shellWire);
@@ -102,7 +102,37 @@ const rings=CAKRAS.map(([n,y],k)=>{
   const lg=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,3.35,0),new THREE.Vector3(0,channelY1,0)]);
   scene.add(new THREE.Line(lg,new THREE.LineDashedMaterial({color:TEAL,dashSize:.08,gapSize:.06,transparent:true,opacity:.6})));
 }
-/* scan ring — the alive sweep */
+/* ---------- yantra overlay: measurable geometry (PEDAGOGICAL) ---------- */
+const yantra=new THREE.Group(); yantra.visible=false; scene.add(yantra);
+{
+  const line=(pts,color,op=.8)=>{const g=new THREE.BufferGeometry().setFromPoints(pts);
+    yantra.add(new THREE.Line(g,new THREE.LineBasicMaterial({color,transparent:true,opacity:op})));};
+  const ring=(y,r,color)=>{const m=new THREE.Mesh(new THREE.TorusGeometry(r,.008,6,72),
+    new THREE.MeshBasicMaterial({color,transparent:true,opacity:.7})); m.position.y=y; m.rotation.x=Math.PI/2; yantra.add(m);};
+  /* base square (earth) at feet */
+  const s=.55,y=-3.9;
+  line([new THREE.Vector3(-s,y,-s),new THREE.Vector3(s,y,-s),new THREE.Vector3(s,y,s),new THREE.Vector3(-s,y,s),new THREE.Vector3(-s,y,-s)],GOLD);
+  /* heart star: fire triangle up + water triangle down */
+  const hy=.78,r=.5;
+  line([new THREE.Vector3(0,hy+r*.9,0),new THREE.Vector3(-r,hy-r*.6,0),new THREE.Vector3(r,hy-r*.6,0),new THREE.Vector3(0,hy+r*.9,0)],GOLD);
+  line([new THREE.Vector3(0,hy-r*.9,0),new THREE.Vector3(-r,hy+r*.6,0),new THREE.Vector3(r,hy+r*.6,0),new THREE.Vector3(0,hy-r*.9,0)],TEAL);
+  /* crown circle + bindu */
+  ring(3.3,.3,GOLD);
+  const bindu=new THREE.Mesh(new THREE.SphereGeometry(.035,12,10),new THREE.MeshBasicMaterial({color:0xffe9b0}));
+  bindu.position.set(0,3.3,0); yantra.add(bindu);
+  /* 5 kalā divisions, feet→head */
+  [['nivṛtti',-3.2],['pratiṣṭhā',-1.7],['vidyā',-.2],['śāntā',1.5],['śāntātītā',3.1]].forEach(([n,yy])=>{
+    line([new THREE.Vector3(-.85,yy,0),new THREE.Vector3(.85,yy,0)],TEAL,.45);
+    const d=document.createElement('div'); d.className='klabel'; d.textContent=n;
+    const o=new CSS2DObject(d); o.position.set(1.05,yy,0); yantra.add(o);
+  });
+  /* dvādaśānta 12-unit measure above crown */
+  for(let k=1;k<=12;k++){const yy=3.3+k*.083;
+    line([new THREE.Vector3(-.12,yy,0),new THREE.Vector3(.12,yy,0)],TEAL,.5);}
+}
+document.getElementById('bYan').onclick=e=>{
+  yantra.visible=!yantra.visible; e.target.classList.toggle('on',yantra.visible);
+};
 const scan=new THREE.Mesh(new THREE.TorusGeometry(.62,.014,8,48),
   new THREE.MeshBasicMaterial({color:TEAL,transparent:true,opacity:.5}));
 scan.rotation.x=Math.PI/2; scene.add(scan);
@@ -172,7 +202,10 @@ const A=p=>({x:(p[6]-200)/90, y:(400-p[7])/90, z:zFor(p[5])});
 let cfg='matrika';
 function glyphChip(dev, iast){
   const el=document.createElement('div');
-  el.className='glyph'; el.textContent=dev;
+  el.className='glyph';
+  el.innerHTML=`<svg viewBox="0 0 36 36" width="36" height="36">`
+    +`<circle cx="18" cy="18" r="16.5" class="ring"/>`
+    +`<text x="18" y="18.5" text-anchor="middle" dominant-baseline="central" class="g">${dev}</text></svg>`;
   el.setAttribute('role','button'); el.setAttribute('tabindex','0');
   el.setAttribute('aria-label','phoneme '+iast);
   const o=new CSS2DObject(el);
