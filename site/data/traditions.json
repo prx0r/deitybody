@@ -1,0 +1,82 @@
+{
+  "id": "menu-v2",
+  "note": "Tradition → course → phase. Each phase loads one body preset + its sound. Play runs the timed visualisation.",
+  "traditions": [
+    {"id": "trika", "name": "Trika", "lineage": "Kashmir Shaivism · Abhinavagupta",
+     "courses": [
+      {"id": "matrika", "title": "Matrika course — 50 sounds on the body",
+       "phases": [
+        {"id": "m1", "title": "Phase 1 — Round the body with sound", "desc": "All 50 sounds in order, each on its body point. Follow along out loud.",
+         "fw": "trika", "cfg": "matrika", "chant": "full", "grade": "g0"},
+        {"id": "m2", "title": "Phase 2 — Sounds alone", "desc": "Same order, sound only. Feel each body point from memory.",
+         "fw": "trika", "cfg": "matrika", "chant": "full", "grade": "g1"},
+        {"id": "m3", "title": "Phase 3 — Body point only", "desc": "Touch a body point, name the sound. Both directions.",
+         "fw": "trika", "cfg": "matrika", "chant": "quiz", "grade": "g2"},
+        {"id": "m4", "title": "Phase 4 — Small mantras: AUM, SO'HAM", "desc": "Short combined movements over the installed body.",
+         "fw": "trika", "cfg": "matrika", "scores": ["frameworks/trika/practices/aum.json", "frameworks/trika/practices/soham.json"]},
+        {"id": "m5", "title": "Phase 5 — Full mantras: OM, OM NAMAH SHIVAYA", "desc": "Long trajectories. Light follows the recorded sound.",
+         "fw": "trika", "cfg": "matrika", "scores": ["frameworks/trika/practices/om.json", "frameworks/trika/practices/namah-shivaya.json"]}
+       ]},
+      {"id": "malini", "title": "Malini order — mixed sequence",
+       "phases": [
+        {"id": "mal1", "title": "Phase 1 — Malini on the body", "desc": "Same 50 sounds in Malini goddess order. Do after Matrika is stable.",
+         "fw": "trika", "cfg": "malini", "chant": "full", "grade": "g0"}
+       ]},
+      {"id": "vbt", "title": "Vijnana Bhairava — gaze practice",
+       "phases": [
+        {"id": "vbt24", "title": "Phase 1 — Gaze (practice 24)", "desc": "Fixed gaze with body-wide attention. Timed score with voice cues.",
+         "fw": "trika", "cfg": "matrika", "scores": ["frameworks/vbt/practices/v24-gaze.json"]}
+       ]}
+     ]},
+    {"id": "sivananda", "name": "Sivananda", "lineage": "Kundalini Yoga · Divine Life Society",
+     "courses": [
+      {"id": "siv-core", "title": "Sivananda course — breath and centres",
+       "phases": [
+        {"id": "s1", "title": "Phase 1 — Clear the channels", "desc": "Alternate-nostril breathing, 8 minutes, easy exhales.",
+         "fw": "yoga", "scores": ["frameworks/yoga/practices/nadi-shodhana.json"]},
+        {"id": "s2", "title": "Phase 2 — Six centres tour", "desc": "Base to brow, one centre at a time.",
+         "fw": "yoga", "scores": ["frameworks/yoga/practices/cakra-tour.json"]},
+        {"id": "s3", "title": "Phase 3 — Three knots", "desc": "Base, heart, brow. Hold attention one slow breath each.",
+         "fw": "yoga", "scores": ["frameworks/yoga/practices/granthi-piercing.json"]},
+        {"id": "s4", "title": "Phase 4 — Ascent", "desc": "Rising pulse base to crown, then rest.",
+         "fw": "yoga", "scores": ["frameworks/yoga/practices/kundalini-ascent.json"]}
+       ]}
+     ]},
+    {"id": "pillar", "name": "Middle Pillar", "lineage": "Western Hermetic · Golden Dawn",
+     "courses": [
+      {"id": "mp-core", "title": "Middle Pillar course",
+       "phases": [
+        {"id": "mp1", "title": "Phase 1 — Show the five centres", "desc": "Column of five light centres on the body. No movement yet.",
+         "fw": "mp"},
+        {"id": "mp2", "title": "Phase 2 — Descent of light", "desc": "Light descends crown to feet. Timed.",
+         "fw": "mp", "pillar": "descent"},
+        {"id": "mp3", "title": "Phase 3 — Circulation", "desc": "Light circulates round the body. Timed.",
+         "fw": "mp", "pillar": "circulation"}
+       ]}
+     ]},
+    {"id": "layayoga", "name": "Anahata Lotus", "lineage": "Laya Yoga",
+     "courses": [
+      {"id": "lotus-core", "title": "Lotus course — heart centre",
+       "phases": [
+        {"id": "lx1", "title": "Phase 1 — Open the lotus", "desc": "Twelve-petal heart lotus. Tap petals for syllables.",
+         "fw": "layayoga", "lotus": true}
+       ]}
+     ]},
+    {"id": "kalachakra", "name": "Kalachakra", "lineage": "Vajrayana Buddhism",
+     "courses": [
+      {"id": "kala-core", "title": "Kalachakra course — channel centres",
+       "phases": [
+        {"id": "kc1", "title": "Phase 1 — Show the centres", "desc": "Channel-wheel centres with counts. Study model only.",
+         "fw": "kalachakra"}
+       ]}
+     ]},
+    {"id": "theravada", "name": "Ajahn Lee", "lineage": "Thai Forest Buddhism",
+     "courses": [
+      {"id": "aj-core", "title": "Breath energy course — Method 1",
+       "phases": [
+        {"id": "aj1", "title": "Phase 1 — Breath energy", "desc": "Seated figure, breath audio and spoken guidance.",
+         "fw": "theravada", "ajahn": true}
+       ]}
+     ]}
+  ]
+}

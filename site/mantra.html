@@ -191,6 +191,10 @@ $('#grade').onchange=e=>{
   else if(g==='g4'){ $('#seq').value='mantra:om-namah-shivaya'; rebuild(); }
 };
 await rebuild();
+{ const q=new URLSearchParams(location.search);
+  if(q.get('seq')) $('#seq').value=q.get('seq');
+  if(q.get('grade')) $('#grade').value=q.get('grade');
+  $('#grade').dispatchEvent(new Event('change')); }
 </script>
 </body>
 </html>

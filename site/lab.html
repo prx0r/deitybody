@@ -32,24 +32,42 @@ body.split #second{display:block; position:fixed; z-index:1; top:0; right:0; wid
  border-radius:50%; border:1px solid var(--line); background:var(--panel); color:var(--ink);
  font-size:26px; line-height:1; cursor:pointer; backdrop-filter:blur(8px)}
 #splitBtn.on{border-color:var(--gold); color:var(--gold)}
-#menu{position:fixed; z-index:10; top:0; left:0; bottom:0; width:264px;
+#menu{position:fixed; z-index:10; top:0; left:0; bottom:0; width:320px;
  background:var(--panel); border-right:1px solid var(--line);
- padding:4.3rem .9rem .9rem; backdrop-filter:blur(12px); display:none;
+ padding:4.3rem .8rem .9rem; backdrop-filter:blur(12px); display:none;
  overflow-y:auto}
 #menu.show{display:block}
 @media (min-width:900px){ #menu.show{display:block} }
-#menu h3{margin:.7rem 0 .35rem; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+#menu h3{margin:.8rem 0 .4rem; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
  color:var(--mut); font-family:ui-sans-serif,system-ui}
 #menu h3:first-child{margin-top:0}
-#menu details.trad{border-left:2px solid var(--line); margin:.3rem 0 .3rem .2rem; padding-left:.55rem}
-#menu details.trad > summary{cursor:pointer; font-size:.82rem; letter-spacing:.06em; text-transform:uppercase;
- color:var(--ink); font-family:ui-sans-serif,system-ui; list-style:none; padding:.3rem 0}
+#menu details.trad{border:1px solid var(--line); margin:.4rem 0; padding:.1rem .55rem .45rem; background:rgba(255,255,255,.5)}
+#menu details.trad > summary{cursor:pointer; font-size:.9rem; font-weight:700;
+ color:var(--ink); font-family:ui-sans-serif,system-ui; list-style:none; padding:.45rem 0}
 #menu details.trad > summary::-webkit-details-marker{display:none}
 #menu details.trad > summary::before{content:'▸ '; color:var(--mut)}
 #menu details.trad[open] > summary::before{content:'▾ '; color:var(--gold)}
-#menu .row{display:flex; gap:.4rem; flex-wrap:wrap}
-#menu .row button{font-family:ui-sans-serif,system-ui; font-size:.85rem; padding:.55rem .9rem;
- min-height:42px; border-radius:999px; border:1px solid var(--line); background:transparent;
+#menu details.course{border:1px solid var(--line); margin:.35rem 0; background:#fff}
+#menu details.course > summary{cursor:pointer; font-size:.85rem; font-weight:600; padding:.45rem .55rem;
+ color:var(--ink); font-family:ui-sans-serif,system-ui; list-style:none}
+#menu details.course > summary::-webkit-details-marker{display:none}
+#menu .phase{border-top:1px solid var(--line); padding:.5rem .55rem; display:grid; gap:.35rem}
+#menu .phase .pt{font-size:.85rem; font-weight:700; font-family:ui-sans-serif,system-ui}
+#menu .phase .pd{font-size:.78rem; color:var(--mut); font-family:ui-sans-serif,system-ui}
+#menu .phase .prow{display:grid; grid-template-columns:1fr 1fr; gap:.35rem}
+#menu .phase button{font-family:ui-sans-serif,system-ui; font-size:.85rem; padding:.55rem .5rem;
+ min-height:42px; border-radius:6px; border:1px solid var(--line); background:#fff;
+ color:var(--ink); cursor:pointer}
+#menu .phase button.play{background:linear-gradient(120deg,var(--gold-hi),var(--gold)); color:#0b0d12; border-color:var(--gold); font-weight:700}
+#menu .phase button.on{border-color:var(--gold); color:var(--gold-hi); font-weight:700}
+#menu .grid2{display:grid; grid-template-columns:1fr 1fr; gap:.35rem}
+#menu .grid2 button{font-family:ui-sans-serif,system-ui; font-size:.85rem; padding:.55rem .5rem;
+ min-height:42px; border-radius:6px; border:1px solid var(--line); background:#fff;
+ color:var(--ink); cursor:pointer}
+#menu .grid2 button.on{background:linear-gradient(120deg,var(--gold-hi),var(--gold)); color:#0b0d12; border-color:var(--gold); font-weight:700}
+#menu .row{display:grid; grid-template-columns:1fr 1fr; gap:.35rem}
+#menu .row button{font-family:ui-sans-serif,system-ui; font-size:.85rem; padding:.55rem .5rem;
+ min-height:42px; border-radius:6px; border:1px solid var(--line); background:#fff;
  color:var(--ink); cursor:pointer}
 #menu .row button.on{background:linear-gradient(120deg,var(--gold-hi),var(--gold)); color:#0b0d12; border-color:var(--gold); font-weight:700}
 #menu .note{font-size:.75rem; color:var(--mut); margin:.3rem 0 0}

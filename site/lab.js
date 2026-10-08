@@ -870,82 +870,142 @@ function menuMark(){
 }
 function markRail(){ menuMark(); }
 function menuClose(){ menu.classList.remove('show'); document.getElementById('menuBtn').classList.remove('on'); }
+/* ---------- menu v2: Tradition → Course → Phase ----------
+   Each phase loads ONE body preset + its sound. Play runs it in time. */
+function loadPhase(p){
+  if(p.cfg) setCfg(p.cfg);
+  if(p.fw) setFw(p.fw);
+  if(p.lotus && fw!=='layayoga') setFw('layayoga');
+  if(p.pillar){ if(fw!=='mp') setFw('mp'); return {pillar:p.pillar}; }
+  if(p.ajahn){ startAjahn(); return {autoplay:true}; }
+  return {};
+}
+function playScorePath(s,p){
+  loadPhase(p);
+  if(s.endsWith('om.json')){ playOM(); return; }
+  if(s.endsWith('namah-shivaya.json')){ playNamah(); return; }
+  score(s).then(j=>runScore(j.events||[],{id:j.id,title:j.title||p.title,source:j.provenance||'timed score'}));
+  readout.innerHTML='<b>'+s.split('/').pop().replace('.json','')+'</b> · playing — light follows sound';
+}
+function playPhase(p){
+  const st=loadPhase(p);
+  if(st.autoplay) return;
+  if(st.pillar){ mpRun(st.pillar); return; }
+  const scores=p.scores||[];
+  if(!scores.length) return;
+  const first=scores[0];
+  if(first.endsWith('om.json')){ playOM(); return; }
+  if(first.endsWith('namah-shivaya.json')){ playNamah(); return; }
+  score(first).then(j=>{
+    const evs=j.events||[];
+    runScore(evs,{id:j.id,title:j.title||p.title,source:j.provenance||'timed score'});
+    if(scores[1]) readout.innerHTML='<b>'+p.title+'</b> · playing 1 of 2 — press Play again for part 2';
+  });
+}
+function chantURL(p){
+  if(p.chant==='quiz') return 'mantra?grade=g2';
+  if(p.grade==='g1') return 'mantra?grade=g1&seq=full';
+  return 'mantra?grade=g0&seq=full';
+}
+function renderTraditions(g){
+  const host=document.getElementById('tradHost')||menu;
+  for(const t of (g.traditions||[])){
+    const d=document.createElement('details'); d.className='trad';
+    const s=document.createElement('summary');
+    s.textContent=t.name+' — '+t.lineage;
+    d.appendChild(s);
+    for(const c of (t.courses||[])){
+      const cd=document.createElement('details'); cd.className='course';
+      const cs=document.createElement('summary'); cs.textContent=c.title;
+      cd.appendChild(cs);
+      for(const p of (c.phases||[])){
+        const box=document.createElement('div'); box.className='phase';
+        const pt=document.createElement('div'); pt.className='pt'; pt.textContent=p.title;
+        const pd=document.createElement('div'); pd.className='pd'; pd.textContent=p.desc||'';
+        const row=document.createElement('div'); row.className='prow';
+        box.append(pt,pd,row); cd.appendChild(box);
+        const hasScore=(p.scores&&p.scores.length)||p.pillar||p.ajahn;
+        if(p.chant){
+          const show=document.createElement('button'); show.textContent='Show body';
+          show.onclick=()=>{ loadPhase(p); readout.innerHTML='<b>'+p.title+'</b> · body shown — open chant audio, press play there'; menuMark(); };
+          const ch=document.createElement('button'); ch.textContent='Open chant audio';
+          ch.onclick=()=>{ location.href=chantURL(p); };
+          row.append(show,ch);
+        } else if(p.lotus){
+          const b=document.createElement('button'); b.textContent='Show lotus'; b.className='play';
+          b.onclick=()=>{ loadPhase(p); readout.innerHTML='<b>'+p.title+'</b> · lotus shown — tap petals'; menuMark(); menuClose(); };
+          row.append(b);
+        } else if(hasScore){
+          const list=p.scores||[];
+          if(list.length>1){
+            for(const s of list){
+              const short=s.split('/').pop().replace('.json','');
+              const b=document.createElement('button'); b.textContent='▶ '+short; b.className='play';
+              b.onclick=()=>{ playScorePath(s,p); menuMark(); menuClose(); };
+              row.appendChild(b);
+            }
+          } else {
+            const b=document.createElement('button'); b.textContent='▶ Play'; b.className='play';
+            b.onclick=()=>{ playPhase(p); readout.innerHTML='<b>'+p.title+'</b> · playing — light follows sound'; menuMark(); menuClose(); };
+            const info2=document.createElement('button'); info2.textContent='Show body first';
+            info2.onclick=()=>{ loadPhase(p); readout.innerHTML='<b>'+p.title+'</b> · body ready — press Play'; menuMark(); };
+            row.append(info2,b);
+          }
+        } else {
+          const b=document.createElement('button'); b.textContent='Show'; b.className='play';
+          b.onclick=()=>{ loadPhase(p); menuMark(); menuClose(); };
+          row.append(b);
+        }
+      }
+      d.appendChild(cd);
+    }
+    host.appendChild(d);
+  }
+  menuMark();
+}
+function renderTraditionsFallback(){
+  // Offline fallback: Trika only, hardcoded. Shown when data/traditions.json missing.
+  renderTraditions({traditions:[{id:'trika',name:'Trika',lineage:'Kashmir Shaivism',
+    courses:[{id:'matrika',title:'Matrika course — 50 sounds on the body',
+      phases:[
+        {id:'m1',title:'Phase 1 — Round the body with sound',desc:'All 50 sounds in order.',fw:'trika',cfg:'matrika',chant:'full',grade:'g0'},
+        {id:'m4',title:'Phase 4 — Small mantras',desc:'AUM + SO HAM.',fw:'trika',cfg:'matrika',scores:['frameworks/trika/practices/aum.json']},
+        {id:'m5',title:'Phase 5 — Full mantras',desc:'OM + OM NAMAH SHIVAYA.',fw:'trika',cfg:'matrika',scores:['frameworks/trika/practices/om.json']},
+      ]}]}]});
+}
 function buildMenu(){
   const sec=(t)=>{const h=document.createElement('h3'); h.textContent=t; menu.appendChild(h);
-    const r=document.createElement('div'); r.className='row'; menu.appendChild(r); return r;};
-  const grp=(t,open)=>{const d=document.createElement('details'); d.className='trad';
-    const s=document.createElement('summary'); s.textContent=t; d.appendChild(s);
-    const r=document.createElement('div'); r.className='row'; d.appendChild(r);
-    if(open)d.open=true; menu.appendChild(d); return r;};
+    const r=document.createElement('div'); r.className='grid2'; menu.appendChild(r); return r;};
   const btn=(parent,label,fn,id)=>{const b=document.createElement('button'); b.textContent=label;
     if(id)b.id=id; b.onclick=(ev)=>{fn(ev); menuMark();}; parent.appendChild(b); return b;};
   let r=sec('');
-  btn(r,'✕ close',()=>{menuClose();});
-  r=sec('Posture');
+  btn(r,'Close',()=>{menuClose();});
+  btn(r,'Clear everything',()=>{clearAll(); menuClose();});
+  r=sec('Sitting position');
   const poseBtn=(label,name)=>{const b=btn(r,label,()=>{setPose(name); menuMark();});
     b.dataset.pose=name; return b;};
-  poseBtn('🧍 standing','standing'); poseBtn('🧘 seated','seated'); poseBtn('🛌 lying','lying');
-  r=sec('Canvas');
-  btn(r,'body lines',e=>{bodyOn(!bodyLinesOn); menuMark();},'mBody');
-  btn(r,'✕ clear',()=>{clearAll(); menuClose();});
-  r=grp('☸ Trika — mantra body',true);
-  const trikaGo=fn=>()=>{ if(fw!=='trika')setFw('trika'); fn(); menuClose(); };
-  btn(r,'Mātṛkā install',trikaGo(()=>setCfg('matrika')));
-  btn(r,'Mālinī infusion',trikaGo(()=>setCfg('malini')));
-  btn(r,'▶ OM',trikaGo(()=>playOM()));
-  btn(r,'AUṀ seed',trikaGo(()=>score('frameworks/trika/practices/aum.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'pedagogical decomposition'}))));
-  btn(r,'SO’HAṂ',trikaGo(()=>score('frameworks/trika/practices/soham.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'ajapa simplified'}))));
-  btn(r,'▶ Namaḥ Śivāya',trikaGo(()=>playNamah()));
-  btn(r,'⚡ ha flash',trikaGo(()=>playHa()));
-  btn(r,'VBT 24 gaze',trikaGo(()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'}))));
-  btn(r,'caitanyam',trikaGo(()=>playSutra('sutra','caitanyam ātmā — Consciousness is Self')));
-  btn(r,'hṛdaye',trikaGo(()=>playSutra('hrdaye','hṛdaye — in the Heart')));
-  btn(r,'Melody',e=>{melodyOn=!melodyOn; e.target.textContent=`Melody: ${melodyOn?'sa…ni ♪':'off'}`;},'mMel');
-  const a=document.createElement('a'); a.href='mantra'; a.textContent='chant-through →';
-  a.style.cssText='font-size:.85rem;font-family:ui-sans-serif,system-ui'; r.appendChild(a);
-  r=grp('🕉️ Sivananda — breath school');
-  const yogGo=fn=>()=>{ if(fw!=='yoga')setFw('yoga'); fn(); menuClose(); };
-  btn(r,'Nadi-shodhana',yogGo(()=>score('frameworks/yoga/practices/nadi-shodhana.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'}))));
-  btn(r,'Cakra tour',yogGo(()=>score('frameworks/yoga/practices/cakra-tour.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda loci'}))));
-  btn(r,'Three knots',yogGo(()=>score('frameworks/yoga/practices/granthi-piercing.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'}))));
-  btn(r,'Kundalini ascent',yogGo(()=>score('frameworks/yoga/practices/kundalini-ascent.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'}))));
-  r=grp('☩ Pillar — middle column');
-  btn(r,'Enter',()=>{ if(fw==='mp')setFw('bare'); else setFw('mp'); menuClose(); menuMark(); });
-  btn(r,'▶ Descent',()=>{ if(fw!=='mp')setFw('mp'); mpRun('descent'); menuClose(); });
-  btn(r,'▶ Circulation',()=>{ if(fw!=='mp')setFw('mp'); mpRun('circulation'); menuClose(); });
-  r=grp('🪷 Lotus · ❖ Time-wheel');
-  btn(r,'Anahata lotus',()=>{ if(fw==='layayoga')setFw('bare'); else setFw('layayoga'); menuClose(); menuMark(); });
-  btn(r,'Kālacakra',()=>{ if(fw==='kalachakra')setFw('bare'); else setFw('kalachakra'); menuClose(); menuMark(); });
-  r=grp('🧘 Breath — no tradition');
-  btn(r,'Ajahn Lee M1',()=>{startAjahn(); menuClose();});
-  btn(r,'Breath audio',e=>{breathAudioOn=!breathAudioOn; e.target.textContent=`Breath audio: ${breathAudioOn?'on':'off'}`;});
-  btn(r,'Guide voice',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;},'mGuide');
-  r=sec('Atmosphere');
-  btn(r,'🌊 water',()=>{setFluid(!fluidOn);},'mFluid');
-  btn(r,'✨ dust',()=>toggleGrid(),'mGrid');
-  btn(r,'∿ side weave',()=>{weaveOn=!weaveOn; buildChannels((x,y)=>xfPos(x,y));},'mWeave');
-  btn(r,'🕸 nerve lines',()=>{toggleNadis(); menuMark();},'mNadi');
-  btn(r,'🎙 mic breath',()=>{toggleMic(); menuMark();},'mMic');
-  btn(r,'♥ heartbeat',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
-  btn(r,'≋ sound shapes',()=>toggleChladni(),'mChlad');
-  btn(r,'◉ scan',()=>toggleScan(),'mScan');
-  r=sec('Figures');
-  btn(r,'△ yantra',()=>toggleYan(),'mYan');
-  btn(r,'✦ figure',e=>{cycleVitFig(); e.target.textContent='✦ '+vitFigLabel();},'mVit');
-  btn(r,'◈ lines',()=>toggleX(),'mX');
-  btn(r,'◍ avatar',()=>cycleAvatar(),'mAva');
-  r=sec('Compare');
-  btn(r,'OM × Descent',()=>comparePreset('om-descent'));
-  btn(r,'VBT 24 × Scan',()=>comparePreset('v24-scan'));
-  r=sec('Guide');
-  const f=document.createElement('form'); f.id='askRow'; f.style.display='flex'; f.style.gap='.35rem';
-  f.innerHTML='<input id="askQ" type="text" placeholder="where am I · next · repeat · pause · source" aria-label="Ask the guide" autocomplete="off" style="flex:1;min-width:0;background:rgba(11,13,18,.7);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:.8rem;padding:.5rem .6rem"/>';
-  f.onsubmit=ev=>{ev.preventDefault(); const q=f.querySelector('#askQ');
-    if(!q.value.trim())return; const a=tools?tools.answer(q.value):'…';
-    info.querySelector('.locus').textContent=a; readout.innerHTML='<b>guide</b> · '+a; speak(a); q.value='';};
-  menu.appendChild(f);
+  poseBtn('Standing','standing'); poseBtn('Seated','seated');
+  poseBtn('Lying down','lying');
+  btn(r,'Body outline',e=>{bodyOn(!bodyLinesOn); menuMark();},'mBody');
+  r=sec('Practices — pick a tradition, then a course, then a phase');
+  const tradHost=document.createElement('div'); tradHost.id='tradHost'; menu.appendChild(tradHost);
+  fetch('data/traditions.json').then(x=>x.json()).then(g=>renderTraditions(g)).catch(()=>renderTraditionsFallback());
+  r=sec('Display');
+  btn(r,'Breath pacer',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
+  btn(r,'Sound shapes',()=>toggleChladni(),'mChlad');
+  btn(r,'Body scan sweep',()=>toggleScan(),'mScan');
+  btn(r,'Chant page',()=>{location.href='mantra';});
+  const adv=document.createElement('details'); adv.className='trad';
+  const as=document.createElement('summary'); as.textContent='Advanced display (optional)';
+  adv.appendChild(as); menu.appendChild(adv);
+  const ar=document.createElement('div'); ar.className='grid2'; adv.appendChild(ar);
+  btn(ar,'Water background',()=>{setFluid(!fluidOn);},'mFluid');
+  btn(ar,'Dust particles',()=>toggleGrid(),'mGrid');
+  btn(ar,'Side channels',()=>{weaveOn=!weaveOn; buildChannels((x,y)=>xfPos(x,y));},'mWeave');
+  btn(ar,'Nerve lines map',()=>{toggleNadis(); menuMark();},'mNadi');
+  btn(ar,'Microphone breath',()=>{toggleMic(); menuMark();},'mMic');
   const n=document.createElement('p'); n.className='note';
-  n.textContent='One map per sitting. Geometries differ per tradition — never one chart.';
+  n.textContent='One tradition per sitting. Sound + body point together — that is the practice.';
   menu.appendChild(n);
 }
 /* ---------- pose system: energy inhabits the posture ---------- */
