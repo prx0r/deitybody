@@ -34,6 +34,18 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 #info .dev{font-family:'Noto Serif Devanagari',serif; font-size:1.7rem; line-height:1.8}
 #info .iast{color:var(--gold); font-size:.85rem; font-family:ui-sans-serif,system-ui}
 #info .locus{color:var(--mut); font-size:.8rem}
+/* phoneme chips — real DOM text: browser shapes every conjunct perfectly, sharp at any zoom */
+.glyph{width:36px; height:36px; border-radius:50%;
+ display:flex; align-items:center; justify-content:center;
+ font-family:'Noto Sans Devanagari',serif; font-size:17px; font-weight:600; color:var(--ink);
+ background:radial-gradient(circle at 38% 32%, #2b3550, #141a29 78%);
+ border:1.5px solid var(--gold); cursor:pointer; user-select:none;
+ transition:background .25s, color .25s, opacity .3s, scale .25s}
+.glyph:hover{scale:1.12}
+.glyph.lit{background:radial-gradient(circle at 38% 32%, #f2dd9e, #c9a45c 78%);
+ color:#0b0d12; font-weight:700}
+.glyph.back{opacity:.18; pointer-events:none}
+.glyph:focus-visible{outline:2px solid var(--gold-hi, #e8cf8f); outline-offset:2px}
 #legend{position:fixed; z-index:5; left:.7rem; top:4.2rem; font-size:.72rem; color:var(--mut);
  font-family:ui-sans-serif,system-ui; background:rgba(18,22,31,.6); padding:.5rem .7rem; border-radius:10px}
 @media (max-width:640px){ #legend{display:none} #info{top:auto; bottom:4.4rem; right:.5rem} }
@@ -48,7 +60,7 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 <div id="dock">
  <button id="bMat" class="on">Mātṛkā</button><button id="bMal">Mālinī</button>
  <button id="bOm">▶ OM</button><button id="bNam">▶ Namaḥ Śivāya</button>
- <button id="bHa">⚡ ha flash</button><button id="bX">x-ray</button>
+ <button id="bHa">⚡ ha flash</button><button id="bScan">scan ↕</button><button id="bX">x-ray</button>
  <button data-s="sutra">caitanyam</button><button data-s="hrdaye">hṛdaye</button>
 </div>
 <script type="module" src="lab.js"></script>

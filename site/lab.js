@@ -1,6 +1,11 @@
 /* Living subtle-body lab — Three.js, zero build. Same frozen maps + audio as homescreen. */
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
 const GOLD=0xc9a45c, TEAL=0x5ec4b6, INK=0xf0ebe0, ROSE=0xd4899a;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -16,6 +21,21 @@ camera.position.set(2.6, 1.1, 7.2);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; controls.target.set(0,.4,0);
 controls.minDistance = 3; controls.maxDistance = 16;
+
+/* CSS2D label layer — real shaped Devanagari (browser HarfBuzz), always crisp */
+const cssRenderer = new CSS2DRenderer();
+cssRenderer.setSize(innerWidth, innerHeight);
+Object.assign(cssRenderer.domElement.style,{position:'fixed',inset:'0',pointerEvents:'none',zIndex:2});
+document.body.appendChild(cssRenderer.domElement);
+
+/* bloom — the alive glow (auto-off on small screens) */
+let composer=null, bloomOn=innerWidth>=640 && !reduce;
+if(bloomOn){
+  composer=new EffectComposer(renderer);
+  composer.addPass(new RenderPass(scene,camera));
+  const bloom=new UnrealBloomPass(new THREE.Vector2(innerWidth,innerHeight),.55,.65,.78);
+  composer.addPass(bloom); composer.addPass(new OutputPass());
+}
 
 /* dust */
 {
@@ -150,25 +170,30 @@ function zFor(locus){
 const M=p=>({x:(p[3]-200)/90, y:(400-p[4])/90, z:zFor(p[2])});
 const A=p=>({x:(p[6]-200)/90, y:(400-p[7])/90, z:zFor(p[5])});
 let cfg='matrika';
-function glyphSprite(dev){
-  const c=document.createElement('canvas'); c.width=c.height=128;
-  const x=c.getContext('2d');
-  const g=x.createRadialGradient(64,52,6,64,64,62);
-  g.addColorStop(0,'#2b3550'); g.addColorStop(1,'#141a29');
-  x.fillStyle=g; x.beginPath(); x.arc(64,64,58,0,7); x.fill();
-  x.strokeStyle='#c9a45c'; x.lineWidth=3; x.beginPath(); x.arc(64,64,58,0,7); x.stroke();
-  x.fillStyle='#f0ebe0'; x.font='600 56px "Noto Sans Devanagari", serif';
-  x.textAlign='center'; x.textBaseline='middle'; x.fillText(dev,64,68);
-  const t=new THREE.CanvasTexture(c); t.anisotropy=4;
-  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:t,transparent:true,depthTest:false}));
-  s.scale.set(.5,.5,1); return s;
+function glyphChip(dev, iast){
+  const el=document.createElement('div');
+  el.className='glyph'; el.textContent=dev;
+  el.setAttribute('role','button'); el.setAttribute('tabindex','0');
+  el.setAttribute('aria-label','phoneme '+iast);
+  const o=new CSS2DObject(el);
+  el.style.pointerEvents='auto';
+  return {o, el};
+}
+/* soft additive halo behind each chip — gives bloom something to catch + true 3D pop */
+function haloSprite(){
+  const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(),transparent:true,opacity:.28,depthWrite:false}));
+  s.scale.set(.42,.42,1); return s;
 }
 const nodes=P.map(p=>{
-  const s=glyphSprite(p[1]); const m=M(p);
-  s.position.set(m.x,m.y,m.z); s.userData={p,base:1,target:m};
-  scene.add(s); return s;
+  const m=M(p);
+  const anchor=new THREE.Object3D(); anchor.position.set(m.x,m.y,m.z); scene.add(anchor);
+  const {o, el}=glyphChip(p[1],p[0]); anchor.add(o);
+  const halo=haloSprite(); halo.position.copy(anchor.position); scene.add(halo);
+  el.addEventListener('click',ev=>{ev.stopPropagation(); fire(p[0]);});
+  el.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault(); fire(p[0]);}});
+  return {anchor, el, halo, p, base:.42, target:m};
 });
-const byIast={}; P.forEach((p,k)=>byIast[p[0]]=nodes[k]);
+const byIast={}; P.forEach((p,k)=>byIast[p[0]]=k);
 
 /* ---------- audio ---------- */
 let actx=null; const bufCache={};
@@ -186,9 +211,12 @@ async function play(url){
 
 /* ---------- fx: tweens + pulses ---------- */
 const tweens=[];
-function pop(sprite,big=1.5,dur=.5){
-  const s0=sprite.scale.x;
-  tweens.push({t:0,dur,fn:k=>{const s=s0*(1+(big-1)*Math.sin(Math.PI*k)); sprite.scale.set(s,s,1);}});
+function pop(k,big=1.6,dur=.5){
+  const n=nodes[k]; if(!n) return;
+  const s0=n.base;
+  n.el.classList.add('lit');
+  tweens.push({t:0,dur,fn:t=>{const s=s0*(1+(big-1)*Math.sin(Math.PI*t)); n.halo.scale.set(s,s,1);},
+    done:()=>setTimeout(()=>n.el.classList.remove('lit'),650)});
 }
 const pulses=[];
 const pulseMat=new THREE.MeshBasicMaterial({color:0xffe9b0,transparent:true,opacity:.95});
@@ -199,14 +227,14 @@ function pulse(y0,y1,dur=.9,cb){
   glow.scale.set(.8,.8,1); m.add(glow);
   pulses.push({m,t:0,y0,y1,dur,cb});
 }
-let _glow=null;
+let _glowTex=null;
 function glowTex(){
-  if(_glow) return _glow;
+  if(_glowTex) return _glowTex;
   const c=document.createElement('canvas'); c.width=c.height=128;
   const x=c.getContext('2d'),g=x.createRadialGradient(64,64,2,64,64,64);
   g.addColorStop(0,'rgba(255,233,176,1)'); g.addColorStop(1,'rgba(255,233,176,0)');
   x.fillStyle=g; x.fillRect(0,0,128,128);
-  return _glow=new THREE.CanvasTexture(c);
+  return _glowTex=new THREE.CanvasTexture(c);
 }
 function ringPing(y,color=GOLD){
   const r=new THREE.Mesh(new THREE.TorusGeometry(.4,.02,8,48),
@@ -226,38 +254,24 @@ function show(p){
 }
 function fire(iast,withSound=true){
   const k=P.findIndex(p=>p[0]===iast); if(k<0) return;
-  const p=P[k], s=nodes[k];
-  show(p); pop(s);
-  const y=s.position.y;
+  const p=P[k], n=nodes[k];
+  show(p); pop(k);
+  const y=n.anchor.position.y;
   pulse(Math.max(y-.4,channelY0),Math.min(y+.9,channelY1),.55,()=>ringPing(Math.min(y+.9,channelY1),TEAL));
   if(withSound&&p[8]) play('audio/phonemes/'+p[8]);
 }
-/* tap vs drag */
-const ray=new THREE.Raycaster(), ptr=new THREE.Vector2(); let downXY=null;
-canvas.addEventListener('pointerdown',e=>downXY=[e.clientX,e.clientY]);
-canvas.addEventListener('pointerup',e=>{
-  if(!downXY) return;
-  const dx=e.clientX-downXY[0],dy=e.clientY-downXY[1]; downXY=null;
-  if(dx*dx+dy*dy>36) return;
-  ptr.set(e.clientX/innerWidth*2-1,-(e.clientY/innerHeight)*2+1);
-  ray.setFromCamera(ptr,camera);
-  const hit=ray.intersectObjects(nodes,false)[0];
-  if(hit){ const i=nodes.indexOf(hit.object); fire(P[i][0]); }
-});
+/* taps land on the DOM chips themselves — no raycast needed; canvas keeps drag/zoom */
 document.getElementById('bMat').onclick=e=>{cfg='matrika';
   e.target.classList.add('on'); document.getElementById('bMal').classList.remove('on');
-  P.forEach((p,k)=>nodes[k].userData.target=M(p));};
+  P.forEach((p,k)=>nodes[k].target=M(p));};
 document.getElementById('bMal').onclick=e=>{cfg='malini';
   e.target.classList.add('on'); document.getElementById('bMat').classList.remove('on');
-  P.forEach((p,k)=>nodes[k].userData.target=A(p));};
-document.getElementById('bX').onclick=e=>{
-  const on=shellSolid.material.opacity<.2;
-  shellSolid.material.opacity=on?.28:.05; e.target.classList.toggle('on',on);
-};
+  P.forEach((p,k)=>nodes[k].target=A(p));};
+/* (x-ray handler lives with the scan block below) */
 document.getElementById('bOm').onclick=()=>{
   show(['oṃ','ॐ','heart → crown → dvādaśānta → rain','',0,'','',0,null]);
   pulse(.78,channelY1,1.4,()=>{ringPing(channelY1,TEAL); pulse(channelY1,.78,1.2,()=>ringPing(.78));});
-  ['ma','ha','aṃ','a'].forEach((id,k)=>setTimeout(()=>{const s=byIast[id]; if(s)pop(s);},k*450));
+  ['ma','ha','aṃ','a'].forEach((id,k)=>setTimeout(()=>{const j=byIast[id]; if(j!=null)pop(j);},k*450));
 };
 document.getElementById('bNam').onclick=()=>{
   const seq=cfg==='matrika'?['na','ma','aḥ','śa','i','va','ā','ya']:['na','ma','śa','va','ya'];
@@ -265,7 +279,7 @@ document.getElementById('bNam').onclick=()=>{
 };
 document.getElementById('bHa').onclick=()=>{
   show(['ha','ह','prāṇa — full-channel flash','',0,'','',0,'ha.ogg']);
-  play('audio/phonemes/ha.ogg'); pop(byIast['ha'],2);
+  play('audio/phonemes/ha.ogg'); pop(byIast['ha'],2.2);
   pulse(channelY0,3.3,.9,()=>{ CAKRAS.forEach(([n,y],k)=>setTimeout(()=>ringPing(y),k*120)); });
   shellWire.material.opacity=.3; setTimeout(()=>shellWire.material.opacity=.13,1100);
 };
@@ -274,11 +288,30 @@ const SEQ={sutra:['sa','u','a','i','ta','a','ña','ma','ā','ta','ma','ā'],
 const WAV={sutra:'audio/edge_test_sutra.wav',hrdaye:'audio/edge_test_hrdaye.wav'};
 document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{
   play(WAV[b.dataset.s]);
-  SEQ[b.dataset.s].forEach((id,k)=>{const kk=P.findIndex(p=>p[0]===id); if(kk>=0)setTimeout(()=>{show(P[kk]); pop(nodes[kk]);},k*450);});
+  SEQ[b.dataset.s].forEach((id,k)=>{const kk=P.findIndex(p=>p[0]===id); if(kk>=0)setTimeout(()=>{show(P[kk]); pop(kk);},k*450);});
 });
+
+/* ---------- vipassana-style scan ---------- */
+let scanMode=null;
+document.getElementById('bScan').onclick=e=>{
+  if(scanMode){scanMode=null; scanBand.visible=false; e.target.classList.remove('on'); return;}
+  scanMode={y:4.5,dir:-1}; scanBand.visible=true; e.target.classList.add('on');
+  info.querySelector('.dev').textContent='स्मृति';
+  info.querySelector('.iast').textContent='body scan — crown → feet → crown';
+  info.querySelector('.locus').textContent='Rest attention where the band glows. Breathe naturally (TĀ 4.91). Tap ⏹ to stop.';
+};
+const scanBand=new THREE.Mesh(new THREE.TorusGeometry(.72,.03,8,48),
+  new THREE.MeshBasicMaterial({color:TEAL,transparent:true,opacity:.55}));
+scanBand.rotation.x=Math.PI/2; scanBand.visible=false; scene.add(scanBand);
 
 /* ---------- loop ---------- */
 const clock=new THREE.Clock();
+const _cam=new THREE.Vector3(), _nd=new THREE.Vector3(), _ct=new THREE.Vector3(0,.4,0);
+let xray=false;
+document.getElementById('bX').onclick=e=>{
+  xray=!xray;
+  shellSolid.material.opacity=xray?.28:.05; e.target.classList.toggle('on',xray);
+};
 function tick(){
   requestAnimationFrame(tick);
   const dt=Math.min(clock.getDelta(),.05), t=clock.elapsedTime;
@@ -294,11 +327,29 @@ function tick(){
   for(let i=pulses.length-1;i>=0;i--){const pu=pulses[i]; pu.t+=dt;
     const k=Math.min(1,pu.t/pu.dur); pu.m.position.y=pu.y0+(pu.y1-pu.y0)*k;
     if(k>=1){scene.remove(pu.m); pulses.splice(i,1); pu.cb&&pu.cb();}}
-  nodes.forEach(s=>{const tg=s.userData.target;
-    s.position.x+=(tg.x-s.position.x)*Math.min(1,dt*4);
-    s.position.y+=(tg.y-s.position.y)*Math.min(1,dt*4);
-    s.position.z+=(tg.z-s.position.z)*Math.min(1,dt*4);});
-  renderer.render(scene,camera);
+  nodes.forEach(n=>{const tg=n.target, a=n.anchor;
+    a.position.x+=(tg.x-a.position.x)*Math.min(1,dt*4);
+    a.position.y+=(tg.y-a.position.y)*Math.min(1,dt*4);
+    a.position.z+=(tg.z-a.position.z)*Math.min(1,dt*4);
+    n.halo.position.copy(a.position);
+    /* depth cue: nodes on the far side dim (unless x-ray) */
+    if(!xray){
+      _nd.copy(a.position).sub(_ct); _cam.copy(camera.position).sub(_ct);
+      const front=_nd.dot(_cam)>0;
+      n.el.classList.toggle('back',!front);
+    } else n.el.classList.remove('back');
+  });
+  /* scan sweep */
+  if(scanMode&&!reduce){
+    const s=scanMode; s.y+=s.dir*dt*.55;
+    if(s.y<-4.4){s.y=-4.4; s.dir=1;} if(s.y>4.5){s.y=4.5; s.dir=-1;}
+    scanBand.position.y=s.y;
+    const sc=1+Math.sin(t*1.2)*.04; scanBand.scale.set(sc,sc,1);
+    nodes.forEach((n,k)=>{ if(Math.abs(n.anchor.position.y-s.y)<.35 && !n.el.classList.contains('lit')) pop(k,1.35,.8); });
+  }
+  if(bloomOn) composer.render(); else renderer.render(scene,camera);
+  cssRenderer.render(scene,camera);
 }
-function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();renderer.setSize(innerWidth,innerHeight);}
+function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
+  renderer.setSize(innerWidth,innerHeight); cssRenderer.setSize(innerWidth,innerHeight);}
 addEventListener('resize',resize); resize(); tick();
