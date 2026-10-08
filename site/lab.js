@@ -435,6 +435,7 @@ fetch('frameworks/hermetic/config.json').then(r=>r.json()).then(fw2=>{
     const o=new CSS2DObject(el); o.position.set(c.x3,c.y3,c.z3); mpGroup.add(o);
     MP.orbs[c.id]={c,halo,el,labelO:o};
   });
+  setVisibleDeep(mpGroup, fw==='mp');
   /* rPillar lives in the circle menu now */
 }).catch(()=>{/* offline/file mode: Trika only */});
 /* ---------- layayoga lotus layer (procedural, per-text config) ---------- */
@@ -875,7 +876,8 @@ function buildMenu(){
     b.dataset.pose=name; return b;};
   poseBtn('🧍 standing','standing'); poseBtn('🧘 seated','seated'); poseBtn('🛌 lying','lying');
   r=sec('Traditions');
-  const fwBtn=(label,fwId,go)=>btn(r,label,()=>{go();},null).dataset.fw=fwId;
+  const fwBtn=(label,fwId,go)=>{const b=btn(r,label,()=>{ if(fw===fwId) setFw('bare'); else go(); },null); b.dataset.fw=fwId; return b;};
+  btn(r,'✕ clear',()=>{clearAll(); menuClose();});
   r=sec('☸ Trika');
   const trikaGo=fn=>()=>{ if(fw!=='trika')setFw('trika'); fn(); menuClose(); };
   btn(r,'Mātṛkā install',trikaGo(()=>setCfg('matrika')));
@@ -898,12 +900,12 @@ function buildMenu(){
   btn(r,'Three knots',yogGo(()=>score('frameworks/yoga/practices/granthi-piercing.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'}))));
   btn(r,'Kundalini ascent',yogGo(()=>score('frameworks/yoga/practices/kundalini-ascent.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'}))));
   r=sec('☩ Pillar');
-  btn(r,'Enter',()=>{setFw('mp'); menuClose();});
+  btn(r,'Enter',()=>{ if(fw==='mp')setFw('bare'); else setFw('mp'); menuClose(); menuMark(); });
   btn(r,'▶ Descent',()=>{ if(fw!=='mp')setFw('mp'); mpRun('descent'); menuClose(); });
   btn(r,'▶ Circulation',()=>{ if(fw!=='mp')setFw('mp'); mpRun('circulation'); menuClose(); });
   r=sec('🪷 Lotus · ❖ Kāla · 🧘 Ajahn');
-  btn(r,'Anahata lotus',()=>{setFw('layayoga'); menuClose();});
-  btn(r,'Kālacakra',()=>{setFw('kalachakra'); menuClose();});
+  btn(r,'Anahata lotus',()=>{ if(fw==='layayoga')setFw('bare'); else setFw('layayoga'); menuClose(); menuMark(); });
+  btn(r,'Kālacakra',()=>{ if(fw==='kalachakra')setFw('bare'); else setFw('kalachakra'); menuClose(); menuMark(); });
   btn(r,'Ajahn Lee M1',()=>{startAjahn(); menuClose();});
   btn(r,'Breath audio',e=>{breathAudioOn=!breathAudioOn; e.target.textContent=`Breath audio: ${breathAudioOn?'on':'off'}`;});
   btn(r,'Guide voice',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;},'mGuide');
@@ -991,6 +993,23 @@ function toggleScan(){
 function toggleYan(){ setVisibleDeep(yantra,!yantra.visible); }
 function toggleX(){
   xray=!xray; edges.visible=!xray;
+}
+/* ---------- clear: back to blank living canvas ---------- */
+function clearAll(){
+  try{ session.stop(); }catch(e){}
+  if(scanMode){scanMode=null; scanBand.visible=false;}
+  setVisibleDeep(yantra,false);
+  if(typeof vitLayer!=='undefined'&&vitLayer) setVisibleDeep(vitLayer.group,false);
+  document.getElementById('vitruv').style.display='none';
+  if(typeof vitFig!=='undefined'&&vitFig){ morphOn=false; vitFig.show(false); }
+  if(typeof avatar!=='undefined'&&avatar){ avatar.show(false); avIdx=-1; }
+  if(typeof nadis!=='undefined'&&nadis) setVisibleDeep(nadis.group,false);
+  if(typeof lotus!=='undefined'&&lotus) setVisibleDeep(lotus.group,false);
+  if(typeof kalSpokes!=='undefined'&&kalSpokes) setVisibleDeep(kalSpokes.group,false);
+  if(chladniOn) toggleChladni();
+  setFw('bare');
+  readout.innerHTML='bare canvas · channels + breath + waves';
+  menuMark();
 }
 /* practice actions (also callable via postMessage in embeds) */
 function playOM(){
