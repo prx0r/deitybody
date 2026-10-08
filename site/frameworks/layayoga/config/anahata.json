@@ -21,5 +21,19 @@
     "note": "Do not hard-code New-Age palettes; colours vary by text"},
   "function": "Air/ touch junction; breath-heart attention seat",
   "provenance": {"text": "Śaṭcakranirūpaṇa vv.22–26 (standard edition)", "status": "needs_verification",
-    "note": "Petal letters, yantra and bīja per the standard published translation; verify against Sanskrit before teaching. Volume confirms 12-petal count only."}
+    "note": "Petal letters, yantra and bīja per the standard published translation; verify against Sanskrit before teaching. Volume confirms 12-petal count only."},
+  "assertions": [
+    {"subject": "anahata.petals", "predicate": "count", "value": 12,
+     "source": {"tradition": "satcakra", "authority": "Śaṭcakranirūpaṇa", "reference": "vv.22–26, standard translation"},
+     "evidence": "attested", "verified": false},
+    {"subject": "anahata.petals", "predicate": "letters", "value": "kaṃ–ṭhaṃ (ka kha ga gha ṅa ca cha ja jha ña ṭa ṭha)",
+     "source": {"tradition": "satcakra", "authority": "Śaṭcakranirūpaṇa", "reference": "vv.22–26, standard translation"},
+     "evidence": "attested", "verified": false},
+    {"subject": "anahata.yantra", "predicate": "geometry", "value": "hexagram (interlocking triangles)",
+     "source": {"tradition": "satcakra", "authority": "Śaṭcakranirūpaṇa", "reference": "vv.22–26, standard translation"},
+     "evidence": "attested", "verified": false},
+    {"subject": "anahata.bija", "predicate": "syllable", "value": "yaṃ (air)",
+     "source": {"tradition": "satcakra", "authority": "Śaṭcakranirūpaṇa", "reference": "vv.22–26, standard translation"},
+     "evidence": "attested", "verified": false}
+  ]
 }

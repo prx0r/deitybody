@@ -1,6 +1,7 @@
 {
   "id": "canonical-body-v1",
   "note": "Address space for the subtle-body renderer. y in scene units (feet≈-3.9, dvadasanta≈4.3). PEDAGOGICAL geometry; loci from matrika-body-map-v2.",
+  "orientation": "Mirror-correct: the body faces the viewer, so screen-left = practitioner's right (dakṣiṇa). Applies to nyāsa R/L, Regardie pillar orientation, and all lineage diagrams unless the source states otherwise.",
   "regions": {
     "crown": {"y": 3.3, "nodes": ["aṃ"]},
     "forehead": {"y": 2.95, "nodes": ["a"]},

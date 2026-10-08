@@ -1,0 +1,14 @@
+{
+  "id": "vbt24-gaze",
+  "title": "VBT 24 · heart↔dvādaśānta gaze",
+  "provenance": "Locus + structure from Vijñānabhairava dh.24 (Lakshmanjoo/KSTS numeration); cue words are our own, verse text NOT reproduced.",
+  "cues": "Watch the outgoing breath rise heart→12-end and the ingoing return; fill both movements with awareness until fullness.",
+  "events": [
+    {"t": 0.0, "do": "info", "dev": "हृत् ↔ द्वादशान्त", "iast": "VBT 24 · the two mouths of breath"},
+    {"t": 0.5, "do": "breath", "phase": "exhale", "from": "heart", "to": "dvadasanta", "dur": 4.0, "cue": "outgoing breath rises heart → twelve-end"},
+    {"t": 5.0, "do": "breath", "phase": "inhale", "from": "dvadasanta", "to": "heart", "dur": 4.0, "cue": "ingoing breath returns twelve-end → heart"},
+    {"t": 9.5, "do": "breath", "phase": "exhale", "from": "heart", "to": "dvadasanta", "dur": 4.0, "cue": "again — fill both movements with awareness"},
+    {"t": 14.0, "do": "breath", "phase": "inhale", "from": "dvadasanta", "to": "heart", "dur": 4.0, "cue": "rest in the fullness (pūrṇatā)"},
+    {"t": 18.5, "do": "ring", "at": "heart"}
+  ]
+}

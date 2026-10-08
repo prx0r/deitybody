@@ -5,6 +5,7 @@ import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer
 import { PracticeClock } from './engine/clock.js';
 import { loadBody } from './engine/body.js';
 import { buildLotus } from './engine/primitives/lotus.js';
+import { buildSpokes } from './engine/primitives/spokes.js';
 let BD=null; loadBody().then(b=>BD=b).catch(()=>{});
 const scoreClock=new PracticeClock();
 const SCORES={};
@@ -42,6 +43,10 @@ function exec(e){
       }
       break; }
     case 'ring': ringPing(Y(e.at),TEAL); break;
+    case 'breath': {
+      const y0=Y(e.from), y1=Y(e.to);
+      if(e.cue) info.querySelector('.locus').textContent=e.cue;
+      pulse(y0,y1,e.dur||4.0,()=>ringPing(y1,TEAL)); break; }
     case 'splat': {
       const k=P.findIndex(p=>p[0]===e.node); if(k<0) break;
       const [sx,sy]=locusScreen(k); fluidSplat(sx,sy,e.dx||0,e.dy||-24); break; }
@@ -317,12 +322,38 @@ function petalShow(p, el){
   const [sx, sy] = [innerWidth/2, innerHeight*0.45];
   fluidSplat(sx, sy, (Math.random()-.5)*30, -20);
 }
+/* ---------- kalachakra spoke layer (channel counts, educational model) ---------- */
+let kalSpokes=null, kalCfg=null;
+fetch('frameworks/vajrayana/config/kalachakra.json').then(r=>r.json()).then(c=>{
+  kalCfg=c; document.getElementById('rKal').style.display='';
+}).catch(()=>{});
+function kalConverge(){
+  if(!kalSpokes) return;
+  info.querySelector('.dev').textContent='❖';
+  info.querySelector('.iast').textContent='convergence into the heart centre';
+  info.querySelector('.locus').textContent='Winds gather toward the heart hub (educational gesture, not instruction).';
+  pulse(-0.9, 0.78, 1.8, ()=>ringPing(0.78, GOLD));
+  pulse(3.3, 0.78, 1.8);
+}
+function kalCentreShow(c, el){
+  info.querySelector('.dev').textContent=c.name;
+  info.querySelector('.iast').textContent=`${c.spokes} subsidiary channels · ${kalCfg.provenance.status}`;
+  info.querySelector('.locus').textContent=
+    'Kālacakra completion-stage structure (public teaching level only). ' +
+    'Counts per Tsenshap Serkong Rinpoche via Study Buddhism — never lineage instruction.';
+  el.classList.add('lit'); setTimeout(()=>el.classList.remove('lit'),900);
+  pulse(c.y3-0.5, c.y3+0.5, 0.8, ()=>ringPing(c.y3, TEAL));
+}
 function setFw(f){
   fw=f;
-  const trika=f==='trika', mp=f==='mp', lay=f==='layayoga';
+  const trika=f==='trika', mp=f==='mp', lay=f==='layayoga', kal=f==='kalachakra';
   nodes.forEach(n=>{n.anchor.visible=trika; n.halo.visible=trika;});
   mpGroup.visible=mp;
   if(lotus) lotus.group.visible=lay;
+  if(kalSpokes) kalSpokes.group.visible=kal;
+  if(kal && !kalSpokes && kalCfg){
+    kalSpokes=buildSpokes(kalCfg,{scene, onCentre:kalCentreShow});
+  }
   if(lay && !lotus && lotusCfg){
     lotus=buildLotus(lotusCfg,{scene, playPhoneme:null, onPetal:petalShow});
     lotus.group.position.set(0, 0.78, 0.55);
@@ -472,11 +503,14 @@ function fire(iast,withSound=true){
 const panel=document.getElementById('fpanel');
 const PANELS={
   trika:{t:'☸ Trika',d:'Mātṛkā base install, Mālinī infusion after automatic. One map per sitting.',
-    opts:[['Mātṛkā · base',()=>setCfg('matrika')],['Mālinī · infusion',()=>setCfg('malini')]]},
+    opts:[['Mātṛkā · base',()=>setCfg('matrika')],['Mālinī · infusion',()=>setCfg('malini')],
+      ['VBT 24 · heart↔12 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events))]]},
   pillar:{t:'☩ Middle Pillar',d:'Hermetic descent + circulation over the same body. Separate layer — never mixed with nyāsa.',
     opts:[['Enter Pillar',()=>setFw('mp')],['Back to Trika',()=>setFw('trika')]]},
   layayoga:{t:'🪷 Anahata lotus',d:'12-petal procedural lotus at the heart (needs_verification vs Śaṭcakranirūpaṇa). Tap petals for bīja + source.',
     opts:[['Enter lotus',()=>setFw('layayoga')],['Back to Trika',()=>setFw('trika')]]},
+  kalachakra:{t:'❖ Kālacakra centres',d:'Six centres with attested subsidiary-channel counts (educational model; initiation contexts never replaced).',
+    opts:[['Enter centres',()=>setFw('kalachakra')],['Back to Trika',()=>setFw('trika')]]},
   scan:{t:'◉ Body scan',d:'Crown→feet→crown sweep. Rest attention where the band glows, natural breath.',
     opts:[['Start / stop',()=>toggleScan()]]},
   yantra:{t:'△ Yantra',d:'Measurable geometry: square, star, kalā rulings, 12-tick dvādaśānta. (PEDAGOGICAL)',
@@ -490,14 +524,15 @@ function openPanel(k){
   p.opts.forEach(([label,fn])=>{const b=document.createElement('button'); b.textContent=label;
     b.onclick=()=>{fn(); markRail();}; row.appendChild(b);});
   panel.classList.add('show');
-  ['rTrika','rPillar','rLotus','rScan','rYan','rX'].forEach(id=>{const b=document.getElementById(id); if(b)b.classList.remove('on');});
-  ({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',scan:'rScan',yantra:'rYan'}[k]||'') &&
-    document.getElementById({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',scan:'rScan',yantra:'rYan'}[k]).classList.add('on');
+  ['rTrika','rPillar','rLotus','rKal','rScan','rYan','rX'].forEach(id=>{const b=document.getElementById(id); if(b)b.classList.remove('on');});
+  ({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',kalachakra:'rKal',scan:'rScan',yantra:'rYan'}[k]||'') &&
+    document.getElementById({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',kalachakra:'rKal',scan:'rScan',yantra:'rYan'}[k]).classList.add('on');
 }
 function markRail(){
   document.getElementById('rTrika').classList.toggle('on',fw==='trika');
   const rp=document.getElementById('rPillar'); if(rp)rp.classList.toggle('on',fw==='mp');
   const rl=document.getElementById('rLotus'); if(rl)rl.classList.toggle('on',fw==='layayoga');
+  const rk=document.getElementById('rKal'); if(rk)rk.classList.toggle('on',fw==='kalachakra');
   document.getElementById('rScan').classList.toggle('on',!!scanMode);
   document.getElementById('rYan').classList.toggle('on',yantra.visible);
 }
@@ -521,6 +556,7 @@ function toggleX(){
 document.getElementById('rTrika').onclick=()=>{setFw('trika'); openPanel('trika');};
 document.getElementById('rPillar').onclick=()=>openPanel('pillar');
 document.getElementById('rLotus').onclick=()=>openPanel('layayoga');
+document.getElementById('rKal').onclick=()=>openPanel('kalachakra');
 document.getElementById('rScan').onclick=()=>{toggleScan(); openPanel('scan');};
 document.getElementById('rYan').onclick=()=>{toggleYan(); openPanel('yantra');};
 document.getElementById('rX').onclick=()=>toggleX();
@@ -528,11 +564,13 @@ document.getElementById('rX').onclick=()=>toggleX();
 document.getElementById('bOm').onclick=async ()=>{
   if(fw==='mp'){ if(MP)mpRun('descent'); return; }
   if(fw==='layayoga'){ lotusBloom(); return; }
+  if(fw==='kalachakra'){ kalConverge(); return; }
   runScore((await score('frameworks/trika/practices/om.json')).events);
 };
 document.getElementById('bNam').onclick=async ()=>{
   if(fw==='mp'){ if(MP)mpRun('circulation'); return; }
   if(fw==='layayoga'){ lotusBloom(); return; }
+  if(fw==='kalachakra'){ kalConverge(); return; }
   const j=await score('frameworks/trika/practices/namah-shivaya.json');
   runScore(j.variants[cfg]);
 };
@@ -619,6 +657,7 @@ function tick(){
   }
   if(bloomOn) composer.render(); else renderer.render(scene,camera);
   cssRenderer.render(scene,camera);
+  if(typeof kalSpokes!=='undefined'&&kalSpokes&&kalSpokes.group.visible&&!reduce) kalSpokes.spin(dt,0.06);
 }
 function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
   renderer.setSize(innerWidth,innerHeight); cssRenderer.setSize(innerWidth,innerHeight);}

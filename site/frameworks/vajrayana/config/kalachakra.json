@@ -1,0 +1,23 @@
+{
+  "id": "kalachakra-six-centres",
+  "framework": "vajrayana/kalachakra",
+  "note": "Subsidiary-channel counts per Tsenshap Serkong Rinpoche's Kālacakra completion-stage teaching (Study Buddhism). Educational model: spokes render as radial channels, NOT lotus petals. Kālacakra ≠ Guhyasamāja — never merged.",
+  "centres": [
+    {"id": "crown", "name": "Crown", "spokes": 4, "y3": 3.3},
+    {"id": "forehead", "name": "Forehead", "spokes": 16, "y3": 2.75},
+    {"id": "throat", "name": "Throat", "spokes": 32, "y3": 1.6},
+    {"id": "heart", "name": "Heart", "spokes": 8, "y3": 0.78},
+    {"id": "navel", "name": "Navel", "spokes": 64, "y3": -0.9},
+    {"id": "secret", "name": "Secret place", "spokes": 32, "y3": -2.4}
+  ],
+  "assertions": [
+    {"subject": "kalachakra.navel", "predicate": "subsidiary_channel_count", "value": 64,
+     "source": {"tradition": "kalachakra", "authority": "Tsenshap Serkong Rinpoche", "reference": "Study Buddhism, completion-stage teaching"},
+     "evidence": "attested-teaching", "verified": false},
+    {"subject": "kalachakra.heart", "predicate": "subsidiary_channel_count", "value": 8,
+     "source": {"tradition": "kalachakra", "authority": "Tsenshap Serkong Rinpoche", "reference": "Study Buddhism, completion-stage teaching"},
+     "evidence": "attested-teaching", "verified": false}
+  ],
+  "provenance": {"status": "needs_verification",
+    "note": "Counts per the cited teaching; advanced completion-stage context is initiation-dependent — atlas documents public structure only, never replaces lineage instruction."}
+}
