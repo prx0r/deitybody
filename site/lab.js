@@ -8,6 +8,7 @@ import { loadGraph } from './engine/graph.js';
 import { makeTools } from './engine/agent.js';
 import { buildLotus } from './engine/primitives/lotus.js';
 import { buildSpokes } from './engine/primitives/spokes.js';
+import { buildVitruvian } from './engine/primitives/vitruvian.js';
 let BD=null; loadBody().then(b=>BD=b).catch(()=>{});
 /* session owns the clock; exec renders; tools expose state to guide/agents */
 const session=new Session();
@@ -538,6 +539,8 @@ const PANELS={
     opts:[['Enter lotus',()=>setFw('layayoga')],['Back to Trika',()=>setFw('trika')]]},
   kalachakra:{t:'❖ Kālacakra centres',d:'Six centres with attested subsidiary-channel counts (educational model; initiation contexts never replaced).',
     opts:[['Enter centres',()=>setFw('kalachakra')],['Back to Trika',()=>setFw('trika')]]},
+  vitruvian:{t:'✦ Vitruvian measure',d:'Circle + square + proportions + physics notes. Diagram overlay over any framework.',
+    opts:[['Show / hide',()=>toggleVit()]]},
   scan:{t:'◉ Body scan',d:'Crown→feet→crown sweep. Rest attention where the band glows, natural breath.',
     opts:[['Start / stop',()=>toggleScan()]]},
   yantra:{t:'△ Yantra',d:'Measurable geometry: square, star, kalā rulings, 12-tick dvādaśānta. (PEDAGOGICAL)',
@@ -551,15 +554,16 @@ function openPanel(k){
   p.opts.forEach(([label,fn])=>{const b=document.createElement('button'); b.textContent=label;
     b.onclick=(ev)=>{fn(ev); markRail();}; row.appendChild(b);});
   panel.classList.add('show');
-  ['rTrika','rPillar','rLotus','rKal','rScan','rYan','rX'].forEach(id=>{const b=document.getElementById(id); if(b)b.classList.remove('on');});
-  ({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',kalachakra:'rKal',scan:'rScan',yantra:'rYan'}[k]||'') &&
-    document.getElementById({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',kalachakra:'rKal',scan:'rScan',yantra:'rYan'}[k]).classList.add('on');
+  ['rTrika','rPillar','rLotus','rKal','rVit','rScan','rYan','rX'].forEach(id=>{const b=document.getElementById(id); if(b)b.classList.remove('on');});
+  ({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',kalachakra:'rKal',vitruvian:'rVit',scan:'rScan',yantra:'rYan'}[k]||'') &&
+    document.getElementById({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',kalachakra:'rKal',vitruvian:'rVit',scan:'rScan',yantra:'rYan'}[k]).classList.add('on');
 }
 function markRail(){
   document.getElementById('rTrika').classList.toggle('on',fw==='trika');
   const rp=document.getElementById('rPillar'); if(rp)rp.classList.toggle('on',fw==='mp');
   const rl=document.getElementById('rLotus'); if(rl)rl.classList.toggle('on',fw==='layayoga');
   const rk=document.getElementById('rKal'); if(rk)rk.classList.toggle('on',fw==='kalachakra');
+  const rv=document.getElementById('rVit'); if(rv)rv.classList.toggle('on',!!(vitLayer&&vitLayer.group.visible));
   document.getElementById('rScan').classList.toggle('on',!!scanMode);
   document.getElementById('rYan').classList.toggle('on',yantra.visible);
 }
@@ -584,6 +588,7 @@ document.getElementById('rTrika').onclick=()=>{setFw('trika'); openPanel('trika'
 document.getElementById('rPillar').onclick=()=>openPanel('pillar');
 document.getElementById('rLotus').onclick=()=>openPanel('layayoga');
 document.getElementById('rKal').onclick=()=>openPanel('kalachakra');
+document.getElementById('rVit').onclick=()=>{toggleVit(); openPanel('vitruvian');};
 document.getElementById('rScan').onclick=()=>{toggleScan(); openPanel('scan');};
 document.getElementById('rYan').onclick=()=>{toggleYan(); openPanel('yantra');};
 document.getElementById('rX').onclick=()=>toggleX();
@@ -624,6 +629,24 @@ document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{
   runScore(evs,{id:'sutra-'+k,title:b.textContent.replace('▶ ',''),source:'EdgeSanskrit phrase + Mātṛkā loci'});
 });
 
+/* ---------- vitruvian overlay (diagram, not doctrine) ---------- */
+let vitCfg=null, vitLayer=null;
+fetch('frameworks/hermetic/vitruvian-man.json').then(r=>r.json()).then(c=>{
+  vitCfg=c; document.getElementById('rVit').style.display='';
+}).catch(()=>{});
+function toggleVit(){
+  if(!vitLayer && vitCfg) vitLayer=buildVitruvian(vitCfg,{scene});
+  if(!vitLayer) return;
+  vitLayer.group.visible=!vitLayer.group.visible;
+  if(vitLayer.group.visible){
+    info.querySelector('.dev').textContent='☉☽';
+    info.querySelector('.iast').textContent='As above, so below — measure, not mystique';
+    info.querySelector('.locus').textContent=
+      'Circle=heavens (navel centre) · square=earth (feet→crown) · span=height. '+
+      'Heart torus: HRV peer-reviewed, field claims contested · vacuum point: speculative · pilot ripples: minority view.';
+  }
+  markRail();
+}
 /* ---------- vipassana-style scan (driven from the rail → toggleScan) ---------- */
 let scanMode=null;
 const scanBand=new THREE.Mesh(new THREE.TorusGeometry(.72,.03,8,48),

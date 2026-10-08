@@ -1,0 +1,45 @@
+{
+  "id": "vitruvian-man",
+  "framework": "hermetic/geometry",
+  "title": "Vitruvian measure — as above, so below",
+  "note": "Diagram overlay, not a practice. da Vinci proportions + Hermetic correspondences + modern physics notes, each with its own status.",
+  "geometry": {
+    "square": {"from": "feet", "to": "crown", "meaning": "earth · the measured microcosm"},
+    "circle": {"center": "navel", "meaning": "heavens · macrocosm, navel as centre"},
+    "span": {"meaning": "arm span = height (arms outstretched; stylized here)"},
+    "centers": [
+      {"id": "navel", "role": "circle-centre"},
+      {"id": "groin", "role": "square-centre (da Vinci: centre of square at groin)"}
+    ],
+    "proportions": [
+      "4 fingers = 1 palm",
+      "4 palms = 1 foot",
+      "6 palms = 1 cubit",
+      "4 cubits = height",
+      "arm span = height"
+    ]
+  },
+  "correspondences": [
+    {"below": "navel (circle-centre)", "above": "sun / centre of system", "source": "hermetic-analogy", "status": "traditional"},
+    {"below": "heart (blood, pulse)", "above": "solar fire, rhythm", "source": "hermetic-analogy", "status": "traditional"},
+    {"below": "breath (24,000/day, traditional count)", "above": "cosmic cycles", "source": "hermetic-analogy", "status": "traditional"}
+  ],
+  "physics_notes": [
+    {"id": "heart-torus", "claim": "Heart generates the body's largest rhythmic EM field; HRV coherence tracks attention/emotion states",
+     "source": "HeartMath Institute (peer-reviewed HRV work exists; field-consciousness extensions are contested)",
+     "status": "mixed-mainstream", "renders": "torus at heart"},
+    {"id": "holofractal", "claim": "Vacuum-energy / Planck-scale information structure underlies mass and connectedness (Haramein)",
+     "source": "N. Haramein, holofractographic model", "status": "speculative-fringe",
+     "renders": "central singularity point + vacuum lattice hint"},
+    {"id": "pilot-wave", "claim": "Particles guided by an enfolded wave field; implicate order unfolds into explicate form (Bohm)",
+     "source": "D. Bohm, Wholeness and the Implicate Order", "status": "minority-interpretation",
+     "renders": "ripple rings behind body"},
+    {"id": "relational", "claim": "No absolute state: physical facts are interactions between systems (Rovelli)",
+     "source": "C. Rovelli, relational QM / Helgoland", "status": "mainstream-contender",
+     "renders": "node-link ticks (relations, not absolutes)"},
+    {"id": "zpe-frank", "claim": "TBD — owner to name the Frank zero-point-energy book",
+     "source": "TBD", "status": "missing"}
+  ],
+  "provenance": {"status": "pedagogical-synthesis",
+    "note": "da Vinci proportions historical; Hermetic maxim from Emerald Tablet; physics notes are modern overlays with individual statuses — never presented as one doctrine."}
+}
