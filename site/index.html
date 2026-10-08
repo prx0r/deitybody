@@ -4,52 +4,87 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
 <title>Body — Mātṛkā Homescreen</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@500;600&display=swap" rel="stylesheet"/>
 <style>
 :root{
   --bg:#0b0d12; --panel:#12161f; --ink:#f0ebe0; --mut:#a8a294;
-  --gold:#c9a45c; --teal:#5ec4b6; --rose:#d4899a; --line:#2a3142;
+  --gold:#c9a45c; --gold-hi:#e8cf8f; --teal:#5ec4b6; --rose:#d4899a; --line:#2a3142;
   --node:#1c2333; --node-on:#c9a45c;
+  --display:'Yatra One','Noto Sans Devanagari',Georgia,serif;
+  --deva:'Noto Sans Devanagari','Mangal','Kokila',Georgia,serif;
+  --serif-deva:'Noto Serif Devanagari',Georgia,serif;
 }
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
 html,body{margin:0; background:var(--bg); color:var(--ink);
   font:17px/1.5 Georgia,'Times New Roman',serif; min-height:100%}
-header{max-width:860px; margin:0 auto; padding:1rem 1rem .4rem; text-align:center}
-h1{font-size:clamp(1.3rem,4vw,1.8rem); margin:.2rem 0; letter-spacing:.02em}
+body::before{content:""; position:fixed; inset:-20vmax; z-index:-2;
+  background:
+    radial-gradient(38vmax 30vmax at 22% 18%, rgba(201,164,92,.09), transparent 65%),
+    radial-gradient(30vmax 26vmax at 80% 72%, rgba(94,196,182,.07), transparent 65%),
+    radial-gradient(24vmax 22vmax at 72% 12%, rgba(212,137,154,.05), transparent 65%);
+  filter:blur(10px); animation:drift 46s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate3d(3vmax,-2vmax,0) rotate(4deg)}}
+body::after{content:""; position:fixed; inset:0; z-index:50; pointer-events:none; opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='.6'/%3E%3C/svg%3E")}
+header{max-width:860px; margin:0 auto; padding:1.4rem 1rem .4rem; text-align:center}
+h1{font-family:var(--display); font-weight:400; font-size:clamp(1.7rem,5vw,2.4rem);
+  margin:.2rem 0; letter-spacing:.02em;
+  background:linear-gradient(100deg,var(--gold-hi),var(--gold) 45%,#9a7a3a 90%);
+  -webkit-background-clip:text; background-clip:text; color:transparent}
 .sub{color:var(--mut); font-size:.95rem; margin:.1rem 0 .6rem}
 .controls{display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin:.4rem 0}
 .controls button, .sutra-row button{
   font-family:ui-sans-serif,system-ui,sans-serif; font-size:.95rem;
   padding:.65rem 1.1rem; min-height:44px; border-radius:999px;
-  border:1px solid var(--line); background:var(--panel); color:var(--ink); cursor:pointer}
-.controls button.on{background:var(--gold); border-color:var(--gold); color:#0b0d12; font-weight:700}
+  border:1px solid var(--line); background:rgba(18,22,31,.72); color:var(--ink); cursor:pointer;
+  backdrop-filter:blur(6px); transition:transform .16s ease, border-color .2s, box-shadow .2s}
+.controls button:hover, .sutra-row button:hover{transform:translateY(-1px); border-color:var(--gold);
+  box-shadow:0 4px 18px rgba(201,164,92,.18)}
+.controls button:active, .sutra-row button:active{transform:scale(.97)}
+.controls button:focus-visible, .sutra-row button:focus-visible{outline:2px solid var(--gold); outline-offset:2px}
+.controls button.on{background:linear-gradient(120deg,var(--gold-hi),var(--gold)); border-color:var(--gold); color:#0b0d12; font-weight:700;
+  box-shadow:0 4px 22px rgba(201,164,92,.35)}
 main{max-width:860px; margin:0 auto; padding:0 1rem 3rem}
-#stage{background:var(--panel); border:1px solid var(--line); border-radius:18px;
-  padding:.5rem; position:relative; overflow:hidden}
+#stage{background:linear-gradient(var(--panel),var(--panel)) padding-box,
+    linear-gradient(140deg,rgba(201,164,92,.5),rgba(42,49,66,.2) 35%,rgba(94,196,182,.35)) border-box;
+  border:1px solid transparent; border-radius:20px;
+  padding:.5rem; position:relative; overflow:hidden;
+  box-shadow:0 18px 60px rgba(0,0,0,.5), inset 0 1px 0 rgba(240,235,224,.06)}
 svg#body{width:100%; height:auto; display:block; touch-action:manipulation}
 .node{cursor:pointer}
 .node .halo{fill:transparent; transition:fill .25s}
-.node circle.dot{fill:var(--node); stroke:var(--line); stroke-width:1.5; transition:fill .25s, stroke .25s, r .25s}
-.node text{fill:var(--ink); font-size:13px; text-anchor:middle; dominant-baseline:central;
-  font-family:'Noto Sans Devanagari','Mangal','Kokila',Georgia,serif; pointer-events:none}
-.node.lit circle.dot{fill:var(--node-on); stroke:var(--gold)}
+.node circle.dot{fill:url(#nodeGrad); stroke:var(--line); stroke-width:1.5; transition:fill .25s, stroke .25s}
+.node text{fill:var(--ink); font-size:13.5px; text-anchor:middle; dominant-baseline:central;
+  font-family:var(--deva); pointer-events:none}
+.node.lit circle.dot{fill:url(#litGrad); stroke:var(--gold-hi)}
+.node.lit{filter:drop-shadow(0 0 7px rgba(201,164,92,.9))}
 .node.lit text{fill:#0b0d12; font-weight:700}
 .node .pulse{fill:none; stroke:var(--gold); stroke-width:2; opacity:0; pointer-events:none}
 .node.lit .pulse{animation:ping 1s ease-out}
 @keyframes ping{0%{opacity:.9; r:14}100%{opacity:0; r:30}}
-.axis{fill:none; stroke:var(--line); stroke-width:3; stroke-linecap:round}
+.axis{fill:none; stroke:url(#axisGrad); stroke-width:3; stroke-linecap:round;
+  animation:breathe 4.5s ease-in-out infinite}
+@keyframes breathe{0%,100%{opacity:.55}50%{opacity:1}}
+.dva-dot{fill:none; stroke:var(--teal); stroke-width:1.5; animation:breathe 4.5s ease-in-out infinite}
 .flow{fill:none; stroke:var(--teal); stroke-width:3.5; stroke-linecap:round;
   stroke-dasharray:100 200; stroke-dashoffset:100; opacity:0}
-.flow.go{opacity:1; transition:opacity .3s}
+.flow.go{opacity:1; transition:opacity .3s; filter:drop-shadow(0 0 6px rgba(94,196,182,.8))}
 #silhouette{fill:rgba(201,164,92,.05); stroke:var(--line); stroke-width:2}
-#info{background:var(--panel); border:1px solid var(--line); border-radius:14px;
+#info{background:rgba(18,22,31,.72); backdrop-filter:blur(8px);
+  border:1px solid var(--line); border-radius:14px;
   padding:.9rem 1.1rem; margin-top:.8rem; min-height:88px}
-#info .dev{font-size:1.6rem}
+#info .dev{font-family:var(--serif-deva); font-size:2rem; line-height:1.9}
 #info .iast{color:var(--gold); font-family:ui-sans-serif,system-ui,sans-serif}
 #info .locus{color:var(--mut); font-size:.92rem}
 .sutra-row{display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin:.8rem 0}
 footer{color:var(--mut); font-size:.8rem; text-align:center; padding:1rem; font-family:ui-sans-serif,system-ui,sans-serif}
 .src{font-size:.75rem; color:var(--mut)}
 @media (min-width:700px){ #wrap{display:grid; grid-template-columns:1.2fr .8fr; gap:.8rem; align-items:start} }
+@media (prefers-reduced-motion:reduce){
+  body::before,.node.lit .pulse,.axis,.dva-dot{animation:none}
+  *{transition:none !important} }
 </style>
 </head>
 <body>
@@ -67,6 +102,21 @@ footer{color:var(--mut); font-size:.8rem; text-align:center; padding:1rem; font-
 <div id="wrap">
   <div id="stage">
     <svg id="body" viewBox="0 0 400 780" role="img" aria-label="Interactive phonemic body">
+      <defs>
+        <radialGradient id="nodeGrad" cx="38%" cy="32%" r="80%">
+          <stop offset="0%" stop-color="#2b3550"/>
+          <stop offset="100%" stop-color="#161c2b"/>
+        </radialGradient>
+        <radialGradient id="litGrad" cx="38%" cy="32%" r="80%">
+          <stop offset="0%" stop-color="#f2dd9e"/>
+          <stop offset="100%" stop-color="#c9a45c"/>
+        </radialGradient>
+        <linearGradient id="axisGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#5ec4b6"/>
+          <stop offset="35%" stop-color="#c9a45c"/>
+          <stop offset="100%" stop-color="#2a3142"/>
+        </linearGradient>
+      </defs>
       <!-- subtle silhouette -->
       <g id="silhouette-g">
         <ellipse id="silhouette" cx="200" cy="400" rx="105" ry="330"/>
@@ -74,7 +124,7 @@ footer{color:var(--mut); font-size:.8rem; text-align:center; padding:1rem; font-
       </g>
       <!-- axis: dvadasanta -> crown -> base -->
       <line class="axis" x1="200" y1="18" x2="200" y2="740"/>
-      <circle cx="200" cy="18" r="4" fill="none" stroke="#5ec4b6" stroke-width="1.5"/>
+      <circle class="dva-dot" cx="200" cy="18" r="4"/>
       <text x="212" y="22" fill="#a8a294" font-size="10" font-family="ui-sans-serif,system-ui">dvādaśānta</text>
       <!-- trajectory flows -->
       <path id="flowOm" class="flow" d="M200,330 C200,250 200,150 200,62 C200,40 200,28 200,18 C200,60 200,150 200,330"/>

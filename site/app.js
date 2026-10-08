@@ -104,6 +104,19 @@ function place(){
 }
 place();
 
+/* entrance: nodes kindle in emission order (a→kṣa), like the alphabet waking up */
+(function(){
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce) return;
+  P.forEach((p,k) => {
+    const g = els[p.i];
+    const x = cfg==='matrika' ? p.mx : p.ax, y = cfg==='matrika' ? p.my : p.ay;
+    g.animate(
+      [{opacity:0}, {opacity:1}],
+      {duration:420, delay:120+k*28, easing:'ease-out', fill:'backwards'});
+  });
+})();
+
 /* audio */
 let actx = null;
 function ctx(){ if(!actx) actx = new (window.AudioContext||window.webkitAudioContext)(); return actx; }
