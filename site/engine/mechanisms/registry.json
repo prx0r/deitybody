@@ -1,0 +1,40 @@
+{
+  "id": "mechanism-registry-v1",
+  "note": "Named operations by what they DO. Scores invoke mechanisms; solvers render them. Adapted from Renderio MECHANISM-CATALOG (yogic-subtle-body + tantraloka-cosmology sections).",
+  "mechanisms": [
+    {"id": "nadi-flow", "does": "currents along provenance-specific channel geometry",
+     "solver": "path-registry + pulse", "status": "live",
+     "scores": ["om", "namah-shivaya", "middle-pillar/descent"]},
+    {"id": "kundalini-ascent", "does": "coiled root uncoiling, rising through staged centers",
+     "solver": "score breath events + pulses", "status": "live",
+     "scores": ["yoga/kundalini-ascent", "ajahn-lee-1 (adapted)"]},
+    {"id": "subtle-circulation", "does": "current rising centrally, returning around (cyclic)",
+     "solver": "score sweep up + sweep down", "status": "live",
+     "scores": ["middle-pillar/circulation", "om (ascent+flood)"]},
+    {"id": "prana-apana-balance", "does": "descending + ascending currents converging at navel",
+     "solver": "score breath events", "status": "live",
+     "scores": ["vbt/v24-gaze", "yoga/nadi-shodhana"]},
+    {"id": "dvadasanta-ascent", "does": "stations unfolding heart outward to the 12-end",
+     "solver": "score flashes along adhara16", "status": "queued",
+     "needs": "body/reference/anatomy-geometry.json stations"},
+    {"id": "speech-descent", "does": "para to vaikharī strata sounding",
+     "solver": "tone ladder + sweep down", "status": "queued"},
+    {"id": "body-scan", "does": "sequential attention across regions",
+     "solver": "scan band + region flashes", "status": "live", "scores": ["scan mode"]},
+    {"id": "field-suffusion", "does": "whole-field brightening (rapture/pervasion)",
+     "solver": "field event + fluid + rings", "status": "live",
+     "scores": ["ajahn-lee-1/suffusion", "kundalini-ascent/field"]},
+    {"id": "yantra-install", "does": "geometric figure placed at locus, blooming",
+     "solver": "lotus/spokes primitives", "status": "live"},
+    {"id": "wave-interference", "does": "oscillatory fields superposing (Chladni)",
+     "solver": "engine/mxth chladni + cymatics superposition", "status": "live"}
+  ],
+  "solvers": {
+    "path-registry": "site/engine/paths.js (arc-length travel)",
+    "breath-signal": "site/engine/breath.js (sim/mic/score)",
+    "rk4-dynamics": "site/engine/dynamics/systems.mjs (Lorenz/Rössler/Duffing — ambient currents next)",
+    "nodal-particles": "site/engine/dynamics/nodal-particles.mjs (Chladni-node convergence next)",
+    "scalar-fields": "site/engine/dynamics/fields-scalar.mjs",
+    "substitution": "site/engine/dynamics/fractals.mjs (branching patterns next)"
+  }
+}
