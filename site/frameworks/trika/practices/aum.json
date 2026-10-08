@@ -1,0 +1,13 @@
+{
+  "id": "aum-seed",
+  "title": "AUṀ · a + u + ṃ combined",
+  "provenance": "Pedagogical decomposition: diphthong au = a+u openness→closure, ṃ bindu ascent. Component flashes timed to the auṃ head of om.wav (approx).",
+  "classification": {"kind": "mantra-decomposition", "status": "pedagogical"},
+  "events": [
+    {"t": 0.0, "do": "info", "dev": "ॐ", "iast": "AUṀ · a opens, u closes, ṃ rises"},
+    {"t": 0.1, "do": "flash", "node": "a", "cue": "a — open, forehead", "feel": "expansion"},
+    {"t": 0.45, "do": "flash", "node": "u", "cue": "u — gathering, lips narrowing", "feel": "contraction"},
+    {"t": 0.8, "do": "flash", "node": "ma", "cue": "ma — lips close at the heart", "feel": "warmth"},
+    {"t": 1.1, "do": "pulse", "from": "heart", "to": "crown", "dur": 1.0, "cue": "ṃ — bindu rises", "feel": "luminosity"}
+  ]
+}

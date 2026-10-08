@@ -1,0 +1,13 @@
+{
+  "id": "soham",
+  "title": "SO’HAṂ · sa (out) + ha (in)",
+  "provenance": "Ajapa breath mantra (traditional); here as two-node trajectory: sa = exhaling release, haṃ = inhaling return. Simplified score.",
+  "classification": {"kind": "mantra-decomposition", "status": "pedagogical"},
+  "events": [
+    {"t": 0.0, "do": "info", "dev": "सोऽहम्", "iast": "SO’HAṂ · That I am — out and back"},
+    {"t": 0.3, "do": "flash", "node": "sa", "cue": "sa — out with the exhale", "feel": "release"},
+    {"t": 1.0, "do": "pulse", "from": "heart", "to": "crown", "dur": 0.8, "feel": "rising"},
+    {"t": 1.6, "do": "flash", "node": "ha", "cue": "haṃ — I return with the inhale", "feel": "fullness"},
+    {"t": 2.2, "do": "pulse", "from": "crown", "to": "heart", "dur": 0.8, "feel": "settling"}
+  ]
+}

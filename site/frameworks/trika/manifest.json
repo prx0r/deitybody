@@ -1,2 +1,16 @@
-{"id": "trika", "lineage": "Kashmir Trika (Abhinavagupta)", "texts": ["Mālinīvijayottaratantra", "Tantrāloka", "Tantrasāra", "Parātrīśikāvivaraṇa"],
- "configurations": ["matrika-ordered", "malini-mixed"], "practices": "frameworks/trika/practices/"}
+{
+ "id": "trika",
+ "lineage": "Kashmir Trika (Abhinavagupta)",
+ "texts": [
+  "Mālinīvijayottaratantra",
+  "Tantrāloka",
+  "Tantrasāra",
+  "Parātrīśikāvivaraṇa"
+ ],
+ "configurations": [
+  "matrika-ordered",
+  "malini-mixed"
+ ],
+ "practices": "frameworks/trika/practices/",
+ "syllabus": "frameworks/trika/syllabus.json"
+}

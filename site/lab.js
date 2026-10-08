@@ -877,6 +877,8 @@ function buildMenu(){
   btn(r,'Mātṛkā install',trikaGo(()=>setCfg('matrika')));
   btn(r,'Mālinī infusion',trikaGo(()=>setCfg('malini')));
   btn(r,'▶ OM',trikaGo(()=>playOM()));
+  btn(r,'AUṀ seed',trikaGo(()=>score('frameworks/trika/practices/aum.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'pedagogical decomposition'}))));
+  btn(r,'SO’HAṂ',trikaGo(()=>score('frameworks/trika/practices/soham.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'ajapa simplified'}))));
   btn(r,'▶ Namaḥ Śivāya',trikaGo(()=>playNamah()));
   btn(r,'⚡ ha flash',trikaGo(()=>playHa()));
   btn(r,'VBT 24 gaze',trikaGo(()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'}))));
