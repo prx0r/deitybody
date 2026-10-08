@@ -55,6 +55,12 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 #info .dev{font-family:'Noto Serif Devanagari',serif; font-size:1.7rem; line-height:1.8}
 #info .iast{color:var(--gold); font-size:.85rem; font-family:ui-sans-serif,system-ui}
 #info .locus{color:var(--mut); font-size:.8rem}
+#ask{display:flex; gap:.35rem; margin-top:.5rem}
+#askQ{flex:1; min-width:0; background:rgba(11,13,18,.7); border:1px solid var(--line);
+ border-radius:8px; color:var(--ink); font-size:.8rem; padding:.45rem .6rem;
+ font-family:ui-sans-serif,system-ui}
+#ask button{border-radius:8px; border:1px solid var(--line); background:transparent;
+ color:var(--gold); width:34px; cursor:pointer; font-size:1rem}
 /* phoneme chips — real DOM text: browser shapes every conjunct perfectly, sharp at any zoom */
 .glyph{font-family:'Noto Sans Devanagari','Mangal','Kokila',serif; font-size:21px;
  font-weight:500; color:rgba(240,235,224,.85); cursor:pointer; user-select:none;
@@ -108,7 +114,8 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 <div id="fpanel" aria-live="polite"><h4></h4><p></p><div class="row"></div></div>
 <header><h1>जीव — living subtle body</h1><div class="hint">drag to orbit · scroll to zoom · tap any glyph</div></header>
 <div id="legend">wireframe = inscribed grid (Flood: constructed, not found)<br/>gold channel = suṣumṇā · helix = iḍā/piṅgalā<br/>rings = cakra overlay (PEDAGOGICAL, late model)</div>
-<div id="info" aria-live="polite"><div class="dev">अ</div><div class="iast">a · forehead</div><div class="locus">Tap a glyph — hear it, watch prāṇa answer.</div></div>
+<div id="info" aria-live="polite"><div class="dev">अ</div><div class="iast">a · forehead</div><div class="locus">Tap a glyph — hear it, watch prāṇa answer.</div>
+<form id="ask"><input id="askQ" type="text" placeholder="Ask: where am I · next · repeat · pause · source" aria-label="Ask the guide" autocomplete="off"/><button type="submit" aria-label="Ask">?</button></form></div>
 <div id="dock">
  <button id="bOm">▶ OM</button><button id="bNam">▶ Namaḥ Śivāya</button>
  <button id="bHa">⚡ ha flash</button>

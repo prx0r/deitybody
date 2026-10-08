@@ -2,12 +2,33 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
-import { PracticeClock } from './engine/clock.js';
 import { loadBody } from './engine/body.js';
+import { Session } from './engine/session.js';
+import { loadGraph } from './engine/graph.js';
+import { makeTools } from './engine/agent.js';
 import { buildLotus } from './engine/primitives/lotus.js';
 import { buildSpokes } from './engine/primitives/spokes.js';
 let BD=null; loadBody().then(b=>BD=b).catch(()=>{});
-const scoreClock=new PracticeClock();
+/* session owns the clock; exec renders; tools expose state to guide/agents */
+const session=new Session();
+let graph=null, tools=null;
+function fxFlashRegion(regionId, ids){ (ids||[]).slice(0,6).forEach((id,k)=>{
+  const n=P.findIndex(p=>p[0]===id); if(n>=0) setTimeout(()=>{show(P[n]); pop(n);},k*350); }); }
+function bindTools(){ tools=makeTools({session, graph, fx:{flashRegion:fxFlashRegion}});
+  window.deitybody.tools=tools; }
+bindTools();
+loadGraph().then(g=>{graph=g; bindTools();}).catch(()=>{});
+session.render=(e)=>exec(e);
+window.deitybody={session, tools:null, get graph(){return graph;}};
+Object.defineProperty(window.deitybody,'tools',{get:()=>tools});
+session.on((kind)=>{ if(kind==='pause'||kind==='stop'){ try{speechSynthesis.cancel();}catch(e){} } });
+document.getElementById('ask').addEventListener('submit',ev=>{
+  ev.preventDefault();
+  const q=document.getElementById('askQ'); if(!q||!q.value.trim()) return;
+  const a=tools?tools.answer(q.value):'Loading…';
+  info.querySelector('.locus').textContent=a; speak(a);
+  q.value='';
+});
 const SCORES={};
 async function score(url){
   if(!SCORES[url]) SCORES[url]=await (await fetch(url)).json();
@@ -19,11 +40,10 @@ function speak(t){
   if(!guideOn||!('speechSynthesis' in window)) return;
   try{ const u=new SpeechSynthesisUtterance(t); u.rate=.95; speechSynthesis.speak(u); }catch(e){}
 }
-function runScore(events){
-  scoreClock.clear();
+function runScore(events, meta){
+  session.loadPractice(meta||{id:'adhoc',title:'practice'}, events);
   try{ speechSynthesis.cancel(); }catch(e){}
-  for(const e of events) scoreClock.at(e.t, ()=>exec(e));
-  scoreClock.play();
+  session.play();
 }
 function exec(e){
   if(e.cue){ info.querySelector('.locus').textContent=e.cue+(e.feel?` · feel: ${e.feel}`:''); speak(e.cue); }
@@ -394,7 +414,7 @@ function mpFire(id){
   pulse(Math.max(c.y3-.4,channelY0),Math.min(c.y3+.9,channelY1),.55,()=>ringPing(Math.min(c.y3+.9,channelY1),TEAL));
 }
 function mpRun(trajId){
-  score('frameworks/hermetic/middle-pillar.json').then(j=>runScore(j.trajectories[trajId]));
+  score('frameworks/hermetic/middle-pillar.json').then(j=>runScore(j.trajectories[trajId],{id:j.id,title:j.title,source:'Regardie Middle Pillar'}));
 }
 let actx=null, analyser=null, _fq=null; const bufCache={};
 async function audioBuf(url){
@@ -510,7 +530,7 @@ const panel=document.getElementById('fpanel');
 const PANELS={
   trika:{t:'☸ Trika',d:'Mātṛkā base install, Mālinī infusion after automatic. One map per sitting.',
     opts:[['Mātṛkā · base',()=>setCfg('matrika')],['Mālinī · infusion',()=>setCfg('malini')],
-      ['VBT 24 · heart↔12 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events))],
+      ['VBT 24 · heart↔12 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'}))],
       ['Guide voice: off',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;}]]},
   pillar:{t:'☩ Middle Pillar',d:'Hermetic descent + circulation over the same body. Separate layer — never mixed with nyāsa.',
     opts:[['Enter Pillar',()=>setFw('mp')],['Back to Trika',()=>setFw('trika')]]},
@@ -572,14 +592,14 @@ document.getElementById('bOm').onclick=async ()=>{
   if(fw==='mp'){ if(MP)mpRun('descent'); return; }
   if(fw==='layayoga'){ lotusBloom(); return; }
   if(fw==='kalachakra'){ kalConverge(); return; }
-  runScore((await score('frameworks/trika/practices/om.json')).events);
+  score('frameworks/trika/practices/om.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:j.provenance}));
 };
 document.getElementById('bNam').onclick=async ()=>{
   if(fw==='mp'){ if(MP)mpRun('circulation'); return; }
   if(fw==='layayoga'){ lotusBloom(); return; }
   if(fw==='kalachakra'){ kalConverge(); return; }
   const j=await score('frameworks/trika/practices/namah-shivaya.json');
-  runScore(j.variants[cfg]);
+  runScore(j.variants[cfg],{id:j.id+'/'+cfg,title:j.title+' ('+cfg+')',source:j.provenance});
 };
 document.getElementById('bHa').onclick=()=>{
   show(['ha','ह','prāṇa — full-channel flash','',0,'','',0,'ha.ogg']);
@@ -601,7 +621,7 @@ document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{
   SEQ[key].forEach((id,kk)=>{const n=P.findIndex(p=>p[0]===id); if(n>=0){
     evs.push({t:.15+kk*.45,do:'flash',node:id});
     evs.push({t:.15+kk*.45,do:'splat',node:id,dy:-26});}});
-  runScore(evs);
+  runScore(evs,{id:'sutra-'+k,title:b.textContent.replace('▶ ',''),source:'EdgeSanskrit phrase + Mātṛkā loci'});
 });
 
 /* ---------- vipassana-style scan (driven from the rail → toggleScan) ---------- */
