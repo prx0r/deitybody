@@ -10,6 +10,38 @@ import { buildLotus } from './engine/primitives/lotus.js';
 import { buildSpokes } from './engine/primitives/spokes.js';
 import { buildVitruvian } from './engine/primitives/vitruvian.js';
 import { buildGridField } from './engine/primitives/grid-field.js';
+import { renderChladni } from './engine/mxth/chladni.js';
+
+/* ---------- Chladni plate: live wave geometry per phoneme ----------
+   Mode↔class mapping is AESTHETIC (documented here + panel caption),
+   never a textual claim. Audio energy drives time_rate/exposure. */
+const CHLADNI_MODES={
+  a:'ci-2-2',ā:'ci-2-2',i:'ci-3-2',ī:'ci-3-2',u:'ci-2-2',ū:'ci-2-2',
+  'ṛ':'ci-5-1','ṝ':'ci-5-1','ḷ':'ci-6-2','ḹ':'ci-6-2',e:'ci-3-2',ai:'ci-3-2',
+  o:'ci-3-2',au:'ci-3-2','aṃ':'ci-2-2','aḥ':'ci-2-2',
+  ka:'sq-2-3',kha:'sq-2-3',ga:'sq-2-3',gha:'sq-2-3','ṅa':'sq-2-3',
+  ca:'sq-3-4',cha:'sq-3-4',ja:'sq-3-4',jha:'sq-3-4','ña':'sq-3-4',
+  'ṭa':'sq-4-5','ṭha':'sq-4-5','ḍa':'sq-4-5','ḍha':'sq-4-5','ṇa':'sq-4-5',
+  ta:'sq-3-5',tha:'sq-3-5',da:'sq-3-5',dha:'sq-3-5',na:'sq-3-5',
+  pa:'sq-5-8',pha:'sq-5-8',ba:'sq-5-8',bha:'sq-5-8',ma:'sq-5-8',
+  ya:'ci-3-2',ra:'ci-3-2',la:'ci-3-2',va:'ci-3-2',
+  'śa':'ci-5-1','ṣa':'ci-5-1',sa:'ci-5-1',ha:'ci-6-2','kṣa':'sq-4-7'};
+let chladniOn=false;
+const chladniGenome={trail:.93,sample:1,rotation:0,time_rate:1,zoom:1,
+  node_sharpness:7,observable:'bands',contours:3,threshold:.12,gamma:1.25,
+  exposure:1,point_size:1};
+let chladniVariant='sq-3-5', chladniLabel='—';
+const chCanvas=()=>document.getElementById('chladni');
+function chladniSet(iast,dev){
+  chladniVariant=CHLADNI_MODES[iast]||'sq-3-5';
+  chladniLabel=`${dev||iast} · ${chladniVariant} (aesthetic mapping)`;
+  const cap=document.getElementById('chladniCap'); if(cap)cap.textContent=chladniLabel;
+}
+function toggleChladni(){
+  chladniOn=!chladniOn;
+  document.getElementById('chladniBox').style.display=chladniOn?'':'none';
+}
+import { renderChladni } from './engine/mxth/chladni.js';
 let BD=null; loadBody().then(b=>BD=b).catch(()=>{});
 /* session owns the clock; exec renders; tools expose state to guide/agents */
 const session=new Session();
@@ -532,6 +564,7 @@ function fire(iast,withSound=true){
   const [sx,sy]=locusScreen(k), e=audioEnergy();
   fluidSplat(sx,sy,(Math.random()-.5)*24,-(14+46*e));
   gridStimulate(n.anchor.position.x, n.anchor.position.y, n.anchor.position.z, 0.9, 1.2);
+  if(chladniOn) chladniSet(p.i, p.d);
 }
 /* taps land on the DOM chips themselves — no raycast needed; canvas keeps drag/zoom */
 /* ---------- left rail + panel: frameworks, Trika first ---------- */
@@ -540,6 +573,7 @@ const PANELS={
   trika:{t:'☸ Trika',d:'Mātṛkā base install, Mālinī infusion after automatic. One map per sitting.',
     opts:[['Mātṛkā · base',()=>setCfg('matrika')],['Mālinī · infusion',()=>setCfg('malini')],
       ['VBT 24 · heart↔12 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'}))],
+      ['Chladni plate: off',e=>{toggleChladni(); e.target.textContent=`Chladni plate: ${chladniOn?'on':'off'}`;}]]},
       ['Guide voice: off',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;}]]},
   pillar:{t:'☩ Middle Pillar',d:'Hermetic descent + circulation over the same body. Separate layer — never mixed with nyāsa.',
     opts:[['Enter Pillar',()=>setFw('mp')],['Back to Trika',()=>setFw('trika')]]},
@@ -716,6 +750,12 @@ function tick(){
   if(bloomOn) composer.render(); else renderer.render(scene,camera);
   cssRenderer.render(scene,camera);
   if(gridField) gridField.tick(dt,t);
+  if(chladniOn){
+    const e=audioEnergy();
+    chladniGenome.time_rate=0.6+e*2.2;
+    chladniGenome.exposure=0.8+e*0.9;
+    try{ renderChladni(chCanvas(),{genome:chladniGenome,source_variant:chladniVariant},t); }catch(err){}
+  }
   if(typeof kalSpokes!=='undefined'&&kalSpokes&&kalSpokes.group.visible&&!reduce) kalSpokes.spin(dt,0.06);
 }
 function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
