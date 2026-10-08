@@ -101,6 +101,22 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 <body>
 <canvas id="fluid"></canvas>
 <canvas id="scene"></canvas>
+<div id="booterr" style="display:none;position:fixed;z-index:99;left:.6rem;right:.6rem;top:.6rem;background:#3a1420;color:#ffd7de;font:13px/1.4 ui-sans-serif,system-ui;padding:.7rem .9rem;border-radius:10px;border:1px solid #d4899a"></div>
+<script>
+window.__bootErrors=[];
+window.addEventListener('error',function(e){
+  var m='Error: '+(e.message||e.type)+' @'+((e.filename||'').split('/').pop()||'?')+':'+(e.lineno||'?');
+  window.__bootErrors.push(m);
+  var b=document.getElementById('booterr');
+  if(b){b.style.display='block';b.textContent=m+(window.__bootErrors.length>1?' (+'+(window.__bootErrors.length-1)+' more)':'');}
+},true);
+window.addEventListener('unhandledrejection',function(e){
+  var m='Promise: '+((e.reason&&(e.reason.message||e.reason))||'?');
+  window.__bootErrors.push(m);
+  var b=document.getElementById('booterr');
+  if(b){b.style.display='block';b.textContent=m;}
+});
+</script>
 <nav id="rail" aria-label="Frameworks">
  <button id="rTrika" class="on" title="Trika · Mātṛkā/Mālinī">☸</button>
  <button id="rPillar" title="Middle Pillar" style="display:none">☩</button>
