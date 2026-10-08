@@ -115,7 +115,13 @@ function exec(e){
     case 'ring': ringPing(Y(e.at),TEAL); break;
     case 'breath': {
       const y0=Y(e.from), y1=Y(e.to);
+      breathSound(e.phase, e.dur||4.0);
       pulse(y0,y1,e.dur||4.0,()=>ringPing(y1,TEAL)); break; }
+    case 'field': {
+      pulse(-3.5,3.5,Math.min(4,(e.dur||8)/3),()=>ringPing(0.78,GOLD));
+      for(let k=0;k<6;k++) setTimeout(()=>ringPing(-2+k*1.2, TEAL), k*450);
+      fluidSplat(innerWidth/2, innerHeight*0.45, 0, -60);
+      break; }
     case 'breath': {
       const y0=Y(e.from), y1=Y(e.to);
       if(e.cue) info.querySelector('.locus').textContent=e.cue;
@@ -403,6 +409,7 @@ function kalCentreShow(c, el){
 }
 function setFw(f){
   fw=f;
+  setFigGhost(false);
   const trika=f==='trika', mp=f==='mp', lay=f==='layayoga', kal=f==='kalachakra';
   nodes.forEach(n=>{n.anchor.visible=trika;});
   mpGroup.visible=mp;
@@ -572,6 +579,34 @@ function fire(iast,withSound=true){
   gridStimulate(n.anchor.position.x, n.anchor.position.y, n.anchor.position.z, 0.9, 1.2);
   if(chladniOn) chladniSet(p.i, p.d);
 }
+/* ---------- breath audio: audible inhale/exhale for mirroring ---------- */
+let breathAudioOn=false, _noiseBuf=null;
+function noiseBuf(){
+  if(_noiseBuf) return _noiseBuf;
+  const b=actx.createBuffer(1, actx.sampleRate*2, actx.sampleRate);
+  const d=b.getChannelData(0);
+  for(let k=0;k<d.length;k++) d[k]=Math.random()*2-1;
+  return _noiseBuf=b;
+}
+function breathSound(phase,dur){
+  if(!breathAudioOn||!ensureAudio()) return;
+  try{
+    const src=actx.createBufferSource(); src.buffer=noiseBuf(); src.loop=true;
+    const f=actx.createBiquadFilter(); f.type='bandpass';
+    f.frequency.value=phase==='inhale'?620:400; f.Q.value=0.8;
+    const g=actx.createGain(), t=actx.currentTime;
+    if(phase==='inhale'){
+      g.gain.setValueAtTime(0.0001,t);
+      g.gain.exponentialRampToValueAtTime(0.13,t+dur*0.8);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    }else{
+      g.gain.setValueAtTime(0.11,t);
+      g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+    }
+    src.connect(f); f.connect(g); g.connect(actx.destination);
+    src.start(t); src.stop(t+dur+0.1);
+  }catch(e){}
+}
 /* ---------- musical body: pitch follows height (sargam ascent), colour+shape follow element.
    Citables: cakra colour table (body/reference), green-core rows (tantrica2),
    tattva shapes square/crescent/triangle/hexagram/circle (Śaṭcakranirūpaṇa standard).
@@ -691,6 +726,8 @@ function buildMenu(){
   btn(r,'▶ Namaḥ Śivāya',()=>playNamah());
   btn(r,'⚡ ha',()=>playHa());
   btn(r,'VBT 24 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'})));
+  btn(r,'Ajahn Lee · breath energy',()=>startAjahn());
+  btn(r,'Breath audio',e=>{breathAudioOn=!breathAudioOn; e.target.textContent=`Breath audio: ${breathAudioOn?'on':'off'}`;});
   btn(r,'caitanyam',()=>playSutra('sutra','caitanyam ātmā — Consciousness is Self'));
   btn(r,'hṛdaye',()=>playSutra('hrdaye','hṛdaye — in the Heart'));
   btn(r,'Guide voice',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;},'mGuide');
@@ -850,6 +887,21 @@ function cycleAvatar(){
     }
     menuMark();
   }).catch(()=>{});
+}
+/* ---------- ajahn lee endgame loop: seated figure, breath audio, narration ---------- */
+function setFigGhost(on){
+  if(!vitFig) return;
+  vitFig.group.traverse(o=>{ if(o.isMesh&&o.material){ o.material.transparent=true; o.material.opacity=on?0.32:0.92; } });
+}
+function startAjahn(){
+  score('frameworks/theravada/practices/ajahn-lee-1.json').then(j=>{
+    if(!vitFig) vitFig=buildVitruvianFigure({scene});
+    vitFig.show(true); vitFig.setPose('seated'); setFigGhost(true);
+    document.getElementById('vitruv').style.display='none';
+    breathAudioOn=true; guideOn=true;
+    runScore(j.events,{id:j.id,title:j.title,source:'Ajahn Lee M1 simplified — verify against source'});
+    readout.innerHTML='<b>ajahn lee · method 1</b> · seated · breath + narration on — mirror, then feel';
+  });
 }
 let scanMode=null;
 const scanBand=new THREE.Mesh(new THREE.TorusGeometry(.72,.03,8,48),
