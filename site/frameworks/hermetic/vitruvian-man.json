@@ -3,21 +3,41 @@
   "framework": "hermetic/geometry",
   "title": "Vitruvian measure — as above, so below",
   "note": "Diagram overlay, not a practice. da Vinci proportions + Hermetic correspondences + modern physics notes, each with its own status.",
+  "canon": {
+    "source": "Vitruvius, De architectura III.1 (Morgan/Gutenberg #20239); Leonardo's 4-cubit height + circle/square centres from the drawing tradition",
+    "unit": "H = height = 4 cubits = 24 palms = 96 fingers",
+    "measures": [
+      {"member": "face (chin→hairline)", "value": "1/10 H"},
+      {"member": "open hand (wrist→middle fingertip)", "value": "1/10 H"},
+      {"member": "head (chin→crown)", "value": "1/8 H"},
+      {"member": "breast-top→hairline", "value": "1/6 H"},
+      {"member": "mid-breast→crown", "value": "1/4 H"},
+      {"member": "foot length", "value": "1/6 H"},
+      {"member": "forearm", "value": "1/4 H"},
+      {"member": "breast breadth", "value": "1/4 H"},
+      {"member": "face thirds (chin→nostrils→brows→hairline)", "value": "1/3 F each"},
+      {"member": "arm span", "value": "= H (square construction)"},
+      {"member": "navel station", "value": "0.6H (drawing tradition); circle centre by compass (text)"},
+      {"member": "circle radius", "value": "navel→crown; soles do NOT touch the circle under text numbers (pop claim geometrically impossible); cf. Ida r/side ≈ 137/225 measured"},
+      {"member": "square centre", "value": "groin (Leonardo drawing tradition; Vitruvius silent)"}
+    ],
+    "constraints": [
+      "span - height = 0",
+      "circle.centre = navel AND circle passes through crown",
+      "square.side = height AND square.centre = groin",
+      "foot.length = H/6 AND forearm = H/4 AND head = H/8"
+    ]
+  },
   "geometry": {
-    "square": {"from": "feet", "to": "crown", "meaning": "earth · the measured microcosm"},
-    "circle": {"center": "navel", "meaning": "heavens · macrocosm, navel as centre"},
-    "span": {"meaning": "arm span = height (arms outstretched; stylized here)"},
+    "square": {"side": "H", "centre": "groin", "meaning": "earth · measured microcosm"},
+    "circle": {"centre": "navel", "radius": "navel→crown", "meaning": "heavens · macrocosm"},
+    "span": {"meaning": "arm span = H (square construction)"},
     "centers": [
       {"id": "navel", "role": "circle-centre"},
-      {"id": "groin", "role": "square-centre (da Vinci: centre of square at groin)"}
+      {"id": "groin", "role": "square-centre (drawing tradition; Vitruvius silent)"}
     ],
-    "proportions": [
-      "4 fingers = 1 palm",
-      "4 palms = 1 foot",
-      "6 palms = 1 cubit",
-      "4 cubits = height",
-      "arm span = height"
-    ]
+    "metrology": ["4 fingers = 1 palm", "4 palms = 1 foot (16 fingers: cubit−2 palms)",
+      "6 palms = 1 cubit = 24 fingers", "4 cubits = height", "10 fingers = perfect (Plato); 6 = perfect (mathematicians)"]
   },
   "correspondences": [
     {"below": "navel (circle-centre)", "above": "sun / centre of system", "source": "hermetic-analogy", "status": "traditional"},

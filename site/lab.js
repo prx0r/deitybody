@@ -680,7 +680,7 @@ function buildMenu(){
   r=sec('Layers');
   btn(r,'◉ scan',()=>toggleScan(),'mScan');
   btn(r,'△ yantra',()=>toggleYan(),'mYan');
-  btn(r,'✦ figure',e=>{cycleVit(); e.target.textContent='✦ '+vitModeLabel();},'mVit');
+  btn(r,'✦ Vitruvian',e=>{cycleVit(); e.target.textContent='✦ '+vitModeLabel();},'mVit');
   btn(r,'◈ lines',()=>toggleX(),'mX');
   btn(r,'🌊 fluid',()=>{fluidOn=!fluidOn; fluidCanvas.style.display=fluidOn?'':'none';},'mFluid');
   btn(r,'≋ chladni',()=>toggleChladni(),'mChlad');
@@ -808,7 +808,10 @@ function vitStill(){
   document.getElementById('vitruv').style.display='';
   readout.innerHTML='<b>earthly pose</b> · square · centre groin';
 }
-function vitMorph(){ vitStill(); morphOn=true; morphT=0; morphDir=1; }
+function vitMorph(){
+  vitStill(); morphOn=true; morphT=0; morphDir=1;
+  readout.innerHTML='<b>morphing</b> · groin ↔ navel — the body moves, not the shapes';
+}
 function vitHide(){
   morphOn=false;
   if(vitFig) vitFig.show(false);

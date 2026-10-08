@@ -1,0 +1,1 @@
+# vitruvius-morgan-gutenberg20239.txt — Vitruvius, Ten Books on Architecture, tr. Morris Hicky Morgan (1914). Project Gutenberg #20239, public domain. Canon passage: Book III Ch.1 (human proportions, circle/square). Downloaded 2026-10-08.
