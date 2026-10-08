@@ -15,12 +15,12 @@ let graph=null, tools=null;
 function fxFlashRegion(regionId, ids){ (ids||[]).slice(0,6).forEach((id,k)=>{
   const n=P.findIndex(p=>p[0]===id); if(n>=0) setTimeout(()=>{show(P[n]); pop(n);},k*350); }); }
 function bindTools(){ tools=makeTools({session, graph, fx:{flashRegion:fxFlashRegion}});
-  window.deitybody.tools=tools; }
+  if(window.deitybody) window.deitybody.tools=tools; }
+window.deitybody={session, tools:null, get graph(){return graph;}};
+Object.defineProperty(window.deitybody,'tools',{get:()=>tools});
 bindTools();
 loadGraph().then(g=>{graph=g; bindTools();}).catch(()=>{});
 session.render=(e)=>exec(e);
-window.deitybody={session, tools:null, get graph(){return graph;}};
-Object.defineProperty(window.deitybody,'tools',{get:()=>tools});
 session.on((kind)=>{ if(kind==='pause'||kind==='stop'){ try{speechSynthesis.cancel();}catch(e){} } });
 document.getElementById('ask').addEventListener('submit',ev=>{
   ev.preventDefault();
