@@ -12,6 +12,22 @@ import { buildVitruvian } from './engine/primitives/vitruvian.js';
 import { buildVitruvianFigure } from './engine/primitives/vitruvian-figure.js';
 import { buildAvatar } from './engine/primitives/avatar.js';
 import { buildGridField } from './engine/primitives/grid-field.js';
+import { lsystem } from './engine/dynamics/fractals.mjs';
+import { analyzeFrame } from './engine/audio/spectrum.mjs';
+import { AudioRouter } from './engine/audio/audio-router.mjs';
+const clipModes=new Map();
+function analyzeClip(url, buf){
+  try{
+    const ch=buf.getChannelData(0);
+    const fr=analyzeFrame(ch.slice(0, Math.min(8192, ch.length)), {sampleRate: buf.sampleRate});
+    clipModes.set(url, Math.round(fr.moments.centroid));
+  }catch(e){}
+}
+const mixRouter=new AudioRouter([
+  {source:'energy', target:'toneVol', curve:'ease-out', minimum:.05, maximum:.16},
+  {source:'energy', target:'chladniBoost', curve:'sqrt', minimum:.8, maximum:1.8},
+]);
+let mixOut={toneVol:.12, chladniBoost:1};
 import { createPathRegistry } from './engine/paths.js';
 import { createBreath } from './engine/breath.js';
 let pathReg=null, breath=null;
@@ -41,6 +57,21 @@ const chCanvas=()=>document.getElementById('chladni');
 function chladniSet(iast,dev){
   chladniVariant=CHLADNI_MODES[iast]||'sq-3-5';
   chladniLabel=`${dev||iast} · ${chladniVariant} (aesthetic mapping)`;
+  const cap=document.getElementById('chladniCap'); if(cap)cap.textContent=chladniLabel;
+}
+/* measured mode: spectral centroid of the actual clip picks the figure.
+   Vowels → circle family, consonants → square; brighter → higher mode. */
+const VOWEL_SET=['a','ā','i','ī','u','ū','ṛ','ṝ','ḷ','ḹ','e','ai','o','au','aṃ','aḥ'];
+function chladniSetMeasured(p,centroidHz){
+  let v;
+  if(centroidHz==null){ v=CHLADNI_MODES[p[0]]||'sq-3-5'; }
+  else{
+    const bright=Math.max(0,Math.min(1,(centroidHz-400)/3600));
+    const tier=bright<0.33?0:bright<0.66?1:2;
+    v=VOWEL_SET.includes(p[0])?['ci-2-2','ci-3-2','ci-5-1'][tier]:['sq-2-3','sq-3-5','sq-5-8'][tier];
+  }
+  chladniVariant=v;
+  chladniLabel=`${p[1]} · ${v}`+(centroidHz!=null?` · measured ${centroidHz}Hz`:' · aesthetic mapping');
   const cap=document.getElementById('chladniCap'); if(cap)cap.textContent=chladniLabel;
 }
 function toggleChladni(){
@@ -451,7 +482,7 @@ function kalCentreShow(c, el){
 function setFw(f){
   fw=f;
   setFigGhost(false);
-  const trika=f==='trika', mp=f==='mp', lay=f==='layayoga', kal=f==='kalachakra', bare=f==='bare';
+  const trika=(f==='trika'||f==='yoga'), mp=f==='mp', lay=f==='layayoga', kal=f==='kalachakra', bare=f==='bare';
   nodes.forEach(n=>{n.anchor.visible=trika;});
   edges.visible=trika;
   mpGroup.visible=mp;
@@ -497,7 +528,9 @@ async function audioBuf(url){
     analyser=actx.createAnalyser(); analyser.fftSize=256;
     _fq=new Uint8Array(analyser.frequencyBinCount); analyser.connect(actx.destination); }
   const r=await fetch(url), b=await r.arrayBuffer();
-  return bufCache[url]=await actx.decodeAudioData(b);
+  const dec=await actx.decodeAudioData(b);
+  bufCache[url]=dec; analyzeClip(url, dec);
+  return dec;
 }
 function audioEnergy(){
   if(!analyser) return .5;
@@ -553,19 +586,20 @@ function buildHubAndBranches(){
   scene.add(hubMesh);
   branchGroup=new THREE.Group(); scene.add(branchGroup);
   if(!nadisCfg) return;
-  const rnd=mulberry(7);
   const bmat=new THREE.LineBasicMaterial({color:0xa86f14,transparent:true,opacity:.22});
+  /* L-system branching (engine/dynamics/fractals): deterministic, rule-grown */
+  const TREE=lsystem({axiom:'F',rules:{F:'F[+F]F[-F]F'},iterations:3,angle:0.44,step:0.16});
+  const treePts=[];
+  for(const [a,b] of TREE){ treePts.push([a.x,a.y],[b.x,b.y]); }
   for(const n of nadisCfg.nadis){
     if(!n.points||n.points.length<2) continue;
     const base=n.points.map(p=>{const [x,y]=xfPos(p[0],p[1]); return new THREE.Vector3(x,y,p[2]??0);});
-    for(let b=0;b<5;b++){
-      const t0=0.25+rnd()*0.6;
-      const i=Math.min(base.length-2,Math.floor(t0*(base.length-1)));
-      const o=base[i].clone();
-      const dir=new THREE.Vector3((rnd()-0.5)*1.4,(rnd()-0.3)*1.2,(rnd()-0.5)*0.6);
-      const pts=[o.clone()];
-      for(let k=1;k<=3;k++) pts.push(o.clone().addScaledVector(dir,k*0.22*(1-k*0.2)));
-      branchGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),bmat));
+    for(let b=0;b<3;b++){
+      const i=Math.min(base.length-2,Math.floor((0.3+b*0.25)*(base.length-1)));
+      const o=base[i].clone(), co=Math.cos(b*2.1), si=Math.sin(b*2.1);
+      const pts=treePts.map(([x,y])=>new THREE.Vector3(
+        o.x+(x*co-y*si)*0.5, o.y+(x*si+y*co)*0.5, o.z));
+      branchGroup.add(new THREE.LineSegments(new THREE.BufferGeometry().setFromPoints(pts),bmat));
     }
   }
 }
@@ -689,13 +723,12 @@ function fire(iast,withSound=true){
   shapeFlash(n.anchor.position.x, y, n.anchor.position.z, st.shape, st.color);
   playTone(toneForY(y), toneDur(p[0], y));
   if(withSound) clipFor(p).then(c=>{
-    if(c.url) play(c.url);
+    if(c.url){ play(c.url); if(chladniOn) chladniSetMeasured(p, clipModes.get(c.url)); }
     else readout.innerHTML='<b>'+p[1]+'</b> · '+p[0]+' · no recording anywhere — silence, flagged';
   });
   const [sx,sy]=locusScreen(k), e=audioEnergy();
   fluidSplat(sx,sy,(Math.random()-.5)*24,-(14+46*e));
   gridStimulate(n.anchor.position.x, n.anchor.position.y, n.anchor.position.z, 0.9, 1.2);
-  if(chladniOn) chladniSet(p.i, p.d);
 }
 /* ---------- breath audio: audible inhale/exhale for mirroring ---------- */
 let breathAudioOn=false, _noiseBuf=null;
@@ -763,8 +796,9 @@ function droneStart(dur){
   }catch(e){}
 }
 function droneStop(){ if(droneNodes){ try{droneNodes.forEach(o=>o.stop());}catch(e){} droneNodes=null; } }
-function playTone(freq,dur=1.1,vol=.12){
+function playTone(freq,dur=1.1,vol){
   if(!melodyOn||!actx) return;
+  if(vol==null) vol=mixOut.toneVol;
   try{
     const o=actx.createOscillator(), g=actx.createGain();
     o.type='sine'; o.frequency.value=freq;
@@ -840,6 +874,7 @@ function buildMenu(){
   fwBtn('☩ Pillar','mp',()=>setFw('mp'));
   fwBtn('🪷 Lotus','layayoga',()=>setFw('layayoga'));
   fwBtn('❖ Kāla','kalachakra',()=>setFw('kalachakra'));
+  fwBtn('🕉️ Sivananda','yoga',()=>setFw('yoga'));
   r=sec('Fields');
   btn(r,'🌊 waves',()=>{setFluid(!fluidOn);},'mFluid');
   btn(r,'✨ vacuum dots',()=>toggleGrid(),'mGrid');
@@ -1208,8 +1243,9 @@ function tick(){
   if(avatar&&avatar.group.visible){ avatar.tick(dt); avatar.breathe(0.5+0.5*Math.sin(t*0.45)); }
   if(chladniOn){
     const e=audioEnergy();
+    mixOut=mixRouter.update({energy:e},dt);
     chladniGenome.time_rate=0.6+e*2.2;
-    chladniGenome.exposure=0.8+e*0.9;
+    chladniGenome.exposure=(0.8+e*0.9)*mixOut.chladniBoost;
     try{ renderChladni(chCanvas(),{genome:chladniGenome,source_variant:chladniVariant},t); }catch(err){}
   }
   if(typeof kalSpokes!=='undefined'&&kalSpokes&&kalSpokes.group.visible&&!reduce) kalSpokes.spin(dt,0.06);

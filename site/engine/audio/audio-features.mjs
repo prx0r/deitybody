@@ -1,5 +1,6 @@
-import { readFile } from "node:fs/promises";
-import { clamp, lerp } from "../../math.mjs";
+let _readFile = null;
+async function readFile(p, o){ if(!_readFile){ try{ _readFile = (await import("node:fs/promises")).readFile; }catch(e){ throw new Error("node-only"); } } return _readFile(p, o); }
+import { clamp, lerp } from "../dynamics/math-core.mjs";
 
 export async function loadAudioFeatureManifest(path) {
   const data = JSON.parse(await readFile(path, "utf8"));

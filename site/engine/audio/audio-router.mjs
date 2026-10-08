@@ -1,4 +1,4 @@
-import { clamp, lerp } from "../../math.mjs";
+import { clamp, lerp } from "../dynamics/math-core.mjs";
 import { EnvelopeFollower } from "./audio-features.mjs";
 
 const CURVES = Object.freeze({

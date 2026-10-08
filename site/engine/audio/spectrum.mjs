@@ -1,4 +1,4 @@
-import {TAU,clamp,rms} from "../core/math.mjs";
+import {TAU,clamp,rms} from "../dynamics/math-core.mjs";
 
 export function hann(n,N){return .5-.5*Math.cos(TAU*n/(N-1||1));}
 
