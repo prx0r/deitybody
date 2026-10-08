@@ -1,0 +1,1 @@
+# vitruvian.svg — vector trace of Luc Viatour photo of da Vinci Vitruvian Man (Gallerie dell Accademia). Wikimedia Commons File:Da Vinci Vitruve Luc Viatour 2.svg — public domain artwork, faithful reproduction. Used faint as base layer under the constellation.

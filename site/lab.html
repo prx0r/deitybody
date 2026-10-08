@@ -14,6 +14,8 @@ html,body{margin:0; height:100%; background:var(--bg); color:var(--ink);
  font:16px/1.5 Georgia,serif; overflow:hidden}
 #scene{position:fixed; inset:0; z-index:1}
 #fluid{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.55}
+#vitruv{position:fixed; inset:0; margin:auto; height:94vh; z-index:0; opacity:.16;
+ filter:sepia(.55) saturate(.85); pointer-events:none; display:none}
 body.split #scene{right:50%}
 body.split #fluid{right:50%}
 #second{display:none}
@@ -105,6 +107,7 @@ body.embed #menuBtn,body.embed #splitBtn,body.embed #menu,body.embed #readout{di
 </head>
 <body>
 <canvas id="fluid"></canvas>
+<img id="vitruv" alt=""/>
 <canvas id="scene"></canvas>
 <div id="booterr" style="display:none;position:fixed;z-index:99;left:.6rem;right:.6rem;top:.6rem;background:#3a1420;color:#ffd7de;font:13px/1.4 ui-sans-serif,system-ui;padding:.7rem .9rem;border-radius:10px;border:1px solid #d4899a"></div>
 <script>

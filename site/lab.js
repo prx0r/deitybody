@@ -495,7 +495,7 @@ if(fluidOn){
       SPLAT_RADIUS:.3,SPLAT_FORCE:5200,
       COLORFUL:false,SPLAT_COLOR:{r:.5,g:.32,b:.08},
       SHADING:true,BLOOM:true,BLOOM_INTENSITY:.5,BLOOM_THRESHOLD:.55,SUNRAYS:false,
-      BACK_COLOR:{r:.965,g:.95,b:.91},TRANSPARENT:false,PAUSED:false});
+      BACK_COLOR:{r:.965,g:.95,b:.91},TRANSPARENT:true,PAUSED:false});
     fluidOK=true;
     setTimeout(()=>{fluidSplat(innerWidth/2,innerHeight*.42,0,-50);
       setTimeout(()=>fluidSplat(innerWidth/2,innerHeight*.6,0,40),700);},900);
@@ -768,6 +768,9 @@ function toggleVit(){
   if(!vitLayer && vitCfg) vitLayer=buildVitruvian(vitCfg,{scene});
   if(!vitLayer) return;
   vitLayer.group.visible=!vitLayer.group.visible;
+  const img=document.getElementById('vitruv');
+  if(!img.src) img.src='assets/vitruvian.svg';
+  img.style.display=vitLayer.group.visible?'':'none';
   if(vitLayer.group.visible){
     info.querySelector('.dev').textContent='☉☽';
     info.querySelector('.iast').textContent='As above, so below — measure, not mystique';
