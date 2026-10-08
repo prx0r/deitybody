@@ -299,6 +299,7 @@ function updateStatics(){
 }
 /* ---------- yantra overlay: measurable geometry (PEDAGOGICAL) ---------- */
 const yantra=new THREE.Group(); yantra.visible=false; scene.add(yantra);
+setVisibleDeep(yantra,false);
 {
   const line=(pts,color,op=.8)=>{const g=new THREE.BufferGeometry().setFromPoints(pts);
     yantra.add(new THREE.Line(g,new THREE.LineBasicMaterial({color,transparent:true,opacity:op})));};
@@ -479,15 +480,18 @@ function kalCentreShow(c, el){
   el.classList.add('lit'); setTimeout(()=>el.classList.remove('lit'),900);
   pulse(c.y3-0.5, c.y3+0.5, 0.8, ()=>ringPing(c.y3, TEAL));
 }
+/* CSS2DRenderer only respects each label's OWN visible flag — parents don't hide children.
+   So every layer toggle goes through here (deep). */
+function setVisibleDeep(obj,v){ obj.traverse(o=>{o.visible=v;}); }
 function setFw(f){
   fw=f;
   setFigGhost(false);
   const trika=(f==='trika'||f==='yoga'), mp=f==='mp', lay=f==='layayoga', kal=f==='kalachakra', bare=f==='bare';
-  nodes.forEach(n=>{n.anchor.visible=trika;});
+  nodes.forEach(n=>setVisibleDeep(n.anchor,trika));
   edges.visible=trika;
-  mpGroup.visible=mp;
-  if(lotus) lotus.group.visible=lay;
-  if(kalSpokes) kalSpokes.group.visible=kal;
+  setVisibleDeep(mpGroup,mp);
+  if(lotus) setVisibleDeep(lotus.group,lay);
+  if(kalSpokes) setVisibleDeep(kalSpokes.group,kal);
   if(kal && !kalSpokes && kalCfg){
     kalSpokes=buildSpokes(kalCfg,{scene, onCentre:kalCentreShow});
   }
@@ -563,7 +567,7 @@ function toggleNadis(){
     pathReg.rebuild((x,y)=>xfPos(x,y));
   }
   if(!nadis) return;
-  nadis.group.visible=!nadis.group.visible;
+  setVisibleDeep(nadis.group,!nadis.group.visible);
   if(nadis.group.visible){
     info.querySelector('.dev').textContent='नाडी';
     info.querySelector('.iast').textContent='ten principals · endpoints per SSP/Darśana/Yājñavalkya';
@@ -868,7 +872,6 @@ function buildMenu(){
   poseBtn('🧍 standing','standing'); poseBtn('🧘 seated','seated'); poseBtn('🛌 lying','lying');
   r=sec('Traditions');
   const fwBtn=(label,fwId,go)=>btn(r,label,()=>{go();},null).dataset.fw=fwId;
-  fwBtn('○ bare canvas','bare',()=>setFw('bare'));
   r=sec('☸ Trika');
   const trikaGo=fn=>()=>{ if(fw!=='trika')setFw('trika'); fn(); menuClose(); };
   btn(r,'Mātṛkā install',trikaGo(()=>setCfg('matrika')));
@@ -979,7 +982,7 @@ function toggleScan(){
     info.querySelector('.locus').textContent='Rest attention where the band glows. Breathe naturally (TĀ 4.91).';
     readout.innerHTML='<b>scan</b> · crown → feet → crown';}
 }
-function toggleYan(){ yantra.visible=!yantra.visible; }
+function toggleYan(){ setVisibleDeep(yantra,!yantra.visible); }
 function toggleX(){
   xray=!xray; edges.visible=!xray;
 }
@@ -1026,7 +1029,7 @@ fetch('frameworks/hermetic/vitruvian-man.json').then(r=>r.json()).then(c=>{
 function toggleVit(){
   if(!vitLayer && vitCfg) vitLayer=buildVitruvian(vitCfg,{scene});
   if(!vitLayer) return;
-  vitLayer.group.visible=!vitLayer.group.visible;
+  setVisibleDeep(vitLayer.group,!vitLayer.group.visible);
   const img=document.getElementById('vitruv');
   if(!img.src) img.src='assets/vitruvian.svg';
   img.style.display=vitLayer.group.visible?'':'none';
@@ -1068,7 +1071,7 @@ function cycleVitFig(){
       readout.innerHTML='<b>seated lotus</b> · same canon, folded'; }
     else { vitFig.setPose('lying');
       readout.innerHTML='<b>lying down</b> · same canon, horizontal'; }
-    if(vitLayer) vitLayer.group.visible=false;
+    if(vitLayer) setVisibleDeep(vitLayer.group,false);
     img.style.display='';
   }
   menuMark();
@@ -1076,14 +1079,14 @@ function cycleVitFig(){
 function vitStill(){
   morphOn=false;
   vitFig.show(true); vitFig.setPose('standing'); vitFig.pose(0);
-  if(vitLayer) vitLayer.group.visible=false;
+  if(vitLayer) setVisibleDeep(vitLayer.group,false);
   document.getElementById('vitruv').style.display='';
   readout.innerHTML='<b>earthly pose</b> · square · centre groin';
 }
 function vitPose(name){
   morphOn=false;
   vitFig.show(true); vitFig.setPose(name);
-  if(vitLayer) vitLayer.group.visible=false;
+  if(vitLayer) setVisibleDeep(vitLayer.group,false);
   document.getElementById('vitruv').style.display = name==='standing' ? '' : 'none';
   readout.innerHTML = name==='seated'
     ? '<b>seated lotus</b> · same canon, folded'
@@ -1092,7 +1095,7 @@ function vitPose(name){
 function vitHide(){
   morphOn=false;
   if(vitFig) vitFig.show(false);
-  if(vitLayer) vitLayer.group.visible=false;
+  if(vitLayer) setVisibleDeep(vitLayer.group,false);
   document.getElementById('vitruv').style.display='none';
 }
 /* ---------- avatar reference mesh (articulated, faint, NOT the subtle body) ---------- */
