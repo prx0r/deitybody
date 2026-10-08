@@ -321,9 +321,9 @@
    },
    "audio": {
     "reference": "audio/phonemes/lr.ogg",
-    "speaker": "edge-tts-madhur-unverified",
+    "speaker": "edgesanskrit-v1-directipa-unverified",
     "verified": false,
-    "note": "Edge TTS hi-IN-Madhur single-segment render; needs ear verify. Swara alternate staged."
+    "note": "EdgeSanskrit v1 direct-IPA l̩ render (same session as full-50 track); needs ear verify."
    },
    "placements": {
     "matrika": {
@@ -359,9 +359,9 @@
    },
    "audio": {
     "reference": "audio/phonemes/lrr.ogg",
-    "speaker": "edge-tts-madhur-unverified",
+    "speaker": "edgesanskrit-v1-directipa-unverified",
     "verified": false,
-    "note": "Edge TTS hi-IN-Madhur single-segment render; needs ear verify. Swara alternate staged."
+    "note": "EdgeSanskrit v1 direct-IPA l̩ː render (same session as full-50 track); needs ear verify."
    },
    "placements": {
     "matrika": {
