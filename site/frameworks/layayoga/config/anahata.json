@@ -1,39 +1,185 @@
 {
-  "id": "anahata",
-  "framework": "layayoga_satcakra",
-  "geometry": {"type": "lotus", "petals": 12, "centralYantra": "hexagram", "orientation": "front", "position": "heart"},
-  "petals": [
-    {"i": 0, "bija": "kaṃ", "phoneme": "ka", "dev": "कं"},
-    {"i": 1, "bija": "khaṃ", "phoneme": "kha", "dev": "खं"},
-    {"i": 2, "bija": "gaṃ", "phoneme": "ga", "dev": "गं"},
-    {"i": 3, "bija": "ghaṃ", "phoneme": "gha", "dev": "घं"},
-    {"i": 4, "bija": "ṅaṃ", "phoneme": "ṅa", "dev": "ङं"},
-    {"i": 5, "bija": "caṃ", "phoneme": "ca", "dev": "चं"},
-    {"i": 6, "bija": "chaṃ", "phoneme": "cha", "dev": "छं"},
-    {"i": 7, "bija": "jaṃ", "phoneme": "ja", "dev": "जं"},
-    {"i": 8, "bija": "jhaṃ", "phoneme": "jha", "dev": "झं"},
-    {"i": 9, "bija": "ñaṃ", "phoneme": "ña", "dev": "ञं"},
-    {"i": 10, "bija": "ṭaṃ", "phoneme": "ṭa", "dev": "टं"},
-    {"i": 11, "bija": "ṭhaṃ", "phoneme": "ṭha", "dev": "ठं"}
+ "id": "anahata",
+ "framework": "layayoga_satcakra",
+ "geometry": {
+  "type": "lotus",
+  "petals": 12,
+  "centralYantra": "hexagram",
+  "orientation": "front",
+  "position": "heart"
+ },
+ "petals": [
+  {
+   "i": 0,
+   "bija": "kaṃ",
+   "phoneme": "ka",
+   "dev": "कं"
+  },
+  {
+   "i": 1,
+   "bija": "khaṃ",
+   "phoneme": "kha",
+   "dev": "खं"
+  },
+  {
+   "i": 2,
+   "bija": "gaṃ",
+   "phoneme": "ga",
+   "dev": "गं"
+  },
+  {
+   "i": 3,
+   "bija": "ghaṃ",
+   "phoneme": "gha",
+   "dev": "घं"
+  },
+  {
+   "i": 4,
+   "bija": "ṅaṃ",
+   "phoneme": "ṅa",
+   "dev": "ङं"
+  },
+  {
+   "i": 5,
+   "bija": "caṃ",
+   "phoneme": "ca",
+   "dev": "चं"
+  },
+  {
+   "i": 6,
+   "bija": "chaṃ",
+   "phoneme": "cha",
+   "dev": "छं"
+  },
+  {
+   "i": 7,
+   "bija": "jaṃ",
+   "phoneme": "ja",
+   "dev": "जं"
+  },
+  {
+   "i": 8,
+   "bija": "jhaṃ",
+   "phoneme": "jha",
+   "dev": "झं"
+  },
+  {
+   "i": 9,
+   "bija": "ñaṃ",
+   "phoneme": "ña",
+   "dev": "ञं"
+  },
+  {
+   "i": 10,
+   "bija": "ṭaṃ",
+   "phoneme": "ṭa",
+   "dev": "टं"
+  },
+  {
+   "i": 11,
+   "bija": "ṭhaṃ",
+   "phoneme": "ṭha",
+   "dev": "ठं"
+  }
+ ],
+ "center": {
+  "bija": "yaṃ",
+  "bijaDev": "यं",
+  "element": "air",
+  "sense": "touch"
+ },
+ "visual": {
+  "petalColour": "source-specific: vermilion/red",
+  "binduColour": "source-specific",
+  "note": "Do not hard-code New-Age palettes; colours vary by text"
+ },
+ "function": "Air/ touch junction; breath-heart attention seat",
+ "provenance": {
+  "status": "volume-verified",
+  "sources": [
+   "Goswami Layayoga text (lines per corpus/extracts/GOSWAMI-ANAHATA.md)",
+   "Śaṭcakranirūpaṇa vv.22-26 (standard translation)"
   ],
-  "center": {"bija": "yaṃ", "bijaDev": "यं", "element": "air", "sense": "touch"},
-  "visual": {"petalColour": "source-specific: vermilion/red", "binduColour": "source-specific",
-    "note": "Do not hard-code New-Age palettes; colours vary by text"},
-  "function": "Air/ touch junction; breath-heart attention seat",
-  "provenance": {"text": "Śaṭcakranirūpaṇa vv.22–26 (standard edition)", "status": "needs_verification",
-    "note": "Petal letters, yantra and bīja per the standard published translation; verify against Sanskrit before teaching. Volume confirms 12-petal count only."},
-  "assertions": [
-    {"subject": "anahata.petals", "predicate": "count", "value": 12,
-     "source": {"tradition": "satcakra", "authority": "Śaṭcakranirūpaṇa", "reference": "vv.22–26, standard translation"},
-     "evidence": "attested", "verified": false},
-    {"subject": "anahata.petals", "predicate": "letters", "value": "kaṃ–ṭhaṃ (ka kha ga gha ṅa ca cha ja jha ña ṭa ṭha)",
-     "source": {"tradition": "satcakra", "authority": "Śaṭcakranirūpaṇa", "reference": "vv.22–26, standard translation"},
-     "evidence": "attested", "verified": false},
-    {"subject": "anahata.yantra", "predicate": "geometry", "value": "hexagram (interlocking triangles)",
-     "source": {"tradition": "satcakra", "authority": "Śaṭcakranirūpaṇa", "reference": "vv.22–26, standard translation"},
-     "evidence": "attested", "verified": false},
-    {"subject": "anahata.bija", "predicate": "syllable", "value": "yaṃ (air)",
-     "source": {"tradition": "satcakra", "authority": "Śaṭcakranirūpaṇa", "reference": "vv.22–26, standard translation"},
-     "evidence": "attested", "verified": false}
-  ]
+  "note": "Letters (ka→tha vermilion), hexagon smoke region, Yaṃ, Isha white, Kakini yellow, Bana-liṅga confirmed in-volume. Disputed colours/forms recorded, not smoothed."
+ },
+ "assertions": [
+  {
+   "subject": "anahata.petals",
+   "predicate": "count",
+   "value": 12,
+   "source": {
+    "tradition": "satcakra",
+    "authority": "Śaṭcakranirūpaṇa",
+    "reference": "vv.22–26, standard translation"
+   },
+   "evidence": "attested",
+   "verified": false
+  },
+  {
+   "subject": "anahata.petals",
+   "predicate": "letters",
+   "value": "kaṃ–ṭhaṃ (ka kha ga gha ṅa ca cha ja jha ña ṭa ṭha)",
+   "source": {
+    "tradition": "satcakra",
+    "authority": "Śaṭcakranirūpaṇa",
+    "reference": "vv.22–26, standard translation"
+   },
+   "evidence": "attested",
+   "verified": false
+  },
+  {
+   "subject": "anahata.yantra",
+   "predicate": "geometry",
+   "value": "hexagram (interlocking triangles)",
+   "source": {
+    "tradition": "satcakra",
+    "authority": "Śaṭcakranirūpaṇa",
+    "reference": "vv.22–26, standard translation"
+   },
+   "evidence": "attested",
+   "verified": false
+  },
+  {
+   "subject": "anahata.bija",
+   "predicate": "syllable",
+   "value": "yaṃ (air)",
+   "source": {
+    "tradition": "satcakra",
+    "authority": "Śaṭcakranirūpaṇa",
+    "reference": "vv.22–26, standard translation"
+   },
+   "evidence": "attested",
+   "verified": false
+  }
+ ],
+ "vrittis": [
+  "lustfulness",
+  "fraudulence",
+  "indecision",
+  "repentance",
+  "hope",
+  "anxiety",
+  "longing",
+  "impartiality",
+  "arrogance",
+  "incompetency",
+  "discrimination",
+  "attitude of defiance"
+ ],
+ "concentrations": [
+  "petaline",
+  "mahabhuta",
+  "tanmatra",
+  "vayu",
+  "isha",
+  "kakini",
+  "bana-linga",
+  "jiwatman"
+ ],
+ "breath_forms": [
+  "Fourth Form: suspend on air + Yaṃ + Isha",
+  "bhutashuddhi 16-64-32 Yaṃ drying / Raṃ burning",
+  "apana-up Yaṃ conducts Kundalini+jiva anahata→sahasrara"
+ ],
+ "position_note": "Intrathoracic spinal point, NOT the physical heart; hṛt (8 golden, face-down) below it is distinct; Viṣṇu-knot at hṛt/anahata boundary."
 }
