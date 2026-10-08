@@ -631,7 +631,7 @@ async function toggleMic(){
     readout.innerHTML='<b>mic</b> · blocked — grant permission to use breath proxy';
   }
 }
-let fluidOn = innerWidth>=640 && !reduce, fluidOK=false;
+let fluidOn=false, fluidOK=false;
 const fluidCanvas=document.getElementById('fluid');
 const _pv=new THREE.Vector3();
 function locusScreen(k){
@@ -858,6 +858,7 @@ function menuMark(){
   const set=(id,on)=>{const b=menu.querySelector('#'+id); if(b)b.classList.toggle('on',!!on);};
   set('mScan',scanMode); set('mYan',yantra.visible); set('mX',xray);
   set('mFluid',fluidOn); set('mChlad',chladniOn); set('mAlive',aliveOn);
+  set('mBody',bodyLinesOn);
   set('mGrid',!!gridField);
   set('mWeave',weaveOn);
   set('mNadi',nadis&&nadis.group.visible); set('mMic',micOn);
@@ -871,12 +872,14 @@ function buildMenu(){
     const r=document.createElement('div'); r.className='row'; menu.appendChild(r); return r;};
   const btn=(parent,label,fn,id)=>{const b=document.createElement('button'); b.textContent=label;
     if(id)b.id=id; b.onclick=(ev)=>{fn(ev); menuMark();}; parent.appendChild(b); return b;};
-  let r=sec('Posture');
+  let r=sec('');
+  btn(r,'✕ close',()=>{menuClose();});
+  r=sec('Posture');
   const poseBtn=(label,name)=>{const b=btn(r,label,()=>{setPose(name); menuMark();});
     b.dataset.pose=name; return b;};
   poseBtn('🧍 standing','standing'); poseBtn('🧘 seated','seated'); poseBtn('🛌 lying','lying');
-  r=sec('Traditions');
-  const fwBtn=(label,fwId,go)=>{const b=btn(r,label,()=>{ if(fw===fwId) setFw('bare'); else go(); },null); b.dataset.fw=fwId; return b;};
+  r=sec('Canvas');
+  btn(r,'body lines',e=>{bodyOn(!bodyLinesOn); menuMark();},'mBody');
   btn(r,'✕ clear',()=>{clearAll(); menuClose();});
   r=sec('☸ Trika');
   const trikaGo=fn=>()=>{ if(fw!=='trika')setFw('trika'); fn(); menuClose(); };
@@ -993,6 +996,14 @@ function toggleScan(){
 function toggleYan(){ setVisibleDeep(yantra,!yantra.visible); }
 function toggleX(){
   xray=!xray; edges.visible=!xray;
+}
+/* ---------- body lines: channels, rings, markers (blank by default) ---------- */
+let bodyLinesOn=false;
+function bodyOn(v){
+  bodyLinesOn=v;
+  for(const id of pathReg.ids()) pathReg.setVisible(id,v);
+  rings.forEach(m=>m.visible=v);
+  dvaMark.visible=v; dvaLine.visible=v;
 }
 /* ---------- clear: back to blank living canvas ---------- */
 function clearAll(){
@@ -1161,7 +1172,7 @@ function startAjahn(){
   });
 }
 /* ---------- alive baseline: average-human heart + breath (SIMULATED) ---------- */
-let aliveOn=true; const aliveTimers=[];
+let aliveOn=false; const aliveTimers=[];
 function aliveBeat(){
   if(!aliveOn) return;
   const iv=(60/64+((Math.random()+Math.random()+Math.random())-1.5)/1.5*0.045)*1000;
@@ -1324,12 +1335,16 @@ function comparePreset(which){
 }
 /* ---------- chrome wiring ---------- */
 buildMenu(); menuMark();
-setFw('bare'); menuMark();
+setFw('bare'); bodyOn(false); menuMark();
 document.getElementById('menuBtn').onclick=()=>{
   const m=menu; m.classList.toggle('show');
   document.getElementById('menuBtn').classList.toggle('on',m.classList.contains('show'));
 };
 document.getElementById('splitBtn').onclick=()=>setSplit(!document.body.classList.contains('split'));
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') menuClose(); });
+document.addEventListener('pointerdown',e=>{
+  if(menu.classList.contains('show') && !menu.contains(e.target) && e.target.id!=='menuBtn') menuClose();
+});
 /* embed control + boot params */
 window.addEventListener('message',ev=>{
   const m=ev.data||{}; if(!m.t) return;
