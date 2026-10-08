@@ -9,6 +9,7 @@ import { makeTools } from './engine/agent.js';
 import { buildLotus } from './engine/primitives/lotus.js';
 import { buildSpokes } from './engine/primitives/spokes.js';
 import { buildVitruvian } from './engine/primitives/vitruvian.js';
+import { buildGridField } from './engine/primitives/grid-field.js';
 let BD=null; loadBody().then(b=>BD=b).catch(()=>{});
 /* session owns the clock; exec renders; tools expose state to guide/agents */
 const session=new Session();
@@ -438,7 +439,13 @@ async function play(url){
   }catch(e){}
 }
 
-/* ---------- fluid prāṇa-field (Navier-Stokes dye behind the body) ---------- */
+/* ---------- Grid vacuum field (virtual pairs + excitations) ---------- */
+let gridField=null;
+if(innerWidth>=640 && !reduce){
+  try{ gridField=buildGridField({scene, count:900}); }catch(e){ gridField=null; }
+}
+const _gv=new THREE.Vector3();
+function gridStimulate(x,y,z,s=1,r=1.4){ if(gridField){ _gv.set(x,y,z); gridField.stimulate(_gv,s,r); } }
 let fluidOn = innerWidth>=640 && !reduce, fluidOK=false;
 const fluidCanvas=document.getElementById('fluid');
 const _pv=new THREE.Vector3();
@@ -524,6 +531,7 @@ function fire(iast,withSound=true){
   if(withSound&&p[8]) play('audio/phonemes/'+p[8]);
   const [sx,sy]=locusScreen(k), e=audioEnergy();
   fluidSplat(sx,sy,(Math.random()-.5)*24,-(14+46*e));
+  gridStimulate(n.anchor.position.x, n.anchor.position.y, n.anchor.position.z, 0.9, 1.2);
 }
 /* taps land on the DOM chips themselves — no raycast needed; canvas keeps drag/zoom */
 /* ---------- left rail + panel: frameworks, Trika first ---------- */
@@ -679,6 +687,7 @@ function tick(){
       _hv.copy(pu.m.position).project(camera);
       fluidSplat((_hv.x*.5+.5)*innerWidth,(-_hv.y*.5+.5)*innerHeight,0,pu.y1>pu.y0?-22:22);
     }
+    if(gridField&&frame%9===0&&k<1) gridStimulate(pu.m.position.x,pu.m.position.y,pu.m.position.z,0.7,1.0);
     if(k>=1){scene.remove(pu.m); pulses.splice(i,1); pu.cb&&pu.cb();}}
   nodes.forEach(n=>{const tg=n.target, a=n.anchor;
     a.position.x+=(tg.x-a.position.x)*Math.min(1,dt*4);
@@ -700,11 +709,13 @@ function tick(){
       _hv.set(0,s.y,0).project(camera);
       fluidSplat((_hv.x*.5+.5)*innerWidth,(-_hv.y*.5+.5)*innerHeight,(Math.random()-.5)*30,0);
     }
+    if(gridField&&frame%50===0){ _hv.set(0,s.y,0); gridField.knot(_hv,0.8); }
     const sc=1+Math.sin(t*1.2)*.04; scanBand.scale.set(sc,sc,1);
     nodes.forEach((n,k)=>{ if(Math.abs(n.anchor.position.y-s.y)<.35 && !n.el.classList.contains('lit')) pop(k,1.35,.8); });
   }
   if(bloomOn) composer.render(); else renderer.render(scene,camera);
   cssRenderer.render(scene,camera);
+  if(gridField) gridField.tick(dt,t);
   if(typeof kalSpokes!=='undefined'&&kalSpokes&&kalSpokes.group.visible&&!reduce) kalSpokes.spin(dt,0.06);
 }
 function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
