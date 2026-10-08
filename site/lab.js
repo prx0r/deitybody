@@ -417,7 +417,7 @@ const byIast={}; P.forEach((p,k)=>{byIast[p[0]]=k; IDX[p[0]]=k;});
 /* ---------- ritual frameworks: overlays over ONE body ----------
    Trika phonemes are the embedded base layer. Other traditions load as
    data (site/frameworks/*) — same mesh, same pulse machinery. */
-let fw='trika', MP=null;
+let fw='bare', MP=null;
 const mpGroup=new THREE.Group(); mpGroup.visible=false; scene.add(mpGroup);
 fetch('frameworks/hermetic/config.json').then(r=>r.json()).then(fw2=>{
   MP={data:fw2, orbs:{}};
@@ -866,15 +866,38 @@ function buildMenu(){
   const poseBtn=(label,name)=>{const b=btn(r,label,()=>{setPose(name); menuMark();});
     b.dataset.pose=name; return b;};
   poseBtn('🧍 standing','standing'); poseBtn('🧘 seated','seated'); poseBtn('🛌 lying','lying');
-  r=sec('Tradition');
-  const fwBtn=(label,fwId,go)=>btn(r,label,()=>{go(); menuClose();},null).dataset.fw=fwId;
-  fwBtn('○ bare','bare',()=>setFw('bare'));
-  fwBtn('☸ Mātṛkā','trika',()=>{setFw('trika'); setCfg('matrika');});
-  fwBtn('☸ Mālinī','trika',()=>{setFw('trika'); setCfg('malini');});
-  fwBtn('☩ Pillar','mp',()=>setFw('mp'));
-  fwBtn('🪷 Lotus','layayoga',()=>setFw('layayoga'));
-  fwBtn('❖ Kāla','kalachakra',()=>setFw('kalachakra'));
-  fwBtn('🕉️ Sivananda','yoga',()=>setFw('yoga'));
+  r=sec('Traditions');
+  const fwBtn=(label,fwId,go)=>btn(r,label,()=>{go();},null).dataset.fw=fwId;
+  fwBtn('○ bare canvas','bare',()=>setFw('bare'));
+  r=sec('☸ Trika');
+  const trikaGo=fn=>()=>{ if(fw!=='trika')setFw('trika'); fn(); menuClose(); };
+  btn(r,'Mātṛkā install',trikaGo(()=>setCfg('matrika')));
+  btn(r,'Mālinī infusion',trikaGo(()=>setCfg('malini')));
+  btn(r,'▶ OM',trikaGo(()=>playOM()));
+  btn(r,'▶ Namaḥ Śivāya',trikaGo(()=>playNamah()));
+  btn(r,'⚡ ha flash',trikaGo(()=>playHa()));
+  btn(r,'VBT 24 gaze',trikaGo(()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'}))));
+  btn(r,'caitanyam',trikaGo(()=>playSutra('sutra','caitanyam ātmā — Consciousness is Self')));
+  btn(r,'hṛdaye',trikaGo(()=>playSutra('hrdaye','hṛdaye — in the Heart')));
+  btn(r,'Melody',e=>{melodyOn=!melodyOn; e.target.textContent=`Melody: ${melodyOn?'sa…ni ♪':'off'}`;},'mMel');
+  const a=document.createElement('a'); a.href='mantra'; a.textContent='chant-through →';
+  a.style.cssText='font-size:.85rem;font-family:ui-sans-serif,system-ui'; r.appendChild(a);
+  r=sec('🕉️ Sivananda');
+  const yogGo=fn=>()=>{ if(fw!=='yoga')setFw('yoga'); fn(); menuClose(); };
+  btn(r,'Nadi-shodhana',yogGo(()=>score('frameworks/yoga/practices/nadi-shodhana.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'}))));
+  btn(r,'Cakra tour',yogGo(()=>score('frameworks/yoga/practices/cakra-tour.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda loci'}))));
+  btn(r,'Three knots',yogGo(()=>score('frameworks/yoga/practices/granthi-piercing.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'}))));
+  btn(r,'Kundalini ascent',yogGo(()=>score('frameworks/yoga/practices/kundalini-ascent.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'}))));
+  r=sec('☩ Pillar');
+  btn(r,'Enter',()=>{setFw('mp'); menuClose();});
+  btn(r,'▶ Descent',()=>{ if(fw!=='mp')setFw('mp'); mpRun('descent'); menuClose(); });
+  btn(r,'▶ Circulation',()=>{ if(fw!=='mp')setFw('mp'); mpRun('circulation'); menuClose(); });
+  r=sec('🪷 Lotus · ❖ Kāla · 🧘 Ajahn');
+  btn(r,'Anahata lotus',()=>{setFw('layayoga'); menuClose();});
+  btn(r,'Kālacakra',()=>{setFw('kalachakra'); menuClose();});
+  btn(r,'Ajahn Lee M1',()=>{startAjahn(); menuClose();});
+  btn(r,'Breath audio',e=>{breathAudioOn=!breathAudioOn; e.target.textContent=`Breath audio: ${breathAudioOn?'on':'off'}`;});
+  btn(r,'Guide voice',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;},'mGuide');
   r=sec('Fields');
   btn(r,'🌊 waves',()=>{setFluid(!fluidOn);},'mFluid');
   btn(r,'✨ vacuum dots',()=>toggleGrid(),'mGrid');
@@ -889,23 +912,6 @@ function buildMenu(){
   btn(r,'✦ figure',e=>{cycleVitFig(); e.target.textContent='✦ '+vitFigLabel();},'mVit');
   btn(r,'◈ lines',()=>toggleX(),'mX');
   btn(r,'◍ avatar',()=>cycleAvatar(),'mAva');
-  r=sec('Practice');
-  btn(r,'▶ OM',()=>playOM());
-  btn(r,'▶ Namaḥ Śivāya',()=>playNamah());
-  btn(r,'⚡ ha',()=>playHa());
-  btn(r,'VBT 24 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'})));
-  btn(r,'Nadi-shodhana',()=>score('frameworks/yoga/practices/nadi-shodhana.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'})));
-  btn(r,'Cakra tour',()=>score('frameworks/yoga/practices/cakra-tour.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda loci'})));
-  btn(r,'Three knots',()=>score('frameworks/yoga/practices/granthi-piercing.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'})));
-  btn(r,'Kundalini ascent',()=>score('frameworks/yoga/practices/kundalini-ascent.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'})));
-  btn(r,'Ajahn Lee · breath energy',()=>startAjahn());
-  btn(r,'Breath audio',e=>{breathAudioOn=!breathAudioOn; e.target.textContent=`Breath audio: ${breathAudioOn?'on':'off'}`;});
-  btn(r,'caitanyam',()=>playSutra('sutra','caitanyam ātmā — Consciousness is Self'));
-  btn(r,'hṛdaye',()=>playSutra('hrdaye','hṛdaye — in the Heart'));
-  btn(r,'Guide voice',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;},'mGuide');
-  btn(r,'Melody',e=>{melodyOn=!melodyOn; e.target.textContent=`Melody: ${melodyOn?'sa…ni ♪':'off'}`;},'mMel');
-  const a=document.createElement('a'); a.href='mantra'; a.textContent='chant-through →';
-  a.style.cssText='font-size:.85rem;font-family:ui-sans-serif,system-ui'; r.appendChild(a);
   r=sec('Compare');
   btn(r,'OM × Descent',()=>comparePreset('om-descent'));
   btn(r,'VBT 24 × Scan',()=>comparePreset('v24-scan'));
@@ -1290,6 +1296,7 @@ function comparePreset(which){
 }
 /* ---------- chrome wiring ---------- */
 buildMenu(); menuMark();
+setFw('bare'); menuMark();
 document.getElementById('menuBtn').onclick=()=>{
   const m=menu; m.classList.toggle('show');
   document.getElementById('menuBtn').classList.toggle('on',m.classList.contains('show'));
