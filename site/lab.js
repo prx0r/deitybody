@@ -360,7 +360,7 @@ fetch('frameworks/hermetic/config.json').then(r=>r.json()).then(fw2=>{
     el.style.pointerEvents='auto';
     el.addEventListener('click',ev=>{ev.stopPropagation(); mpFire(c.id);});
     const o=new CSS2DObject(el); o.position.set(c.x3,c.y3,c.z3); mpGroup.add(o);
-    MP.orbs[c.id]={c,halo,el};
+    MP.orbs[c.id]={c,halo,el,labelO:o};
   });
   /* rPillar lives in the circle menu now */
 }).catch(()=>{/* offline/file mode: Trika only */});
@@ -420,7 +420,7 @@ function setFw(f){
   }
   if(lay && !lotus && lotusCfg){
     lotus=buildLotus(lotusCfg,{scene, playPhoneme:null, onPetal:petalShow});
-    lotus.group.position.set(0, 0.78, 0.55);
+    const [lx,ly]=xfPos(0,.78); lotus.group.position.set(lx,ly,.55);
     lotus.group.rotation.x=-0.12;
     let k=0; const bloomIn=setInterval(()=>{k+=0.06; lotus.setOpen(Math.min(1,k)); if(k>=1)clearInterval(bloomIn);},60);
   }
@@ -473,11 +473,9 @@ async function play(url){
   }catch(e){}
 }
 
-/* ---------- Grid vacuum field (virtual pairs + excitations) ---------- */
+/* ---------- Grid vacuum field (OFF by default: plain background) ---------- */
 let gridField=null;
-if(innerWidth>=640 && !reduce){
-  try{ gridField=buildGridField({scene, count:900}); }catch(e){ gridField=null; }
-}
+/* enable later with: gridField=buildGridField({scene,count:900}) */
 const _gv=new THREE.Vector3();
 function gridStimulate(x,y,z,s=1,r=1.4){ if(gridField){ _gv.set(x,y,z); gridField.stimulate(_gv,s,r); } }
 let fluidOn = innerWidth>=640 && !reduce, fluidOK=false;
@@ -524,10 +522,11 @@ const pulseMat=new THREE.MeshBasicMaterial({color:0xc77f1a,transparent:true,opac
 function pulse(y0,y1,dur=.9,cb,color){
   const m=new THREE.Mesh(new THREE.SphereGeometry(.09,16,12),pulseMat.clone());
   if(color!=null) m.material.color.setHex(color);
-  m.position.set(0,y0,.1); scene.add(m);
+  const p0=axisPoint(y0), p1=axisPoint(y1);
+  m.position.copy(p0); scene.add(m);
   const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(),transparent:true,opacity:.8,depthWrite:false}));
   glow.scale.set(.8,.8,1); m.add(glow);
-  pulses.push({m,t:0,y0,y1,dur,cb});
+  pulses.push({m,t:0,p0,p1,dur,cb});
 }
 function glowTex(){
   if(_glowTex) return _glowTex;
@@ -540,7 +539,10 @@ function glowTex(){
 function ringPing(y,color=GOLD){
   const r=new THREE.Mesh(new THREE.TorusGeometry(.4,.02,8,48),
     new THREE.MeshBasicMaterial({color,transparent:true,opacity:.9}));
-  r.position.set(0,y,0); r.rotation.x=Math.PI/2; scene.add(r);
+  const c=axisPoint(y);
+  r.position.copy(c);
+  if(poseName==='lying') r.rotation.y=Math.PI/2; else r.rotation.x=Math.PI/2;
+  scene.add(r);
   tweens.push({t:0,dur:.9,fn:k=>{r.scale.setScalar(1+k*1.6); r.material.opacity=.9*(1-k);},done:()=>scene.remove(r)});
 }
 
@@ -693,6 +695,7 @@ const menu=document.getElementById('menu');
 const readout=document.getElementById('readout');
 function menuMark(){
   menu.querySelectorAll('[data-fw]').forEach(b=>b.classList.toggle('on',b.dataset.fw===fw));
+  menu.querySelectorAll('[data-pose]').forEach(b=>b.classList.toggle('on',b.dataset.pose===poseName));
   const set=(id,on)=>{const b=menu.querySelector('#'+id); if(b)b.classList.toggle('on',!!on);};
   set('mScan',scanMode); set('mYan',yantra.visible); set('mX',xray);
   set('mFluid',fluidOn); set('mChlad',chladniOn);
@@ -713,6 +716,10 @@ function buildMenu(){
   fwBtn('☩ Middle Pillar','mp',()=>setFw('mp'));
   fwBtn('🪷 Anahata lotus','layayoga',()=>setFw('layayoga'));
   fwBtn('❖ Kālacakra','kalachakra',()=>setFw('kalachakra'));
+  r=sec('Posture');
+  const poseBtn=(label,name)=>{const b=btn(r,label,()=>{setPose(name); menuMark();});
+    b.dataset.pose=name; return b;};
+  poseBtn('🧍 standing','standing'); poseBtn('🧘 seated','seated'); poseBtn('🛌 lying','lying');
   r=sec('Layers');
   btn(r,'◉ scan',()=>toggleScan(),'mScan');
   btn(r,'△ yantra',()=>toggleYan(),'mYan');
@@ -748,9 +755,46 @@ function buildMenu(){
   n.textContent='One map per sitting. Geometries differ per tradition — never one chart.';
   menu.appendChild(n);
 }
+/* ---------- pose system: energy inhabits the posture ---------- */
+let poseName='standing';
+function xfPos(x,y){
+  if(poseName==='seated'){
+    if(y<-1.4) return [x*2.4, -3.45+(y+3.9)*0.1];
+    return [x*1.05, -3.5+(y+3.9)*0.58];
+  }
+  if(poseName==='lying'){
+    return [-3.4+(1-(y+3.9)/7.8)*6.8, -0.5-x*0.8];
+  }
+  return [x,y];
+}
+function axisPoint(y){
+  const [x,yy]=xfPos(0,y);
+  return new THREE.Vector3(x,yy,.1);
+}
+function setTargets(){
+  P.forEach((p,k)=>{ const b=cfg==='matrika'?M(p):A(p);
+    const [x,y]=xfPos(b.x,b.y); nodes[k].target={x,y,z:b.z}; });
+  applyPoseToFrameworks();
+}
+function applyPoseToFrameworks(){
+  if(typeof MP!=='undefined'&&MP) for(const id in MP.orbs){
+    const o=MP.orbs[id], [x,y]=xfPos(o.c.x3,o.c.y3);
+    o.halo.position.set(x,y,o.c.z3); o.labelO.position.set(x,y,o.c.z3);
+  }
+  if(typeof lotus!=='undefined'&&lotus){ const [x,y]=xfPos(0,.78); lotus.group.position.set(x,y,.55); }
+  if(typeof kalSpokes!=='undefined'&&kalSpokes) for(const w of kalSpokes.wheels){
+    w.group.position.y=xfPos(0,w.cfg.y3)[1];
+  }
+}
 function setCfg(c){
-  cfg=c;
-  P.forEach((p,k)=>nodes[k].target=c==='matrika'?M(p):A(p));
+  cfg=c; setTargets();
+}
+function setPose(name){
+  poseName=name;
+  setTargets();
+  if(typeof vitFig!=='undefined'&&vitFig&&vitFig.group.visible) vitFig.setPose(name==='lying'?'lying':name==='seated'?'seated':'standing');
+  const labels={standing:'standing · full height',seated:'seated lotus · folded',lying:'lying down · horizontal'};
+  readout.innerHTML='<b>pose</b> · '+labels[name];
 }
 function toggleScan(){
   if(scanMode){scanMode=null; scanBand.visible=false;}
@@ -948,10 +992,10 @@ function tick(){
   for(let i=tweens.length-1;i>=0;i--){const tw=tweens[i]; tw.t+=dt;
     const k=Math.min(1,tw.t/tw.dur); tw.fn(k); if(k>=1){tweens.splice(i,1); tw.done&&tw.done();}}
   for(let i=pulses.length-1;i>=0;i--){const pu=pulses[i]; pu.t+=dt;
-    const k=Math.min(1,pu.t/pu.dur); pu.m.position.y=pu.y0+(pu.y1-pu.y0)*k;
+    const k=Math.min(1,pu.t/pu.dur); pu.m.position.lerpVectors(pu.p0,pu.p1,k);
     if(fluidOK&&fluidOn&&frame%7===0&&k<1){
       _hv.copy(pu.m.position).project(camera);
-      fluidSplat((_hv.x*.5+.5)*innerWidth,(-_hv.y*.5+.5)*innerHeight,0,pu.y1>pu.y0?-22:22);
+      fluidSplat((_hv.x*.5+.5)*innerWidth,(-_hv.y*.5+.5)*innerHeight,0,pu.p1.y>pu.p0.y?-22:22);
     }
     if(gridField&&frame%9===0&&k<1) gridStimulate(pu.m.position.x,pu.m.position.y,pu.m.position.z,0.7,1.0);
     if(k>=1){scene.remove(pu.m); pulses.splice(i,1); pu.cb&&pu.cb();}}
@@ -966,18 +1010,29 @@ function tick(){
       n.el.classList.toggle('back',!front);
     } else n.el.classList.remove('back');
   });
-  /* scan sweep */
+  /* scan sweep (follows the pose axis) */
   if(scanMode&&!reduce){
-    const s=scanMode; s.y+=s.dir*dt*.55;
-    if(s.y<-4.4){s.y=-4.4; s.dir=1;} if(s.y>4.5){s.y=4.5; s.dir=-1;}
-    scanBand.position.y=s.y;
+    const s=scanMode;
+    if(poseName==='lying'){
+      if(s.x==null){s.x=-3.4; s.dir=-1;}
+      s.x+=s.dir*dt*.55;
+      if(s.x<-3.4){s.x=-3.4; s.dir=1;} if(s.x>3.4){s.x=3.4; s.dir=-1;}
+      scanBand.position.set(s.x,-0.5,0); scanBand.rotation.set(0,Math.PI/2,0);
+    }else{
+      const lo=poseName==='seated'?-3.5:-4.4, hi=poseName==='seated'?1.0:4.5;
+      s.y+=s.dir*dt*.55;
+      if(s.y<lo){s.y=lo; s.dir=1;} if(s.y>hi){s.y=hi; s.dir=-1;}
+      scanBand.position.set(0,s.y,0); scanBand.rotation.set(Math.PI/2,0,0);
+    }
     if(fluidOK&&fluidOn&&frame%40===0){
-      _hv.set(0,s.y,0).project(camera);
+      _hv.copy(scanBand.position).project(camera);
       fluidSplat((_hv.x*.5+.5)*innerWidth,(-_hv.y*.5+.5)*innerHeight,(Math.random()-.5)*30,0);
     }
-    if(gridField&&frame%50===0){ _hv.set(0,s.y,0); gridField.knot(_hv,0.8); }
+    if(gridField&&frame%50===0){ _hv.copy(scanBand.position); gridField.knot(_hv,0.8); }
     const sc=1+Math.sin(t*1.2)*.04; scanBand.scale.set(sc,sc,1);
-    nodes.forEach((n,k)=>{ if(Math.abs(n.anchor.position.y-s.y)<.35 && !n.el.classList.contains('lit')) pop(k,1.35,.8); });
+    const along=n=>poseName==='lying'?n.anchor.position.x:n.anchor.position.y;
+    const at=poseName==='lying'?s.x:s.y;
+    nodes.forEach((n,k)=>{ if(Math.abs(along(n)-at)<.35 && !n.el.classList.contains('lit')) pop(k,1.35,.8); });
   }
   if(bloomOn) composer.render(); else renderer.render(scene,camera);
   cssRenderer.render(scene,camera);
@@ -1029,6 +1084,9 @@ function comparePreset(which){
 }
 /* ---------- chrome wiring ---------- */
 buildMenu(); menuMark();
+if(innerWidth>=900 && !new URLSearchParams(location.search).get('embed')){
+  menu.classList.add('show'); document.getElementById('menuBtn').classList.add('on');
+}
 document.getElementById('menuBtn').onclick=()=>{
   const m=menu; m.classList.toggle('show');
   document.getElementById('menuBtn').classList.toggle('on',m.classList.contains('show'));
