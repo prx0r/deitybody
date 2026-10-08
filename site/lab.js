@@ -180,6 +180,7 @@ function glyphChip(dev, iast){
   return {o, el};
 }
 /* soft additive halo behind each chip — gives bloom something to catch + true 3D pop */
+let _glowTex=null;
 function haloSprite(){
   const s=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(),transparent:true,opacity:.28,depthWrite:false}));
   s.scale.set(.42,.42,1); return s;
@@ -227,7 +228,6 @@ function pulse(y0,y1,dur=.9,cb){
   glow.scale.set(.8,.8,1); m.add(glow);
   pulses.push({m,t:0,y0,y1,dur,cb});
 }
-let _glowTex=null;
 function glowTex(){
   if(_glowTex) return _glowTex;
   const c=document.createElement('canvas'); c.width=c.height=128;
