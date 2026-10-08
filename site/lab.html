@@ -12,7 +12,8 @@
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
 html,body{margin:0; height:100%; background:var(--bg); color:var(--ink);
  font:16px/1.5 Georgia,serif; overflow:hidden}
-#scene{position:fixed; inset:0}
+#scene{position:fixed; inset:0; z-index:1}
+#fluid{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.85}
 header{position:fixed; top:0; left:0; right:0; z-index:5; text-align:center;
  padding:.7rem 1rem .3rem; pointer-events:none}
 h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
@@ -83,12 +84,14 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 <script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script>
 </head>
 <body>
+<canvas id="fluid"></canvas>
 <canvas id="scene"></canvas>
 <nav id="rail" aria-label="Frameworks">
  <button id="rTrika" class="on" title="Trika · Mātṛkā/Mālinī">☸</button>
  <button id="rPillar" title="Middle Pillar" style="display:none">☩</button>
  <button id="rScan" title="Body scan">◉</button>
  <button id="rYan" title="Yantra overlay">△</button>
+ <button id="rFluid" title="Fluid prāṇa-field">🌊</button>
  <button id="rX" title="X-ray shell">◈</button>
 </nav>
 <div id="fpanel" aria-live="polite"><h4></h4><p></p><div class="row"></div></div>

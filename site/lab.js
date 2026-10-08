@@ -280,18 +280,63 @@ function mpRun(trajId){
     t.stops.forEach((id,k)=>setTimeout(()=>mpFire(id),k*420));
   });
 }
-let actx=null; const bufCache={};
+let actx=null, analyser=null, _fq=null; const bufCache={};
 async function audioBuf(url){
   if(bufCache[url]) return bufCache[url];
-  if(!actx) actx=new (window.AudioContext||window.webkitAudioContext)();
+  if(!actx){ actx=new (window.AudioContext||window.webkitAudioContext)();
+    analyser=actx.createAnalyser(); analyser.fftSize=256;
+    _fq=new Uint8Array(analyser.frequencyBinCount); analyser.connect(actx.destination); }
   const r=await fetch(url), b=await r.arrayBuffer();
   return bufCache[url]=await actx.decodeAudioData(b);
 }
+function audioEnergy(){
+  if(!analyser) return .5;
+  analyser.getByteFrequencyData(_fq);
+  let s=0; for(let k=0;k<_fq.length;k++) s+=_fq[k];
+  return Math.min(1, s/_fq.length/110);
+}
 async function play(url){
   try{ const b=await audioBuf(url);
-    const s=actx.createBufferSource(); s.buffer=b; s.connect(actx.destination); s.start();
+    const s=actx.createBufferSource(); s.buffer=b; s.connect(analyser); s.start();
   }catch(e){}
 }
+
+/* ---------- fluid prāṇa-field (Navier-Stokes dye behind the body) ---------- */
+let fluidOn = innerWidth>=640 && !reduce, fluidOK=false;
+const fluidCanvas=document.getElementById('fluid');
+const _pv=new THREE.Vector3();
+function locusScreen(k){
+  _pv.copy(nodes[k].anchor.position).project(camera);
+  return [(_pv.x*.5+.5)*innerWidth, (-_pv.y*.5+.5)*innerHeight];
+}
+function fluidSplat(x,y,dx,dy){
+  if(!fluidOK||!fluidOn) return;
+  const o={bubbles:true,cancelable:true,clientX:x,clientY:y};
+  fluidCanvas.dispatchEvent(new MouseEvent('mousedown',o));
+  for(let k=1;k<=3;k++) fluidCanvas.dispatchEvent(new MouseEvent('mousemove',
+    {...o,clientX:x+dx*k/3,clientY:y+dy*k/3}));
+  fluidCanvas.dispatchEvent(new MouseEvent('mouseup',o));
+}
+if(fluidOn){
+  import('./vendor/fluid/webgl-fluid.mjs').then(m=>{
+    m.default(fluidCanvas,{TRIGGER:'hover',IMMEDIATE:false,AUTO:false,
+      SIM_RESOLUTION:128,DYE_RESOLUTION:512,CAPTURE_RESOLUTION:256,
+      DENSITY_DISSIPATION:.985,VELOCITY_DISSIPATION:.25,
+      PRESSURE:.8,PRESSURE_ITERATIONS:18,CURL:28,
+      SPLAT_RADIUS:.3,SPLAT_FORCE:5200,
+      COLORFUL:false,SPLAT_COLOR:{r:.79,g:.64,b:.36},
+      SHADING:true,BLOOM:true,BLOOM_INTENSITY:.5,BLOOM_THRESHOLD:.55,SUNRAYS:false,
+      BACK_COLOR:{r:.043,g:.05,b:.07},TRANSPARENT:false,PAUSED:false});
+    fluidOK=true;
+    setTimeout(()=>{fluidSplat(innerWidth/2,innerHeight*.42,0,-50);
+      setTimeout(()=>fluidSplat(innerWidth/2,innerHeight*.6,0,40),700);},900);
+  }).catch(()=>{fluidCanvas.style.display='none';});
+} else fluidCanvas.style.display='none';
+document.getElementById('rFluid').onclick=e=>{
+  fluidOn=!fluidOn; fluidCanvas.style.display=fluidOn?'':'none';
+  e.target.classList.toggle('on',fluidOn);
+};
+if(fluidOn) document.getElementById('rFluid').classList.add('on');
 
 /* ---------- fx: tweens + pulses ---------- */
 const tweens=[];
@@ -342,6 +387,8 @@ function fire(iast,withSound=true){
   const y=n.anchor.position.y;
   pulse(Math.max(y-.4,channelY0),Math.min(y+.9,channelY1),.55,()=>ringPing(Math.min(y+.9,channelY1),TEAL));
   if(withSound&&p[8]) play('audio/phonemes/'+p[8]);
+  const [sx,sy]=locusScreen(k), e=audioEnergy();
+  fluidSplat(sx,sy,(Math.random()-.5)*24,-(14+46*e));
 }
 /* taps land on the DOM chips themselves — no raycast needed; canvas keeps drag/zoom */
 /* ---------- left rail + panel: frameworks, Trika first ---------- */
@@ -411,6 +458,10 @@ document.getElementById('bNam').onclick=()=>{
 document.getElementById('bHa').onclick=()=>{
   show(['ha','ह','prāṇa — full-channel flash','',0,'','',0,'ha.ogg']);
   play('audio/phonemes/ha.ogg'); pop(byIast['ha'],2.2);
+  fluidSplat(innerWidth/2,innerHeight*.45,0,-90);
+  for(let k=0;k<4;k++) setTimeout(()=>fluidSplat(
+    innerWidth*(.3+Math.random()*.4),innerHeight*(.3+Math.random()*.3),
+    (Math.random()-.5)*60,(Math.random()-.5)*60),k*160);
   pulse(channelY0,3.3,.9,()=>{ CAKRAS.forEach(([n,y],k)=>setTimeout(()=>ringPing(y),k*120)); });
   shellWire.material.opacity=.3; setTimeout(()=>shellWire.material.opacity=.13,1100);
 };
@@ -419,7 +470,8 @@ const SEQ={sutra:['sa','u','a','i','ta','a','ña','ma','ā','ta','ma','ā'],
 const WAV={sutra:'audio/edge_test_sutra.wav',hrdaye:'audio/edge_test_hrdaye.wav'};
 document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{
   play(WAV[b.dataset.s]);
-  SEQ[b.dataset.s].forEach((id,k)=>{const kk=P.findIndex(p=>p[0]===id); if(kk>=0)setTimeout(()=>{show(P[kk]); pop(kk);},k*450);});
+  SEQ[b.dataset.s].forEach((id,k)=>{const kk=P.findIndex(p=>p[0]===id); if(kk>=0)setTimeout(()=>{show(P[kk]); pop(kk);
+    const [sx,sy]=locusScreen(kk); fluidSplat(sx,sy,0,-26);},k*450);});
 });
 
 /* ---------- vipassana-style scan (driven from the rail → toggleScan) ---------- */
@@ -430,12 +482,15 @@ scanBand.rotation.x=Math.PI/2; scanBand.visible=false; scene.add(scanBand);
 
 /* ---------- loop ---------- */
 const clock=new THREE.Clock();
+let frame=0;
+const _hv=new THREE.Vector3();
 const _cam=new THREE.Vector3(), _nd=new THREE.Vector3(), _ct=new THREE.Vector3(0,.4,0);
 let xray=false;
 /* (x-ray toggled from the rail → toggleX) */
 function tick(){
   requestAnimationFrame(tick);
   const dt=Math.min(clock.getDelta(),.05), t=clock.elapsedTime;
+  frame++;
   controls.update();
   if(!reduce){
     scan.position.y=-3.4+((t*.5)%7.2); scan.material.opacity=.3+.2*Math.sin(t*2);
@@ -447,6 +502,10 @@ function tick(){
     const k=Math.min(1,tw.t/tw.dur); tw.fn(k); if(k>=1){tweens.splice(i,1); tw.done&&tw.done();}}
   for(let i=pulses.length-1;i>=0;i--){const pu=pulses[i]; pu.t+=dt;
     const k=Math.min(1,pu.t/pu.dur); pu.m.position.y=pu.y0+(pu.y1-pu.y0)*k;
+    if(fluidOK&&fluidOn&&frame%7===0&&k<1){
+      _hv.copy(pu.m.position).project(camera);
+      fluidSplat((_hv.x*.5+.5)*innerWidth,(-_hv.y*.5+.5)*innerHeight,0,pu.y1>pu.y0?-22:22);
+    }
     if(k>=1){scene.remove(pu.m); pulses.splice(i,1); pu.cb&&pu.cb();}}
   nodes.forEach(n=>{const tg=n.target, a=n.anchor;
     a.position.x+=(tg.x-a.position.x)*Math.min(1,dt*4);
@@ -465,6 +524,10 @@ function tick(){
     const s=scanMode; s.y+=s.dir*dt*.55;
     if(s.y<-4.4){s.y=-4.4; s.dir=1;} if(s.y>4.5){s.y=4.5; s.dir=-1;}
     scanBand.position.y=s.y;
+    if(fluidOK&&fluidOn&&frame%40===0){
+      _hv.set(0,s.y,0).project(camera);
+      fluidSplat((_hv.x*.5+.5)*innerWidth,(-_hv.y*.5+.5)*innerHeight,(Math.random()-.5)*30,0);
+    }
     const sc=1+Math.sin(t*1.2)*.04; scanBand.scale.set(sc,sc,1);
     nodes.forEach((n,k)=>{ if(Math.abs(n.anchor.position.y-s.y)<.35 && !n.el.classList.contains('lit')) pop(k,1.35,.8); });
   }
