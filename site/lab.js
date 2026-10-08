@@ -415,6 +415,7 @@ const nodes=P.map(p=>{
 });
 const byIast={}; P.forEach((p,k)=>{byIast[p[0]]=k; IDX[p[0]]=k;});
 
+
 /* ---------- ritual frameworks: overlays over ONE body ----------
    Trika phonemes are the embedded base layer. Other traditions load as
    data (site/frameworks/*) — same mesh, same pulse machinery. */
@@ -906,22 +907,23 @@ function buildMenu(){
   btn(r,'Enter',()=>{ if(fw==='mp')setFw('bare'); else setFw('mp'); menuClose(); menuMark(); });
   btn(r,'▶ Descent',()=>{ if(fw!=='mp')setFw('mp'); mpRun('descent'); menuClose(); });
   btn(r,'▶ Circulation',()=>{ if(fw!=='mp')setFw('mp'); mpRun('circulation'); menuClose(); });
-  r=sec('🪷 Lotus · ❖ Kāla · 🧘 Ajahn');
+  r=sec('🪷 Lotus · ❖ Kāla');
   btn(r,'Anahata lotus',()=>{ if(fw==='layayoga')setFw('bare'); else setFw('layayoga'); menuClose(); menuMark(); });
   btn(r,'Kālacakra',()=>{ if(fw==='kalachakra')setFw('bare'); else setFw('kalachakra'); menuClose(); menuMark(); });
+  r=sec('🧘 Breath');
   btn(r,'Ajahn Lee M1',()=>{startAjahn(); menuClose();});
   btn(r,'Breath audio',e=>{breathAudioOn=!breathAudioOn; e.target.textContent=`Breath audio: ${breathAudioOn?'on':'off'}`;});
   btn(r,'Guide voice',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;},'mGuide');
-  r=sec('Fields');
-  btn(r,'🌊 waves',()=>{setFluid(!fluidOn);},'mFluid');
-  btn(r,'✨ vacuum dots',()=>toggleGrid(),'mGrid');
-  btn(r,'∿ weave',()=>{weaveOn=!weaveOn; buildChannels((x,y)=>xfPos(x,y));},'mWeave');
-  btn(r,'🕸️ nāḍīs',()=>{toggleNadis(); menuMark();},'mNadi');
-  btn(r,'🎙️ breath mic',()=>{toggleMic(); menuMark();},'mMic');
-  btn(r,'♥ alive',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
-  btn(r,'≋ chladni',()=>toggleChladni(),'mChlad');
+  r=sec('Atmosphere');
+  btn(r,'🌊 water',()=>{setFluid(!fluidOn);},'mFluid');
+  btn(r,'✨ dust',()=>toggleGrid(),'mGrid');
+  btn(r,'∿ side weave',()=>{weaveOn=!weaveOn; buildChannels((x,y)=>xfPos(x,y));},'mWeave');
+  btn(r,'🕸 nerve lines',()=>{toggleNadis(); menuMark();},'mNadi');
+  btn(r,'🎙 mic breath',()=>{toggleMic(); menuMark();},'mMic');
+  btn(r,'♥ heartbeat',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
+  btn(r,'≋ sound shapes',()=>toggleChladni(),'mChlad');
   btn(r,'◉ scan',()=>toggleScan(),'mScan');
-  r=sec('Overlays');
+  r=sec('Figures');
   btn(r,'△ yantra',()=>toggleYan(),'mYan');
   btn(r,'✦ figure',e=>{cycleVitFig(); e.target.textContent='✦ '+vitFigLabel();},'mVit');
   btn(r,'◈ lines',()=>toggleX(),'mX');
