@@ -12,6 +12,9 @@ import { buildVitruvian } from './engine/primitives/vitruvian.js';
 import { buildVitruvianFigure } from './engine/primitives/vitruvian-figure.js';
 import { buildAvatar } from './engine/primitives/avatar.js';
 import { buildGridField } from './engine/primitives/grid-field.js';
+import { createPathRegistry } from './engine/paths.js';
+import { createBreath } from './engine/breath.js';
+let pathReg=null, breath=null;
 import { buildNadis } from './engine/primitives/nadis.js';
 import { renderChladni } from './engine/mxth/chladni.js';
 
@@ -52,7 +55,7 @@ function fxFlashRegion(regionId, ids){ (ids||[]).slice(0,6).forEach((id,k)=>{
   const n=P.findIndex(p=>p[0]===id); if(n>=0) setTimeout(()=>{show(P[n]); pop(n);},k*350); }); }
 function bindTools(){ tools=makeTools({session, graph, fx:{flashRegion:fxFlashRegion}});
   if(window.deitybody) window.deitybody.tools=tools; }
-window.deitybody={session, tools:null, get graph(){return graph;}, get camera(){return camera;}};
+window.deitybody={session, tools:null, get graph(){return graph;}, get camera(){return camera;}, get breath(){return breath;}, get pathReg(){return pathReg;}};
 bindTools();
 loadGraph().then(g=>{graph=g; bindTools();}).catch(()=>{});
 session.render=(e)=>exec(e);
@@ -117,16 +120,14 @@ function exec(e){
     case 'breath': {
       const y0=Y(e.from), y1=Y(e.to);
       breathSound(e.phase, e.dur||4.0);
+      breath.prescribe(e.phase);
+      if(e.cue) info.querySelector('.locus').textContent=e.cue+(e.feel?` · feel: ${e.feel}`:'');
       pulse(y0,y1,e.dur||4.0,()=>ringPing(y1,TEAL)); break; }
     case 'field': {
       pulse(-3.5,3.5,Math.min(4,(e.dur||8)/3),()=>ringPing(0.78,GOLD));
       for(let k=0;k<6;k++) setTimeout(()=>ringPing(-2+k*1.2, TEAL), k*450);
       fluidSplat(innerWidth/2, innerHeight*0.45, 0, -60);
       break; }
-    case 'breath': {
-      const y0=Y(e.from), y1=Y(e.to);
-      if(e.cue) info.querySelector('.locus').textContent=e.cue;
-      pulse(y0,y1,e.dur||4.0,()=>ringPing(y1,TEAL)); break; }
     case 'splat': {
       const k=P.findIndex(p=>p[0]===e.node); if(k<0) break;
       const [sx,sy]=locusScreen(k); fluidSplat(sx,sy,e.dx||0,e.dy||-24); break; }
@@ -147,6 +148,8 @@ const canvas = document.getElementById('scene');
 const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 const scene = new THREE.Scene();
+pathReg = createPathRegistry(scene);
+breath = createBreath();
 scene.fog = null;
 const camera = new THREE.PerspectiveCamera(42, innerWidth/innerHeight, .1, 100);
 camera.position.set(2.2, 0.6, 12.6);
@@ -204,35 +207,32 @@ function axisLerp(y){
   /* local axis point without needing pose fns (setup-safe: standing default) */
   return new THREE.Vector3(0,y,.1);
 }
+function channelBasePoints(){
+  const pts={ sus:[[0,channelY0,0],[0,channelY1,0]], ida:[], ping:[] };
+  for(let s=0;s<=1.001;s+=.02){
+    const y=channelY0+s*(channelY1-channelY0);
+    if(weaveOn){
+      pts.ida.push([Math.sin(s*(channelY1-channelY0)*2.1)*.3, y, Math.cos(s*(channelY1-channelY0)*2.1)*.18]);
+      pts.ping.push([Math.sin(s*(channelY1-channelY0)*2.1+Math.PI)*.3, y, Math.cos(s*(channelY1-channelY0)*2.1+Math.PI)*.18]);
+    }else{
+      const bow=0.28+0.1*Math.sin(s*Math.PI);
+      pts.ida.push([-bow, y, 0]); pts.ping.push([bow, y, 0]);
+    }
+  }
+  return pts;
+}
 function buildChannels(mapFn){
   for(const m of channelMeshes){ scene.remove(m); m.geometry.dispose(); }
   channelMeshes=[];
-  const P0=mapFn?mapFn(channelY0):new THREE.Vector3(0,channelY0,.1);
-  const P1=mapFn?mapFn(channelY1):new THREE.Vector3(0,channelY1,.1);
-  const dir=P1.clone().sub(P0); const len=dir.length(); dir.normalize();
-  const side=new THREE.Vector3(0,0,1);
-  const up2=new THREE.Vector3().crossVectors(dir,side).normalize();
-  const g=new THREE.TubeGeometry(new THREE.CatmullRomCurve3([P0,P1]),32,.02,8);
-  const sm=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:GOLD,transparent:true,opacity:.75}));
-  scene.add(sm); channelMeshes.push(sm);
-  /* laterals: paraxial by default (early Śaiva) — same side, gentle bow.
-     Helical weave = later-yoga mode (toggle). */
-  const lateral=(s,helical)=>{
-    const pts=[];
-    for(let s2=0;s2<=1.001;s2+=.02){
-      const c=P0.clone().addScaledVector(dir,s2*len);
-      const off=helical
-        ? Math.sin(s2*len*2.1+s*Math.PI)*.3
-        : s*(0.28+0.1*Math.sin(s2*Math.PI));
-      pts.push(c.addScaledVector(up2,off).add(new THREE.Vector3(0,0,helical?Math.cos(s2*len*2.1+s*Math.PI)*.18:0)));
-    }
-    return pts;
-  };
-  [[-1,TEAL],[1,ROSE]].forEach(([s,color])=>{
-    const m=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(lateral(s,weaveOn)),120,.008,6),
-      new THREE.MeshBasicMaterial({color,transparent:true,opacity:.3}));
-    scene.add(m); channelMeshes.push(m);
-  });
+  const base=channelBasePoints();
+  pathReg.register('sushumna',{points:base.sus,color:GOLD,radius:.02,opacity:.75,
+    provenance:'TĀ: central longitudinal conduit (very high confidence)'});
+  pathReg.register('ida',{points:base.ida,color:TEAL,radius:.008,opacity:.3,
+    provenance:'left-associated paraxial; weave crossings NOT assumed'});
+  pathReg.register('pingala',{points:base.ping,color:ROSE,radius:.008,opacity:.3,
+    provenance:'right-associated paraxial; weave crossings NOT assumed'});
+  pathReg.rebuild(mapFn);
+  channelMeshes.length=0;
 }
 let weaveOn=false;
 buildChannels(null);
@@ -253,7 +253,7 @@ const dvaLine=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE
 }
 /* pose root: every static layer re-derives from the posture */
 function updateStatics(){
-  buildChannels(y=>axisPoint(y));
+  buildChannels((x,y)=>xfPos(x,y));
   for(const m of rings){
     const c=axisPoint(m.userData.baseY);
     m.position.copy(c);
@@ -520,7 +520,15 @@ function gridStimulate(x,y,z,s=1,r=1.4){ if(gridField){ _gv.set(x,y,z); gridFiel
 let nadis=null, nadisCfg=null;
 fetch('frameworks/layayoga/config/nadis-ten.json').then(r=>r.json()).then(c=>{ nadisCfg=c; }).catch(()=>{});
 function toggleNadis(){
-  if(!nadis && nadisCfg) nadis=buildNadis(nadisCfg,{scene, mapPoint:(x,y)=>xfPos(x,y)});
+  if(!nadis && nadisCfg){
+    nadis=buildNadis(nadisCfg,{scene, mapPoint:(x,y)=>xfPos(x,y)});
+    for(const n of nadisCfg.nadis){
+      if(n.id==='sushumna'||n.id==='ida'||n.id==='pingala') continue;
+      pathReg.register('nadi:'+n.id,{points:n.points.map(p=>[p[0],p[1],p[2]??0]),
+        color:0x8a6f3c,radius:.012,opacity:.5,provenance:'ten principals; endpoints traditional-variant'});
+    }
+    pathReg.rebuild((x,y)=>xfPos(x,y));
+  }
   if(!nadis) return;
   nadis.group.visible=!nadis.group.visible;
   if(nadis.group.visible){
@@ -533,8 +541,11 @@ function toggleNadis(){
 let hubMesh=null, branchGroup=null;
 function mulberry(seed){ let s=seed; return ()=>{ s=(s*16807)%2147483647; return s/2147483647; }; }
 function buildHubAndBranches(){
-  if(hubMesh){ scene.remove(hubMesh); hubMesh.geometry.dispose(); }
-  if(branchGroup){ scene.remove(branchGroup); }
+  if(hubMesh){ scene.remove(hubMesh); hubMesh.geometry.dispose(); hubMesh.material.dispose(); }
+  if(branchGroup){
+    branchGroup.traverse(o=>{ if(o.geometry) o.geometry.dispose(); });
+    scene.remove(branchGroup);
+  }
   const [hx,hy]=xfPos(0,-2.2);
   hubMesh=new THREE.Mesh(new THREE.SphereGeometry(.3,18,14),
     new THREE.MeshBasicMaterial({color:0xc77f1a,transparent:true,opacity:.28}));
@@ -826,7 +837,7 @@ function buildMenu(){
   fwBtn('❖ Kāla','kalachakra',()=>setFw('kalachakra'));
   r=sec('Fields');
   btn(r,'🌊 waves',()=>{setFluid(!fluidOn);},'mFluid');
-  btn(r,'∿ weave',()=>{weaveOn=!weaveOn; buildChannels(y=>axisPoint(y));},'mWeave');
+  btn(r,'∿ weave',()=>{weaveOn=!weaveOn; buildChannels((x,y)=>xfPos(x,y));},'mWeave');
   btn(r,'🕸️ nāḍīs',()=>{toggleNadis(); menuMark();},'mNadi');
   btn(r,'🎙️ breath mic',()=>{toggleMic(); menuMark();},'mMic');
   btn(r,'♥ alive',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
@@ -1175,16 +1186,16 @@ function tick(){
   cssRenderer.render(scene,camera);
   if(gridField) gridField.tick(dt,t);
   if(aliveOn&&!reduce){
-    const bp=axisPoint(-0.6);
-    pacer.visible=true; pacer.position.copy(bp);
-    if(poseName==='lying') pacer.rotation.set(0,Math.PI/2,0); else pacer.rotation.set(Math.PI/2,0,0);
-    let br;
     if(micOn&&micAnalyser){
       micAnalyser.getByteTimeDomainData(micData);
       let s=0; for(let k=0;k<micData.length;k+=4){const v=(micData[k]-128)/128; s+=v*v;}
-      micLevel+= (Math.min(1,Math.sqrt(s/(micData.length/4))*4)-micLevel)*0.2;
-      br=micLevel;
-    }else br=0.5+0.5*Math.sin(t*2*Math.PI*0.1);
+      micLevel+=(Math.min(1,Math.sqrt(s/(micData.length/4))*4)-micLevel)*0.2;
+    }
+    breath.tick(dt, t, micOn&&micAnalyser?{on:true,level:micLevel}:null);
+    const bp=axisPoint(-0.6);
+    pacer.visible=true; pacer.position.copy(bp);
+    if(poseName==='lying') pacer.rotation.set(0,Math.PI/2,0); else pacer.rotation.set(Math.PI/2,0,0);
+    const br=breath.state.expansion??0.5;
     pacer.scale.setScalar(0.85+0.3*br); pacer.material.opacity=.14+.12*br;
   } else pacer.visible=false;
   if(heartField&&!reduce) heartField.material.opacity=.08+.06*Math.sin(t*2*Math.PI*0.1+1);
