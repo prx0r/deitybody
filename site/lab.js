@@ -715,6 +715,7 @@ function show(p){
   info.querySelector('.iast').textContent=p[0]+' · '+loc;
   info.querySelector('.locus').textContent=(cfg==='matrika'?'Mātṛkā base':'Mālinī infusion')+' · '+other;
   readout.innerHTML='<b>'+p[1]+'</b> · '+p[0]+' · '+loc;
+  readout.style.display='';
 }
 /* clip resolution: engine library take first (needs ears), human reference fallback.
    null only when nothing exists anywhere → visible flag, never fake audio. */
