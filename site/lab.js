@@ -565,14 +565,16 @@ function glowTex(){
   x.fillStyle=g; x.fillRect(0,0,128,128);
   return _glowTex=new THREE.CanvasTexture(c);
 }
-function ringPing(y,color=GOLD){
-  const r=new THREE.Mesh(new THREE.TorusGeometry(.4,.02,8,48),
+function ringAt(p, color=GOLD, s=1){
+  const r=new THREE.Mesh(new THREE.TorusGeometry(.4*s,.02,8,48),
     new THREE.MeshBasicMaterial({color,transparent:true,opacity:.9}));
-  const c=axisPoint(y);
-  r.position.copy(c);
+  r.position.copy(p);
   if(poseName==='lying') r.rotation.y=Math.PI/2; else r.rotation.x=Math.PI/2;
   scene.add(r);
   tweens.push({t:0,dur:.9,fn:k=>{r.scale.setScalar(1+k*1.6); r.material.opacity=.9*(1-k);},done:()=>scene.remove(r)});
+}
+function ringPing(y,color=GOLD){
+  ringAt(axisPoint(y), color);
 }
 
 /* ---------- ui ---------- */
@@ -727,7 +729,7 @@ function menuMark(){
   menu.querySelectorAll('[data-pose]').forEach(b=>b.classList.toggle('on',b.dataset.pose===poseName));
   const set=(id,on)=>{const b=menu.querySelector('#'+id); if(b)b.classList.toggle('on',!!on);};
   set('mScan',scanMode); set('mYan',yantra.visible); set('mX',xray);
-  set('mFluid',fluidOn); set('mChlad',chladniOn);
+  set('mFluid',fluidOn); set('mChlad',chladniOn); set('mAlive',aliveOn);
   set('mVit',vitLayer&&vitLayer.group.visible);
   set('mGuide',guideOn);
 }
@@ -752,6 +754,7 @@ function buildMenu(){
   fwBtn('❖ Kāla','kalachakra',()=>setFw('kalachakra'));
   r=sec('Fields');
   btn(r,'🌊 waves',()=>{setFluid(!fluidOn);},'mFluid');
+  btn(r,'♥ alive',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
   btn(r,'≋ chladni',()=>toggleChladni(),'mChlad');
   btn(r,'◉ scan',()=>toggleScan(),'mScan');
   r=sec('Overlays');
@@ -989,6 +992,21 @@ function startAjahn(){
     readout.innerHTML='<b>ajahn lee · method 1</b> · seated · breath + narration on — mirror, then feel';
   });
 }
+/* ---------- alive baseline: average-human heart + breath (SIMULATED) ---------- */
+let aliveOn=true; const aliveTimers=[];
+function aliveBeat(){
+  if(!aliveOn) return;
+  const iv=(60/64+((Math.random()+Math.random()+Math.random())-1.5)/1.5*0.045)*1000;
+  aliveTimers.push(setTimeout(()=>{
+    const p=axisPoint(0.78);
+    ringAt(p, GOLD, .55);
+    aliveTimers.push(setTimeout(()=>ringAt(p, GOLD, .34), 190));
+    aliveBeat();
+  }, iv));
+}
+const pacer=new THREE.Mesh(new THREE.TorusGeometry(.5,.015,8,48),
+  new THREE.MeshBasicMaterial({color:0x1f7a6e,transparent:true,opacity:.28}));
+pacer.visible=false; scene.add(pacer);
 let scanMode=null;
 const scanBand=new THREE.Mesh(new THREE.TorusGeometry(.72,.03,8,48),
   new THREE.MeshBasicMaterial({color:TEAL,transparent:true,opacity:.55}));
@@ -1069,6 +1087,13 @@ function tick(){
   if(bloomOn) composer.render(); else renderer.render(scene,camera);
   cssRenderer.render(scene,camera);
   if(gridField) gridField.tick(dt,t);
+  if(aliveOn&&!reduce){
+    const bp=axisPoint(-0.6);
+    pacer.visible=true; pacer.position.copy(bp);
+    if(poseName==='lying') pacer.rotation.set(0,Math.PI/2,0); else pacer.rotation.set(Math.PI/2,0,0);
+    const br=0.5+0.5*Math.sin(t*2*Math.PI*0.1);
+    pacer.scale.setScalar(0.85+0.3*br); pacer.material.opacity=.14+.12*br;
+  } else pacer.visible=false;
   if(avatar&&avatar.group.visible){ avatar.tick(dt); avatar.breathe(0.5+0.5*Math.sin(t*0.45)); }
   if(chladniOn){
     const e=audioEnergy();
@@ -1116,9 +1141,6 @@ function comparePreset(which){
 }
 /* ---------- chrome wiring ---------- */
 buildMenu(); menuMark();
-if(innerWidth>=900 && !new URLSearchParams(location.search).get('embed')){
-  menu.classList.add('show'); document.getElementById('menuBtn').classList.add('on');
-}
 document.getElementById('menuBtn').onclick=()=>{
   const m=menu; m.classList.toggle('show');
   document.getElementById('menuBtn').classList.toggle('on',m.classList.contains('show'));
@@ -1141,3 +1163,4 @@ window.addEventListener('message',ev=>{
   if(fw&&['trika','mp','layayoga','kalachakra'].includes(fw)) setFw(fw);
 })();
 addEventListener('resize',resize); resize(); tick();
+if(!reduce) aliveBeat();
