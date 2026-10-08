@@ -558,6 +558,14 @@ function show(p){
   info.querySelector('.locus').textContent=(cfg==='matrika'?'Mātṛkā base':'Mālinī infusion')+' · '+other;
   readout.innerHTML='<b>'+p[1]+'</b> · '+p[0]+' · '+loc;
 }
+/* clip resolution: engine library take first (needs ears), human reference fallback.
+   null only when nothing exists anywhere → visible flag, never fake audio. */
+async function clipFor(p){
+  const lib='audio/library/'+encodeURIComponent(p[0])+'/v1_hm_omega.ogg';
+  try{ const r=await fetch(lib,{method:'HEAD'}); if(r.ok) return {url:lib, kind:'engine-take'}; }catch(e){}
+  if(p[8]) return {url:'audio/phonemes/'+p[8], kind:'human-ref'};
+  return {url:null, kind:'missing'};
+}
 function fire(iast,withSound=true){
   const k=P.findIndex(p=>p[0]===iast); if(k<0) return;
   const p=P[k], n=nodes[k];
@@ -566,7 +574,10 @@ function fire(iast,withSound=true){
   pulse(Math.max(y-.4,channelY0),Math.min(y+.9,channelY1),.55,()=>ringPing(Math.min(y+.9,channelY1),st.color),st.color);
   shapeFlash(n.anchor.position.x, y, n.anchor.position.z, st.shape, st.color);
   playTone(toneForY(y), toneDur(p[0], y));
-  if(withSound&&p[8]) play('audio/phonemes/'+p[8]);
+  if(withSound) clipFor(p).then(c=>{
+    if(c.url) play(c.url);
+    else readout.innerHTML='<b>'+p[1]+'</b> · '+p[0]+' · no recording anywhere — silence, flagged';
+  });
   const [sx,sy]=locusScreen(k), e=audioEnergy();
   fluidSplat(sx,sy,(Math.random()-.5)*24,-(14+46*e));
   gridStimulate(n.anchor.position.x, n.anchor.position.y, n.anchor.position.z, 0.9, 1.2);
