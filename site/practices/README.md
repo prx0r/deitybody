@@ -32,3 +32,21 @@ feet, …). Unknown addresses throw — scores fail loud, never silently.
 `guideOn` speaks every `cue` via local speechSynthesis in time with the
 visuals. An external assistant can do the same by fetching the score JSON
 and reading `t` + `cue` + `feel` + region addresses.
+
+## Imported engine (from prx0r/the-library, vendored under site/engine/)
+
+| File | Source | Use |
+|---|---|---|
+| `operators.json` | ontology-engine/canonical (16 ops) | player opcodes |
+| `primitive-registry.json` | ontology-engine/canonical (24 archetypes) | primitive catalog (**missing `channel` — add as Tube/Curve**) |
+| `particles/*` | skia-engine particles (system/emitters/fields/constraints) | pure-math core; `draw(ctx)` → Three.js Points next |
+| `cymatics/*` | essayviz Chladni modes + superposition | real Chladni math for the cymatics panel |
+| `audio/*` | cymatics phoneme/spectrum + runtime audio-features/router | phoneme acoustic analysis; feature→visual routing |
+| `../body/reference/anatomy-geometry.json` | renderio anatomy-geometry.mjs (data only) | 24 landmarks, 7 cakra table, **12 dvādaśānta stations** |
+
+Operator → visual mapping (initial): appear→flash · pulse→ringPing ·
+recognize→hold+glow · expand/contract→scale field · dissolve→fade+release ·
+suspend→stillness hold. Per visual-grammar rule: semantics decide, renderer interprets.
+
+Reference score: `frameworks/trika/practices/spanda-triadic-pulse.json`
+(ontology-engine example shape; breath-phased cues to be authored on top).

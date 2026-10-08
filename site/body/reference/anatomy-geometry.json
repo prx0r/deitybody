@@ -1,0 +1,199 @@
+{
+ "id": "anatomy-geometry-data-v1",
+ "provenance": {
+  "source": "prx0r/the-library renderio/runtime/anatomy-geometry.mjs",
+  "note": "2D canvas coords (y down); remap to scene units on use. Chakra colours are that file’s convention, not universal.",
+  "status": "imported-data"
+ },
+ "landmarks_2d": {
+  "crown": [
+   0,
+   16
+  ],
+  "brow": [
+   0,
+   55
+  ],
+  "mouth": [
+   0,
+   72
+  ],
+  "throat": [
+   0,
+   104
+  ],
+  "leftShoulder": [
+   -72,
+   118
+  ],
+  "rightShoulder": [
+   72,
+   118
+  ],
+  "heart": [
+   -8,
+   169
+  ],
+  "diaphragm": [
+   0,
+   213
+  ],
+  "solarPlexus": [
+   0,
+   211
+  ],
+  "navel": [
+   0,
+   243
+  ],
+  "sacrum": [
+   0,
+   286
+  ],
+  "root": [
+   0,
+   304
+  ],
+  "leftElbow": [
+   -101,
+   219
+  ],
+  "rightElbow": [
+   101,
+   219
+  ],
+  "leftWrist": [
+   -112,
+   309
+  ],
+  "rightWrist": [
+   112,
+   309
+  ],
+  "leftHip": [
+   -42,
+   293
+  ],
+  "rightHip": [
+   42,
+   293
+  ],
+  "leftKnee": [
+   -44,
+   395
+  ],
+  "rightKnee": [
+   44,
+   395
+  ],
+  "leftAnkle": [
+   -40,
+   478
+  ],
+  "rightAnkle": [
+   40,
+   478
+  ]
+ },
+ "chakras": [
+  {
+   "id": "muladhara",
+   "term": "Mūlādhāra",
+   "dev": "मूलाधार",
+   "petals": 4,
+   "color": "#a8444e"
+  },
+  {
+   "id": "svadhisthana",
+   "term": "Svādhiṣṭhāna",
+   "dev": "स्वाधिष्ठान",
+   "petals": 6,
+   "color": "#c56f34"
+  },
+  {
+   "id": "manipura",
+   "term": "Maṇipūra",
+   "dev": "मणिपूर",
+   "petals": 10,
+   "color": "#d6a338"
+  },
+  {
+   "id": "anahata",
+   "term": "Anāhata",
+   "dev": "अनाहत",
+   "petals": 12,
+   "color": "#5c9274"
+  },
+  {
+   "id": "vishuddha",
+   "term": "Viśuddha",
+   "dev": "विशुद्ध",
+   "petals": 16,
+   "color": "#4389a6"
+  },
+  {
+   "id": "ajna",
+   "term": "Ājñā",
+   "dev": "आज्ञा",
+   "petals": 2,
+   "color": "#5c6ca4"
+  },
+  {
+   "id": "sahasrara",
+   "term": "Sahasrāra",
+   "dev": "सहस्रार",
+   "petals": 24,
+   "color": "#8767a3"
+  }
+ ],
+ "dvadasanta_stations": [
+  {
+   "id": "hrdaya",
+   "label": "hṛdaya"
+  },
+  {
+   "id": "kantha",
+   "label": "kaṇṭha"
+  },
+  {
+   "id": "talu",
+   "label": "tālu"
+  },
+  {
+   "id": "bhrumadhya",
+   "label": "bhrūmadhya"
+  },
+  {
+   "id": "lalata",
+   "label": "lalāṭa"
+  },
+  {
+   "id": "brahmarandhra",
+   "label": "brahmarandhra"
+  },
+  {
+   "id": "sikha",
+   "label": "śikhā"
+  },
+  {
+   "id": "pascima",
+   "label": "paścima"
+  },
+  {
+   "id": "shakti",
+   "label": "śakti"
+  },
+  {
+   "id": "vyapini",
+   "label": "vyāpinī"
+  },
+  {
+   "id": "samana",
+   "label": "samanā"
+  },
+  {
+   "id": "unmana",
+   "label": "unmanā"
+  }
+ ]
+}
