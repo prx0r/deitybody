@@ -1,0 +1,19 @@
+{
+  "id": "kundalini-ascent-bhavana",
+  "title": "Kuṇḍalinī ascent · bhāvana-led (Sivananda)",
+  "provenance": "Sivananda: feel Kundalini rise chakra-to-chakra on inhalation; bhāvana over ratio. Simplified score.",
+  "setup": {"figure": "seated-lotus", "breathAudio": true, "guide": true},
+  "events": [
+    {"t": 0.0, "do": "info", "dev": "कुण्डलिनी", "iast": "Sit at the base triangle · feel, don't force"},
+    {"t": 1.0, "do": "breath", "phase": "inhale", "from": "feet", "to": "belly", "dur": 5.0,
+     "cue": "Inhale — feel her stir at the base.", "feel": "warmth gathering"},
+    {"t": 7.0, "do": "breath", "phase": "inhale", "from": "belly", "to": "heart", "dur": 5.0,
+     "cue": "Rising through navel to heart.", "feel": "rising warmth"},
+    {"t": 13.0, "do": "breath", "phase": "inhale", "from": "heart", "to": "crown", "dur": 6.0,
+     "cue": "Through throat and brow to the crown.", "feel": "luminosity"},
+    {"t": 21.0, "do": "field", "region": "whole_body", "dur": 10.0,
+     "cue": "She reaches the thousand-petalled. Rest in the shower.", "feel": "pervasion"},
+    {"t": 33.0, "do": "breath", "phase": "exhale", "from": "crown", "to": "heart", "dur": 8.0,
+     "cue": "Descend gently to the heart. Rest.", "feel": "stillness"}
+  ]
+}

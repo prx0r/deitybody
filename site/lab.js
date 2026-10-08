@@ -215,18 +215,26 @@ function buildChannels(mapFn){
   const g=new THREE.TubeGeometry(new THREE.CatmullRomCurve3([P0,P1]),32,.02,8);
   const sm=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:GOLD,transparent:true,opacity:.75}));
   scene.add(sm); channelMeshes.push(sm);
-  [[0,TEAL],[Math.PI,ROSE]].forEach(([phase,color])=>{
+  /* laterals: paraxial by default (early Śaiva) — same side, gentle bow.
+     Helical weave = later-yoga mode (toggle). */
+  const lateral=(s,helical)=>{
     const pts=[];
-    for(let s=0;s<=1.001;s+=.02){
-      const c=P0.clone().addScaledVector(dir,s*len);
-      const a=s*len*2.1+phase;
-      pts.push(c.addScaledVector(up2,Math.sin(a)*.3).add(new THREE.Vector3(0,0,Math.cos(a)*.18)));
+    for(let s2=0;s2<=1.001;s2+=.02){
+      const c=P0.clone().addScaledVector(dir,s2*len);
+      const off=helical
+        ? Math.sin(s2*len*2.1+s*Math.PI)*.3
+        : s*(0.28+0.1*Math.sin(s2*Math.PI));
+      pts.push(c.addScaledVector(up2,off).add(new THREE.Vector3(0,0,helical?Math.cos(s2*len*2.1+s*Math.PI)*.18:0)));
     }
-    const m=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),120,.008,6),
+    return pts;
+  };
+  [[-1,TEAL],[1,ROSE]].forEach(([s,color])=>{
+    const m=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(lateral(s,weaveOn)),120,.008,6),
       new THREE.MeshBasicMaterial({color,transparent:true,opacity:.3}));
     scene.add(m); channelMeshes.push(m);
   });
 }
+let weaveOn=false;
 buildChannels(null);
 let ida={rotation:{}}, ping={rotation:{}};
 /* cakra rings (PEDAGOGICAL overlay) */
@@ -521,7 +529,35 @@ function toggleNadis(){
     info.querySelector('.locus').textContent='Schematic attention-paths through kanda — counts differ by text (72k vs 350k). Not anatomy.';
   }
 }
-/* ---------- mic breath proxy (respiration envelope, needs consent) ---------- */
+/* ---------- kanda hub + procedural secondary branches ---------- */
+let hubMesh=null, branchGroup=null;
+function mulberry(seed){ let s=seed; return ()=>{ s=(s*16807)%2147483647; return s/2147483647; }; }
+function buildHubAndBranches(){
+  if(hubMesh){ scene.remove(hubMesh); hubMesh.geometry.dispose(); }
+  if(branchGroup){ scene.remove(branchGroup); }
+  const [hx,hy]=xfPos(0,-2.2);
+  hubMesh=new THREE.Mesh(new THREE.SphereGeometry(.3,18,14),
+    new THREE.MeshBasicMaterial({color:0xc77f1a,transparent:true,opacity:.28}));
+  hubMesh.scale.set(1.1,2.2,0.8); hubMesh.position.set(hx,hy,0);
+  scene.add(hubMesh);
+  branchGroup=new THREE.Group(); scene.add(branchGroup);
+  if(!nadisCfg) return;
+  const rnd=mulberry(7);
+  const bmat=new THREE.LineBasicMaterial({color:0xa86f14,transparent:true,opacity:.22});
+  for(const n of nadisCfg.nadis){
+    if(!n.points||n.points.length<2) continue;
+    const base=n.points.map(p=>{const [x,y]=xfPos(p[0],p[1]); return new THREE.Vector3(x,y,p[2]??0);});
+    for(let b=0;b<5;b++){
+      const t0=0.25+rnd()*0.6;
+      const i=Math.min(base.length-2,Math.floor(t0*(base.length-1)));
+      const o=base[i].clone();
+      const dir=new THREE.Vector3((rnd()-0.5)*1.4,(rnd()-0.3)*1.2,(rnd()-0.5)*0.6);
+      const pts=[o.clone()];
+      for(let k=1;k<=3;k++) pts.push(o.clone().addScaledVector(dir,k*0.22*(1-k*0.2)));
+      branchGroup.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),bmat));
+    }
+  }
+}
 let micOn=false, micAnalyser=null, micData=null, micStream=null, micLevel=0;
 async function toggleMic(){
   if(micOn){
@@ -764,6 +800,7 @@ function menuMark(){
   const set=(id,on)=>{const b=menu.querySelector('#'+id); if(b)b.classList.toggle('on',!!on);};
   set('mScan',scanMode); set('mYan',yantra.visible); set('mX',xray);
   set('mFluid',fluidOn); set('mChlad',chladniOn); set('mAlive',aliveOn);
+  set('mWeave',weaveOn);
   set('mNadi',nadis&&nadis.group.visible); set('mMic',micOn);
   set('mVit',vitLayer&&vitLayer.group.visible);
   set('mGuide',guideOn);
@@ -789,6 +826,7 @@ function buildMenu(){
   fwBtn('❖ Kāla','kalachakra',()=>setFw('kalachakra'));
   r=sec('Fields');
   btn(r,'🌊 waves',()=>{setFluid(!fluidOn);},'mFluid');
+  btn(r,'∿ weave',()=>{weaveOn=!weaveOn; buildChannels(y=>axisPoint(y));},'mWeave');
   btn(r,'🕸️ nāḍīs',()=>{toggleNadis(); menuMark();},'mNadi');
   btn(r,'🎙️ breath mic',()=>{toggleMic(); menuMark();},'mMic');
   btn(r,'♥ alive',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
@@ -804,6 +842,8 @@ function buildMenu(){
   btn(r,'▶ Namaḥ Śivāya',()=>playNamah());
   btn(r,'⚡ ha',()=>playHa());
   btn(r,'VBT 24 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'})));
+  btn(r,'Nadi-shodhana',()=>score('frameworks/yoga/practices/nadi-shodhana.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'})));
+  btn(r,'Kundalini ascent',()=>score('frameworks/yoga/practices/kundalini-ascent.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'})));
   btn(r,'Ajahn Lee · breath energy',()=>startAjahn());
   btn(r,'Breath audio',e=>{breathAudioOn=!breathAudioOn; e.target.textContent=`Breath audio: ${breathAudioOn?'on':'off'}`;});
   btn(r,'caitanyam',()=>playSutra('sutra','caitanyam ātmā — Consciousness is Self'));
@@ -864,6 +904,8 @@ function setPose(name){
   poseName=name;
   setTargets();
   updateStatics();
+  buildHubAndBranches();
+  if(heartField) heartField.position.copy(axisPoint(0.78));
   if(nadis&&nadis.group.visible) nadis.redraw();
   if(typeof vitFig!=='undefined'&&vitFig&&vitFig.group.visible) vitFig.setPose(name==='lying'?'lying':name==='seated'?'seated':'standing');
   const labels={standing:'standing · full height',seated:'seated lotus · folded',lying:'lying down · horizontal'};
@@ -1045,6 +1087,13 @@ function aliveBeat(){
 const pacer=new THREE.Mesh(new THREE.TorusGeometry(.5,.015,8,48),
   new THREE.MeshBasicMaterial({color:0x1f7a6e,transparent:true,opacity:.28}));
 pacer.visible=false; scene.add(pacer);
+/* ---------- heart register: functional field, not a junction ---------- */
+let heartField=null;
+{
+  heartField=new THREE.Mesh(new THREE.SphereGeometry(.42,20,14),
+    new THREE.MeshBasicMaterial({color:0xd4899a,transparent:true,opacity:.1,depthWrite:false}));
+  heartField.position.copy(axisPoint(0.78)); scene.add(heartField);
+}
 let scanMode=null;
 const scanBand=new THREE.Mesh(new THREE.TorusGeometry(.72,.03,8,48),
   new THREE.MeshBasicMaterial({color:TEAL,transparent:true,opacity:.55}));
@@ -1138,6 +1187,7 @@ function tick(){
     }else br=0.5+0.5*Math.sin(t*2*Math.PI*0.1);
     pacer.scale.setScalar(0.85+0.3*br); pacer.material.opacity=.14+.12*br;
   } else pacer.visible=false;
+  if(heartField&&!reduce) heartField.material.opacity=.08+.06*Math.sin(t*2*Math.PI*0.1+1);
   if(avatar&&avatar.group.visible){ avatar.tick(dt); avatar.breathe(0.5+0.5*Math.sin(t*0.45)); }
   if(chladniOn){
     const e=audioEnergy();
@@ -1207,4 +1257,5 @@ window.addEventListener('message',ev=>{
   if(fw&&['trika','mp','layayoga','kalachakra'].includes(fw)) setFw(fw);
 })();
 addEventListener('resize',resize); resize(); tick();
+try{ buildHubAndBranches(); }catch(e){}
 if(!reduce) aliveBeat();

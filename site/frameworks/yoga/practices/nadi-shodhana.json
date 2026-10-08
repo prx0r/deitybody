@@ -1,0 +1,18 @@
+{
+  "id": "nadi-shodhana-beginner",
+  "title": "Nādi-shodhana · beginner (Sivananda)",
+  "provenance": "Sivananda Kundalini Yoga: 3-Om counts, no kumbhaka for neophytes, long rechaka, comfort rule. Simplified score.",
+  "setup": {"figure": "seated-lotus", "breathAudio": true, "guide": true},
+  "events": [
+    {"t": 0.0, "do": "info", "dev": "नाडीशोधन", "iast": "Channel-clearing · left first, no retention"},
+    {"t": 1.0, "do": "breath", "phase": "inhale", "from": "feet", "to": "crown", "dur": 4.0,
+     "cue": "Close the right nostril. Inhale left, three slow Oms.", "feel": "ease"},
+    {"t": 6.0, "do": "breath", "phase": "exhale", "from": "crown", "to": "feet", "dur": 6.0,
+     "cue": "Long slow exhale. No retention yet.", "feel": "release"},
+    {"t": 13.0, "do": "breath", "phase": "inhale", "from": "feet", "to": "crown", "dur": 4.0,
+     "cue": "Again — comfort only, never strain.", "feel": "clarity"},
+    {"t": 18.0, "do": "breath", "phase": "exhale", "from": "crown", "to": "feet", "dur": 6.0,
+     "cue": "Feel the channels clearing.", "feel": "clarity"},
+    {"t": 25.0, "do": "ring", "at": "heart", "cue": "Rest in the cleared channel.", "feel": "stillness"}
+  ]
+}
