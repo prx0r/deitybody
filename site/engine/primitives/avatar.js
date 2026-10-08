@@ -24,6 +24,15 @@ export async function buildAvatar(opts){
   });
   const bones = {};
   root.traverse(o=>{ if(o.isBone) bones[o.name.replace('mixamorig:','')] = o; });
+  /* humanoid-standard aliases (VRM/Humanoid bone names): pose once, any mesh.
+     Freaktown's avatar.v1 contract uses the same capability idea. */
+  const HUMAN = {hips:'Hips', spine:'Spine', chest:'Spine1', upperChest:'Spine2',
+    neck:'Neck', head:'Head', shoulderL:'LeftShoulder', armL:'LeftArm', foreL:'LeftForeArm',
+    handL:'LeftHand', shoulderR:'RightShoulder', armR:'RightArm', foreR:'RightForeArm',
+    handR:'RightHand', thighL:'LeftUpLeg', shinL:'LeftLeg', footL:'LeftFoot',
+    thighR:'RightUpLeg', shinR:'RightLeg', footR:'RightFoot'};
+  const humanoid = {};
+  for(const [h,m] of Object.entries(HUMAN)) humanoid[h]=bones[m]||null;
   const mixer = new THREE.AnimationMixer(root);
   const clips = {};
   for(const c of gltf.animations||[]) clips[c.name] = c;
@@ -39,10 +48,10 @@ export async function buildAvatar(opts){
   group.visible = false;
   scene.add(group);
   const api = {
-    group, bones, mixer, clips: Object.keys(clips),
+    group, bones, humanoid, mixer, clips: Object.keys(clips),
     /* breath swell: chest expands ~3% — call each frame with phase 0..1 */
     breathe(k){
-      const sp = bones.Spine2||bones.Spine1||bones.Spine;
+      const sp = this.humanoid.chest||bones.Spine2||bones.Spine1||bones.Spine;
       if(sp){ const s2 = 1+0.035*k; sp.scale.set(s2,1,s2); }
     },
     setPose(name){
