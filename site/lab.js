@@ -130,9 +130,7 @@ const yantra=new THREE.Group(); yantra.visible=false; scene.add(yantra);
   for(let k=1;k<=12;k++){const yy=3.3+k*.083;
     line([new THREE.Vector3(-.12,yy,0),new THREE.Vector3(.12,yy,0)],TEAL,.5);}
 }
-document.getElementById('bYan').onclick=e=>{
-  yantra.visible=!yantra.visible; e.target.classList.toggle('on',yantra.visible);
-};
+/* (yantra visibility is toggled from the rail → toggleYan) */
 const scan=new THREE.Mesh(new THREE.TorusGeometry(.62,.014,8,48),
   new THREE.MeshBasicMaterial({color:TEAL,transparent:true,opacity:.5}));
 scan.rotation.x=Math.PI/2; scene.add(scan);
@@ -249,22 +247,20 @@ fetch('data/frameworks/middle-pillar.json').then(r=>r.json()).then(fw2=>{
     const o=new CSS2DObject(el); o.position.set(c.x3,c.y3,c.z3); mpGroup.add(o);
     MP.orbs[c.id]={c,halo,el};
   });
-  document.getElementById('bMP').style.display='';
+  document.getElementById('rPillar').style.display='';
 }).catch(()=>{/* offline/file mode: Trika only */});
 function setFw(f){
   fw=f;
   const trika=f==='trika';
   nodes.forEach(n=>{n.anchor.visible=trika; n.halo.visible=trika;});
   mpGroup.visible=!trika;
-  document.getElementById('bMP').classList.toggle('on',!trika);
-  document.getElementById('bMat').style.display=trika?'':'none';
-  document.getElementById('bMal').style.display=trika?'':'none';
+  markRail();
   document.getElementById('bHa').style.display=trika?'':'none';
   document.querySelectorAll('[data-s]').forEach(b=>b.style.display=trika?'':'none');
   document.getElementById('bOm').textContent=trika?'▶ OM':'▶ Descent';
   document.getElementById('bNam').textContent=trika?'▶ Namaḥ Śivāya':'▶ Circulation';
 }
-document.getElementById('bMP').onclick=()=>setFw(fw==='trika'?'mp':'trika');
+/* (framework switching lives on the rail → rPillar panel) */
 function mpFire(id){
   if(!MP) return; const {c,halo,el}=MP.orbs[id];
   info.querySelector('.dev').textContent=c.hebrew;
@@ -348,12 +344,58 @@ function fire(iast,withSound=true){
   if(withSound&&p[8]) play('audio/phonemes/'+p[8]);
 }
 /* taps land on the DOM chips themselves — no raycast needed; canvas keeps drag/zoom */
-document.getElementById('bMat').onclick=e=>{cfg='matrika';
-  e.target.classList.add('on'); document.getElementById('bMal').classList.remove('on');
-  P.forEach((p,k)=>nodes[k].target=M(p));};
-document.getElementById('bMal').onclick=e=>{cfg='malini';
-  e.target.classList.add('on'); document.getElementById('bMat').classList.remove('on');
-  P.forEach((p,k)=>nodes[k].target=A(p));};
+/* ---------- left rail + panel: frameworks, Trika first ---------- */
+const panel=document.getElementById('fpanel');
+const PANELS={
+  trika:{t:'☸ Trika',d:'Mātṛkā base install, Mālinī infusion after automatic. One map per sitting.',
+    opts:[['Mātṛkā · base',()=>setCfg('matrika')],['Mālinī · infusion',()=>setCfg('malini')]]},
+  pillar:{t:'☩ Middle Pillar',d:'Hermetic descent + circulation over the same body. Separate layer — never mixed with nyāsa.',
+    opts:[['Enter Pillar',()=>setFw('mp')],['Back to Trika',()=>setFw('trika')]]},
+  scan:{t:'◉ Body scan',d:'Crown→feet→crown sweep. Rest attention where the band glows, natural breath.',
+    opts:[['Start / stop',()=>toggleScan()]]},
+  yantra:{t:'△ Yantra',d:'Measurable geometry: square, star, kalā rulings, 12-tick dvādaśānta. (PEDAGOGICAL)',
+    opts:[['Show / hide',()=>toggleYan()]]},
+};
+function openPanel(k){
+  const p=PANELS[k]; if(!p) return;
+  panel.querySelector('h4').textContent=p.t;
+  panel.querySelector('p').textContent=p.d;
+  const row=panel.querySelector('.row'); row.innerHTML='';
+  p.opts.forEach(([label,fn])=>{const b=document.createElement('button'); b.textContent=label;
+    b.onclick=()=>{fn(); markRail();}; row.appendChild(b);});
+  panel.classList.add('show');
+  ['rTrika','rPillar','rScan','rYan','rX'].forEach(id=>document.getElementById(id).classList.remove('on'));
+  ({trika:'rTrika',pillar:'rPillar',scan:'rScan',yantra:'rYan'}[k]||'') &&
+    document.getElementById({trika:'rTrika',pillar:'rPillar',scan:'rScan',yantra:'rYan'}[k]).classList.add('on');
+}
+function markRail(){
+  document.getElementById('rTrika').classList.toggle('on',fw==='trika');
+  document.getElementById('rPillar').classList.toggle('on',fw!=='trika');
+  document.getElementById('rScan').classList.toggle('on',!!scanMode);
+  document.getElementById('rYan').classList.toggle('on',yantra.visible);
+}
+function setCfg(c){
+  cfg=c;
+  P.forEach((p,k)=>nodes[k].target=c==='matrika'?M(p):A(p));
+}
+function toggleScan(){
+  if(scanMode){scanMode=null; scanBand.visible=false;}
+  else{scanMode={y:4.5,dir:-1}; scanBand.visible=true;
+    info.querySelector('.dev').textContent='स्मृति';
+    info.querySelector('.iast').textContent='body scan — crown → feet → crown';
+    info.querySelector('.locus').textContent='Rest attention where the band glows. Breathe naturally (TĀ 4.91).';}
+  markRail();
+}
+function toggleYan(){ yantra.visible=!yantra.visible; markRail(); }
+function toggleX(){
+  xray=!xray; shellSolid.material.opacity=xray?.28:.05;
+  document.getElementById('rX').classList.toggle('on',xray);
+}
+document.getElementById('rTrika').onclick=()=>{setFw('trika'); openPanel('trika');};
+document.getElementById('rPillar').onclick=()=>openPanel('pillar');
+document.getElementById('rScan').onclick=()=>{toggleScan(); openPanel('scan');};
+document.getElementById('rYan').onclick=()=>{toggleYan(); openPanel('yantra');};
+document.getElementById('rX').onclick=()=>toggleX();
 /* (x-ray handler lives with the scan block below) */
 document.getElementById('bOm').onclick=()=>{
   if(fw!=='trika'){ if(MP)mpRun('descent'); return; }
@@ -380,15 +422,8 @@ document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{
   SEQ[b.dataset.s].forEach((id,k)=>{const kk=P.findIndex(p=>p[0]===id); if(kk>=0)setTimeout(()=>{show(P[kk]); pop(kk);},k*450);});
 });
 
-/* ---------- vipassana-style scan ---------- */
+/* ---------- vipassana-style scan (driven from the rail → toggleScan) ---------- */
 let scanMode=null;
-document.getElementById('bScan').onclick=e=>{
-  if(scanMode){scanMode=null; scanBand.visible=false; e.target.classList.remove('on'); return;}
-  scanMode={y:4.5,dir:-1}; scanBand.visible=true; e.target.classList.add('on');
-  info.querySelector('.dev').textContent='स्मृति';
-  info.querySelector('.iast').textContent='body scan — crown → feet → crown';
-  info.querySelector('.locus').textContent='Rest attention where the band glows. Breathe naturally (TĀ 4.91). Tap ⏹ to stop.';
-};
 const scanBand=new THREE.Mesh(new THREE.TorusGeometry(.72,.03,8,48),
   new THREE.MeshBasicMaterial({color:TEAL,transparent:true,opacity:.55}));
 scanBand.rotation.x=Math.PI/2; scanBand.visible=false; scene.add(scanBand);
@@ -397,10 +432,7 @@ scanBand.rotation.x=Math.PI/2; scanBand.visible=false; scene.add(scanBand);
 const clock=new THREE.Clock();
 const _cam=new THREE.Vector3(), _nd=new THREE.Vector3(), _ct=new THREE.Vector3(0,.4,0);
 let xray=false;
-document.getElementById('bX').onclick=e=>{
-  xray=!xray;
-  shellSolid.material.opacity=xray?.28:.05; e.target.classList.toggle('on',xray);
-};
+/* (x-ray toggled from the rail → toggleX) */
 function tick(){
   requestAnimationFrame(tick);
   const dt=Math.min(clock.getDelta(),.05), t=clock.elapsedTime;

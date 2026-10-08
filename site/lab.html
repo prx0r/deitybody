@@ -28,6 +28,26 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
  cursor:pointer; backdrop-filter:blur(8px)}
 #dock button.on{background:linear-gradient(120deg,var(--gold-hi),var(--gold)); color:#0b0d12; font-weight:700; border-color:var(--gold)}
 #dock button:active{transform:scale(.96)}
+/* left icon rail — framework picker */
+#rail{position:fixed; z-index:6; left:.6rem; top:50%; transform:translateY(-50%);
+ display:flex; flex-direction:column; gap:.55rem}
+#rail button{width:46px; height:46px; border-radius:50%; border:1px solid var(--line);
+ background:var(--panel); color:var(--ink); font-size:19px; cursor:pointer;
+ backdrop-filter:blur(8px); transition:border-color .2s, transform .15s}
+#rail button:hover{border-color:var(--gold)}
+#rail button:active{transform:scale(.93)}
+#rail button.on{background:linear-gradient(120deg,var(--gold-hi,#e8cf8f),var(--gold)); color:#0b0d12; border-color:var(--gold)}
+#fpanel{position:fixed; z-index:6; left:4.1rem; top:50%; transform:translateY(-50%);
+ width:210px; background:var(--panel); border:1px solid var(--line); border-radius:14px;
+ padding:.8rem .9rem; backdrop-filter:blur(10px); display:none}
+#fpanel.show{display:block}
+#fpanel h4{margin:0 0 .2rem; font-size:.95rem; color:var(--gold); font-family:ui-sans-serif,system-ui}
+#fpanel p{margin:.2rem 0 .6rem; font-size:.78rem; color:var(--mut)}
+#fpanel .row{display:flex; gap:.4rem; flex-wrap:wrap}
+#fpanel .row button{font-family:ui-sans-serif,system-ui; font-size:.8rem; padding:.5rem .8rem;
+ min-height:40px; border-radius:999px; border:1px solid var(--line); background:transparent;
+ color:var(--ink); cursor:pointer}
+#fpanel .row button.on{background:var(--gold); color:#0b0d12; border-color:var(--gold); font-weight:700}
 #info{position:fixed; z-index:5; right:.7rem; top:4.2rem; width:min(270px,44vw);
  background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:.7rem .9rem;
  backdrop-filter:blur(8px)}
@@ -64,13 +84,20 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 </head>
 <body>
 <canvas id="scene"></canvas>
+<nav id="rail" aria-label="Frameworks">
+ <button id="rTrika" class="on" title="Trika · Mātṛkā/Mālinī">☸</button>
+ <button id="rPillar" title="Middle Pillar" style="display:none">☩</button>
+ <button id="rScan" title="Body scan">◉</button>
+ <button id="rYan" title="Yantra overlay">△</button>
+ <button id="rX" title="X-ray shell">◈</button>
+</nav>
+<div id="fpanel" aria-live="polite"><h4></h4><p></p><div class="row"></div></div>
 <header><h1>जीव — living subtle body</h1><div class="hint">drag to orbit · scroll to zoom · tap any glyph</div></header>
 <div id="legend">wireframe = inscribed grid (Flood: constructed, not found)<br/>gold channel = suṣumṇā · helix = iḍā/piṅgalā<br/>rings = cakra overlay (PEDAGOGICAL, late model)</div>
 <div id="info" aria-live="polite"><div class="dev">अ</div><div class="iast">a · forehead</div><div class="locus">Tap a glyph — hear it, watch prāṇa answer.</div></div>
 <div id="dock">
- <button id="bMat" class="on">Mātṛkā</button><button id="bMal">Mālinī</button><button id="bMP" style="display:none">Middle Pillar</button>
  <button id="bOm">▶ OM</button><button id="bNam">▶ Namaḥ Śivāya</button>
- <button id="bHa">⚡ ha flash</button><button id="bScan">scan ↕</button><button id="bYan">yantra △</button><button id="bX">x-ray</button>
+ <button id="bHa">⚡ ha flash</button>
  <button data-s="sutra">caitanyam</button><button data-s="hrdaye">hṛdaye</button>
 </div>
 <script type="module" src="lab.js"></script>
