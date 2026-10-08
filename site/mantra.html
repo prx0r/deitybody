@@ -36,6 +36,7 @@ a{color:var(--gold)}
 <body>
 <header><h1>मन्त्रशरीर</h1><div class="sub">Mantra Body · chant-through · <a href="lab">3D body</a></div>
 <div id="opts">
+ <label>grade <select id="grade"><option value="g0">G0 · round with sound</option><option value="g1">G1 · phonemes alone</option><option value="g2">G2 · recall quiz</option><option value="g3">G3 · seeds aum/soham</option><option value="g4">G4 · mantras</option></select></label>
  <label>map <select id="map"><option value="matrika">Mātṛkā</option><option value="malini">Mālinī</option></select></label>
  <label>sequence <select id="seq"><option value="pair">starter a·ā</option><option value="vowels">vowels 16</option><option value="full">full 50</option><option value="mantra:om-namah-shivaya">mantra · oṃ namaḥ śivāya</option><option value="mantra:soham">mantra · so’haṃ</option><option value="mantra:om">mantra · oṃ</option><option value="mantra:vowels-16">mantra · 16 vowels</option></select></label>
  <label>gap <input id="gap" type="range" min="0.4" max="5" step="0.2" value="1.6"/> <span id="gapV">1.6s</span></label>
@@ -51,12 +52,19 @@ a{color:var(--gold)}
   <button id="rep" aria-label="Repeat">↻</button>
   <button id="stop" aria-label="Stop">⏹</button>
  </div>
+ <div id="quiz" style="display:none">
+  <div id="qprompt" style="min-height:2.2em"></div>
+  <div id="qopts" style="display:flex;gap:.6rem;justify-content:center;flex-wrap:wrap;margin:.6rem 0"></div>
+  <div id="qscore" style="font-size:.85rem"></div>
+  <button id="qhear" style="font-family:ui-sans-serif,system-ui;font-size:.9rem;padding:.5rem 1rem;border-radius:999px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer">🔊 hear again</button>
+ </div>
 </div>
 <div id="report" aria-live="polite"></div></main>
 <footer>practice scaffold · clips: human-grid-v1 + EdgeSanskrit-v1(unverified ṅa/kṣa) · ḷ/ḹ silence+flag · no autoplay before tap</footer>
 <script type="module">
 import { ChantPlayer } from './engine/audio/chant-player.js';
 import { MantraPlayer } from './engine/mantra/player.js';
+import { fourChoices, loadProgress, recordResult, weakest } from './engine/mantra/drills.js';
 import { loadRegistry } from './engine/audio/asset-registry.js';
 const $=s=>document.querySelector(s);
 const SEQ16=['a','ā','i','ī','u','ū','ṛ','ṝ','ḷ','ḹ','e','ai','o','au','aṃ','aḥ'];
@@ -119,6 +127,69 @@ $('#rep').onclick=()=>{ if(isMantra()){M.stop(); M.play();} else P.repeat(); };
 $('#gap').oninput=e=>{P.gap=+e.target.value; M.gap=+e.target.value; $('#gapV').textContent=P.gap.toFixed(1)+'s';};
 $('#loop').onchange=e=>{P.loop=e.target.checked; M.loop=e.target.checked;};
 $('#map').onchange=rebuild; $('#seq').onchange=rebuild;
+/* ---------- grades (VISION-matrika-pathway) ---------- */
+let quiz=null; const progress=loadProgress();
+function audibleIds(){ return FULL.filter(id=>{const p=reg.records.find(x=>x.iast===id); return p&&p.audio.reference;}); }
+async function playClip(id){
+  const p=reg.records.find(x=>x.iast===id);
+  const b=await (await fetch(p.audio.reference)).arrayBuffer();
+  const d=await actx.decodeAudioData(b);
+  const s=actx.createBufferSource(); s.buffer=d; s.connect(actx.destination); s.start();
+}
+function quizScoreLine(){
+  const ks=Object.values(progress); const seen=ks.reduce((a,r)=>a+r.seen,0);
+  const pc=ks.reduce((a,r)=>a+r.correct,0);
+  return seen?`score ${pc}/${seen} this device`:'no answers yet';
+}
+function quizNext(){
+  const map=$('#map').value;
+  const pool=weakest(progress, audibleIds(), map, 12);
+  const answer=pool[Math.floor(Math.random()*pool.length)];
+  const dir=Math.random()<0.5?'sound_to_body':'body_to_sound';
+  const ph=reg.records.find(p=>p.iast===answer);
+  quiz={answer,dir,map,done:false};
+  const box=$('#qopts'); box.innerHTML='';
+  if(dir==='sound_to_body'){
+    $('#qprompt').textContent='Hear it — which glyph?';
+    playClip(answer);
+  }else{
+    $('#qprompt').textContent=`Locus: ${ph.placements[map].regionId} — which sound?`;
+  }
+  for(const o of fourChoices(reg.records, answer, map)){
+    const b=document.createElement('button');
+    b.textContent=o.dev; b.dataset.iast=o.iast;
+    b.style.cssText='font-family:"Noto Serif Devanagari",serif;font-size:2.2rem;min-width:64px;min-height:64px;border-radius:14px;border:1px solid var(--line);background:var(--panel);color:var(--ink);cursor:pointer';
+    b.onclick=()=>quizAnswer(b,o.iast);
+    box.appendChild(b);
+  }
+  $('#qscore').textContent=quizScoreLine();
+}
+function quizAnswer(btn,guess){
+  if(!quiz||quiz.done) return; quiz.done=true;
+  const ok=guess===quiz.answer;
+  recordResult(progress, quiz.answer, quiz.map, quiz.dir, ok);
+  btn.style.borderColor=ok?'#5ec4b6':'#d4899a';
+  [...$('#qopts').children].forEach(x=>{
+    if(x.dataset.iast===quiz.answer) x.style.borderColor='#5ec4b6';
+    x.style.pointerEvents='none';
+  });
+  playClip(quiz.answer);
+  $('#qscore').textContent=(ok?'✓ ':'✗ ')+quiz.answer+' · '+quizScoreLine();
+  setTimeout(()=>{ if($('#grade').value==='g2') quizNext(); }, 1400);
+}
+$('#qhear').onclick=()=>{ if(quiz&&!quiz.done&&quiz.dir==='sound_to_body') playClip(quiz.answer); };
+$('#grade').onchange=e=>{
+  const g=e.target.value;
+  $('#transport').style.display=g==='g2'?'none':'flex';
+  $('#quiz').style.display=g==='g2'?'block':'none';
+  $('#locus').style.display=(g==='g1')?'none':'';
+  $('#seq').disabled=(g==='g2');
+  if(g==='g0'){ $('#seq').value='full'; rebuild(); }
+  else if(g==='g1'){ $('#seq').value='full'; rebuild(); }
+  else if(g==='g2'){ P.stop(); M.stop(); quizNext(); }
+  else if(g==='g3'){ $('#seq').value='mantra:soham'; rebuild(); }
+  else if(g==='g4'){ $('#seq').value='mantra:om-namah-shivaya'; rebuild(); }
+};
 await rebuild();
 </script>
 </body>
