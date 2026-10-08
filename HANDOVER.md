@@ -48,4 +48,4 @@ Interactive subtle-body atlas + practice engine. Zero-build vanilla JS + vendore
 8. Vajrayāna winds/drops animation (structure only — initiation contexts never replaced).
 
 ## Owner's current focus
-Mātṛkā track per VISION-matrika-pathway.md. Sivananda syllabus is the reference implementation pattern.
+North star: `northstar.md`. Backend-first: full taxonomy in `docs/CATALOG.md` + `site/data/catalog.json` (tradition → school → course → phase → practice, standard score grammar). Frontend migrates to walk the catalog next. Mātṛkā track per VISION-matrika-pathway.md stays the live reference.

@@ -1,0 +1,117 @@
+{
+  "id": "catalog-v1",
+  "note": "Backend taxonomy per docs/CATALOG.md. Grid walks this tree. Statuses: live | verify | stub | planned | needs_review. Nothing auto-live.",
+  "traditions": [
+    {"id": "trika", "name": "Trika", "lineage": "Kashmir Shaivism · Abhinavagupta", "status": "live",
+     "courses": [
+      {"id": "matrika", "title": "Matrika course — 50 sounds on the body", "status": "live",
+       "sources": [{"id": "mv-ta15", "kind": "text", "title": "Malinivijayottara + Tantraloka 15 nyasa", "status": "SOURCE_ATTESTED"}],
+       "phases": [
+        {"id": "m1", "title": "Phase 1 — Round the body with sound", "graduation": "Follow the full round without losing place.",
+         "practices": [{"id": "m1-chant", "fw": "trika", "cfg": "matrika", "chant": "full", "status": "live"}]},
+        {"id": "m2", "title": "Phase 2 — Sounds alone", "graduation": "Every clip lands somewhere felt, no chart.",
+         "practices": [{"id": "m2-chant", "fw": "trika", "cfg": "matrika", "chant": "full", "status": "live"}]},
+        {"id": "m3", "title": "Phase 3 — Body point only", "graduation": "Both directions reliable for 40+/50.",
+         "practices": [{"id": "m3-quiz", "fw": "trika", "cfg": "matrika", "chant": "quiz", "status": "live"}]},
+        {"id": "m4", "title": "Phase 4 — Small mantras: AUM, SO'HAM", "graduation": "Run both trajectories from memory, in time.",
+         "practices": [
+          {"id": "m4-aum", "fw": "trika", "cfg": "matrika", "score": "frameworks/trika/practices/aum.json", "status": "live"},
+          {"id": "m4-soham", "fw": "trika", "cfg": "matrika", "score": "frameworks/trika/practices/soham.json", "status": "live"}]},
+        {"id": "m5", "title": "Phase 5 — Full mantras: OM, OM NAMAH SHIVAYA", "graduation": "Chant either mantra with light locked to sound.",
+         "practices": [
+          {"id": "m5-om", "fw": "trika", "cfg": "matrika", "score": "frameworks/trika/practices/om.json", "status": "live"},
+          {"id": "m5-namah", "fw": "trika", "cfg": "matrika", "score": "frameworks/trika/practices/namah-shivaya.json", "status": "live"}]}
+       ]},
+      {"id": "malini", "title": "Malini order — mixed sequence", "status": "live",
+       "phases": [
+        {"id": "mal1", "title": "Phase 1 — Malini on the body", "graduation": "Stable Malini round after Matrika automatic.",
+         "practices": [{"id": "mal1-chant", "fw": "trika", "cfg": "malini", "chant": "full", "status": "live"}]}
+       ]},
+      {"id": "vbt", "title": "Vijnana Bhairava — gaze practice", "status": "live",
+       "sources": [{"id": "vbt-24", "kind": "text", "title": "Vijnanabhairava practice 24", "status": "SOURCE_ATTESTED"}],
+       "phases": [
+        {"id": "vbt24", "title": "Phase 1 — Gaze", "graduation": "Sustain gaze with body-wide attention.",
+         "practices": [{"id": "vbt24-score", "fw": "trika", "cfg": "matrika", "score": "frameworks/vbt/practices/v24-gaze.json", "status": "live"}]}
+       ]}
+     ]},
+    {"id": "buddhism", "name": "Buddhism", "status": "verify",
+     "schools": [
+      {"id": "theravada", "name": "Theravada · Thai Forest", "status": "verify",
+       "courses": [
+        {"id": "breath-energy", "title": "Breath energy course — Method 1", "status": "verify",
+         "sources": [{"id": "ajahn-lee-m1", "kind": "method", "title": "Ajahn Lee Method 1", "status": "verify"}],
+         "phases": [
+          {"id": "aj1", "title": "Phase 1 — Breath energy", "graduation": "Mirror the breath, then feel it unaided.",
+           "practices": [{"id": "ajahn-m1", "fw": "theravada", "score": "frameworks/theravada/practices/ajahn-lee-1.json", "status": "verify"}]}
+         ]},
+        {"id": "vipassana-sweep", "title": "Vipassana course — body sweep visualisation", "status": "planned",
+         "sources": [{"id": "vipassana-sweep-method", "kind": "method", "title": "Body-sweep attention practice", "status": "needs_review"}],
+         "phases": [
+          {"id": "vs1", "title": "Phase 1 — Sweep visualisation", "graduation": "Attention rides crown to feet and back without sticking.",
+           "practices": [{"id": "vs1-sweep", "fw": "vipassana", "score": "frameworks/vipassana/body-scan.json", "status": "planned"}]}
+         ]}
+       ]},
+      {"id": "tibetan", "name": "Tibetan · Kalachakra", "status": "stub",
+       "courses": [
+        {"id": "kalachakra-centres", "title": "Kalachakra course — channel centres", "status": "stub",
+         "sources": [{"id": "kalachakra-pub", "kind": "text", "title": "Kalachakra public-teaching level", "status": "needs_review"}],
+         "phases": [
+          {"id": "kc1", "title": "Phase 1 — Show the centres", "graduation": "Name each centre and its count from the model.",
+           "practices": [{"id": "kc1-show", "fw": "kalachakra", "status": "stub"}]}
+         ]}
+       ]}
+     ]},
+    {"id": "occult", "name": "Occult", "status": "verify",
+     "schools": [
+      {"id": "golden-dawn", "name": "Golden Dawn lineage", "status": "verify",
+       "courses": [
+        {"id": "middle-pillar", "title": "Middle Pillar course", "status": "verify",
+         "sources": [{"id": "regardie-mp", "kind": "text", "title": "Regardie, Middle Pillar", "status": "SOURCE_ATTESTED"}],
+         "phases": [
+          {"id": "mp1", "title": "Phase 1 — Show the five centres", "graduation": "Hold all five centres in attention at once.",
+           "practices": [{"id": "mp1-show", "fw": "mp", "status": "verify"}]},
+          {"id": "mp2", "title": "Phase 2 — Descent of light", "graduation": "Follow the descent crown to feet without losing the thread.",
+           "practices": [{"id": "mp2-descent", "fw": "mp", "score": "frameworks/hermetic/middle-pillar.json", "status": "verify"}]},
+          {"id": "mp3", "title": "Phase 3 — Circulation", "graduation": "Complete the circulation and rest in the field.",
+           "practices": [{"id": "mp3-circ", "fw": "mp", "score": "frameworks/hermetic/middle-pillar.json", "status": "verify"}]}
+         ]}
+       ]},
+      {"id": "quariae", "name": "Quariae", "status": "planned",
+       "courses": [
+        {"id": "quariae-mp", "title": "Quariae-structured Middle Pillar", "status": "planned",
+         "sources": [{"id": "quariae-apprentice", "kind": "text", "title": "Quariae Apprentice modules", "status": "needs_review"}],
+         "phases": []
+        }
+       ]}
+     ]},
+    {"id": "yoga", "name": "Sivananda", "lineage": "Kundalini Yoga · Divine Life Society", "status": "verify",
+     "courses": [
+      {"id": "siv-core", "title": "Sivananda course — breath and centres", "status": "verify",
+       "sources": [{"id": "sivananda-ky", "kind": "text", "title": "Sivananda, Kundalini Yoga (free reprint)", "status": "SOURCE_ATTESTED"}],
+       "phases": [
+        {"id": "s1", "title": "Phase 1 — Clear the channels", "graduation": "Easy alternate breathing 8 min, long exhales.",
+         "practices": [{"id": "s1-nadi", "fw": "yoga", "score": "frameworks/yoga/practices/nadi-shodhana.json", "status": "verify"}]},
+        {"id": "s2", "title": "Phase 2 — Six centres tour", "graduation": "Name all six loci from feeling, in order.",
+         "practices": [{"id": "s2-cakra", "fw": "yoga", "score": "frameworks/yoga/practices/cakra-tour.json", "status": "verify"}]},
+        {"id": "s3", "title": "Phase 3 — Three knots", "graduation": "Hold attention at each knot through one slow breath.",
+         "practices": [{"id": "s3-granthi", "fw": "yoga", "score": "frameworks/yoga/practices/granthi-piercing.json", "status": "verify"}]},
+        {"id": "s4", "title": "Phase 4 — Ascent", "graduation": "Sustain the full ascent visualisation without the screen.",
+         "practices": [{"id": "s4-ascent", "fw": "yoga", "score": "frameworks/yoga/practices/kundalini-ascent.json", "status": "verify"}]}
+       ]}
+     ]},
+    {"id": "layayoga", "name": "Anahata Lotus", "lineage": "Laya Yoga", "status": "verify",
+     "courses": [
+      {"id": "lotus", "title": "Lotus course — heart centre", "status": "verify",
+       "phases": [
+        {"id": "lx1", "title": "Phase 1 — Open the lotus", "graduation": "Rest petal by petal, then in the bindu.",
+         "practices": [{"id": "lx1-show", "fw": "layayoga", "status": "verify"}]}
+       ]}
+     ]},
+    {"id": "nightly", "name": "Nightly", "status": "planned",
+     "note": "Reserved. Wind-down and night practices. Session kind night tunes slower timings. No courses yet.",
+     "courses": []},
+    {"id": "movement", "name": "Movement", "status": "planned",
+     "note": "Reserved. Posture and motion sequences extending the pose system. motion.* ops specified in docs/CATALOG.md. No courses yet.",
+     "courses": []}
+  ]
+}
