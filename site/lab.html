@@ -23,13 +23,13 @@ body.split #fluid{right:50%}
 #second{display:none}
 body.split #second{display:block; position:fixed; z-index:1; top:0; right:0; width:50%; height:100%; border:0; border-left:1px solid var(--line)}
 /* single circle menu */
-#menuBtn{position:fixed; z-index:10; top:.8rem; left:.8rem; width:52px; height:52px;
- border-radius:50%; border:1px solid #c9ccd4; cursor:pointer;
- background:radial-gradient(circle at 34% 30%, #ffffff 0%, #e8eaef 38%, #b9bdc7 72%, #8f94a0 100%);
- box-shadow:inset -3px -5px 9px rgba(0,0,0,.18), inset 3px 5px 8px rgba(255,255,255,.9), 0 2px 10px rgba(0,0,0,.12);}
-#menuBtn.on{box-shadow:inset -3px -5px 9px rgba(0,0,0,.28), 0 0 0 2px var(--gold);}
-#splitBtn{position:fixed; z-index:10; top:.8rem; right:.8rem; width:52px; height:52px;
- border-radius:50%; border:1px solid var(--line); background:var(--panel); color:var(--ink);
+#menuBtn{position:fixed; z-index:10; left:.8rem; bottom:.8rem; width:52px; height:52px;
+ border-radius:12px; border:1px solid var(--line); cursor:pointer; background:var(--panel);
+ backdrop-filter:blur(8px); display:flex; align-items:center; justify-content:center; padding:0}
+#menuBtn.on{border-color:var(--gold); box-shadow:0 0 0 2px var(--gold)}
+#menuBtn svg{display:block}
+#splitBtn{position:fixed; z-index:10; right:.8rem; bottom:.8rem; width:52px; height:52px;
+ border-radius:12px; border:1px solid var(--line); background:var(--panel); color:var(--ink);
  font-size:26px; line-height:1; cursor:pointer; backdrop-filter:blur(8px)}
 #splitBtn.on{border-color:var(--gold); color:var(--gold)}
 #menu{position:fixed; z-index:10; top:0; left:0; bottom:0; width:320px;
@@ -121,6 +121,32 @@ body.split #readout{left:25%}
 .seph.lit .hb{background:var(--gold); color:#0b0d12 !important; border-color:var(--gold-hi, #e8cf8f) !important}
 .klabel{font-size:10px; letter-spacing:.06em; color:var(--teal);
  font-family:ui-sans-serif,system-ui; white-space:nowrap; opacity:.85}
+/* chant dock — right side, never leaves the body */
+#side{position:fixed; z-index:9; top:0; right:0; bottom:0; width:300px; max-width:86vw;
+ background:var(--panel); border-left:1px solid var(--line); backdrop-filter:blur(12px);
+ padding:.9rem; overflow-y:auto; transform:translateX(105%); transition:transform .25s ease}
+#side.open{transform:none}
+#side h2{font-size:.72rem; letter-spacing:.1em; text-transform:uppercase; color:var(--mut);
+ font-family:ui-sans-serif,system-ui; margin:0 0 .5rem}
+#side .card{background:#fff; border:1px solid var(--line); border-radius:12px;
+ padding:1.2rem .8rem; text-align:center}
+#side .sglyph{font-family:'Noto Serif Devanagari',serif; font-size:3.2rem; line-height:1.4}
+#side .siast{color:var(--gold-hi); font-family:ui-sans-serif,system-ui; font-size:.95rem}
+#side .slocus{color:var(--mut); font-size:.85rem; margin:.2rem 0}
+#side .sflag{color:#b04a5a; font-size:.78rem; min-height:1.3em}
+#side .scount{color:var(--mut); font-size:.75rem; font-family:ui-sans-serif,system-ui}
+#side .tport{display:grid; grid-template-columns:1fr 1fr 1fr; gap:.35rem; margin:.6rem 0}
+#side .tport button{font-family:ui-sans-serif,system-ui; font-size:.9rem; padding:.55rem 0;
+ min-height:42px; border-radius:6px; border:1px solid var(--line); background:#fff;
+ color:var(--ink); cursor:pointer}
+#side .tport button.big{grid-column:1/-1; background:linear-gradient(120deg,var(--gold-hi),var(--gold));
+ color:#0b0d12; border-color:var(--gold); font-weight:700}
+#side .srow{display:flex; gap:.4rem; align-items:center; margin:.4rem 0;
+ font-size:.8rem; color:var(--mut); font-family:ui-sans-serif,system-ui}
+#side select,#side input[type=range]{flex:1; min-width:0}
+#side .qopts{display:grid; grid-template-columns:1fr 1fr; gap:.35rem; margin:.5rem 0}
+#side .qopts button{font-family:'Noto Serif Devanagari',serif; font-size:1.8rem; min-height:60px;
+ border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer}
 /* embed mode: bare body only */
 body.embed #menuBtn,body.embed #splitBtn,body.embed #menu,body.embed #readout{display:none}
 @media (max-width:640px){
@@ -153,8 +179,9 @@ window.addEventListener('unhandledrejection',function(e){
   if(b){b.style.display='block';b.textContent=m;}
 });
 </script>
-<button id="menuBtn" aria-label="Menu"></button>
+<button id="menuBtn" aria-label="Menu"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#22242c" stroke-width="1.6" stroke-linejoin="round"><path d="M12 2.5 21 7.5v9l-9 5-9-5v-9z"/><path d="M12 12 21 7.5M12 12 3 7.5M12 12v9.5"/></svg></button>
 <button id="splitBtn" aria-label="Compare side by side">+</button>
+<aside id="side" aria-label="Chant audio"></aside>
 <nav id="menu" aria-label="Menu"></nav>
 <div id="readout" aria-live="polite" style="display:none"></div>
 <div id="info" aria-hidden="true"><div class="dev">अ</div><div class="iast">a · forehead</div><div class="locus"></div>

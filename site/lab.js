@@ -29,6 +29,9 @@ const mixRouter=new AudioRouter([
 ]);
 let mixOut={toneVol:.12, chladniBoost:1};
 import { createPathRegistry } from './engine/paths.js';
+import { ChantPlayer } from './engine/audio/chant-player.js';
+import { loadRegistry } from './engine/audio/asset-registry.js';
+import { fourChoices, loadProgress, recordResult, weakest } from './engine/mantra/drills.js';
 import { createBreath } from './engine/breath.js';
 let pathReg=null, breath=null;
 import { buildNadis } from './engine/primitives/nadis.js';
@@ -902,10 +905,152 @@ function playPhase(p){
     if(scores[1]) readout.innerHTML='<b>'+p.title+'</b> · playing 1 of 2 — press Play again for part 2';
   });
 }
-function chantURL(p){
-  if(p.chant==='quiz') return 'mantra?grade=g2';
-  if(p.grade==='g1') return 'mantra?grade=g1&seq=full';
-  return 'mantra?grade=g0&seq=full';
+/* ---------- chant dock: audio lives beside the body, never a new screen ---------- */
+const CHANT16=['a','ā','i','ī','u','ū','ṛ','ṝ','ḷ','ḹ','e','ai','o','au','aṃ','aḥ'];
+const CHANT50=["a","ā","i","ī","u","ū","ṛ","ṝ","ḷ","ḹ","e","ai","o","au","aṃ","aḥ","ka","kha","ga","gha","ṅa","ca","cha","ja","jha","ña","ṭa","ṭha","ḍa","ḍha","ṇa","ta","tha","da","dha","na","pa","pha","ba","bha","ma","ya","ra","la","va","śa","ṣa","sa","ha","kṣa"];
+let chantReg=null, chantPlayer=null, chantMap='matrika', chantQuiz=null, chantLoadToken=0;
+const chantProgress=loadProgress();
+function chantEls(){
+  const side=document.getElementById('side');
+  if(side.dataset.built) return {
+    side, title:side.querySelector('h2'), glyph:side.querySelector('.sglyph'),
+    iast:side.querySelector('.siast'), locus:side.querySelector('.slocus'),
+    flag:side.querySelector('.sflag'), count:side.querySelector('.scount'),
+    play:side.querySelector('.cplay'), seq:side.querySelector('.cseq'),
+    gap:side.querySelector('.cgap'), gapV:side.querySelector('.cgapV'),
+    quiz:side.querySelector('.cquiz'), qprompt:side.querySelector('.qprompt'),
+    qopts:side.querySelector('.qopts'), qscore:side.querySelector('.qscore'),
+    chantUI:side.querySelector('.cchant'),
+  };
+  side.innerHTML=`<h2>Chant audio</h2><div class="card">
+    <div class="cchant">
+    <div class="sglyph">अ</div><div class="siast">a</div><div class="slocus">forehead</div>
+    <div class="sflag"></div><div class="scount">ready</div>
+    <div class="tport"><button class="cplay big">▶ chant</button>
+     <button class="cprev">⏮</button><button class="cnext">⏭</button><button class="crep">↻</button></div>
+    <div class="srow"><label>series <select class="cseq"><option value="pair">starter a·ā</option><option value="vowels">vowels 16</option><option value="full" selected>full 50</option></select></label></div>
+    <div class="srow"><label>gap <input class="cgap" type="range" min="0.4" max="5" step="0.2" value="1.6"/></label><span class="cgapV">1.6s</span></div>
+    </div>
+    <div class="cquiz" style="display:none"><div class="qprompt" style="min-height:2em"></div>
+     <div class="qopts"></div><div class="qscore scount"></div>
+     <button class="qhear" style="font-family:ui-sans-serif,system-ui;font-size:.85rem;padding:.5rem 1rem;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer">🔊 hear again</button></div>
+    <div class="srow"><button class="cclose" style="flex:1;font-family:ui-sans-serif,system-ui;font-size:.85rem;padding:.55rem;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer">Close panel</button></div>
+   </div>`;
+  side.dataset.built='1';
+  const el=chantEls();
+  el.play.onclick=chantToggle;
+  side.querySelector('.cprev').onclick=()=>{ chantPlayer&&chantPlayer.prev(); chantShowCurrent(); };
+  side.querySelector('.cnext').onclick=()=>{ chantPlayer&&chantPlayer.next(); chantShowCurrent(); };
+  side.querySelector('.crep').onclick=()=>{ chantPlayer&&chantPlayer.repeat(); };
+  side.querySelector('.cclose').onclick=()=>{ chantStopAll(); side.classList.remove('open'); };
+  el.seq.onchange=chantRebuild;
+  el.gap.oninput=e=>{ if(chantPlayer)chantPlayer.gap=+e.target.value; el.gapV.textContent=(+e.target.value).toFixed(1)+'s'; };
+  side.querySelector('.qhear').onclick=()=>{ if(chantQuiz&&!chantQuiz.done&&chantQuiz.dir==='sound_to_body') chantClip(chantQuiz.answer); };
+  return el;
+}
+function chantSeqFor(kind){
+  const v=(chantEls().seq||{}).value||'full';
+  void kind;
+  return v==='pair'?['a','ā']:v==='vowels'?CHANT16.slice():CHANT50.slice();
+}
+async function openChant(p){
+  loadPhase(p);
+  ensureAudio();
+  if(!chantReg){ chantReg=await loadRegistry(); ChantPlayer.setRecords({phonemes:chantReg.records}); }
+  if(!chantPlayer){
+    chantPlayer=new ChantPlayer(actx);
+    chantPlayer.onPhoneme=(id,ph,idx)=>chantShow(id,ph,idx);
+    chantPlayer.onEnd=()=>{ const el=chantEls(); el.play.textContent='▶ chant'; el.count.textContent='complete — again, or switch series.'; };
+  }
+  chantMap=p.cfg||'matrika';
+  chantQuiz=null;
+  const el=chantEls();
+  el.title.textContent='Chant audio · '+(p.title||'');
+  el.side.classList.add('open');
+  if(p.chant==='quiz'){
+    chantPlayer.stop();
+    el.chantUI.style.display='none'; el.quiz.style.display='';
+    quizNext();
+  }else{
+    el.quiz.style.display='none'; el.chantUI.style.display='';
+    if(p.chantSeq) el.seq.value=p.chantSeq;
+    el.count.textContent='loading clips…';
+    await chantRebuild();
+  }
+  readout.innerHTML='<b>chant</b> · audio docked right — body lights in time';
+}
+async function chantRebuild(){
+  const el=chantEls();
+  const tok=++chantLoadToken;
+  el.play.disabled=true; el.play.textContent='… loading';
+  const seq=chantSeqFor();
+  const r=await chantPlayer.load(seq, chantMap);
+  if(tok!==chantLoadToken) return; // a newer series was picked; drop this one
+  el.count.textContent=r.silent.length?`silent flagged: ${r.silent.join(' ')} — breathe, don't substitute.`:`${r.loaded} clips ready.`;
+  el.play.textContent='▶ chant';
+  el.play.disabled=false;
+  const id=chantPlayer.seq[0];
+  chantShow(id,(chantReg.records||[]).find(x=>x.iast===id),0);
+}
+function chantShow(id,ph,idx){
+  const el=chantEls();
+  if(!ph) return;
+  el.glyph.textContent=ph.dev; el.iast.textContent=ph.iast;
+  el.locus.textContent=(ph.placements&&(ph.placements[chantMap]||ph.placements.matrika)||{}).regionId||'';
+  el.flag.textContent=!ph.audio.reference?'no verified recording — silence, breathe here':'';
+  el.count.textContent=`sound ${idx+1} of ${chantPlayer.seq.length}`;
+  const k=P.findIndex(x=>x[0]===id); if(k>=0){ show(P[k]); pop(k); }
+}
+function chantShowCurrent(){
+  const id=chantPlayer&&chantPlayer.seq[chantPlayer.idx];
+  if(id) chantShow(id,(chantReg.records||[]).find(x=>x.iast===id),chantPlayer.idx);
+}
+function chantToggle(){
+  const el=chantEls();
+  if(chantPlayer.playing){ chantPlayer.pause(); el.play.textContent='▶ chant'; }
+  else{ chantPlayer.play(); el.play.textContent='⏸ pause'; chantShowCurrent(); }
+}
+function chantStopAll(){ if(chantPlayer)chantPlayer.stop(); const el=chantEls(); if(el.play)el.play.textContent='▶ chant'; }
+async function chantClip(id){
+  const ph=(chantReg.records||[]).find(x=>x.iast===id);
+  if(!ph||!ph.audio.reference) return;
+  const b=await (await fetch(ph.audio.reference)).arrayBuffer();
+  const d=await actx.decodeAudioData(b);
+  const s=actx.createBufferSource(); s.buffer=d; s.connect(actx.destination); s.start();
+}
+function chantAudible(){
+  return CHANT50.filter(id=>{const p=(chantReg.records||[]).find(x=>x.iast===id); return p&&p.audio.reference;});
+}
+function quizNext(){
+  const el=chantEls();
+  const pool=weakest(chantProgress, chantAudible(), chantMap, 12);
+  const answer=pool[Math.floor(Math.random()*pool.length)];
+  const dir=Math.random()<0.5?'sound_to_body':'body_to_sound';
+  const ph=(chantReg.records||[]).find(x=>x.iast===answer);
+  chantQuiz={answer,dir,done:false};
+  el.qopts.innerHTML='';
+  if(dir==='sound_to_body'){ el.qprompt.textContent='Hear it — which glyph?'; chantClip(answer); }
+  else el.qprompt.textContent=`Body point: ${(ph.placements&&(ph.placements[chantMap]||ph.placements.matrika)||{}).regionId} — which sound?`;
+  for(const o of fourChoices(chantReg.records, answer, chantMap)){
+    const b=document.createElement('button'); b.textContent=o.dev; b.dataset.iast=o.iast;
+    b.onclick=()=>quizAnswer(b,o.iast);
+    el.qopts.appendChild(b);
+  }
+  const ks=Object.values(chantProgress), seen=ks.reduce((a,r)=>a+r.seen,0), pc=ks.reduce((a,r)=>a+r.correct,0);
+  el.qscore.textContent=seen?`score ${pc}/${seen} this device`:'no answers yet';
+}
+function quizAnswer(btn,guess){
+  if(!chantQuiz||chantQuiz.done) return; chantQuiz.done=true;
+  const el=chantEls();
+  const ok=guess===chantQuiz.answer;
+  recordResult(chantProgress, chantQuiz.answer, chantMap, chantQuiz.dir, ok);
+  btn.style.borderColor=ok?'#5ec4b6':'#d4899a';
+  [...el.qopts.children].forEach(x=>{ if(x.dataset.iast===chantQuiz.answer)x.style.borderColor='#5ec4b6'; x.style.pointerEvents='none'; });
+  chantClip(chantQuiz.answer);
+  const k=P.findIndex(x=>x[0]===chantQuiz.answer); if(k>=0){ show(P[k]); pop(k); }
+  const ks=Object.values(chantProgress), seen=ks.reduce((a,r)=>a+r.seen,0), pc=ks.reduce((a,r)=>a+r.correct,0);
+  el.qscore.textContent=(ok?'✓ ':'✗ ')+chantQuiz.answer+` · score ${pc}/${seen}`;
+  setTimeout(()=>{ if(el.quiz.style.display!=='none') quizNext(); },1400);
 }
 function renderTraditions(g){
   const host=document.getElementById('tradHost')||menu;
@@ -928,8 +1073,8 @@ function renderTraditions(g){
         if(p.chant){
           const show=document.createElement('button'); show.textContent='Show body';
           show.onclick=()=>{ loadPhase(p); readout.innerHTML='<b>'+p.title+'</b> · body shown — open chant audio, press play there'; menuMark(); };
-          const ch=document.createElement('button'); ch.textContent='Open chant audio';
-          ch.onclick=()=>{ location.href=chantURL(p); };
+          const ch=document.createElement('button'); ch.textContent='Chant audio'; ch.className='play';
+          ch.onclick=()=>{ openChant(p); menuMark(); };
           row.append(show,ch);
         } else if(p.lotus){
           const b=document.createElement('button'); b.textContent='Show lotus'; b.className='play';
@@ -994,7 +1139,7 @@ function buildMenu(){
   btn(r,'Breath pacer',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
   btn(r,'Sound shapes',()=>toggleChladni(),'mChlad');
   btn(r,'Body scan sweep',()=>toggleScan(),'mScan');
-  btn(r,'Chant page',()=>{location.href='mantra';});
+  btn(r,'Chant audio',()=>{ openChant({title:'Free chant',cfg,chant:'full'}); });
   const adv=document.createElement('details'); adv.className='trad';
   const as=document.createElement('summary'); as.textContent='Advanced display (optional)';
   adv.appendChild(as); menu.appendChild(adv);
@@ -1410,10 +1555,7 @@ document.getElementById('menuBtn').onclick=()=>{
   document.getElementById('menuBtn').classList.toggle('on',m.classList.contains('show'));
 };
 document.getElementById('splitBtn').onclick=()=>setSplit(!document.body.classList.contains('split'));
-document.addEventListener('keydown',e=>{ if(e.key==='Escape') menuClose(); });
-document.addEventListener('pointerdown',e=>{
-  if(menu.classList.contains('show') && !menu.contains(e.target) && e.target.id!=='menuBtn') menuClose();
-});
+/* menu answers to the cube only: no outside-tap or Esc collapse */
 /* embed control + boot params */
 window.addEventListener('message',ev=>{
   const m=ev.data||{}; if(!m.t) return;
