@@ -1,0 +1,16 @@
+{
+  "id": "cakra-tour",
+  "title": "Six centres tour (Sivananda loci)",
+  "provenance": "Sivananda loci: anus/genital/navel/heart/throat/brow. Simplified score.",
+  "setup": {"figure": "seated-lotus", "breathAudio": true, "guide": true},
+  "events": [
+    {"t": 0.0, "do": "info", "dev": "षट्चक्र", "iast": "Six centres · base to brow"},
+    {"t": 1.0, "do": "ring", "at": "feet", "cue": "Base of the spine — triangle seat.", "feel": "heaviness"},
+    {"t": 5.0, "do": "ring", "at": "hips", "cue": "Genital region — second centre.", "feel": "warmth"},
+    {"t": 9.0, "do": "ring", "at": "belly", "cue": "Navel — city of jewels.", "feel": "heat"},
+    {"t": 13.0, "do": "ring", "at": "heart", "cue": "Heart — unstruck sound.", "feel": "expansion"},
+    {"t": 17.0, "do": "ring", "at": "throat", "cue": "Throat — great purity.", "feel": "openness"},
+    {"t": 21.0, "do": "ring", "at": "brow", "cue": "Brow — command centre.", "feel": "luminosity"},
+    {"t": 25.0, "do": "ring", "at": "crown", "cue": "Above the crown — thousand-petalled.", "feel": "pervasion"}
+  ]
+}

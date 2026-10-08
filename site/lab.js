@@ -895,6 +895,8 @@ function buildMenu(){
   btn(r,'⚡ ha',()=>playHa());
   btn(r,'VBT 24 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'})));
   btn(r,'Nadi-shodhana',()=>score('frameworks/yoga/practices/nadi-shodhana.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'})));
+  btn(r,'Cakra tour',()=>score('frameworks/yoga/practices/cakra-tour.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda loci'})));
+  btn(r,'Three knots',()=>score('frameworks/yoga/practices/granthi-piercing.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'})));
   btn(r,'Kundalini ascent',()=>score('frameworks/yoga/practices/kundalini-ascent.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'Sivananda simplified'})));
   btn(r,'Ajahn Lee · breath energy',()=>startAjahn());
   btn(r,'Breath audio',e=>{breathAudioOn=!breathAudioOn; e.target.textContent=`Breath audio: ${breathAudioOn?'on':'off'}`;});

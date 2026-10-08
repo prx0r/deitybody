@@ -1,0 +1,18 @@
+{
+  "id": "granthi-piercing",
+  "title": "Three knots (Sivananda)",
+  "provenance": "Brahma (base) · Viṣṇu (heart) · Rudra (brow). Simplified score; comfort rule.",
+  "setup": {"figure": "seated-lotus", "breathAudio": true, "guide": true},
+  "events": [
+    {"t": 0.0, "do": "info", "dev": "ग्रन्थि", "iast": "Three knots · hold each through one slow breath"},
+    {"t": 1.0, "do": "breath", "phase": "inhale", "from": "feet", "to": "feet", "dur": 6.0,
+     "cue": "Brahma knot at the base — breathe into it.", "feel": "pressure"},
+    {"t": 8.0, "do": "ring", "at": "feet", "cue": "Pierced — current moves up.", "feel": "release"},
+    {"t": 10.0, "do": "breath", "phase": "inhale", "from": "heart", "to": "heart", "dur": 6.0,
+     "cue": "Viṣṇu knot at the heart — breathe into it.", "feel": "pressure"},
+    {"t": 17.0, "do": "ring", "at": "heart", "cue": "Pierced — current moves up.", "feel": "release"},
+    {"t": 19.0, "do": "breath", "phase": "inhale", "from": "brow", "to": "brow", "dur": 6.0,
+     "cue": "Rudra knot at the brow — breathe into it.", "feel": "pressure"},
+    {"t": 26.0, "do": "ring", "at": "brow", "cue": "Pierced — channel clear to crown.", "feel": "luminosity"}
+  ]
+}
