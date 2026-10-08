@@ -1,0 +1,18 @@
+{
+  "id": "middle-pillar-v1",
+  "tradition": "Hermetic / Golden Dawn (Regardie, The Middle Pillar)",
+  "provenance": "PEDAGOGICAL encoding of a published ritual; not initiatory instruction. Centers vibrated with god-names; light circulated crown→feet→crown.",
+  "layer": "sephiroth",
+  "note": "Same body mesh as Trika layers. Frameworks are overlays — never mixed in one sitting.",
+  "centers": [
+    {"id": "kether", "hebrew": "כתר", "name": "Kether", "meaning": "Crown", "y3": 3.3, "x3": 0, "z3": 0.2, "color": "#f4f1e8", "godname": "EHIEH", "godname_hebrew": "אהיה"},
+    {"id": "daath", "hebrew": "דעת", "name": "Daath", "meaning": "Knowledge (throat/nape)", "y3": 1.9, "x3": 0, "z3": -0.1, "color": "#b9b3c7", "godname": "YHVH ELOHIM", "godname_hebrew": "יהוה אלהים"},
+    {"id": "tiphareth", "hebrew": "תפארת", "name": "Tiphareth", "meaning": "Beauty (heart)", "y3": 0.78, "x3": 0, "z3": 0.45, "color": "#e0a44c", "godname": "YHVH ELOAH VA-DAATH", "godname_hebrew": "יהוה אלוה ודעת"},
+    {"id": "yesod", "hebrew": "יסוד", "name": "Yesod", "meaning": "Foundation (pelvis)", "y3": -2.0, "x3": 0, "z3": 0.2, "color": "#7a5fc0", "godname": "SHADDAI EL CHAI", "godname_hebrew": "שדי אל חי"},
+    {"id": "malkuth", "hebrew": "מלכות", "name": "Malkuth", "meaning": "Kingdom (feet)", "y3": -3.9, "x3": 0, "z3": 0.1, "color": "#5a5a35", "godname": "ADONAI HA-ARETZ", "godname_hebrew": "אדני הארץ"}
+  ],
+  "trajectories": [
+    {"id": "descent", "name": "Descent of Light", "desc": "White brilliance crown→feet, formulating each center with its god-name", "stops": ["kether", "daath", "tiphareth", "yesod", "malkuth"]},
+    {"id": "circulation", "name": "Circulation", "desc": "Light rises feet→crown then rains crown→feet (cf. OM ascent + amṛta flood)", "stops": ["malkuth", "yesod", "tiphareth", "daath", "kether", "tiphareth", "malkuth"]}
+  ]
+}

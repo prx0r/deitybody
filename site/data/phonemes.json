@@ -1,0 +1,757 @@
+{
+ "id": "phonemes-v1",
+ "source": "matrika-body-map-v2 (TĀ 15 verse-literal) + malini_order.json (MV 3.37–41)",
+ "count": 50,
+ "phonemes": [
+  {
+   "iast": "a",
+   "dev": "अ",
+   "matrika": {
+    "locus": "forehead",
+    "x": 200,
+    "y": 92
+   },
+   "malini": {
+    "locus": "speech",
+    "x": 200,
+    "y": 190
+   },
+   "clip": "a.ogg"
+  },
+  {
+   "iast": "ā",
+   "dev": "आ",
+   "matrika": {
+    "locus": "mouth",
+    "x": 200,
+    "y": 158
+   },
+   "malini": {
+    "locus": "milk / amṛta",
+    "x": 200,
+    "y": 300
+   },
+   "clip": "aa.ogg"
+  },
+  {
+   "iast": "i",
+   "dev": "इ",
+   "matrika": {
+    "locus": "right eye",
+    "x": 181,
+    "y": 118
+   },
+   "malini": {
+    "locus": "tongue",
+    "x": 200,
+    "y": 170
+   },
+   "clip": "i.ogg"
+  },
+  {
+   "iast": "ī",
+   "dev": "ई",
+   "matrika": {
+    "locus": "left eye",
+    "x": 219,
+    "y": 118
+   },
+   "malini": {
+    "locus": "nose",
+    "x": 200,
+    "y": 140
+   },
+   "clip": "ii.ogg"
+  },
+  {
+   "iast": "u",
+   "dev": "उ",
+   "matrika": {
+    "locus": "right ear",
+    "x": 156,
+    "y": 128
+   },
+   "malini": {
+    "locus": "right ear",
+    "x": 156,
+    "y": 128
+   },
+   "clip": "u.ogg"
+  },
+  {
+   "iast": "ū",
+   "dev": "ऊ",
+   "matrika": {
+    "locus": "left ear",
+    "x": 244,
+    "y": 128
+   },
+   "malini": {
+    "locus": "left ear",
+    "x": 244,
+    "y": 128
+   },
+   "clip": "uu.ogg"
+  },
+  {
+   "iast": "ṛ",
+   "dev": "ऋ",
+   "matrika": {
+    "locus": "right nostril",
+    "x": 191,
+    "y": 140
+   },
+   "malini": {
+    "locus": "headband",
+    "x": 170,
+    "y": 78
+   },
+   "clip": "r.ogg"
+  },
+  {
+   "iast": "ṝ",
+   "dev": "ॠ",
+   "matrika": {
+    "locus": "left nostril",
+    "x": 209,
+    "y": 140
+   },
+   "malini": {
+    "locus": "headband",
+    "x": 230,
+    "y": 78
+   },
+   "clip": "rr.ogg"
+  },
+  {
+   "iast": "ḷ",
+   "dev": "ऌ",
+   "matrika": {
+    "locus": "right cheek",
+    "x": 172,
+    "y": 150
+   },
+   "malini": {
+    "locus": "headband",
+    "x": 190,
+    "y": 78
+   },
+   "clip": null
+  },
+  {
+   "iast": "ḹ",
+   "dev": "ॡ",
+   "matrika": {
+    "locus": "left cheek",
+    "x": 228,
+    "y": 150
+   },
+   "malini": {
+    "locus": "headband",
+    "x": 210,
+    "y": 78
+   },
+   "clip": null
+  },
+  {
+   "iast": "e",
+   "dev": "ए",
+   "matrika": {
+    "locus": "lower teeth",
+    "x": 186,
+    "y": 166
+   },
+   "malini": {
+    "locus": "right knee",
+    "x": 170,
+    "y": 570
+   },
+   "clip": "e.ogg"
+  },
+  {
+   "iast": "ai",
+   "dev": "ऐ",
+   "matrika": {
+    "locus": "upper teeth",
+    "x": 214,
+    "y": 162
+   },
+   "malini": {
+    "locus": "left knee",
+    "x": 230,
+    "y": 570
+   },
+   "clip": "ai.ogg"
+  },
+  {
+   "iast": "o",
+   "dev": "ओ",
+   "matrika": {
+    "locus": "lower lip",
+    "x": 188,
+    "y": 178
+   },
+   "malini": {
+    "locus": "right shank",
+    "x": 170,
+    "y": 630
+   },
+   "clip": "o.ogg"
+  },
+  {
+   "iast": "au",
+   "dev": "औ",
+   "matrika": {
+    "locus": "upper lip",
+    "x": 212,
+    "y": 178
+   },
+   "malini": {
+    "locus": "left shank",
+    "x": 230,
+    "y": 630
+   },
+   "clip": "au.ogg"
+  },
+  {
+   "iast": "aṃ",
+   "dev": "अं",
+   "matrika": {
+    "locus": "crown",
+    "x": 200,
+    "y": 62
+   },
+   "malini": {
+    "locus": "right thigh",
+    "x": 172,
+    "y": 510
+   },
+   "clip": "anusvara.ogg"
+  },
+  {
+   "iast": "aḥ",
+   "dev": "अः",
+   "matrika": {
+    "locus": "tongue",
+    "x": 200,
+    "y": 170
+   },
+   "malini": {
+    "locus": "general prāṇa",
+    "x": 200,
+    "y": 350
+   },
+   "clip": "visarga.ogg"
+  },
+  {
+   "iast": "ka",
+   "dev": "क",
+   "matrika": {
+    "locus": "right shoulder",
+    "x": 140,
+    "y": 250
+   },
+   "malini": {
+    "locus": "teeth",
+    "x": 182,
+    "y": 162
+   },
+   "clip": "ka.ogg"
+  },
+  {
+   "iast": "kha",
+   "dev": "ख",
+   "matrika": {
+    "locus": "right arm",
+    "x": 120,
+    "y": 300
+   },
+   "malini": {
+    "locus": "teeth",
+    "x": 194,
+    "y": 162
+   },
+   "clip": "kha.ogg"
+  },
+  {
+   "iast": "ga",
+   "dev": "ग",
+   "matrika": {
+    "locus": "right hand",
+    "x": 105,
+    "y": 350
+   },
+   "malini": {
+    "locus": "teeth",
+    "x": 206,
+    "y": 162
+   },
+   "clip": "ga.ogg"
+  },
+  {
+   "iast": "gha",
+   "dev": "घ",
+   "matrika": {
+    "locus": "right fingers",
+    "x": 100,
+    "y": 380
+   },
+   "malini": {
+    "locus": "teeth",
+    "x": 218,
+    "y": 162
+   },
+   "clip": "gha.ogg"
+  },
+  {
+   "iast": "ṅa",
+   "dev": "ङ",
+   "matrika": {
+    "locus": "right nails",
+    "x": 100,
+    "y": 402
+   },
+   "malini": {
+    "locus": "teeth",
+    "x": 200,
+    "y": 150
+   },
+   "clip": null
+  },
+  {
+   "iast": "ca",
+   "dev": "च",
+   "matrika": {
+    "locus": "left shoulder",
+    "x": 260,
+    "y": 250
+   },
+   "malini": {
+    "locus": "right eye",
+    "x": 181,
+    "y": 118
+   },
+   "clip": "ca.ogg"
+  },
+  {
+   "iast": "cha",
+   "dev": "छ",
+   "matrika": {
+    "locus": "left arm",
+    "x": 280,
+    "y": 300
+   },
+   "malini": {
+    "locus": "right chest",
+    "x": 175,
+    "y": 310
+   },
+   "clip": "cha.ogg"
+  },
+  {
+   "iast": "ja",
+   "dev": "ज",
+   "matrika": {
+    "locus": "left hand",
+    "x": 295,
+    "y": 350
+   },
+   "malini": {
+    "locus": "trident prongs",
+    "x": 170,
+    "y": 40
+   },
+   "clip": "ja.ogg"
+  },
+  {
+   "iast": "jha",
+   "dev": "झ",
+   "matrika": {
+    "locus": "left fingers",
+    "x": 300,
+    "y": 380
+   },
+   "malini": {
+    "locus": "right fingers",
+    "x": 120,
+    "y": 380
+   },
+   "clip": "jha.ogg"
+  },
+  {
+   "iast": "ña",
+   "dev": "ञ",
+   "matrika": {
+    "locus": "left nails",
+    "x": 300,
+    "y": 402
+   },
+   "malini": {
+    "locus": "left fingers",
+    "x": 280,
+    "y": 380
+   },
+   "clip": "na_j.ogg"
+  },
+  {
+   "iast": "ṭa",
+   "dev": "ट",
+   "matrika": {
+    "locus": "right hip",
+    "x": 175,
+    "y": 450
+   },
+   "malini": {
+    "locus": "skull",
+    "x": 200,
+    "y": 40
+   },
+   "clip": "ta1.ogg"
+  },
+  {
+   "iast": "ṭha",
+   "dev": "ठ",
+   "matrika": {
+    "locus": "right thigh",
+    "x": 172,
+    "y": 510
+   },
+   "malini": {
+    "locus": "hands",
+    "x": 200,
+    "y": 365
+   },
+   "clip": "tha1.ogg"
+  },
+  {
+   "iast": "ḍa",
+   "dev": "ड",
+   "matrika": {
+    "locus": "right knee",
+    "x": 170,
+    "y": 570
+   },
+   "malini": {
+    "locus": "right arm",
+    "x": 120,
+    "y": 300
+   },
+   "clip": "da1.ogg"
+  },
+  {
+   "iast": "ḍha",
+   "dev": "ढ",
+   "matrika": {
+    "locus": "right shank",
+    "x": 170,
+    "y": 630
+   },
+   "malini": {
+    "locus": "left arm",
+    "x": 280,
+    "y": 300
+   },
+   "clip": "dha1.ogg"
+  },
+  {
+   "iast": "ṇa",
+   "dev": "ण",
+   "matrika": {
+    "locus": "right toes",
+    "x": 168,
+    "y": 690
+   },
+   "malini": {
+    "locus": "ears",
+    "x": 200,
+    "y": 128
+   },
+   "clip": "na_k.ogg"
+  },
+  {
+   "iast": "ta",
+   "dev": "त",
+   "matrika": {
+    "locus": "left hip",
+    "x": 225,
+    "y": 450
+   },
+   "malini": {
+    "locus": "left thigh",
+    "x": 228,
+    "y": 510
+   },
+   "clip": "ta.ogg"
+  },
+  {
+   "iast": "tha",
+   "dev": "थ",
+   "matrika": {
+    "locus": "left thigh",
+    "x": 228,
+    "y": 510
+   },
+   "malini": {
+    "locus": "top of head",
+    "x": 200,
+    "y": 70
+   },
+   "clip": "tha.ogg"
+  },
+  {
+   "iast": "da",
+   "dev": "द",
+   "matrika": {
+    "locus": "left knee",
+    "x": 230,
+    "y": 570
+   },
+   "malini": {
+    "locus": "right foot",
+    "x": 168,
+    "y": 690
+   },
+   "clip": "da.ogg"
+  },
+  {
+   "iast": "dha",
+   "dev": "ध",
+   "matrika": {
+    "locus": "left shank",
+    "x": 230,
+    "y": 630
+   },
+   "malini": {
+    "locus": "left eye",
+    "x": 219,
+    "y": 118
+   },
+   "clip": "dha.ogg"
+  },
+  {
+   "iast": "na",
+   "dev": "न",
+   "matrika": {
+    "locus": "left toes",
+    "x": 232,
+    "y": 690
+   },
+   "malini": {
+    "locus": "crown-flame śikhā",
+    "x": 200,
+    "y": 48
+   },
+   "clip": "na.ogg"
+  },
+  {
+   "iast": "pa",
+   "dev": "प",
+   "matrika": {
+    "locus": "right side",
+    "x": 165,
+    "y": 355
+   },
+   "malini": {
+    "locus": "heart",
+    "x": 200,
+    "y": 330
+   },
+   "clip": "pa.ogg"
+  },
+  {
+   "iast": "pha",
+   "dev": "फ",
+   "matrika": {
+    "locus": "left side",
+    "x": 235,
+    "y": 355
+   },
+   "malini": {
+    "locus": "left foot",
+    "x": 232,
+    "y": 690
+   },
+   "clip": "pha.ogg"
+  },
+  {
+   "iast": "ba",
+   "dev": "ब",
+   "matrika": {
+    "locus": "back",
+    "x": 218,
+    "y": 372
+   },
+   "malini": {
+    "locus": "mouth",
+    "x": 200,
+    "y": 168
+   },
+   "clip": "ba.ogg"
+  },
+  {
+   "iast": "bha",
+   "dev": "भ",
+   "matrika": {
+    "locus": "belly",
+    "x": 182,
+    "y": 400
+   },
+   "malini": {
+    "locus": "right shoulder",
+    "x": 140,
+    "y": 250
+   },
+   "clip": "bha.ogg"
+  },
+  {
+   "iast": "ma",
+   "dev": "म",
+   "matrika": {
+    "locus": "heart",
+    "x": 200,
+    "y": 330
+   },
+   "malini": {
+    "locus": "buttocks / hips",
+    "x": 200,
+    "y": 450
+   },
+   "clip": "ma.ogg"
+  },
+  {
+   "iast": "ya",
+   "dev": "य",
+   "matrika": {
+    "locus": "skin",
+    "x": 184,
+    "y": 345
+   },
+   "malini": {
+    "locus": "left shoulder",
+    "x": 260,
+    "y": 250
+   },
+   "clip": "ya.ogg"
+  },
+  {
+   "iast": "ra",
+   "dev": "र",
+   "matrika": {
+    "locus": "blood",
+    "x": 216,
+    "y": 360
+   },
+   "malini": {
+    "locus": "trident shaft",
+    "x": 200,
+    "y": 40
+   },
+   "clip": "ra.ogg"
+  },
+  {
+   "iast": "la",
+   "dev": "ल",
+   "matrika": {
+    "locus": "flesh",
+    "x": 184,
+    "y": 375
+   },
+   "malini": {
+    "locus": "left chest",
+    "x": 225,
+    "y": 310
+   },
+   "clip": "la.ogg"
+  },
+  {
+   "iast": "va",
+   "dev": "व",
+   "matrika": {
+    "locus": "sinews",
+    "x": 216,
+    "y": 390
+   },
+   "malini": {
+    "locus": "throat",
+    "x": 200,
+    "y": 230
+   },
+   "clip": "va.ogg"
+  },
+  {
+   "iast": "śa",
+   "dev": "श",
+   "matrika": {
+    "locus": "bone",
+    "x": 184,
+    "y": 405
+   },
+   "malini": {
+    "locus": "guhya",
+    "x": 200,
+    "y": 470
+   },
+   "clip": "sha.ogg"
+  },
+  {
+   "iast": "ṣa",
+   "dev": "ष",
+   "matrika": {
+    "locus": "marrow",
+    "x": 216,
+    "y": 420
+   },
+   "malini": {
+    "locus": "belly",
+    "x": 200,
+    "y": 400
+   },
+   "clip": "shha.ogg"
+  },
+  {
+   "iast": "sa",
+   "dev": "स",
+   "matrika": {
+    "locus": "essence",
+    "x": 184,
+    "y": 435
+   },
+   "malini": {
+    "locus": "jīva / Self",
+    "x": 200,
+    "y": 330
+   },
+   "clip": "sa.ogg"
+  },
+  {
+   "iast": "ha",
+   "dev": "ह",
+   "matrika": {
+    "locus": "prāṇa",
+    "x": 216,
+    "y": 450
+   },
+   "malini": {
+    "locus": "particular prāṇa",
+    "x": 200,
+    "y": 365
+   },
+   "clip": "ha.ogg"
+  },
+  {
+   "iast": "kṣa",
+   "dev": "क्ष",
+   "matrika": {
+    "locus": "generative",
+    "x": 200,
+    "y": 468
+   },
+   "malini": {
+    "locus": "navel",
+    "x": 200,
+    "y": 390
+   },
+   "clip": null
+  }
+ ]
+}

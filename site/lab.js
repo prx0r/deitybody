@@ -229,7 +229,61 @@ const nodes=P.map(p=>{
 });
 const byIast={}; P.forEach((p,k)=>byIast[p[0]]=k);
 
-/* ---------- audio ---------- */
+/* ---------- ritual frameworks: overlays over ONE body ----------
+   Trika phonemes are the embedded base layer. Other traditions load as
+   data (site/data/frameworks/*.json) — same mesh, same pulse machinery. */
+let fw='trika', MP=null;
+const mpGroup=new THREE.Group(); mpGroup.visible=false; scene.add(mpGroup);
+fetch('data/frameworks/middle-pillar.json').then(r=>r.json()).then(fw2=>{
+  MP={data:fw2, orbs:{}};
+  fw2.centers.forEach(c=>{
+    const halo=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(),color:c.color,transparent:true,opacity:.5,depthWrite:false}));
+    halo.scale.set(.9,.9,1); halo.position.set(c.x3,c.y3,c.z3); mpGroup.add(halo);
+    const el=document.createElement('div'); el.className='seph';
+    el.innerHTML=`<span class="hb" style="border-color:${c.color};color:${c.color}">${c.hebrew}</span>`
+      +`<span class="nm">${c.name}</span><span class="gd">${c.godname}</span>`;
+    el.setAttribute('role','button'); el.setAttribute('tabindex','0');
+    el.setAttribute('aria-label',c.name+' — '+c.meaning);
+    el.style.pointerEvents='auto';
+    el.addEventListener('click',ev=>{ev.stopPropagation(); mpFire(c.id);});
+    const o=new CSS2DObject(el); o.position.set(c.x3,c.y3,c.z3); mpGroup.add(o);
+    MP.orbs[c.id]={c,halo,el};
+  });
+  document.getElementById('bMP').style.display='';
+}).catch(()=>{/* offline/file mode: Trika only */});
+function setFw(f){
+  fw=f;
+  const trika=f==='trika';
+  nodes.forEach(n=>{n.anchor.visible=trika; n.halo.visible=trika;});
+  mpGroup.visible=!trika;
+  document.getElementById('bMP').classList.toggle('on',!trika);
+  document.getElementById('bMat').style.display=trika?'':'none';
+  document.getElementById('bMal').style.display=trika?'':'none';
+  document.getElementById('bHa').style.display=trika?'':'none';
+  document.querySelectorAll('[data-s]').forEach(b=>b.style.display=trika?'':'none');
+  document.getElementById('bOm').textContent=trika?'▶ OM':'▶ Descent';
+  document.getElementById('bNam').textContent=trika?'▶ Namaḥ Śivāya':'▶ Circulation';
+}
+document.getElementById('bMP').onclick=()=>setFw(fw==='trika'?'mp':'trika');
+function mpFire(id){
+  if(!MP) return; const {c,halo,el}=MP.orbs[id];
+  info.querySelector('.dev').textContent=c.hebrew;
+  info.querySelector('.iast').textContent=c.name+' · '+c.meaning;
+  info.querySelector('.locus').textContent='Middle Pillar · vibrate '+c.godname;
+  el.classList.add('lit'); setTimeout(()=>el.classList.remove('lit'),900);
+  const s0=.9;
+  tweens.push({t:0,dur:.6,fn:k=>{const s=s0*(1+.8*Math.sin(Math.PI*k)); halo.scale.set(s,s,1);}});
+  pulse(Math.max(c.y3-.4,channelY0),Math.min(c.y3+.9,channelY1),.55,()=>ringPing(Math.min(c.y3+.9,channelY1),TEAL));
+}
+function mpRun(trajId){
+  const t=MP.data.trajectories.find(t=>t.id===trajId);
+  info.querySelector('.dev').textContent='☩';
+  info.querySelector('.iast').textContent='Middle Pillar · '+t.name;
+  info.querySelector('.locus').textContent=t.desc;
+  pulse(channelY0,channelY1,trajId==='descent'?2.2:2.8,()=>{
+    t.stops.forEach((id,k)=>setTimeout(()=>mpFire(id),k*420));
+  });
+}
 let actx=null; const bufCache={};
 async function audioBuf(url){
   if(bufCache[url]) return bufCache[url];
@@ -302,11 +356,13 @@ document.getElementById('bMal').onclick=e=>{cfg='malini';
   P.forEach((p,k)=>nodes[k].target=A(p));};
 /* (x-ray handler lives with the scan block below) */
 document.getElementById('bOm').onclick=()=>{
+  if(fw!=='trika'){ if(MP)mpRun('descent'); return; }
   show(['oṃ','ॐ','heart → crown → dvādaśānta → rain','',0,'','',0,null]);
   pulse(.78,channelY1,1.4,()=>{ringPing(channelY1,TEAL); pulse(channelY1,.78,1.2,()=>ringPing(.78));});
   ['ma','ha','aṃ','a'].forEach((id,k)=>setTimeout(()=>{const j=byIast[id]; if(j!=null)pop(j);},k*450));
 };
 document.getElementById('bNam').onclick=()=>{
+  if(fw!=='trika'){ if(MP)mpRun('circulation'); return; }
   const seq=cfg==='matrika'?['na','ma','aḥ','śa','i','va','ā','ya']:['na','ma','śa','va','ya'];
   pulse(-3.2,.78,1.2,()=>{ringPing(.78); seq.forEach((id,k)=>setTimeout(()=>fire(id,false),k*380));});
 };

@@ -46,6 +46,14 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 .glyph.lit .g{fill:#0b0d12; font-weight:700}
 .glyph.back{opacity:.18; pointer-events:none}
 .glyph:focus-visible{outline:2px solid var(--gold-hi, #e8cf8f); outline-offset:2px; border-radius:50%}
+.seph{text-align:center; cursor:pointer; user-select:none; transition:opacity .3s}
+.seph .hb{font-family:'Noto Sans Hebrew','Noto Sans',serif; font-size:19px; font-weight:700;
+ display:inline-block; width:40px; height:40px; line-height:38px; border-radius:50%;
+ border:2px solid; background:rgba(11,13,18,.8)}
+.seph .nm{display:block; font-size:10px; letter-spacing:.05em; color:var(--ink);
+ font-family:ui-sans-serif,system-ui; margin-top:2px; text-shadow:0 1px 6px #000}
+.seph .gd{display:block; font-size:9px; color:var(--mut); font-family:ui-sans-serif,system-ui}
+.seph.lit .hb{background:var(--gold); color:#0b0d12 !important; border-color:var(--gold-hi, #e8cf8f) !important}
 .klabel{font-size:10px; letter-spacing:.06em; color:var(--teal);
  font-family:ui-sans-serif,system-ui; white-space:nowrap; opacity:.85}
 #legend{position:fixed; z-index:5; left:.7rem; top:4.2rem; font-size:.72rem; color:var(--mut);
@@ -60,7 +68,7 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 <div id="legend">wireframe = inscribed grid (Flood: constructed, not found)<br/>gold channel = suṣumṇā · helix = iḍā/piṅgalā<br/>rings = cakra overlay (PEDAGOGICAL, late model)</div>
 <div id="info" aria-live="polite"><div class="dev">अ</div><div class="iast">a · forehead</div><div class="locus">Tap a glyph — hear it, watch prāṇa answer.</div></div>
 <div id="dock">
- <button id="bMat" class="on">Mātṛkā</button><button id="bMal">Mālinī</button>
+ <button id="bMat" class="on">Mātṛkā</button><button id="bMal">Mālinī</button><button id="bMP" style="display:none">Middle Pillar</button>
  <button id="bOm">▶ OM</button><button id="bNam">▶ Namaḥ Śivāya</button>
  <button id="bHa">⚡ ha flash</button><button id="bScan">scan ↕</button><button id="bYan">yantra △</button><button id="bX">x-ray</button>
  <button data-s="sutra">caitanyam</button><button data-s="hrdaye">hṛdaye</button>
