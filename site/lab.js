@@ -12,6 +12,7 @@ import { buildVitruvian } from './engine/primitives/vitruvian.js';
 import { buildVitruvianFigure } from './engine/primitives/vitruvian-figure.js';
 import { buildAvatar } from './engine/primitives/avatar.js';
 import { buildGridField } from './engine/primitives/grid-field.js';
+import { buildNadis } from './engine/primitives/nadis.js';
 import { renderChladni } from './engine/mxth/chladni.js';
 
 /* ---------- Chladni plate: live wave geometry per phoneme ----------
@@ -507,6 +508,39 @@ let gridField=null;
 /* enable later with: gridField=buildGridField({scene,count:900}) */
 const _gv=new THREE.Vector3();
 function gridStimulate(x,y,z,s=1,r=1.4){ if(gridField){ _gv.set(x,y,z); gridField.stimulate(_gv,s,r); } }
+/* ---------- nadi network (ten principals, schematic) ---------- */
+let nadis=null, nadisCfg=null;
+fetch('frameworks/layayoga/config/nadis-ten.json').then(r=>r.json()).then(c=>{ nadisCfg=c; }).catch(()=>{});
+function toggleNadis(){
+  if(!nadis && nadisCfg) nadis=buildNadis(nadisCfg,{scene, mapPoint:(x,y)=>xfPos(x,y)});
+  if(!nadis) return;
+  nadis.group.visible=!nadis.group.visible;
+  if(nadis.group.visible){
+    info.querySelector('.dev').textContent='नाडी';
+    info.querySelector('.iast').textContent='ten principals · endpoints per SSP/Darśana/Yājñavalkya';
+    info.querySelector('.locus').textContent='Schematic attention-paths through kanda — counts differ by text (72k vs 350k). Not anatomy.';
+  }
+}
+/* ---------- mic breath proxy (respiration envelope, needs consent) ---------- */
+let micOn=false, micAnalyser=null, micData=null, micStream=null, micLevel=0;
+async function toggleMic(){
+  if(micOn){
+    micOn=false;
+    if(micStream) micStream.getTracks().forEach(t=>t.stop());
+    micAnalyser=null; return;
+  }
+  try{
+    micStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true}});
+    const ac=ensureAudio();
+    const src=ac.createMediaStreamSource(micStream);
+    micAnalyser=ac.createAnalyser(); micAnalyser.fftSize=512;
+    micData=new Uint8Array(micAnalyser.fftSize);
+    src.connect(micAnalyser); micOn=true;
+    readout.innerHTML='<b>mic</b> · breath envelope driving pacer — proxy, not measurement';
+  }catch(e){
+    readout.innerHTML='<b>mic</b> · blocked — grant permission to use breath proxy';
+  }
+}
 let fluidOn = innerWidth>=640 && !reduce, fluidOK=false;
 const fluidCanvas=document.getElementById('fluid');
 const _pv=new THREE.Vector3();
@@ -730,6 +764,7 @@ function menuMark(){
   const set=(id,on)=>{const b=menu.querySelector('#'+id); if(b)b.classList.toggle('on',!!on);};
   set('mScan',scanMode); set('mYan',yantra.visible); set('mX',xray);
   set('mFluid',fluidOn); set('mChlad',chladniOn); set('mAlive',aliveOn);
+  set('mNadi',nadis&&nadis.group.visible); set('mMic',micOn);
   set('mVit',vitLayer&&vitLayer.group.visible);
   set('mGuide',guideOn);
 }
@@ -754,6 +789,8 @@ function buildMenu(){
   fwBtn('❖ Kāla','kalachakra',()=>setFw('kalachakra'));
   r=sec('Fields');
   btn(r,'🌊 waves',()=>{setFluid(!fluidOn);},'mFluid');
+  btn(r,'🕸️ nāḍīs',()=>{toggleNadis(); menuMark();},'mNadi');
+  btn(r,'🎙️ breath mic',()=>{toggleMic(); menuMark();},'mMic');
   btn(r,'♥ alive',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
   btn(r,'≋ chladni',()=>toggleChladni(),'mChlad');
   btn(r,'◉ scan',()=>toggleScan(),'mScan');
@@ -827,6 +864,7 @@ function setPose(name){
   poseName=name;
   setTargets();
   updateStatics();
+  if(nadis&&nadis.group.visible) nadis.redraw();
   if(typeof vitFig!=='undefined'&&vitFig&&vitFig.group.visible) vitFig.setPose(name==='lying'?'lying':name==='seated'?'seated':'standing');
   const labels={standing:'standing · full height',seated:'seated lotus · folded',lying:'lying down · horizontal'};
   readout.innerHTML='<b>pose</b> · '+labels[name];
@@ -1091,7 +1129,13 @@ function tick(){
     const bp=axisPoint(-0.6);
     pacer.visible=true; pacer.position.copy(bp);
     if(poseName==='lying') pacer.rotation.set(0,Math.PI/2,0); else pacer.rotation.set(Math.PI/2,0,0);
-    const br=0.5+0.5*Math.sin(t*2*Math.PI*0.1);
+    let br;
+    if(micOn&&micAnalyser){
+      micAnalyser.getByteTimeDomainData(micData);
+      let s=0; for(let k=0;k<micData.length;k+=4){const v=(micData[k]-128)/128; s+=v*v;}
+      micLevel+= (Math.min(1,Math.sqrt(s/(micData.length/4))*4)-micLevel)*0.2;
+      br=micLevel;
+    }else br=0.5+0.5*Math.sin(t*2*Math.PI*0.1);
     pacer.scale.setScalar(0.85+0.3*br); pacer.material.opacity=.14+.12*br;
   } else pacer.visible=false;
   if(avatar&&avatar.group.visible){ avatar.tick(dt); avatar.breathe(0.5+0.5*Math.sin(t*0.45)); }

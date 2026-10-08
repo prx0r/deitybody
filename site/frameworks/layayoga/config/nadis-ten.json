@@ -1,0 +1,28 @@
+{
+  "id": "nadis-ten",
+  "framework": "yoga/hatha",
+  "title": "Ten principal nāḍīs",
+  "provenance": {"status": "traditional-variant",
+    "note": "Endpoints per Siddha Siddhanta Paddhati / Darshana Upanishad / Yoga Yajnavalkya summaries; the three texts differ slightly. Counts vary across texts (72,000 HYP/Goraksha vs 350,000 Shiva Samhita). Curves are schematic attention-paths, not anatomy.",
+    "digitize_next": ["Shiva Samhita (14 principals)", "Siddha Siddhanta Paddhati"]},
+  "hub": {"id": "kanda", "at": [0, -1.6, 0], "note": "bulb below navel; most nadis route through it"},
+  "nadis": [
+    {"id": "sushumna", "name": "Suṣumṇā", "via": "spine", "points": [[0,-3.9,0],[0,-0.9,0],[0,0.78,0],[0,3.3,0]]},
+    {"id": "ida", "name": "Iḍā (lunar, left)", "points": [[-0.15,2.6,0.3],[-0.3,0.8,0],[-0.3,-0.9,0],[-0.2,-2.6,0],[0,-3.9,0]]},
+    {"id": "pingala", "name": "Piṅgalā (solar, right)", "points": [[0.15,2.6,0.3],[0.3,0.8,0],[0.3,-0.9,0],[0.2,-2.6,0],[0,-3.9,0]]},
+    {"id": "gandhari", "name": "Gāndhārī", "route": "left eye → kanda → left big toe",
+     "points": [[-0.35,2.6,0.3],[-0.2,0.5,0],[0,-1.6,0],[-0.3,-2.8,0],[-0.5,-3.8,0.1]]},
+    {"id": "hastijihva", "name": "Hastijihvā", "route": "right eye → kanda → right big toe",
+     "points": [[0.35,2.6,0.3],[0.2,0.5,0],[0,-1.6,0],[0.3,-2.8,0],[0.5,-3.8,0.1]]},
+    {"id": "yasasvini", "name": "Yaśasvinī", "route": "right big toe → kanda → left ear",
+     "points": [[0.5,-3.8,0.1],[0.3,-2.8,0],[0,-1.6,0],[-0.3,0.8,0],[-0.55,1.9,0.2]]},
+    {"id": "pusha", "name": "Pūṣā", "route": "left big toe → kanda → right ear",
+     "points": [[-0.5,-3.8,0.1],[-0.3,-2.8,0],[0,-1.6,0],[0.3,0.8,0],[0.55,1.9,0.2]]},
+    {"id": "alambusha", "name": "Alambusā", "route": "anus → kanda → mouth",
+     "points": [[0,-2.6,-0.1],[0,-1.6,0],[0,-0.5,0.2],[0,0.9,0.4]]},
+    {"id": "kuhu", "name": "Kuhū", "route": "kanda → generative region (approximate)",
+     "points": [[0,-1.6,0],[0,-2.2,0.1]], "approx": true},
+    {"id": "shankhini", "name": "Śaṅkhinī", "route": "throat → anus, left of centre",
+     "points": [[-0.1,1.6,0.2],[-0.15,0.0,0],[-0.1,-1.6,0],[-0.05,-2.6,-0.1]]}
+  ]
+}
