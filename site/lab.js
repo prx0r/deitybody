@@ -90,6 +90,10 @@ function exec(e){
     case 'flash': {
       const k=P.findIndex(p=>p[0]===e.node); if(k<0) break;
       show(P[k]); pop(k); if(e.sound&&P[k][8]) play('audio/phonemes/'+P[k][8]);
+      const ny=nodes[k].anchor.position.y, st=styleForY(ny);
+      ringPing(ny, st.color);
+      shapeFlash(nodes[k].anchor.position.x, ny, nodes[k].anchor.position.z, e.shape||st.shape, e.color??st.color);
+      playTone(toneForY(ny));
       break; }
     case 'pulse': case 'sweep': {
       const y0=Y(e.from), y1=Y(e.to);
@@ -517,8 +521,9 @@ function pop(k,big=1.6,dur=.5){
 }
 const pulses=[];
 const pulseMat=new THREE.MeshBasicMaterial({color:0xffe9b0,transparent:true,opacity:.95});
-function pulse(y0,y1,dur=.9,cb){
+function pulse(y0,y1,dur=.9,cb,color){
   const m=new THREE.Mesh(new THREE.SphereGeometry(.09,16,12),pulseMat.clone());
+  if(color!=null) m.material.color.setHex(color);
   m.position.set(0,y0,.1); scene.add(m);
   const glow=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(),transparent:true,opacity:.8,depthWrite:false}));
   glow.scale.set(.8,.8,1); m.add(glow);
@@ -553,15 +558,69 @@ function fire(iast,withSound=true){
   const k=P.findIndex(p=>p[0]===iast); if(k<0) return;
   const p=P[k], n=nodes[k];
   show(p); pop(k);
-  const y=n.anchor.position.y;
-  pulse(Math.max(y-.4,channelY0),Math.min(y+.9,channelY1),.55,()=>ringPing(Math.min(y+.9,channelY1),TEAL));
+  const y=n.anchor.position.y, st=styleForY(y);
+  pulse(Math.max(y-.4,channelY0),Math.min(y+.9,channelY1),.55,()=>ringPing(Math.min(y+.9,channelY1),st.color),st.color);
+  shapeFlash(n.anchor.position.x, y, n.anchor.position.z, st.shape, st.color);
+  playTone(toneForY(y),.9);
   if(withSound&&p[8]) play('audio/phonemes/'+p[8]);
   const [sx,sy]=locusScreen(k), e=audioEnergy();
   fluidSplat(sx,sy,(Math.random()-.5)*24,-(14+46*e));
   gridStimulate(n.anchor.position.x, n.anchor.position.y, n.anchor.position.z, 0.9, 1.2);
   if(chladniOn) chladniSet(p.i, p.d);
 }
-/* taps land on the DOM chips themselves — no raycast needed; canvas keeps drag/zoom */
+/* ---------- musical body: pitch follows height (sargam ascent), colour+shape follow element.
+   Citables: cakra colour table (body/reference), green-core rows (tantrica2),
+   tattva shapes square/crescent/triangle/hexagram/circle (Śaṭcakranirūpaṇa standard).
+   All three mappings are PEDAGOGICAL aesthetics, never textual claims. */
+let melodyOn=false;
+const SA=136.1, SARGAM=[1,9/8,5/4,4/3,3/2,5/3,15/8,2];
+function toneForY(y){
+  const k=Math.max(0,Math.min(7,Math.floor((y+4)/8.5*8)));
+  return SA*SARGAM[k];
+}
+function playTone(freq,dur=1.1,vol=.12){
+  if(!melodyOn||!actx) return;
+  try{
+    const o=actx.createOscillator(), g=actx.createGain();
+    o.type='sine'; o.frequency.value=freq;
+    const t=actx.currentTime;
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(vol,t+.08);
+    g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+    o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+dur+.05);
+  }catch(e){}
+}
+function styleForY(y){
+  if(y>=2.6) return {color:0x9a8bd0, css:'#9a8bd0', shape:'dot'};      // ether
+  if(y>=1.3) return {color:0x5ec4b6, css:'#5ec4b6', shape:'circle'};  // throat/air
+  if(y>=0.2) return {color:0x6fbf8f, css:'#6fbf8f', shape:'circle'};   // heart/anahata green
+  if(y>=-1.4) return {color:0xd0653a, css:'#d0653a', shape:'triangle'};// fire
+  if(y>=-2.8) return {color:0x5a9ab0, css:'#5a9ab0', shape:'circle'};  // water
+  return {color:0xc09a4a, css:'#c09a4a', shape:'square'};              // earth
+}
+function shapeFlash(x,y,z,shape,color){
+  const pts=[];
+  if(shape==='square'){ const s=.3;
+    pts.push([-s,-s],[s,-s],[s,s],[-s,s],[-s,-s]);
+  } else if(shape==='triangle'){ const s=.34;
+    pts.push([0,s],[-s,-s*.7],[s,-s*.7],[0,s]);
+  } else if(shape==='dot'){
+    const m=new THREE.Mesh(new THREE.SphereGeometry(.05,10,8),
+      new THREE.MeshBasicMaterial({color,transparent:true,opacity:.95}));
+    m.position.set(x,y,z); scene.add(m);
+    tweens.push({t:0,dur:.9,fn:k=>{m.material.opacity=.95*(1-k);},done:()=>scene.remove(m)});
+    return;
+  } else { const pts2=[]; for(let k=0;k<=40;k++){const a=k/40*Math.PI*2; pts2.push(new THREE.Vector3(Math.cos(a)*.3,Math.sin(a)*.3,0));}
+    const l=new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts2),
+      new THREE.LineBasicMaterial({color,transparent:true,opacity:.9}));
+    l.position.set(x,y,z); scene.add(l);
+    tweens.push({t:0,dur:1,fn:k=>{l.material.opacity=.9*(1-k); l.scale.setScalar(1+k*.8);},done:()=>scene.remove(l)});
+    return;
+  }
+  const l=new THREE.LineLoop(new THREE.BufferGeometry().setFromPoints(pts.map(p=>new THREE.Vector3(p[0],p[1],0))),
+    new THREE.LineBasicMaterial({color,transparent:true,opacity:.9}));
+  l.position.set(x,y,z); scene.add(l);
+  tweens.push({t:0,dur:1,fn:k=>{l.material.opacity=.9*(1-k); l.scale.setScalar(1+k*.8);},done:()=>scene.remove(l)});
+}
 /* ---------- single circle menu + split bodies ---------- */
 const menu=document.getElementById('menu');
 const readout=document.getElementById('readout');
@@ -602,6 +661,7 @@ function buildMenu(){
   btn(r,'caitanyam',()=>playSutra('sutra','caitanyam ātmā — Consciousness is Self'));
   btn(r,'hṛdaye',()=>playSutra('hrdaye','hṛdaye — in the Heart'));
   btn(r,'Guide voice',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;},'mGuide');
+  btn(r,'Melody',e=>{melodyOn=!melodyOn; e.target.textContent=`Melody: ${melodyOn?'sa…ni ♪':'off'}`;},'mMel');
   const a=document.createElement('a'); a.href='mantra'; a.textContent='chant-through →';
   a.style.cssText='font-size:.85rem;font-family:ui-sans-serif,system-ui'; r.appendChild(a);
   r=sec('Compare');
