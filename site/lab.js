@@ -41,7 +41,6 @@ function toggleChladni(){
   chladniOn=!chladniOn;
   document.getElementById('chladniBox').style.display=chladniOn?'':'none';
 }
-import { renderChladni } from './engine/mxth/chladni.js';
 let BD=null; loadBody().then(b=>BD=b).catch(()=>{});
 /* session owns the clock; exec renders; tools expose state to guide/agents */
 const session=new Session();
