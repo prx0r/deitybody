@@ -10,6 +10,7 @@ import { buildLotus } from './engine/primitives/lotus.js';
 import { buildSpokes } from './engine/primitives/spokes.js';
 import { buildVitruvian } from './engine/primitives/vitruvian.js';
 import { buildVitruvianFigure } from './engine/primitives/vitruvian-figure.js';
+import { buildAvatar } from './engine/primitives/avatar.js';
 import { buildGridField } from './engine/primitives/grid-field.js';
 import { renderChladni } from './engine/mxth/chladni.js';
 
@@ -682,6 +683,7 @@ function buildMenu(){
   btn(r,'△ yantra',()=>toggleYan(),'mYan');
   btn(r,'✦ Vitruvian',e=>{cycleVit(); e.target.textContent='✦ '+vitModeLabel();},'mVit');
   btn(r,'◈ lines',()=>toggleX(),'mX');
+  btn(r,'◍ avatar',()=>cycleAvatar(),'mAva');
   btn(r,'🌊 fluid',()=>{fluidOn=!fluidOn; fluidCanvas.style.display=fluidOn?'':'none';},'mFluid');
   btn(r,'≋ chladni',()=>toggleChladni(),'mChlad');
   r=sec('Practice');
@@ -827,7 +829,28 @@ function vitHide(){
   if(vitLayer) vitLayer.group.visible=false;
   document.getElementById('vitruv').style.display='none';
 }
-/* ---------- vipassana-style scan (driven from the rail → toggleScan) ---------- */
+/* ---------- avatar reference mesh (articulated, faint, NOT the subtle body) ---------- */
+let avatar=null;
+const AV_POSES=['stand','seat','lie'];
+let avIdx=-1;
+async function ensureAvatar(){
+  if(!avatar) avatar=await buildAvatar({scene});
+  return avatar;
+}
+function cycleAvatar(){
+  ensureAvatar().then(a=>{
+    if(!a) return;
+    avIdx=(avIdx+1)%(AV_POSES.length+1);
+    if(avIdx>=AV_POSES.length){
+      a.show(false);
+      readout.innerHTML='<b>avatar</b> · hidden';
+    }else{
+      a.show(true); a.setPose(AV_POSES[avIdx]);
+      readout.innerHTML=`<b>avatar</b> · ${AV_POSES[avIdx]} (reference mesh, not subtle body)`;
+    }
+    menuMark();
+  }).catch(()=>{});
+}
 let scanMode=null;
 const scanBand=new THREE.Mesh(new THREE.TorusGeometry(.72,.03,8,48),
   new THREE.MeshBasicMaterial({color:TEAL,transparent:true,opacity:.55}));
@@ -897,6 +920,7 @@ function tick(){
   if(bloomOn) composer.render(); else renderer.render(scene,camera);
   cssRenderer.render(scene,camera);
   if(gridField) gridField.tick(dt,t);
+  if(avatar&&avatar.group.visible){ avatar.tick(dt); avatar.breathe(0.5+0.5*Math.sin(t*0.45)); }
   if(chladniOn){
     const e=audioEnergy();
     chladniGenome.time_rate=0.6+e*2.2;

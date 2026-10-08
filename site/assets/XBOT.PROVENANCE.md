@@ -1,0 +1,1 @@
+# Xbot.glb — Mixamo rig sample shipped in three.js examples (mrdoob/three.js). Prototyping stand-in for an articulated reference mesh, NOT the subtle body. Replace with neutral licensed GLB before any release.
