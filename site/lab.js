@@ -75,6 +75,10 @@ function speak(t){
 function runScore(events, meta){
   session.loadPractice(meta||{id:'adhoc',title:'practice'}, events);
   try{ speechSynthesis.cancel(); }catch(e){}
+  droneStop();
+  ensureAudio();
+  const last=events.length?Math.max(...events.map(e=>e.t||0)):0;
+  droneStart(last+2.5);
   session.play();
 }
 function exec(e){
@@ -93,7 +97,7 @@ function exec(e){
       const ny=nodes[k].anchor.position.y, st=styleForY(ny);
       ringPing(ny, st.color);
       shapeFlash(nodes[k].anchor.position.x, ny, nodes[k].anchor.position.z, e.shape||st.shape, e.color??st.color);
-      playTone(toneForY(ny));
+      playTone(toneForY(ny), toneDur(P[k][0], ny));
       break; }
     case 'pulse': case 'sweep': {
       const y0=Y(e.from), y1=Y(e.to);
@@ -561,7 +565,7 @@ function fire(iast,withSound=true){
   const y=n.anchor.position.y, st=styleForY(y);
   pulse(Math.max(y-.4,channelY0),Math.min(y+.9,channelY1),.55,()=>ringPing(Math.min(y+.9,channelY1),st.color),st.color);
   shapeFlash(n.anchor.position.x, y, n.anchor.position.z, st.shape, st.color);
-  playTone(toneForY(y),.9);
+  playTone(toneForY(y), toneDur(p[0], y));
   if(withSound&&p[8]) play('audio/phonemes/'+p[8]);
   const [sx,sy]=locusScreen(k), e=audioEnergy();
   fluidSplat(sx,sy,(Math.random()-.5)*24,-(14+46*e));
@@ -578,6 +582,34 @@ function toneForY(y){
   const k=Math.max(0,Math.min(7,Math.floor((y+4)/8.5*8)));
   return SA*SARGAM[k];
 }
+const LONGV=['ā','ī','ū','ṝ','e','ai','o','au'];
+function toneDur(iast,y){
+  const q=LONGV.includes(iast)?1.8:1.0;
+  return q*(1+((y+4)/8.5)*0.9);   // higher = longer: ascent simplifies toward unity
+}
+function ensureAudio(){
+  if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){} }
+  if(actx&&actx.state==='suspended') actx.resume();
+  return actx;
+}
+let droneNodes=null;
+function droneStart(dur){
+  droneStop();
+  if(!melodyOn||!ensureAudio()) return;
+  try{
+    droneNodes=[];
+    for(const [f,v] of [[SA,.035],[SA*1.5,.022],[SA*2,.012]]){
+      const o=actx.createOscillator(), g=actx.createGain();
+      o.type='sine'; o.frequency.value=f;
+      const t=actx.currentTime;
+      g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(v,t+1.2);
+      g.gain.setValueAtTime(v,t+Math.max(1.2,dur-1)); g.gain.linearRampToValueAtTime(0,t+dur);
+      o.connect(g); g.connect(actx.destination); o.start(t); o.stop(t+dur+.1);
+      droneNodes.push(o);
+    }
+  }catch(e){}
+}
+function droneStop(){ if(droneNodes){ try{droneNodes.forEach(o=>o.stop());}catch(e){} droneNodes=null; } }
 function playTone(freq,dur=1.1,vol=.12){
   if(!melodyOn||!actx) return;
   try{
