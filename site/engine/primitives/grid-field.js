@@ -25,8 +25,8 @@ export function buildGridField(opts){
   geo.setAttribute('position', new THREE.BufferAttribute(pos,3));
   const col = new Float32Array(N*3);
   geo.setAttribute('color', new THREE.BufferAttribute(col,3));
-  const mat = new THREE.PointsMaterial({size:0.045,transparent:true,opacity:0.85,
-    vertexColors:true,blending:THREE.AdditiveBlending,depthWrite:false,sizeAttenuation:true});
+  const mat = new THREE.PointsMaterial({size:0.045,transparent:true,opacity:0.8,
+    vertexColors:true,blending:THREE.NormalBlending,depthWrite:false,sizeAttenuation:true});
   const points = new THREE.Points(geo, mat);
   points.frustumCulled = false;
   scene.add(points);
@@ -59,11 +59,12 @@ export function buildGridField(opts){
           a[k*3]=r*Math.cos(th)*0.6; a[k*3+1]=(Math.random()-.5)*9; a[k*3+2]=r*Math.sin(th)*0.6;
         }
         const e=seed[k*2+1], L=1-Math.abs(1-live[k]*2);       // triangle envelope
-        const glow=Math.min(1.4, L*(0.2+e*0.5)+excite[k]);
-        /* base blue-grey vacuum + gold where excited */
-        col[k*3]=0.32*glow+0.55*Math.min(1,excite[k]);
-        col[k*3+1]=0.42*glow+0.42*Math.min(1,excite[k]);
-        col[k*3+2]=0.5*glow+0.18*Math.min(1,excite[k]);
+        const glow=Math.min(1, L*(0.2+e*0.5));
+        const ex=Math.min(1,excite[k]);
+        /* slate vacuum + amber where excited (light background) */
+        col[k*3]=0.42*glow+0.35*ex;
+        col[k*3+1]=0.44*glow+0.22*ex;
+        col[k*3+2]=0.5*glow+0.02*ex;
         /* drift + shimmer */
         pos[k*3]+=Math.sin(t*0.7+seed[k*2])*dt*0.05;
         pos[k*3+1]+=Math.cos(t*0.5+seed[k*2]*1.7)*dt*0.04;

@@ -163,44 +163,31 @@ if(bloomOn){
 
 /* grid only — no dust, no backdrop. Space is the aesthetic. */
 
-/* ---------- body shell (stylized lathe, NOT anatomy) ---------- */
-const shellPts=[[.02,-4],[.35,-3.9],[.28,-3.2],[.42,-2.4],[.5,-2.2],[.42,-1.2],[.55,-.2],[.62,.4],[.55,1.0],[.7,1.25],[.28,1.6],[.3,1.9],[.62,2.3],[.62,2.9],[.3,3.2],[.02,3.3]]
-  .map(p=>new THREE.Vector2(p[0],p[1]));
-const gridMat=new THREE.LineBasicMaterial({color:GOLD,transparent:true,opacity:.07});
-/* true mathematical grid: clean meridians + parallels, NO triangulation diagonals.
-   (LatheGeometry wireframe draws quad diagonals — that was the blockiness.) */
-{
-  const grid=new THREE.Group();
-  const M=24, P=26;
-  for(let k=0;k<M;k++){
-    const a=k/M*Math.PI*2;
-    grid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(
-      shellPts.map(p=>new THREE.Vector3(Math.cos(a)*p.x,p.y,Math.sin(a)*p.x))),gridMat));
+/* ---------- constellation: no physical body. The phonemes ARE the geometry. ---------- */
+const MATRIKA_ORDER=["a","ā","i","ī","u","ū","ṛ","ṝ","ḷ","ḹ","e","ai","o","au","aṃ","aḥ","ka","kha","ga","gha","ṅa","ca","cha","ja","jha","ña","ṭa","ṭha","ḍa","ḍha","ṇa","ta","tha","da","dha","na","pa","pha","ba","bha","ma","ya","ra","la","va","śa","ṣa","sa","ha","kṣa"];
+let MALINI_ORDER=null;
+fetch('data/malini_order.json').then(r=>r.json()).then(j=>{MALINI_ORDER=j.order;}).catch(()=>{});
+const IDX={};
+const edgeMat=new THREE.LineBasicMaterial({color:0xa86f14,transparent:true,opacity:.32});
+const edgeGeo=new THREE.BufferGeometry();
+const edgePos=new Float32Array((50-1)*2*3);
+edgeGeo.setAttribute('position',new THREE.BufferAttribute(edgePos,3));
+const edges=new THREE.LineSegments(edgeGeo,edgeMat);
+edges.frustumCulled=false; scene.add(edges);
+const _e0=new THREE.Vector3(), _e1=new THREE.Vector3();
+function updateEdges(){
+  const order=(cfg==='malini'&&MALINI_ORDER)?MALINI_ORDER:MATRIKA_ORDER;
+  let o=0;
+  for(let k=0;k<order.length-1;k++){
+    const a=nodes[IDX[order[k]]], b=nodes[IDX[order[k+1]]];
+    if(!a||!b) continue;
+    _e0.copy(a.anchor.position); _e1.copy(b.anchor.position);
+    edgePos[o++]=_e0.x;edgePos[o++]=_e0.y;edgePos[o++]=_e0.z;
+    edgePos[o++]=_e1.x;edgePos[o++]=_e1.y;edgePos[o++]=_e1.z;
   }
-  const ys=[]; for(let k=0;k<P;k++) ys.push(-3.9+(3.25+3.9)*k/(P-1));
-  const prof=[...shellPts].sort((a,b)=>a.y-b.y);
-  const radiusAt=y=>{
-    for(let k=0;k<prof.length-1;k++){
-      const a=prof[k],b=prof[k+1];
-      if(y>=a.y&&y<=b.y){const t=(y-a.y)/Math.max(1e-6,b.y-a.y); return a.x+(b.x-a.x)*t;}
-    }
-    return 0.02;
-  };
-  for(const y of ys){
-    const r=radiusAt(y), pts=[];
-    for(let k=0;k<=48;k++){const a=k/48*Math.PI*2; pts.push(new THREE.Vector3(Math.cos(a)*r,y,Math.sin(a)*r));}
-    grid.add(new THREE.Line(new THREE.BufferGeometry().setFromPoints(pts),gridMat));
-  }
-  window.__grid=grid; scene.add(grid);
+  edgeGeo.attributes.position.needsUpdate=true;
+  edgeGeo.setDrawRange(0,o/3);
 }
-const shellWire={material:gridMat};
-/* arms: single clean lines, not capsules */
-const armMat=new THREE.LineBasicMaterial({color:GOLD,transparent:true,opacity:.16});
-[[-1,1],[1,1]].forEach(([s])=>{
-  const g=new THREE.BufferGeometry().setFromPoints(
-    [new THREE.Vector3(s*.62,1.2,0), new THREE.Vector3(s*1.15,-.35,0)]);
-  scene.add(new THREE.Line(g,armMat));
-});
 /* suṣumṇā */
 const channelY0=-3.9, channelY1=4.3;
 {
@@ -345,7 +332,7 @@ const nodes=P.map(p=>{
   el.addEventListener('keydown',ev=>{if(ev.key==='Enter'||ev.key===' '){ev.preventDefault(); fire(p[0]);}});
   return {anchor, el, p, base:.42, target:m};
 });
-const byIast={}; P.forEach((p,k)=>byIast[p[0]]=k);
+const byIast={}; P.forEach((p,k)=>{byIast[p[0]]=k; IDX[p[0]]=k;});
 
 /* ---------- ritual frameworks: overlays over ONE body ----------
    Trika phonemes are the embedded base layer. Other traditions load as
@@ -506,9 +493,9 @@ if(fluidOn){
       DENSITY_DISSIPATION:.985,VELOCITY_DISSIPATION:.25,
       PRESSURE:.8,PRESSURE_ITERATIONS:18,CURL:28,
       SPLAT_RADIUS:.3,SPLAT_FORCE:5200,
-      COLORFUL:false,SPLAT_COLOR:{r:.79,g:.64,b:.36},
+      COLORFUL:false,SPLAT_COLOR:{r:.5,g:.32,b:.08},
       SHADING:true,BLOOM:true,BLOOM_INTENSITY:.5,BLOOM_THRESHOLD:.55,SUNRAYS:false,
-      BACK_COLOR:{r:.043,g:.05,b:.07},TRANSPARENT:false,PAUSED:false});
+      BACK_COLOR:{r:.965,g:.95,b:.91},TRANSPARENT:false,PAUSED:false});
     fluidOK=true;
     setTimeout(()=>{fluidSplat(innerWidth/2,innerHeight*.42,0,-50);
       setTimeout(()=>fluidSplat(innerWidth/2,innerHeight*.6,0,40),700);},900);
@@ -524,7 +511,7 @@ function pop(k,big=1.6,dur=.5){
   clearTimeout(n._lt); n._lt=setTimeout(()=>n.el.classList.remove('lit'), 1100);
 }
 const pulses=[];
-const pulseMat=new THREE.MeshBasicMaterial({color:0xffe9b0,transparent:true,opacity:.95});
+const pulseMat=new THREE.MeshBasicMaterial({color:0xc77f1a,transparent:true,opacity:.95});
 function pulse(y0,y1,dur=.9,cb,color){
   const m=new THREE.Mesh(new THREE.SphereGeometry(.09,16,12),pulseMat.clone());
   if(color!=null) m.material.color.setHex(color);
@@ -693,7 +680,7 @@ function buildMenu(){
   btn(r,'◉ scan',()=>toggleScan(),'mScan');
   btn(r,'△ yantra',()=>toggleYan(),'mYan');
   btn(r,'✦ vitruvian',()=>toggleVit(),'mVit');
-  btn(r,'◈ x-ray',()=>toggleX(),'mX');
+  btn(r,'◈ lines',()=>toggleX(),'mX');
   btn(r,'🌊 fluid',()=>{fluidOn=!fluidOn; fluidCanvas.style.display=fluidOn?'':'none';},'mFluid');
   btn(r,'≋ chladni',()=>toggleChladni(),'mChlad');
   r=sec('Practice');
@@ -735,7 +722,7 @@ function toggleScan(){
 }
 function toggleYan(){ yantra.visible=!yantra.visible; }
 function toggleX(){
-  xray=!xray; gridMat.opacity=xray?.02:.07;
+  xray=!xray; edges.visible=!xray;
 }
 /* practice actions (also callable via postMessage in embeds) */
 function playOM(){
@@ -810,10 +797,10 @@ function tick(){
   controls.update();
   if(!reduce){
     scan.position.y=-3.4+((t*.5)%7.2); scan.material.opacity=.3+.2*Math.sin(t*2);
-    shellWire.material.opacity=(xray?.02:.07)+.015*Math.sin(t*1.3);
     ida.rotation.y+=dt*.05; ping.rotation.y-=dt*.05;
     rings.forEach((r,k)=>r.material.opacity=.32+.12*Math.sin(t*1.5+k));
   }
+  updateEdges();
   for(let i=tweens.length-1;i>=0;i--){const tw=tweens[i]; tw.t+=dt;
     const k=Math.min(1,tw.t/tw.dur); tw.fn(k); if(k>=1){tweens.splice(i,1); tw.done&&tw.done();}}
   for(let i=pulses.length-1;i>=0;i--){const pu=pulses[i]; pu.t+=dt;
