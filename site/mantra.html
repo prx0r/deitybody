@@ -60,7 +60,7 @@ a{color:var(--gold)}
  </div>
 </div>
 <div id="report" aria-live="polite"></div></main>
-<footer>practice scaffold · clips: human-grid-v1 + EdgeSanskrit-v1(unverified ṅa/kṣa) · ḷ/ḹ silence+flag · no autoplay before tap</footer>
+<footer>practice scaffold · clips: human-grid-v1 + EdgeSanskrit-v1(unverified ṅa/kṣa) + edge-tts-madhur(unverified ḷ/ḹ) · no autoplay before tap</footer>
 <script type="module">
 import { ChantPlayer } from './engine/audio/chant-player.js';
 import { MantraPlayer } from './engine/mantra/player.js';
@@ -83,7 +83,8 @@ function show(id,idx){
   $('#glyph').textContent=ph.dev; $('#iast').textContent=ph.iast;
   $('#locus').textContent=ph.placements[$('#map').value].regionId;
   const miss=!ph.audio.reference;
-  $('#flag').textContent=miss?'no verified recording — silence, breathe here':'';
+  $('#flag').textContent=miss?'no verified recording — silence, breathe here':
+    (/edge|synth|unverified/i.test((ph.audio.speaker||''))?'synth voice — not ear-verified, listen lightly':'');
   $('#count').textContent=`item ${idx+1} of ${P.seq.length} · ${$('#map').value}`;
 }
 function showSyllable(def,sy,idx){

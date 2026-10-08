@@ -997,7 +997,8 @@ function chantShow(id,ph,idx){
   if(!ph) return;
   el.glyph.textContent=ph.dev; el.iast.textContent=ph.iast;
   el.locus.textContent=(ph.placements&&(ph.placements[chantMap]||ph.placements.matrika)||{}).regionId||'';
-  el.flag.textContent=!ph.audio.reference?'no verified recording — silence, breathe here':'';
+  el.flag.textContent=!ph.audio.reference?'no verified recording — silence, breathe here':
+    (/edge|synth|unverified/i.test(ph.audio.speaker||'')?'synth voice — not ear-verified, listen lightly':'');
   el.count.textContent=`sound ${idx+1} of ${chantPlayer.seq.length}`;
   const k=P.findIndex(x=>x[0]===id); if(k>=0){ show(P[k]); pop(k); }
 }
