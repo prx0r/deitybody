@@ -4,6 +4,7 @@ import { OrbitControls } from 'three/addons/OrbitControls.js';
 import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
 import { PracticeClock } from './engine/clock.js';
 import { loadBody } from './engine/body.js';
+import { buildLotus } from './engine/primitives/lotus.js';
 let BD=null; loadBody().then(b=>BD=b).catch(()=>{});
 const scoreClock=new PracticeClock();
 const SCORES={};
@@ -275,10 +276,10 @@ const byIast={}; P.forEach((p,k)=>byIast[p[0]]=k);
 
 /* ---------- ritual frameworks: overlays over ONE body ----------
    Trika phonemes are the embedded base layer. Other traditions load as
-   data (site/data/frameworks/*.json) — same mesh, same pulse machinery. */
+   data (site/frameworks/*) — same mesh, same pulse machinery. */
 let fw='trika', MP=null;
 const mpGroup=new THREE.Group(); mpGroup.visible=false; scene.add(mpGroup);
-fetch('data/frameworks/middle-pillar.json').then(r=>r.json()).then(fw2=>{
+fetch('frameworks/hermetic/config.json').then(r=>r.json()).then(fw2=>{
   MP={data:fw2, orbs:{}};
   fw2.centers.forEach(c=>{
     const halo=new THREE.Sprite(new THREE.SpriteMaterial({map:glowTex(),color:c.color,transparent:true,opacity:.5,depthWrite:false}));
@@ -295,11 +296,39 @@ fetch('data/frameworks/middle-pillar.json').then(r=>r.json()).then(fw2=>{
   });
   document.getElementById('rPillar').style.display='';
 }).catch(()=>{/* offline/file mode: Trika only */});
+/* ---------- layayoga lotus layer (procedural, per-text config) ---------- */
+let lotus=null, lotusCfg=null;
+fetch('frameworks/layayoga/config/anahata.json').then(r=>r.json()).then(c=>{
+  lotusCfg=c; document.getElementById('rLotus').style.display='';
+}).catch(()=>{});
+function petalShow(p, el){
+  const clip = p.phoneme ? 'audio/phonemes/'+({
+    'ka':'ka.ogg','kha':'kha.ogg','ga':'ga.ogg','gha':'gha.ogg','ṅa':'na_k.ogg',
+    'ca':'ca.ogg','cha':'cha.ogg','ja':'ja.ogg','jha':'jha.ogg','ña':'na_j.ogg',
+    'ṭa':'ta1.ogg','ṭha':'tha1.ogg'}[p.phoneme]) : null;  info.querySelector('.dev').textContent = p.bija || p.dev || '';
+  info.querySelector('.iast').textContent =
+    (p.core ? 'anahata bīja · air · touch' : `anahata petal · ${p.bija}`) +
+    (lotusCfg ? ` · ${lotusCfg.provenance.status}` : '');
+  info.querySelector('.locus').textContent =
+    (p.core ? 'Heart-seat of the lotus. ' : 'Petal syllable as attention-seat. ') +
+    'Source: ' + (lotusCfg?.provenance.text || '') + ' — verify Sanskrit before teaching.';
+  el.classList.add('lit'); setTimeout(()=>el.classList.remove('lit'), 900);
+  if(clip) play(clip); else if(p.core) play('audio/phonemes/ya.ogg');
+  const [sx, sy] = [innerWidth/2, innerHeight*0.45];
+  fluidSplat(sx, sy, (Math.random()-.5)*30, -20);
+}
 function setFw(f){
   fw=f;
-  const trika=f==='trika';
+  const trika=f==='trika', mp=f==='mp', lay=f==='layayoga';
   nodes.forEach(n=>{n.anchor.visible=trika; n.halo.visible=trika;});
-  mpGroup.visible=!trika;
+  mpGroup.visible=mp;
+  if(lotus) lotus.group.visible=lay;
+  if(lay && !lotus && lotusCfg){
+    lotus=buildLotus(lotusCfg,{scene, playPhoneme:null, onPetal:petalShow});
+    lotus.group.position.set(0, 0.78, 0.55);
+    lotus.group.rotation.x=-0.12;
+    let k=0; const bloomIn=setInterval(()=>{k+=0.06; lotus.setOpen(Math.min(1,k)); if(k>=1)clearInterval(bloomIn);},60);
+  }
   markRail();
   document.getElementById('bHa').style.display=trika?'':'none';
   document.querySelectorAll('[data-s]').forEach(b=>b.style.display=trika?'':'none');
@@ -307,6 +336,14 @@ function setFw(f){
   document.getElementById('bNam').textContent=trika?'▶ Namaḥ Śivāya':'▶ Circulation';
 }
 /* (framework switching lives on the rail → rPillar panel) */
+function lotusBloom(){
+  if(!lotus) return;
+  info.querySelector('.dev').textContent='पद्म';
+  info.querySelector('.iast').textContent='anahata unfolding · 12 petals';
+  info.querySelector('.locus').textContent='Attention rests petal by petal, then in the bindu. (needs_verification)';
+  pulse(0.3, 1.3, 1.6, ()=>ringPing(0.78, GOLD));
+  let k=0; const t=setInterval(()=>{ k+=0.08; lotus.setOpen(0.4+0.6*Math.abs(Math.sin(k))); if(k>6.3){clearInterval(t); lotus.setOpen(1);} },90);
+}
 function mpFire(id){
   if(!MP) return; const {c,halo,el}=MP.orbs[id];
   info.querySelector('.dev').textContent=c.hebrew;
@@ -318,7 +355,7 @@ function mpFire(id){
   pulse(Math.max(c.y3-.4,channelY0),Math.min(c.y3+.9,channelY1),.55,()=>ringPing(Math.min(c.y3+.9,channelY1),TEAL));
 }
 function mpRun(trajId){
-  score('practices/hermetic/middle-pillar.json').then(j=>runScore(j.trajectories[trajId]));
+  score('frameworks/hermetic/middle-pillar.json').then(j=>runScore(j.trajectories[trajId]));
 }
 let actx=null, analyser=null, _fq=null; const bufCache={};
 async function audioBuf(url){
@@ -438,6 +475,8 @@ const PANELS={
     opts:[['Mātṛkā · base',()=>setCfg('matrika')],['Mālinī · infusion',()=>setCfg('malini')]]},
   pillar:{t:'☩ Middle Pillar',d:'Hermetic descent + circulation over the same body. Separate layer — never mixed with nyāsa.',
     opts:[['Enter Pillar',()=>setFw('mp')],['Back to Trika',()=>setFw('trika')]]},
+  layayoga:{t:'🪷 Anahata lotus',d:'12-petal procedural lotus at the heart (needs_verification vs Śaṭcakranirūpaṇa). Tap petals for bīja + source.',
+    opts:[['Enter lotus',()=>setFw('layayoga')],['Back to Trika',()=>setFw('trika')]]},
   scan:{t:'◉ Body scan',d:'Crown→feet→crown sweep. Rest attention where the band glows, natural breath.',
     opts:[['Start / stop',()=>toggleScan()]]},
   yantra:{t:'△ Yantra',d:'Measurable geometry: square, star, kalā rulings, 12-tick dvādaśānta. (PEDAGOGICAL)',
@@ -451,13 +490,14 @@ function openPanel(k){
   p.opts.forEach(([label,fn])=>{const b=document.createElement('button'); b.textContent=label;
     b.onclick=()=>{fn(); markRail();}; row.appendChild(b);});
   panel.classList.add('show');
-  ['rTrika','rPillar','rScan','rYan','rX'].forEach(id=>document.getElementById(id).classList.remove('on'));
-  ({trika:'rTrika',pillar:'rPillar',scan:'rScan',yantra:'rYan'}[k]||'') &&
-    document.getElementById({trika:'rTrika',pillar:'rPillar',scan:'rScan',yantra:'rYan'}[k]).classList.add('on');
+  ['rTrika','rPillar','rLotus','rScan','rYan','rX'].forEach(id=>{const b=document.getElementById(id); if(b)b.classList.remove('on');});
+  ({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',scan:'rScan',yantra:'rYan'}[k]||'') &&
+    document.getElementById({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',scan:'rScan',yantra:'rYan'}[k]).classList.add('on');
 }
 function markRail(){
   document.getElementById('rTrika').classList.toggle('on',fw==='trika');
-  document.getElementById('rPillar').classList.toggle('on',fw!=='trika');
+  const rp=document.getElementById('rPillar'); if(rp)rp.classList.toggle('on',fw==='mp');
+  const rl=document.getElementById('rLotus'); if(rl)rl.classList.toggle('on',fw==='layayoga');
   document.getElementById('rScan').classList.toggle('on',!!scanMode);
   document.getElementById('rYan').classList.toggle('on',yantra.visible);
 }
@@ -480,17 +520,20 @@ function toggleX(){
 }
 document.getElementById('rTrika').onclick=()=>{setFw('trika'); openPanel('trika');};
 document.getElementById('rPillar').onclick=()=>openPanel('pillar');
+document.getElementById('rLotus').onclick=()=>openPanel('layayoga');
 document.getElementById('rScan').onclick=()=>{toggleScan(); openPanel('scan');};
 document.getElementById('rYan').onclick=()=>{toggleYan(); openPanel('yantra');};
 document.getElementById('rX').onclick=()=>toggleX();
 /* (x-ray handler lives with the scan block below) */
 document.getElementById('bOm').onclick=async ()=>{
-  if(fw!=='trika'){ if(MP)mpRun('descent'); return; }
-  runScore((await score('practices/trika/om.json')).events);
+  if(fw==='mp'){ if(MP)mpRun('descent'); return; }
+  if(fw==='layayoga'){ lotusBloom(); return; }
+  runScore((await score('frameworks/trika/practices/om.json')).events);
 };
 document.getElementById('bNam').onclick=async ()=>{
-  if(fw!=='trika'){ if(MP)mpRun('circulation'); return; }
-  const j=await score('practices/trika/namah-shivaya.json');
+  if(fw==='mp'){ if(MP)mpRun('circulation'); return; }
+  if(fw==='layayoga'){ lotusBloom(); return; }
+  const j=await score('frameworks/trika/practices/namah-shivaya.json');
   runScore(j.variants[cfg]);
 };
 document.getElementById('bHa').onclick=()=>{

@@ -67,6 +67,13 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 .glyph.lit .g{fill:#0b0d12; font-weight:700}
 .glyph.back{opacity:.18; pointer-events:none}
 .glyph:focus-visible{outline:2px solid var(--gold-hi, #e8cf8f); outline-offset:2px; border-radius:50%}
+.petal{min-width:30px; height:30px; padding:0 6px; border-radius:999px;
+ display:inline-flex; align-items:center; justify-content:center;
+ font-family:'Noto Sans Devanagari',serif; font-size:14px; font-weight:600; color:var(--ink);
+ background:rgba(20,26,41,.88); border:1.5px solid var(--gold); cursor:pointer; user-select:none;
+ transition:background .25s, color .25s}
+.petal.core{font-size:17px; border-color:var(--teal)}
+.petal.lit{background:var(--gold); color:#0b0d12}
 .seph{text-align:center; cursor:pointer; user-select:none; transition:opacity .3s}
 .seph .hb{font-family:'Noto Sans Hebrew','Noto Sans',serif; font-size:19px; font-weight:700;
  display:inline-block; width:40px; height:40px; line-height:38px; border-radius:50%;
@@ -89,6 +96,7 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 <nav id="rail" aria-label="Frameworks">
  <button id="rTrika" class="on" title="Trika · Mātṛkā/Mālinī">☸</button>
  <button id="rPillar" title="Middle Pillar" style="display:none">☩</button>
+ <button id="rLotus" title="Anahata lotus" style="display:none">🪷</button>
  <button id="rScan" title="Body scan">◉</button>
  <button id="rYan" title="Yantra overlay">△</button>
  <button id="rFluid" title="Fluid prāṇa-field">🌊</button>

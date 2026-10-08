@@ -1,0 +1,2 @@
+{"id": "hermetic", "lineage": "Golden Dawn / Regardie", "texts": ["The Middle Pillar"],
+ "config": "frameworks/hermetic/config.json", "practices": "frameworks/hermetic/middle-pillar.json"}

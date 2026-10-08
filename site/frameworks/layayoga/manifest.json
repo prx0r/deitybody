@@ -1,0 +1,3 @@
+{"id": "layayoga", "lineage": "Laya / Haṭha cakra systems", "texts": ["Śaṭcakranirūpaṇa (to verify)", "Goswami Layayoga (tool layer)"],
+ "configs": ["frameworks/layayoga/config/anahata.json"],
+ "note": "Cakra counts vary by text; six-cakra model post-11th c. (Flood). Encode per-text, never one universal chart."}

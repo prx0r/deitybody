@@ -1,0 +1,22 @@
+{
+  "id": "framework-registry-v1",
+  "note": "Comparative atlas of contemplative bodies. One engine, many configurations. Geometries differ per tradition — never recolours of one skeleton.",
+  "frameworks": [
+    {"id": "trika", "name": "Trika / Śākta", "status": "live",
+     "manifest": "frameworks/trika/manifest.json",
+     "summary": "Mātṛkā phonemes, Mālinī infusion, nyāsa installation, sṛṣṭi/saṃhāra trajectories"},
+    {"id": "hermetic", "name": "Hermetic Middle Pillar", "status": "live",
+     "manifest": "frameworks/hermetic/manifest.json",
+     "summary": "Five sephiroth, descent + circulation of light"},
+    {"id": "vipassana", "name": "Vipassanā sweep", "status": "live",
+     "manifest": "frameworks/vipassana/manifest.json",
+     "summary": "Region-by-region attention sweep (live as scan mode; full score queued)"},
+    {"id": "layayoga", "name": "Laya / Haṭha cakras", "status": "verify",
+     "manifest": "frameworks/layayoga/manifest.json",
+     "summary": "Procedural lotus configs; anahata encoded needs_verification against Śaṭcakranirūpaṇa"},
+    {"id": "vajrayana", "name": "Vajrayāna channels", "status": "stub",
+     "summary": "rtsa/rlung/thig le differ by lineage (Kālacakra ≠ Guhyasamāja). Needs texts before encoding."},
+    {"id": "daoist", "name": "Daoist internal alchemy", "status": "stub",
+     "summary": "Dāntián, meridians, microcosmic orbit. Needs texts before encoding."}
+  ]
+}
