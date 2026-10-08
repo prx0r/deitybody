@@ -149,6 +149,60 @@ Standouts for scores: V24 heart↔12-end gaze · V26 suṣumnā fixation · V36 
 V48 skin-as-wall-less · V50 any bodily 12-end · V52 toe-fire · V64 breath-junction ·
 V81 tongue-cavity · V88 darkness-before-eyes · V91 savisarga prolongation · V93 needle-point.
 
+## 10. What nāḍīs ARE (Abhinavagupta — deep read 2026-10-08)
+
+**Not tubes.** Condensed consciousness-pulsation-breath:
+`citspandaprāṇavṛttīnām antyā yā sthūlatā` — its gross extreme "becoming
+channel-form holds the body whole" (AbhT 7.66–67). Leaf-vein model (body like
+leaf pervaded by filaments, 7.67–68); central pillar first, branches as
+subordinate guṇa-to-pradhāna. Channels are the *support* of vāyu from kanda
+(6.50); three residents move by them: ātman + prabhuśakti + vāyu (SvT 7.5–7).
+Power desiring embodiment first becomes channel (8.283–84); Suṣumnā herself a
+goddess on the Lord's lap, moon-bright, threading the course (8.391).
+
+**Three chiefs (full table via Jayaratha quoting SvT 7.146–154 ad TĀ 6.198–99;
+Abhi's root gives only the skeleton — flag):**
+
+| | Right: Piṅgalā | Left: Iḍā | Middle: Suṣumṇā |
+|---|---|---|---|
+| path | devamārga | pitṛmārga | śivamārga (no return) |
+| guṇa/state | sattva · jāgrat | rajas · svapna | tamas · suṣupti |
+| presiders | Brahmā + Īśvara | Viṣṇu + Sadāśiva | Rudra + Śiva → Para beyond |
+| śakti | Jyeṣṭhā in jñāna | Vāmā in kriyā | Raudrī in icchā |
+| luminary | sun | moon | fire (cooking/illuminating) |
+| breath/sound | prāṇa exhale + bindu | apāna inhale + nāda | samāna/udāna junction + śakti pulse |
+
+Kṣemarāja bridge: bindu/knowledge-energy = right/prāṇa; sound/action-energy =
+left/apāna; middle = radiant pulse of supreme will.
+FLAGS: middle=tamas holds only for horizontal pervasion — vertical ascent is
+turya-light, no tamas. TĀ 8.390 reverses left/right (emend per SvT 10.1231).
+`prāṇa` = generic breath (6.60–61, 36 fingers heart→nasal-12) vs specific
+right-exhale in the gloss — never collapse. Abhi's own Vāmā/Jyeṣṭhā/Raudrī
+soteriology (6.52–57: saṃsāra / prabuddha / bubhutsu) is NOT channel-mapped in
+root — do not label helices with goddesses without this flag.
+
+**Ten (SvT 7.7–8 ad 6.196):** iḍā piṅgalā suṣumnā gāndhārī hastijihvā pūṣā
+**āryamā** alambusā kuhū śaṅkhinī — standard editions read **yaśasvinī** for
+āryamā (textual variant, not doctrine). Ten at navel like spokes; 72,000 from
+them; as many as pores/palāśa filaments; diversity thousandfold by function.
+Reconciliation (Abhi): equal everywhere, moves primarily in three (29.268);
+a fourth pervades via Īśvara-Sadāśiva-Śiva superintendence. 35 million in pores
+reabsorbed as Mantras (Kṣemarāja). Do NOT cite AbhT 16.111 (aṅgula counts) or
+5.38 (cakra counts) as channel numbers.
+
+**Suṣumnā ascent:** rest in udāna-fire = Mahānanda (5.48); heart-fire kindled by
+soma-sūrya-agni friction (5.22–23); blocked prāṇa-apāna enter suṣumnā, dissolve
+in udāna-fire (gloss); exhale-inhale fuse in Centre, rise like fire consuming
+objectivity; heart→crown dvādaśānta is udāna's course (6.212–13); formless
+centre between prāṇa-apāna, contemplate the pair-juncture as middle-abode
+(29.279–80). Above nāda = sauṣumna world; Devī threads upper-lower course.
+
+**Breath-channel identity:** all emanation depends on kāla, kāla IS prāṇa,
+therefore uccāra is taught (6.60) — uccāra = upward-motion/utterance. **Desired
+channel flows by bhāvanā-tanmayībhāva: contemplate the channel, it flows
+instantly** (25.19–21) — textual warrant for tap-to-direct. Transmission runs
+guru→disciple via own channel-threads (29.263).
+
 ---
 
 ## Mapping → site data (queued, not yet applied)

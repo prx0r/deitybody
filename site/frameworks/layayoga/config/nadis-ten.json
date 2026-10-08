@@ -3,7 +3,7 @@
   "framework": "yoga/hatha",
   "title": "Ten principal nāḍīs",
   "provenance": {"status": "traditional-variant",
-    "note": "Endpoints per Siddha Siddhanta Paddhati / Darshana Upanishad / Yoga Yajnavalkya summaries; the three texts differ slightly. Counts vary across texts (72,000 HYP/Goraksha vs 350,000 Shiva Samhita). Curves are schematic attention-paths, not anatomy.",
+    "note": "Endpoints per Siddha Siddhanta Paddhati / Darshana Upanishad / Yoga Yajnavalkya summaries; the three texts differ slightly. Abhinavagupta's SvT list reads Āryamā where standard editions read Yaśasvinī (textual variant). Counts vary across texts (72,000 HYP/Goraksha vs 350,000 Shiva Samhita). Curves are schematic attention-paths, not anatomy.",
     "digitize_next": ["Shiva Samhita (14 principals)", "Siddha Siddhanta Paddhati"]},
   "hub": {"id": "kanda", "at": [0, -1.6, 0], "note": "bulb below navel; most nadis route through it"},
   "nadis": [
