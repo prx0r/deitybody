@@ -49,7 +49,7 @@ function fxFlashRegion(regionId, ids){ (ids||[]).slice(0,6).forEach((id,k)=>{
   const n=P.findIndex(p=>p[0]===id); if(n>=0) setTimeout(()=>{show(P[n]); pop(n);},k*350); }); }
 function bindTools(){ tools=makeTools({session, graph, fx:{flashRegion:fxFlashRegion}});
   if(window.deitybody) window.deitybody.tools=tools; }
-window.deitybody={session, tools:null, get graph(){return graph;}};
+window.deitybody={session, tools:null, get graph(){return graph;}, get camera(){return camera;}};
 bindTools();
 loadGraph().then(g=>{graph=g; bindTools();}).catch(()=>{});
 session.render=(e)=>exec(e);
