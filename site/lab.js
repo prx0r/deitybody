@@ -196,34 +196,66 @@ function updateEdges(){
   edgeGeo.attributes.position.needsUpdate=true;
   edgeGeo.setDrawRange(0,o/3);
 }
-/* suṣumṇā */
+/* suṣumṇā + iḍā/piṅgalā — rebuilt from the pose axis whenever posture changes */
 const channelY0=-3.9, channelY1=4.3;
-{
-  const g=new THREE.TubeGeometry(new THREE.CatmullRomCurve3(
-    [new THREE.Vector3(0,channelY0,0),new THREE.Vector3(0,channelY1,0)]),32,.02,8);
-  scene.add(new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:GOLD,transparent:true,opacity:.75})));
+let channelMeshes=[];
+function axisLerp(y){
+  /* local axis point without needing pose fns (setup-safe: standing default) */
+  return new THREE.Vector3(0,y,.1);
 }
-/* iḍā / piṅgalā helices */
-function helix(phase,color,op){
-  const pts=[]; for(let y=-3.4;y<=3.1;y+=.12) pts.push(new THREE.Vector3(Math.sin(y*2.1+phase)*.3,y,Math.cos(y*2.1+phase)*.18));
-  const m=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),120,.008,6),
-    new THREE.MeshBasicMaterial({color,transparent:true,opacity:op}));
-  scene.add(m); return m;
+function buildChannels(mapFn){
+  for(const m of channelMeshes){ scene.remove(m); m.geometry.dispose(); }
+  channelMeshes=[];
+  const P0=mapFn?mapFn(channelY0):new THREE.Vector3(0,channelY0,.1);
+  const P1=mapFn?mapFn(channelY1):new THREE.Vector3(0,channelY1,.1);
+  const dir=P1.clone().sub(P0); const len=dir.length(); dir.normalize();
+  const side=new THREE.Vector3(0,0,1);
+  const up2=new THREE.Vector3().crossVectors(dir,side).normalize();
+  const g=new THREE.TubeGeometry(new THREE.CatmullRomCurve3([P0,P1]),32,.02,8);
+  const sm=new THREE.Mesh(g,new THREE.MeshBasicMaterial({color:GOLD,transparent:true,opacity:.75}));
+  scene.add(sm); channelMeshes.push(sm);
+  [[0,TEAL],[Math.PI,ROSE]].forEach(([phase,color])=>{
+    const pts=[];
+    for(let s=0;s<=1.001;s+=.02){
+      const c=P0.clone().addScaledVector(dir,s*len);
+      const a=s*len*2.1+phase;
+      pts.push(c.addScaledVector(up2,Math.sin(a)*.3).add(new THREE.Vector3(0,0,Math.cos(a)*.18)));
+    }
+    const m=new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts),120,.008,6),
+      new THREE.MeshBasicMaterial({color,transparent:true,opacity:.3}));
+    scene.add(m); channelMeshes.push(m);
+  });
 }
-const ida=helix(0,TEAL,.3), ping=helix(Math.PI,ROSE,.3);
+buildChannels(null);
+let ida={rotation:{}}, ping={rotation:{}};
 /* cakra rings (PEDAGOGICAL overlay) */
 const CAKRAS=[['root',-3.2],['sacral',-2.3],['solar',-1.2],['heart',.78],['throat',1.6],['brow',2.75],['crown',3.3]];
 const rings=CAKRAS.map(([n,y],k)=>{
   const m=new THREE.Mesh(new THREE.TorusGeometry(.34+k*.02,.015,8,48),
     new THREE.MeshBasicMaterial({color:k===3?GOLD:TEAL,transparent:true,opacity:.4}));
-  m.position.set(0,y,0); m.rotation.x=Math.PI/2; m.userData.n=n; scene.add(m); return m;
+  m.position.set(0,y,0); m.rotation.x=Math.PI/2; m.userData.n=n; m.userData.baseY=y; scene.add(m); return m;
 });
 /* dvādaśānta */
+const dvaMark=new THREE.Mesh(new THREE.OctahedronGeometry(.12),new THREE.MeshBasicMaterial({color:TEAL}));
+const dvaLine=new THREE.Line(new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,3.35,0),new THREE.Vector3(0,channelY1,0)]),
+  new THREE.LineDashedMaterial({color:TEAL,dashSize:.08,gapSize:.06,transparent:true,opacity:.6}));
 {
-  const o=new THREE.Mesh(new THREE.OctahedronGeometry(.12),new THREE.MeshBasicMaterial({color:TEAL}));
-  o.position.set(0,channelY1,0); scene.add(o);
-  const lg=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,3.35,0),new THREE.Vector3(0,channelY1,0)]);
-  scene.add(new THREE.Line(lg,new THREE.LineDashedMaterial({color:TEAL,dashSize:.08,gapSize:.06,transparent:true,opacity:.6})));
+  dvaMark.position.set(0,channelY1,0); scene.add(dvaMark); scene.add(dvaLine);
+}
+/* pose root: every static layer re-derives from the posture */
+function updateStatics(){
+  buildChannels(y=>axisPoint(y));
+  for(const m of rings){
+    const c=axisPoint(m.userData.baseY);
+    m.position.copy(c);
+    if(poseName==='lying') m.rotation.set(0,Math.PI/2,0); else m.rotation.set(Math.PI/2,0,0);
+  }
+  dvaMark.position.copy(axisPoint(channelY1));
+  dvaLine.geometry.setFromPoints([axisPoint(3.35),axisPoint(channelY1)]);
+  if(poseName!=='standing'){
+    yantra.visible=false;
+    if(typeof vitLayer!=='undefined'&&vitLayer) vitLayer.group.visible=false;
+  }
 }
 /* ---------- yantra overlay: measurable geometry (PEDAGOGICAL) ---------- */
 const yantra=new THREE.Group(); yantra.visible=false; scene.add(yantra);
@@ -792,6 +824,7 @@ function setCfg(c){
 function setPose(name){
   poseName=name;
   setTargets();
+  updateStatics();
   if(typeof vitFig!=='undefined'&&vitFig&&vitFig.group.visible) vitFig.setPose(name==='lying'?'lying':name==='seated'?'seated':'standing');
   const labels={standing:'standing · full height',seated:'seated lotus · folded',lying:'lying down · horizontal'};
   readout.innerHTML='<b>pose</b> · '+labels[name];
