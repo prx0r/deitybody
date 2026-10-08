@@ -116,7 +116,7 @@ function exec(e){
         }
       }
       break; }
-    case 'ring': ringPing(Y(e.at),TEAL); break;
+    case 'ring': ringPing(e.y!=null?e.y:Y(e.at),TEAL); break;
     case 'breath': {
       const y0=Y(e.from), y1=Y(e.to);
       breathSound(e.phase, e.dur||4.0);
@@ -619,6 +619,10 @@ if(fluidOn){
   }).catch(()=>{fluidCanvas.style.display='none';});
 } else fluidCanvas.style.display='none';
 function setFluid(on){ fluidOn=on; fluidCanvas.style.display=on?'':'none'; }
+function toggleGrid(){
+  if(gridField){ gridField.group.visible=!gridField.group.visible; }
+  else { try{ gridField=buildGridField({scene, count:900}); }catch(e){ gridField=null; } }
+}
 
 /* ---------- fx: tweens + pulses ---------- */
 const tweens=[];
@@ -811,6 +815,7 @@ function menuMark(){
   const set=(id,on)=>{const b=menu.querySelector('#'+id); if(b)b.classList.toggle('on',!!on);};
   set('mScan',scanMode); set('mYan',yantra.visible); set('mX',xray);
   set('mFluid',fluidOn); set('mChlad',chladniOn); set('mAlive',aliveOn);
+  set('mGrid',!!gridField);
   set('mWeave',weaveOn);
   set('mNadi',nadis&&nadis.group.visible); set('mMic',micOn);
   set('mVit',vitLayer&&vitLayer.group.visible);
@@ -837,6 +842,7 @@ function buildMenu(){
   fwBtn('❖ Kāla','kalachakra',()=>setFw('kalachakra'));
   r=sec('Fields');
   btn(r,'🌊 waves',()=>{setFluid(!fluidOn);},'mFluid');
+  btn(r,'✨ vacuum dots',()=>toggleGrid(),'mGrid');
   btn(r,'∿ weave',()=>{weaveOn=!weaveOn; buildChannels((x,y)=>xfPos(x,y));},'mWeave');
   btn(r,'🕸️ nāḍīs',()=>{toggleNadis(); menuMark();},'mNadi');
   btn(r,'🎙️ breath mic',()=>{toggleMic(); menuMark();},'mMic');
