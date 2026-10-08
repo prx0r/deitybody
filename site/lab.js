@@ -177,6 +177,7 @@ const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 /* ---------- renderer / scene ---------- */
 const canvas = document.getElementById('scene');
 const renderer = new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+renderer.setClearColor(0xffffff, 1);
 renderer.setPixelRatio(Math.min(devicePixelRatio,2));
 const scene = new THREE.Scene();
 pathReg = createPathRegistry(scene);
@@ -1007,6 +1008,7 @@ function bodyOn(v){
   for(const id of pathReg.ids()) pathReg.setVisible(id,v);
   rings.forEach(m=>m.visible=v);
   dvaMark.visible=v; dvaLine.visible=v;
+  if(heartField) heartField.visible=v;
 }
 /* ---------- clear: back to blank living canvas ---------- */
 function clearAll(){

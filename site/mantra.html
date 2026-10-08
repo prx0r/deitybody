@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@500;600&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#0b0d12;--panel:#12161f;--ink:#f0ebe0;--mut:#a8a294;--gold:#c9a45c;--gold-hi:#e8cf8f;--line:#2a3142}
+:root{--bg:#ffffff;--panel:#f4f2ec;--ink:#22242c;--mut:#6d7180;--gold:#a86f14;--gold-hi:#e8cf8f;--line:#2a3142}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.5 Georgia,serif;min-height:100%}
 header{max-width:640px;margin:0 auto;padding:1rem;text-align:center}
@@ -107,13 +107,6 @@ async function rebuild(){
 }
 P.onPhoneme=(id,ph,idx)=>show(id,idx);
 P.onEnd=()=>{$('#play').textContent='▶ chant'; $('#report').textContent='complete — again, or switch map.';};
-async function rebuild(){
-  P.stop(); $('#play').textContent='▶ chant';
-  const r=await P.load(seqFor(), $('#map').value);
-  const miss=r.silent;
-  $('#report').textContent=miss.length?`silent flagged: ${miss.join(' ')} — breathe, don't substitute.`:`${r.loaded} clips buffered.`;
-  show(P.seq[0],0);
-}
 $('#play').onclick=()=>{ const on=P.playing||M.playing;
   if(on){P.pause(); M.pause(); $('#play').textContent='▶ chant';}
   else { if(isMantra()){M.play();} else {P.play();} $('#play').textContent='⏸ pause';} };
