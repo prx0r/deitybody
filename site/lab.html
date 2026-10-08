@@ -3,64 +3,57 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
-<title>Lab — Living Subtle Body</title>
+<title>Body — mantra dash</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Yatra+One&family=Noto+Sans+Devanagari:wght@400;600;700&family=Noto+Serif+Devanagari:wght@500;600&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#0b0d12; --panel:rgba(18,22,31,.78); --ink:#f0ebe0; --mut:#a8a294;
+:root{--bg:#0b0d12; --panel:rgba(18,22,31,.86); --ink:#f0ebe0; --mut:#a8a294;
  --gold:#c9a45c; --gold-hi:#e8cf8f; --teal:#5ec4b6; --rose:#d4899a; --line:#2a3142}
 *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
 html,body{margin:0; height:100%; background:var(--bg); color:var(--ink);
  font:16px/1.5 Georgia,serif; overflow:hidden}
 #scene{position:fixed; inset:0; z-index:1}
 #fluid{position:fixed; inset:0; z-index:0; pointer-events:none; opacity:.55}
-header{position:fixed; top:0; left:0; right:0; z-index:5; text-align:center;
- padding:.7rem 1rem .3rem; pointer-events:none}
-h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
- font-size:clamp(1.2rem,3.4vw,1.7rem); margin:0;
- background:linear-gradient(100deg,var(--gold-hi),var(--gold) 50%,#9a7a3a);
- -webkit-background-clip:text; background-clip:text; color:transparent}
-.hint{color:var(--mut); font-size:.8rem; font-family:ui-sans-serif,system-ui}
-#dock{position:fixed; left:0; right:0; bottom:0; z-index:5; display:flex; flex-wrap:wrap;
- gap:.45rem; justify-content:center; padding:.6rem .6rem calc(.6rem + env(safe-area-inset-bottom));
- background:linear-gradient(transparent, rgba(11,13,18,.9))}
-#dock button{font-family:ui-sans-serif,system-ui; font-size:.85rem; padding:.6rem .95rem; min-height:42px;
- border-radius:999px; border:1px solid var(--line); background:var(--panel); color:var(--ink);
- cursor:pointer; backdrop-filter:blur(8px)}
-#dock button.on{background:linear-gradient(120deg,var(--gold-hi),var(--gold)); color:#0b0d12; font-weight:700; border-color:var(--gold)}
-#dock button:active{transform:scale(.96)}
-/* left icon rail — framework picker */
-#rail{position:fixed; z-index:6; left:.6rem; top:50%; transform:translateY(-50%);
- display:flex; flex-direction:column; gap:.55rem}
-#rail button{width:46px; height:46px; border-radius:50%; border:1px solid var(--line);
- background:var(--panel); color:var(--ink); font-size:19px; cursor:pointer;
- backdrop-filter:blur(8px); transition:border-color .2s, transform .15s}
-#rail button:hover{border-color:var(--gold)}
-#rail button:active{transform:scale(.93)}
-#rail button.on{background:linear-gradient(120deg,var(--gold-hi,#e8cf8f),var(--gold)); color:#0b0d12; border-color:var(--gold)}
-#fpanel{position:fixed; z-index:6; left:4.1rem; top:50%; transform:translateY(-50%);
- width:210px; background:var(--panel); border:1px solid var(--line); border-radius:14px;
- padding:.8rem .9rem; backdrop-filter:blur(10px); display:none}
-#fpanel.show{display:block}
-#fpanel h4{margin:0 0 .2rem; font-size:.95rem; color:var(--gold); font-family:ui-sans-serif,system-ui}
-#fpanel p{margin:.2rem 0 .6rem; font-size:.78rem; color:var(--mut)}
-#fpanel .row{display:flex; gap:.4rem; flex-wrap:wrap}
-#fpanel .row button{font-family:ui-sans-serif,system-ui; font-size:.8rem; padding:.5rem .8rem;
- min-height:40px; border-radius:999px; border:1px solid var(--line); background:transparent;
+body.split #scene{right:50%}
+body.split #fluid{right:50%}
+#second{display:none}
+body.split #second{display:block; position:fixed; z-index:1; top:0; right:0; width:50%; height:100%; border:0; border-left:1px solid var(--line)}
+/* single circle menu */
+#menuBtn{position:fixed; z-index:10; top:.8rem; left:.8rem; width:52px; height:52px;
+ border-radius:50%; border:1px solid var(--gold); background:var(--panel); color:var(--gold);
+ font-size:24px; cursor:pointer; backdrop-filter:blur(8px)}
+#menuBtn.on{background:linear-gradient(120deg,var(--gold-hi),var(--gold)); color:#0b0d12}
+#splitBtn{position:fixed; z-index:10; top:.8rem; right:.8rem; width:52px; height:52px;
+ border-radius:50%; border:1px solid var(--line); background:var(--panel); color:var(--ink);
+ font-size:26px; line-height:1; cursor:pointer; backdrop-filter:blur(8px)}
+#splitBtn.on{border-color:var(--gold); color:var(--gold)}
+#menu{position:fixed; z-index:10; top:4.3rem; left:.8rem; width:min(300px,86vw);
+ max-height:calc(100% - 9rem); overflow-y:auto; background:var(--panel);
+ border:1px solid var(--line); border-radius:16px; padding:.9rem 1rem;
+ backdrop-filter:blur(12px); display:none}
+#menu.show{display:block}
+#menu h3{margin:.7rem 0 .35rem; font-size:.72rem; letter-spacing:.1em; text-transform:uppercase;
+ color:var(--mut); font-family:ui-sans-serif,system-ui}
+#menu h3:first-child{margin-top:0}
+#menu .row{display:flex; gap:.4rem; flex-wrap:wrap}
+#menu .row button{font-family:ui-sans-serif,system-ui; font-size:.85rem; padding:.55rem .9rem;
+ min-height:42px; border-radius:999px; border:1px solid var(--line); background:transparent;
  color:var(--ink); cursor:pointer}
-#fpanel .row button.on{background:var(--gold); color:#0b0d12; border-color:var(--gold); font-weight:700}
-#info{position:fixed; z-index:5; right:.7rem; top:4.2rem; width:min(270px,44vw);
- background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:.7rem .9rem;
- backdrop-filter:blur(8px)}
-#info .dev{font-family:'Noto Serif Devanagari',serif; font-size:1.7rem; line-height:1.8}
-#info .iast{color:var(--gold); font-size:.85rem; font-family:ui-sans-serif,system-ui}
-#info .locus{color:var(--mut); font-size:.8rem}
-#ask{display:flex; gap:.35rem; margin-top:.5rem}
+#menu .row button.on{background:linear-gradient(120deg,var(--gold-hi),var(--gold)); color:#0b0d12; border-color:var(--gold); font-weight:700}
+#menu .note{font-size:.75rem; color:var(--mut); margin:.3rem 0 0}
+#menu a{color:var(--gold)}
+#askRow{display:flex; gap:.35rem; margin-top:.3rem}
 #askQ{flex:1; min-width:0; background:rgba(11,13,18,.7); border:1px solid var(--line);
- border-radius:8px; color:var(--ink); font-size:.8rem; padding:.45rem .6rem;
- font-family:ui-sans-serif,system-ui}
-#ask button{border-radius:8px; border:1px solid var(--line); background:transparent;
- color:var(--gold); width:34px; cursor:pointer; font-size:1rem}
+ border-radius:8px; color:var(--ink); font-size:.8rem; padding:.5rem .6rem; font-family:ui-sans-serif,system-ui}
+/* single-line readout */
+#readout{position:fixed; z-index:5; left:50%; bottom:.9rem; transform:translateX(-50%);
+ font-family:'Noto Serif Devanagari',serif; font-size:1.05rem; color:var(--ink);
+ background:rgba(11,13,18,.65); border:1px solid var(--line); border-radius:999px;
+ padding:.35rem 1.1rem; backdrop-filter:blur(8px); white-space:nowrap; max-width:92vw;
+ overflow:hidden; text-overflow:ellipsis; pointer-events:none}
+body.split #readout{left:25%}
+#readout b{color:var(--gold); font-weight:600}
+#info{display:none}
 /* phoneme chips — real DOM text: browser shapes every conjunct perfectly, sharp at any zoom */
 .glyph{font-family:'Noto Sans Devanagari','Mangal','Kokila',serif; font-size:21px;
  font-weight:500; color:rgba(240,235,224,.85); cursor:pointer; user-select:none;
@@ -88,7 +81,6 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 #chladni{width:100%; height:auto; display:block; border-radius:8px}
 #chladniCap{font-size:.68rem; color:var(--mut); font-family:ui-sans-serif,system-ui;
  text-align:center; padding-top:.25rem}
-@media (max-width:640px){ #chladniBox{width:150px} }
 .seph{text-align:center; cursor:pointer; user-select:none; transition:opacity .3s}
 .seph .hb{font-family:'Noto Sans Hebrew','Noto Sans',serif; font-size:19px; font-weight:700;
  display:inline-block; width:40px; height:40px; line-height:38px; border-radius:50%;
@@ -99,9 +91,15 @@ h1{font-family:'Yatra One','Noto Sans Devanagari',serif; font-weight:400;
 .seph.lit .hb{background:var(--gold); color:#0b0d12 !important; border-color:var(--gold-hi, #e8cf8f) !important}
 .klabel{font-size:10px; letter-spacing:.06em; color:var(--teal);
  font-family:ui-sans-serif,system-ui; white-space:nowrap; opacity:.85}
-#legend{position:fixed; z-index:5; left:.7rem; top:4.2rem; font-size:.72rem; color:var(--mut);
- font-family:ui-sans-serif,system-ui; background:rgba(18,22,31,.6); padding:.5rem .7rem; border-radius:10px}
-@media (max-width:640px){ #legend{display:none} #info{top:auto; bottom:4.4rem; right:.5rem} }
+/* embed mode: bare body only */
+body.embed #menuBtn,body.embed #splitBtn,body.embed #menu,body.embed #readout{display:none}
+@media (max-width:640px){
+ body.split #scene{right:0; bottom:50%}
+ body.split #fluid{right:0; bottom:50%}
+ body.split #second{width:100%; height:50%; top:50%; border-left:0; border-top:1px solid var(--line)}
+ body.split #readout{left:50%; bottom:auto; top:.8rem}
+ #chladniBox{width:150px}
+}
 </style>
 <script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script>
 </head>
@@ -124,28 +122,14 @@ window.addEventListener('unhandledrejection',function(e){
   if(b){b.style.display='block';b.textContent=m;}
 });
 </script>
-<nav id="rail" aria-label="Frameworks">
- <button id="rTrika" class="on" title="Trika · Mātṛkā/Mālinī">☸</button>
- <button id="rPillar" title="Middle Pillar" style="display:none">☩</button>
- <button id="rLotus" title="Anahata lotus" style="display:none">🪷</button>
- <button id="rKal" title="Kālacakra centres" style="display:none">❖</button>
- <button id="rVit" title="Vitruvian measure" style="display:none">✦</button>
- <button id="rScan" title="Body scan">◉</button>
- <button id="rYan" title="Yantra overlay">△</button>
- <button id="rFluid" title="Fluid prāṇa-field">🌊</button>
- <button id="rX" title="X-ray shell">◈</button>
-</nav>
-<div id="fpanel" aria-live="polite"><h4></h4><p></p><div class="row"></div></div>
-<header><h1>जीव — living subtle body</h1><div class="hint">drag to orbit · scroll to zoom · tap any glyph</div></header>
-<div id="legend">wireframe = inscribed grid (Flood: constructed, not found)<br/>gold channel = suṣumṇā · helix = iḍā/piṅgalā<br/>rings = cakra overlay (PEDAGOGICAL, late model)</div>
+<button id="menuBtn" aria-label="Traditions and modes">☸</button>
+<button id="splitBtn" aria-label="Compare side by side">+</button>
+<nav id="menu" aria-label="Menu"></nav>
+<div id="readout" aria-live="polite">अ · forehead</div>
+<div id="info" aria-hidden="true"><div class="dev">अ</div><div class="iast">a · forehead</div><div class="locus"></div>
+<form id="ask"><input id="askQ" type="text" autocomplete="off"/><button type="submit">?</button></form></div>
 <div id="chladniBox" style="display:none"><canvas id="chladni" width="220" height="220"></canvas><div id="chladniCap">—</div></div>
-<div id="info" aria-live="polite"><div class="dev">अ</div><div class="iast">a · forehead</div><div class="locus">Tap a glyph — hear it, watch prāṇa answer.</div>
-<form id="ask"><input id="askQ" type="text" placeholder="Ask: where am I · next · repeat · pause · source" aria-label="Ask the guide" autocomplete="off"/><button type="submit" aria-label="Ask">?</button></form></div>
-<div id="dock">
- <button id="bOm">▶ OM</button><button id="bNam">▶ Namaḥ Śivāya</button>
- <button id="bHa">⚡ ha flash</button>
- <button data-s="sutra">caitanyam</button><button data-s="hrdaye">hṛdaye</button>
-</div>
+<iframe id="second" title="Second body"></iframe>
 <script type="module" src="lab.js"></script>
 </body>
 </html>

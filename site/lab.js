@@ -359,12 +359,12 @@ fetch('frameworks/hermetic/config.json').then(r=>r.json()).then(fw2=>{
     const o=new CSS2DObject(el); o.position.set(c.x3,c.y3,c.z3); mpGroup.add(o);
     MP.orbs[c.id]={c,halo,el};
   });
-  document.getElementById('rPillar').style.display='';
+  /* rPillar lives in the circle menu now */
 }).catch(()=>{/* offline/file mode: Trika only */});
 /* ---------- layayoga lotus layer (procedural, per-text config) ---------- */
 let lotus=null, lotusCfg=null;
 fetch('frameworks/layayoga/config/anahata.json').then(r=>r.json()).then(c=>{
-  lotusCfg=c; document.getElementById('rLotus').style.display='';
+  lotusCfg=c;
 }).catch(()=>{});
 function petalShow(p, el){
   const clip = p.phoneme ? 'audio/phonemes/'+({
@@ -385,7 +385,7 @@ function petalShow(p, el){
 /* ---------- kalachakra spoke layer (channel counts, educational model) ---------- */
 let kalSpokes=null, kalCfg=null;
 fetch('frameworks/vajrayana/config/kalachakra.json').then(r=>r.json()).then(c=>{
-  kalCfg=c; document.getElementById('rKal').style.display='';
+  kalCfg=c;
 }).catch(()=>{});
 function kalConverge(){
   if(!kalSpokes) return;
@@ -506,11 +506,7 @@ if(fluidOn){
       setTimeout(()=>fluidSplat(innerWidth/2,innerHeight*.6,0,40),700);},900);
   }).catch(()=>{fluidCanvas.style.display='none';});
 } else fluidCanvas.style.display='none';
-document.getElementById('rFluid').onclick=e=>{
-  fluidOn=!fluidOn; fluidCanvas.style.display=fluidOn?'':'none';
-  e.target.classList.toggle('on',fluidOn);
-};
-if(fluidOn) document.getElementById('rFluid').classList.add('on');
+function setFluid(on){ fluidOn=on; fluidCanvas.style.display=on?'':'none'; }
 
 /* ---------- fx: tweens + pulses ---------- */
 const tweens=[];
@@ -551,6 +547,7 @@ function show(p){
   info.querySelector('.dev').textContent=p[1];
   info.querySelector('.iast').textContent=p[0]+' · '+loc;
   info.querySelector('.locus').textContent=(cfg==='matrika'?'Mātṛkā base':'Mālinī infusion')+' · '+other;
+  readout.innerHTML='<b>'+p[1]+'</b> · '+p[0]+' · '+loc;
 }
 function fire(iast,withSound=true){
   const k=P.findIndex(p=>p[0]===iast); if(k<0) return;
@@ -565,47 +562,61 @@ function fire(iast,withSound=true){
   if(chladniOn) chladniSet(p.i, p.d);
 }
 /* taps land on the DOM chips themselves — no raycast needed; canvas keeps drag/zoom */
-/* ---------- left rail + panel: frameworks, Trika first ---------- */
-const panel=document.getElementById('fpanel');
-const PANELS={
-  trika:{t:'☸ Trika',d:'Mātṛkā base install, Mālinī infusion after automatic. One map per sitting.',
-    opts:[['Mātṛkā · base',()=>setCfg('matrika')],['Mālinī · infusion',()=>setCfg('malini')],
-      ['VBT 24 · heart↔12 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'}))],
-      ['Chladni plate: off',e=>{toggleChladni(); e.target.textContent=`Chladni plate: ${chladniOn?'on':'off'}`;}],
-      ['Guide voice: off',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;}]]},
-  pillar:{t:'☩ Middle Pillar',d:'Hermetic descent + circulation over the same body. Separate layer — never mixed with nyāsa.',
-    opts:[['Enter Pillar',()=>setFw('mp')],['Back to Trika',()=>setFw('trika')]]},
-  layayoga:{t:'🪷 Anahata lotus',d:'12-petal procedural lotus at the heart (needs_verification vs Śaṭcakranirūpaṇa). Tap petals for bīja + source.',
-    opts:[['Enter lotus',()=>setFw('layayoga')],['Back to Trika',()=>setFw('trika')]]},
-  kalachakra:{t:'❖ Kālacakra centres',d:'Six centres with attested subsidiary-channel counts (educational model; initiation contexts never replaced).',
-    opts:[['Enter centres',()=>setFw('kalachakra')],['Back to Trika',()=>setFw('trika')]]},
-  vitruvian:{t:'✦ Vitruvian measure',d:'Circle + square + proportions + physics notes. Diagram overlay over any framework.',
-    opts:[['Show / hide',()=>toggleVit()]]},
-  scan:{t:'◉ Body scan',d:'Crown→feet→crown sweep. Rest attention where the band glows, natural breath.',
-    opts:[['Start / stop',()=>toggleScan()]]},
-  yantra:{t:'△ Yantra',d:'Measurable geometry: square, star, kalā rulings, 12-tick dvādaśānta. (PEDAGOGICAL)',
-    opts:[['Show / hide',()=>toggleYan()]]},
-};
-function openPanel(k){
-  const p=PANELS[k]; if(!p) return;
-  panel.querySelector('h4').textContent=p.t;
-  panel.querySelector('p').textContent=p.d;
-  const row=panel.querySelector('.row'); row.innerHTML='';
-  p.opts.forEach(([label,fn])=>{const b=document.createElement('button'); b.textContent=label;
-    b.onclick=(ev)=>{fn(ev); markRail();}; row.appendChild(b);});
-  panel.classList.add('show');
-  ['rTrika','rPillar','rLotus','rKal','rVit','rScan','rYan','rX'].forEach(id=>{const b=document.getElementById(id); if(b)b.classList.remove('on');});
-  ({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',kalachakra:'rKal',vitruvian:'rVit',scan:'rScan',yantra:'rYan'}[k]||'') &&
-    document.getElementById({trika:'rTrika',pillar:'rPillar',layayoga:'rLotus',kalachakra:'rKal',vitruvian:'rVit',scan:'rScan',yantra:'rYan'}[k]).classList.add('on');
+/* ---------- single circle menu + split bodies ---------- */
+const menu=document.getElementById('menu');
+const readout=document.getElementById('readout');
+function menuMark(){
+  menu.querySelectorAll('[data-fw]').forEach(b=>b.classList.toggle('on',b.dataset.fw===fw));
+  const set=(id,on)=>{const b=menu.querySelector('#'+id); if(b)b.classList.toggle('on',!!on);};
+  set('mScan',scanMode); set('mYan',yantra.visible); set('mX',xray);
+  set('mFluid',fluidOn); set('mChlad',chladniOn);
+  set('mVit',vitLayer&&vitLayer.group.visible);
+  set('mGuide',guideOn);
 }
-function markRail(){
-  document.getElementById('rTrika').classList.toggle('on',fw==='trika');
-  const rp=document.getElementById('rPillar'); if(rp)rp.classList.toggle('on',fw==='mp');
-  const rl=document.getElementById('rLotus'); if(rl)rl.classList.toggle('on',fw==='layayoga');
-  const rk=document.getElementById('rKal'); if(rk)rk.classList.toggle('on',fw==='kalachakra');
-  const rv=document.getElementById('rVit'); if(rv)rv.classList.toggle('on',!!(vitLayer&&vitLayer.group.visible));
-  document.getElementById('rScan').classList.toggle('on',!!scanMode);
-  document.getElementById('rYan').classList.toggle('on',yantra.visible);
+function markRail(){ menuMark(); }
+function menuClose(){ menu.classList.remove('show'); document.getElementById('menuBtn').classList.remove('on'); }
+function buildMenu(){
+  const sec=(t)=>{const h=document.createElement('h3'); h.textContent=t; menu.appendChild(h);
+    const r=document.createElement('div'); r.className='row'; menu.appendChild(r); return r;};
+  const btn=(parent,label,fn,id)=>{const b=document.createElement('button'); b.textContent=label;
+    if(id)b.id=id; b.onclick=(ev)=>{fn(ev); menuMark();}; parent.appendChild(b); return b;};
+  let r=sec('Traditions');
+  const fwBtn=(label,fwId,go)=>btn(r,label,()=>{go(); menuClose();},null).dataset.fw=fwId;
+  fwBtn('☸ Trika · Mātṛkā','trika',()=>{setFw('trika'); setCfg('matrika');});
+  fwBtn('☸ Trika · Mālinī','trika',()=>{setFw('trika'); setCfg('malini');});
+  fwBtn('☩ Middle Pillar','mp',()=>setFw('mp'));
+  fwBtn('🪷 Anahata lotus','layayoga',()=>setFw('layayoga'));
+  fwBtn('❖ Kālacakra','kalachakra',()=>setFw('kalachakra'));
+  r=sec('Layers');
+  btn(r,'◉ scan',()=>toggleScan(),'mScan');
+  btn(r,'△ yantra',()=>toggleYan(),'mYan');
+  btn(r,'✦ vitruvian',()=>toggleVit(),'mVit');
+  btn(r,'◈ x-ray',()=>toggleX(),'mX');
+  btn(r,'🌊 fluid',()=>{fluidOn=!fluidOn; fluidCanvas.style.display=fluidOn?'':'none';},'mFluid');
+  btn(r,'≋ chladni',()=>toggleChladni(),'mChlad');
+  r=sec('Practice');
+  btn(r,'▶ OM',()=>playOM());
+  btn(r,'▶ Namaḥ Śivāya',()=>playNamah());
+  btn(r,'⚡ ha',()=>playHa());
+  btn(r,'VBT 24 gaze',()=>score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'})));
+  btn(r,'caitanyam',()=>playSutra('sutra','caitanyam ātmā — Consciousness is Self'));
+  btn(r,'hṛdaye',()=>playSutra('hrdaye','hṛdaye — in the Heart'));
+  btn(r,'Guide voice',e=>{guideOn=!guideOn; e.target.textContent=`Guide voice: ${guideOn?'on':'off'}`;},'mGuide');
+  const a=document.createElement('a'); a.href='mantra'; a.textContent='chant-through →';
+  a.style.cssText='font-size:.85rem;font-family:ui-sans-serif,system-ui'; r.appendChild(a);
+  r=sec('Compare');
+  btn(r,'OM × Descent',()=>comparePreset('om-descent'));
+  btn(r,'VBT 24 × Scan',()=>comparePreset('v24-scan'));
+  r=sec('Guide');
+  const f=document.createElement('form'); f.id='askRow'; f.style.display='flex'; f.style.gap='.35rem';
+  f.innerHTML='<input id="askQ" type="text" placeholder="where am I · next · repeat · pause · source" aria-label="Ask the guide" autocomplete="off" style="flex:1;min-width:0;background:rgba(11,13,18,.7);border:1px solid var(--line);border-radius:8px;color:var(--ink);font-size:.8rem;padding:.5rem .6rem"/>';
+  f.onsubmit=ev=>{ev.preventDefault(); const q=f.querySelector('#askQ');
+    if(!q.value.trim())return; const a=tools?tools.answer(q.value):'…';
+    info.querySelector('.locus').textContent=a; readout.innerHTML='<b>guide</b> · '+a; speak(a); q.value='';};
+  menu.appendChild(f);
+  const n=document.createElement('p'); n.className='note';
+  n.textContent='One map per sitting. Geometries differ per tradition — never one chart.';
+  menu.appendChild(n);
 }
 function setCfg(c){
   cfg=c;
@@ -616,63 +627,52 @@ function toggleScan(){
   else{scanMode={y:4.5,dir:-1}; scanBand.visible=true;
     info.querySelector('.dev').textContent='स्मृति';
     info.querySelector('.iast').textContent='body scan — crown → feet → crown';
-    info.querySelector('.locus').textContent='Rest attention where the band glows. Breathe naturally (TĀ 4.91).';}
-  markRail();
+    info.querySelector('.locus').textContent='Rest attention where the band glows. Breathe naturally (TĀ 4.91).';
+    readout.innerHTML='<b>scan</b> · crown → feet → crown';}
 }
-function toggleYan(){ yantra.visible=!yantra.visible; markRail(); }
+function toggleYan(){ yantra.visible=!yantra.visible; }
 function toggleX(){
   xray=!xray; gridMat.opacity=xray?.04:.2;
-  document.getElementById('rX').classList.toggle('on',xray);
 }
-document.getElementById('rTrika').onclick=()=>{setFw('trika'); openPanel('trika');};
-document.getElementById('rPillar').onclick=()=>openPanel('pillar');
-document.getElementById('rLotus').onclick=()=>openPanel('layayoga');
-document.getElementById('rKal').onclick=()=>openPanel('kalachakra');
-document.getElementById('rVit').onclick=()=>{toggleVit(); openPanel('vitruvian');};
-document.getElementById('rScan').onclick=()=>{toggleScan(); openPanel('scan');};
-document.getElementById('rYan').onclick=()=>{toggleYan(); openPanel('yantra');};
-document.getElementById('rX').onclick=()=>toggleX();
-/* (x-ray handler lives with the scan block below) */
-document.getElementById('bOm').onclick=async ()=>{
+/* practice actions (also callable via postMessage in embeds) */
+function playOM(){
   if(fw==='mp'){ if(MP)mpRun('descent'); return; }
   if(fw==='layayoga'){ lotusBloom(); return; }
   if(fw==='kalachakra'){ kalConverge(); return; }
   score('frameworks/trika/practices/om.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:j.provenance}));
-};
-document.getElementById('bNam').onclick=async ()=>{
+}
+function playNamah(){
   if(fw==='mp'){ if(MP)mpRun('circulation'); return; }
   if(fw==='layayoga'){ lotusBloom(); return; }
   if(fw==='kalachakra'){ kalConverge(); return; }
-  const j=await score('frameworks/trika/practices/namah-shivaya.json');
-  runScore(j.variants[cfg],{id:j.id+'/'+cfg,title:j.title+' ('+cfg+')',source:j.provenance});
-};
-document.getElementById('bHa').onclick=()=>{
+  score('frameworks/trika/practices/namah-shivaya.json').then(j=>runScore(j.variants[cfg],{id:j.id+'/'+cfg,title:j.title+' ('+cfg+')',source:j.provenance}));
+}
+function playHa(){
   show(['ha','ह','prāṇa — full-channel flash','',0,'','',0,'ha.ogg']);
   play('audio/phonemes/ha.ogg'); pop(byIast['ha'],2.2);
-  fluidSplat(innerWidth/2,innerHeight*.45,0,-90);
+  const W=viewSize().w;
+  fluidSplat(W/2,innerHeight*.45,0,-90);
   for(let k=0;k<4;k++) setTimeout(()=>fluidSplat(
-    innerWidth*(.3+Math.random()*.4),innerHeight*(.3+Math.random()*.3),
+    W*(.3+Math.random()*.4),innerHeight*(.3+Math.random()*.3),
     (Math.random()-.5)*60,(Math.random()-.5)*60),k*160);
   pulse(channelY0,3.3,.9,()=>{ CAKRAS.forEach(([n,y],k)=>setTimeout(()=>ringPing(y),k*120)); });
-};
+}
 const SEQ={sutra:['sa','u','a','i','ta','a','ña','ma','ā','ta','ma','ā'],
  hrdaye:['ha','ṛ','da','ya','e']};
 const WAV={sutra:'audio/edge_test_sutra.wav',hrdaye:'audio/edge_test_hrdaye.wav'};
-document.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{
-  const key=b.dataset.s;
+function playSutra(key,title){
   const evs=[{t:0,do:'audio',url:WAV[key]},
-    {t:.05,do:'info',dev:b.textContent.replace('▶ ',''),
-      iast:key==='sutra'?'caitanyam ātmā — Consciousness is Self':'hṛdaye — in the Heart'}];
+    {t:.05,do:'info',dev:key==='sutra'?'चैतन्यमात्मा':'हृदये',iast:title}];
   SEQ[key].forEach((id,kk)=>{const n=P.findIndex(p=>p[0]===id); if(n>=0){
     evs.push({t:.15+kk*.45,do:'flash',node:id});
     evs.push({t:.15+kk*.45,do:'splat',node:id,dy:-26});}});
-  runScore(evs,{id:'sutra-'+k,title:b.textContent.replace('▶ ',''),source:'EdgeSanskrit phrase + Mātṛkā loci'});
-});
+  runScore(evs,{id:'sutra-'+key,title,source:'EdgeSanskrit phrase + Mātṛkā loci'});
+}
 
 /* ---------- vitruvian overlay (diagram, not doctrine) ---------- */
 let vitCfg=null, vitLayer=null;
 fetch('frameworks/hermetic/vitruvian-man.json').then(r=>r.json()).then(c=>{
-  vitCfg=c; document.getElementById('rVit').style.display='';
+  vitCfg=c;
 }).catch(()=>{});
 function toggleVit(){
   if(!vitLayer && vitCfg) vitLayer=buildVitruvian(vitCfg,{scene});
@@ -756,6 +756,63 @@ function tick(){
   }
   if(typeof kalSpokes!=='undefined'&&kalSpokes&&kalSpokes.group.visible&&!reduce) kalSpokes.spin(dt,0.06);
 }
-function resize(){camera.aspect=innerWidth/innerHeight;camera.updateProjectionMatrix();
-  renderer.setSize(innerWidth,innerHeight); cssRenderer.setSize(innerWidth,innerHeight);}
+function viewSize(){
+  if(document.body.classList.contains('split') && innerWidth>640)
+    return {w:Math.floor(innerWidth/2), h:innerHeight};
+  return {w:innerWidth, h:innerHeight};
+}
+function resize(){
+  const {w,h}=viewSize();
+  camera.aspect=w/h; camera.updateProjectionMatrix();
+  renderer.setSize(w,h); cssRenderer.setSize(w,h);
+  Object.assign(cssRenderer.domElement.style,{left:'0',top:'0',width:w+'px',height:h+'px'});
+}
+/* ---------- split bodies + compare presets ---------- */
+const secondFrame=()=>document.getElementById('second');
+function setSplit(on){
+  document.body.classList.toggle('split',on);
+  document.getElementById('splitBtn').classList.toggle('on',on);
+  document.getElementById('splitBtn').textContent=on?'×':'+';
+  const f=secondFrame();
+  if(on && !f.src) f.src=location.pathname+'?embed=1';
+  setTimeout(resize,60);
+}
+function postRight(msg){ const f=secondFrame(); if(f&&f.src) f.contentWindow.postMessage(msg,'*'); }
+function comparePreset(which){
+  if(!document.body.classList.contains('split')) setSplit(true);
+  if(which==='om-descent'){
+    setFw('trika'); setCfg('matrika'); playOM();
+    setTimeout(()=>{ postRight({t:'fw',v:'mp'}); setTimeout(()=>postRight({t:'play',id:'descent'}),900); },900);
+    readout.innerHTML='<b>compare</b> · OM ascent × Pillar descent';
+  }else if(which==='v24-scan'){
+    if(!scanMode) toggleScan();
+    setTimeout(()=>postRight({t:'scan'}),900);
+    readout.innerHTML='<b>compare</b> · VBT 24 gaze × sweep (right runs the sweep)';
+    score('frameworks/vbt/practices/v24-gaze.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:'VBT dh.24 locus+structure; cues our own'}));
+  }
+  menuClose(); menuMark();
+}
+/* ---------- chrome wiring ---------- */
+buildMenu(); menuMark();
+document.getElementById('menuBtn').onclick=()=>{
+  const m=menu; m.classList.toggle('show');
+  document.getElementById('menuBtn').classList.toggle('on',m.classList.contains('show'));
+};
+document.getElementById('splitBtn').onclick=()=>setSplit(!document.body.classList.contains('split'));
+/* embed control + boot params */
+window.addEventListener('message',ev=>{
+  const m=ev.data||{}; if(!m.t) return;
+  if(m.t==='fw'&&m.v) setFw(m.v);
+  else if(m.t==='cfg'&&m.v) setCfg(m.v);
+  else if(m.t==='play'&&m.id==='descent'){ setFw('mp'); setTimeout(()=>mpRun('descent'),600); }
+  else if(m.t==='play'&&m.id==='circulation'){ setFw('mp'); setTimeout(()=>mpRun('circulation'),600); }
+  else if(m.t==='play'&&m.id==='om'){ setFw('trika'); setTimeout(playOM,600); }
+  else if(m.t==='scan'){ if(!scanMode) toggleScan(); }
+});
+(function bootParams(){
+  const q=new URLSearchParams(location.search);
+  if(q.get('embed')) document.body.classList.add('embed');
+  const fw=q.get('fw');
+  if(fw&&['trika','mp','layayoga','kalachakra'].includes(fw)) setFw(fw);
+})();
 addEventListener('resize',resize); resize(); tick();
