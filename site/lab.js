@@ -30,6 +30,7 @@ const mixRouter=new AudioRouter([
 let mixOut={toneVol:.12, chladniBoost:1};
 import { createPathRegistry } from './engine/paths.js';
 import { ChantPlayer } from './engine/audio/chant-player.js';
+import { mouthSVG } from './engine/mouth.js';
 import { loadRegistry } from './engine/audio/asset-registry.js';
 import { fourChoices, loadProgress, recordResult, weakest } from './engine/mantra/drills.js';
 import { createBreath } from './engine/breath.js';
@@ -347,8 +348,8 @@ const P=[
 ['ū','ऊ','left ear',244,128,'left ear',244,128,'uu.ogg'],
 ['ṛ','ऋ','right nostril',191,140,'headband',170,78,'r.ogg'],
 ['ṝ','ॠ','left nostril',209,140,'headband',230,78,'rr.ogg'],
-['ḷ','ऌ','right cheek',172,150,'headband',190,78,null],
-['ḹ','ॡ','left cheek',228,150,'headband',210,78,null],
+['ḷ','ऌ','right cheek',172,150,'headband',190,78,'lr.wav'],
+['ḹ','ॡ','left cheek',228,150,'headband',210,78,'lrr.wav'],
 ['e','ए','lower teeth',186,166,'right knee',170,570,'e.ogg'],
 ['ai','ऐ','upper teeth',214,162,'left knee',230,570,'ai.ogg'],
 ['o','ओ','lower lip',188,178,'right shank',170,630,'o.ogg'],
@@ -1010,7 +1011,8 @@ function chantEls(){
     <div class="sflag"></div><div class="scount">ready</div>
     <div class="tport"><button class="cplay big">▶ chant</button>
      <button class="cprev">⏮</button><button class="cnext">⏭</button><button class="crep">↻</button></div>
-     <div class="srow"><label>series <select class="cseq"><option value="pair">starter a·ā</option><option value="vowels">vowels 16</option><option value="full" selected>full 50</option><option value="full-rev">full 50 reversed (kṣa→a)</option><option value="ka">ka-varga · right arm</option><option value="ca">ca-varga · left arm</option><option value="tta">ṭa-varga · right leg</option><option value="ta">ta-varga · left leg</option><option value="pa">pa-varga · torso</option><option value="rest">ya→kṣa · spread</option></select></label></div>
+     <div class="smouth"></div>
+    <div class="srow"><label>series <select class="cseq"><option value="pair">starter a·ā</option><option value="vowels">vowels 16</option><option value="full" selected>full 50</option><option value="full-rev">full 50 reversed (kṣa→a)</option><option value="ka">ka-varga · right arm</option><option value="ca">ca-varga · left arm</option><option value="tta">ṭa-varga · right leg</option><option value="ta">ta-varga · left leg</option><option value="pa">pa-varga · torso</option><option value="rest">ya→kṣa · spread</option></select></label></div>
     <div class="srow"><label>gap <input class="cgap" type="range" min="0.4" max="15" step="0.2" value="1.6"/></label><span class="cgapV">1.6s</span></div>
     </div>
     <div class="cquiz" style="display:none"><div class="qprompt" style="min-height:2em"></div>
@@ -1072,6 +1074,12 @@ async function chantRebuild(){
   const tok=++chantLoadToken;
   el.play.disabled=true; el.play.textContent='… loading';
   const seq=chantSeqFor();
+  /* mouth position shows immediately — does not wait for audio */
+  try{
+    const mbox=el.side.querySelector('.smouth');
+    const m0=mouthSVG(seq[0]);
+    if(mbox){ mbox.innerHTML=m0.svg+'<span>'+m0.cue+'</span>'; mbox.dataset.place=m0.place; }
+  }catch(e){}
   const r=await chantPlayer.load(seq, chantMap);
   if(tok!==chantLoadToken) return; // a newer series was picked; drop this one
   el.count.textContent=r.silent.length?`silent flagged: ${r.silent.join(' ')} — breathe, don't substitute.`:`${r.loaded} clips ready.`;
@@ -1085,6 +1093,14 @@ function chantShow(id,ph,idx){
   if(!ph) return;
   el.glyph.textContent=ph.dev; el.iast.textContent=ph.iast;
   el.locus.textContent=(ph.placements&&(ph.placements[chantMap]||ph.placements.matrika)||{}).regionId||'';
+  const mbox=el.side.querySelector('.smouth');
+  if(mbox){
+    try{
+      const m=mouthSVG(id);
+      mbox.innerHTML=m.svg+'<span>'+m.cue+'</span>';
+      mbox.dataset.place=m.place;
+    }catch(e){ mbox.innerHTML=''; }
+  }
   el.flag.textContent=!ph.audio.reference?'no verified recording — silence, breathe here':
     (/edge|synth|unverified/i.test(ph.audio.speaker||'')?'synth voice — not ear-verified, listen lightly':'');
   el.count.textContent=`sound ${idx+1} of ${chantPlayer.seq.length}`;

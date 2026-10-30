@@ -14,14 +14,29 @@ export class ChantPlayer {
   async load(seq, map='matrika'){
     this.stop();
     this.seq = seq; this.map = map;
-    for(const id of seq){
-      if(this.buffers.has(id)) continue;
+    /* parallel + per-clip isolation: one slow/missing/bad clip must never
+       wedge the whole dock (sequential load stalled the panel for minutes). */
+    const queue = seq.filter(id=>!this.buffers.has(id));
+    let qi = 0;
+    const worker = async ()=>{
+      while(qi < queue.length){
+        const id = queue[qi++];
+        await (async()=>{
+      if(this.buffers.has(id)) return;
       const ph = ChantPlayer.records.find(p=>p.iast===id||p.id===id);
-      if(!ph || !ph.audio.reference){ this.buffers.set(id, null); continue; }
-      const r = await fetch(ph.audio.reference);
-      const b = await r.arrayBuffer();
-      this.buffers.set(id, await this.ac.decodeAudioData(b));
-    }
+      if(!ph || !ph.audio.reference){ this.buffers.set(id, null); return; }
+      try{
+        const r = await fetch(ph.audio.reference);
+        if(!r.ok) throw new Error('http '+r.status);
+        const b = await r.arrayBuffer();
+        this.buffers.set(id, await this.ac.decodeAudioData(b));
+      }catch(e){
+        this.buffers.set(id, null);  // flagged silent, load still completes
+      }
+        })();
+      }
+    };
+    await Promise.all(Array.from({length: 8}, worker));
     this.idx = 0;
     return {loaded: seq.length, silent: seq.filter(id=>!this.buffers.get(id))};
   }

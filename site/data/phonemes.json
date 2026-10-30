@@ -1860,8 +1860,9 @@
    },
    "audio": {
     "reference": "audio/phonemes/ksa.ogg",
-    "speaker": "edgesanskrit-v1-unverified",
-    "verified": false
+    "speaker": "commons-mr35-pd",
+    "verified": true,
+    "note": "Public-domain Marathi \"ksha\" (Wikimedia Commons MR35), Omni-verified 2026-10-30. Replaces EdgeSanskrit clip that audibly voiced ga."
    },
    "placements": {
     "matrika": {

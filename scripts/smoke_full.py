@@ -36,6 +36,11 @@ with sync_playwright() as pw:
     # chant dock: options, gap max, pair round end-to-end + replay (the reported bug)
     pg.locator("#menu .grid2 button", has_text="Chant audio").first.click()
     pg.wait_for_timeout(1000)
+    # mouth diagram in the dock: default first phoneme = a -> throat
+    pg.wait_for_selector(".smouth svg", timeout=5000)
+    check("mouth diagram shows on open", "<svg" in pg.locator(".smouth").inner_html())
+    check("vowel a maps to throat", "throat" in (pg.locator(".smouth").text_content() or "").lower(),
+          (pg.locator(".smouth").text_content() or "")[:80])
     opts = pg.locator(".cseq option").all_inner_texts()
     check("varga + reverse options", any("ka-varga" in o for o in opts) and any("reversed" in o for o in opts), str(opts))
     mx = pg.locator(".cgap").get_attribute("max")
@@ -53,6 +58,13 @@ with sync_playwright() as pw:
     check("replay after end works", "pause" in btn.lower() or "1 of 2" in cnt2, btn + " / " + cnt2)
     pg.click(".cplay")  # pause
     pg.locator(".cseq").select_option("ka")
+    pg.wait_for_function(
+        "() => { const t=(document.querySelector('.smouth')?.textContent||'');"
+        " return t.includes('tongue back'); }", timeout=20000)
+    _mt = pg.locator(".smouth").text_content() or ""
+    _mh = pg.locator(".smouth").inner_html()
+    check("ka shows velar tongue-back cue", "tongue back" in _mt.lower(),
+          f"text={_mt!r} html_len={len(_mh)} place={pg.locator('.smouth').get_attribute('data-place')} seq={pg.locator('.cseq').input_value()} state={pg.locator('.cchant .scount').inner_text()[:40]!r}")
     pg.click(".cplay")
     pg.wait_for_timeout(4000)
     check("ka-varga plays", "1 of 5" in pg.locator(".cchant .scount").inner_text() or "2 of 5" in pg.locator(".cchant .scount").inner_text(), pg.locator(".cchant .scount").inner_text())
