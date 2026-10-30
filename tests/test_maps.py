@@ -324,6 +324,35 @@ class TestPTVGuide(unittest.TestCase):
         self.assertIn("bliss", n1)
 
 
+class TestMeditations(unittest.TestCase):
+    def test_ten_stages_present_and_ordered(self):
+        m = json.loads((ROOT / "site/data/meditations.json").read_text(encoding="utf-8"))
+        ns = [s["n"] for s in m["stages"]]
+        self.assertEqual(ns, list(range(1, 11)))
+
+    def test_segments_open_practice_close(self):
+        m = json.loads((ROOT / "site/data/meditations.json").read_text(encoding="utf-8"))
+        for st in m["stages"]:
+            segs = st["segments"]
+            self.assertGreaterEqual(len(segs), 2, st["n"])
+            for sg in segs:
+                self.assertTrue(sg.get("say", "").strip(), st["n"])
+            # breath rule lives in the open frame (TĀ 4.91), not repeated per close
+            self.assertIn("Breathe naturally, never forcing the breath", segs[0]["say"], st["n"])
+            self.assertGreaterEqual(segs[0].get("hold", 0), 180, f"stage {st['n']} practice hold too short")
+            self.assertEqual(segs[-1].get("hold", 0), 0, st["n"])
+
+    def test_assembly_labeled(self):
+        m = json.loads((ROOT / "site/data/meditations.json").read_text(encoding="utf-8"))
+        self.assertIn("ASSEMBLY", m.get("note", ""))
+
+    def test_rendered_tracks_exist(self):
+        for n in range(1, 11):
+            p = ROOT / "site" / "audio" / "meditations" / f"m{n}.mp3"
+            self.assertTrue(p.exists(), f"m{n}.mp3 missing")
+            self.assertGreater(p.stat().st_size, 1_000_000, f"m{n} suspiciously small")
+
+
 if __name__ == "__main__":
     rc = unittest.main(verbosity=2, exit=False).result.wasSuccessful()
     sys.exit(0 if rc else 1)

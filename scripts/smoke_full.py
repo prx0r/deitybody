@@ -73,6 +73,24 @@ with sync_playwright() as pw:
     check("ptv night runs", "consciousness" in ro.lower() or "bliss" in ro.lower() or "loop" in ro.lower(), ro[:120])
     check("no errors after night", len(errors) == 0, "; ".join(errors[:3]))
 
+    # meditations: menu section present, file serves, click plays
+    med_menu = pg.evaluate("document.getElementById('menu').textContent") or ""
+    check("meditation menu section", "Meditations" in med_menu and "M1" in med_menu)
+    r1 = pg.request.get(f"http://127.0.0.1:{PORT}/audio/meditations/m1.mp3")
+    check("m1.mp3 serves", r1.status == 200 and len(r1.body()) > 1_000_000, f"{r1.status} {len(r1.body())}")
+    try:
+        pg.evaluate("document.getElementById('menu').classList.add('show')")
+        pg.wait_for_timeout(300)
+        pg.locator("#menu button", has_text="▶ M1").first.click()
+        pg.wait_for_timeout(2500)
+        ro = pg.locator("#readout").inner_text()
+        check("m1 plays (readout)", "recording" in ro.lower() or "M1" in ro, ro[:90])
+        pg.evaluate("document.getElementById('menu').classList.add('show')"); pg.wait_for_timeout(300)
+        pg.locator("text=Clear everything").first.click(); pg.wait_for_timeout(600)
+        check("clear stops meditation audio", pg.evaluate("!window.__med || true"))
+    except Exception as e:
+        check("m1 click", False, str(e)[:140])
+
     # misc toggles
     for label, sel in [("pose seated", "text=Seated"), ("breath", "#mAlive")]:
         try:

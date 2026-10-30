@@ -113,7 +113,7 @@ function speak(t){
   try{ const u=new SpeechSynthesisUtterance(t); u.rate=.95; speechSynthesis.speak(u); }catch(e){}
 }
 function runScore(events, meta){
-  stopMantra();
+  stopMantra(); stopMeditation();
   session.loadPractice(meta||{id:'adhoc',title:'practice'}, events);
   try{ speechSynthesis.cancel(); }catch(e){}
   droneStop();
@@ -904,6 +904,21 @@ function stopMantra(){
   mantraLoop.timers.forEach(clearTimeout); mantraLoop.timers=[];
   mantraStopAudio();
 }
+/* ---------- recorded meditations (site/data/meditations.json → audio/meditations/mN.mp3) ---------- */
+let medAudio=null;
+function stopMeditation(){ if(medAudio){ try{medAudio.pause();}catch(e){} medAudio=null; } }
+function playMeditation(n,title){
+  stopMeditation(); stopMantra();
+  try{ if(chantPlayer&&chantPlayer.playing) chantPlayer.pause(); }catch(e){}
+  try{ session.stop(); }catch(e){}
+  const a=new Audio('audio/meditations/m'+n+'.mp3');
+  a.onerror=()=>{ readout.innerHTML='<b>M'+n+'</b> · recording not on disk — scripts/render_meditations.py'; medAudio=null; };
+  a.onended=()=>{ readout.innerHTML='<b>M'+n+' · '+title+'</b> · complete — rest as long as you like'; medAudio=null; };
+  a.play().then(()=>{
+    medAudio=a;
+    readout.innerHTML='<b>M'+n+' · '+title+'</b> · recording — frame, silence, close; Clear or any play stops it';
+  }).catch(()=>{ readout.innerHTML='<b>M'+n+'</b> · tap ▶ again to start'; });
+}
 function mantraPlayAudio(url){
   mantraStopAudio();
   try{
@@ -1023,7 +1038,7 @@ function chantSeqFor(kind){
 async function openChant(p){
   loadPhase(p);
   ensureAudio();
-  stopMantra();
+  stopMeditation(); stopMantra();
   if(!chantReg){ chantReg=await loadRegistry(); ChantPlayer.setRecords({phonemes:chantReg.records}); }
   if(!chantPlayer){
     chantPlayer=new ChantPlayer(actx);
@@ -1210,6 +1225,12 @@ function buildMenu(){
   r=sec('Practices — pick a tradition, then a course, then a phase');
   const tradHost=document.createElement('div'); tradHost.id='tradHost'; menu.appendChild(tradHost);
   fetch('data/traditions.json').then(x=>x.json()).then(g=>renderTraditions({traditions:(g.traditions||[]).filter(t=>t.id==='trika')})).catch(()=>renderTraditionsFallback());
+  r=sec('Meditations — recorded sittings: frame, silence, close (curriculum stages 1–10)');
+  [[1,'Full body round'],[2,'Vowel powers'],[3,'Varga isolation'],[4,'Recall both ways'],
+   [5,'Reverse pass'],[6,'Aṅga five points'],[7,'Mantra trajectory'],[8,'Ascent + nectar'],
+   [9,'Mālinī order'],[10,'Gaze inward']].forEach(([n2,t2])=>{
+    btn(r,'▶ M'+n2+' · '+t2,()=>playMeditation(n2,t2));
+  });
   r=sec('Display');
   btn(r,'Breath pacer',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
   btn(r,'Sound shapes',()=>toggleChladni(),'mChlad');
@@ -1297,7 +1318,7 @@ function bodyOn(v){
 /* ---------- clear: back to blank living canvas ---------- */
 function clearAll(){
   try{ session.stop(); }catch(e){}
-  stopMantra();
+  stopMeditation(); stopMantra();
   if(scanMode){scanMode=null; scanBand.visible=false;}
   setVisibleDeep(yantra,false);
   if(typeof vitLayer!=='undefined'&&vitLayer) setVisibleDeep(vitLayer.group,false);

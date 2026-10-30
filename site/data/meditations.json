@@ -1,0 +1,59 @@
+{
+  "id": "meditations-v1",
+  "note": "Recorded sittings, one per curriculum stage: open frame, baked practice silence, close question. ASSEMBLY — timings, wording and close-questions are modern apparatus; the practices themselves are the attested curriculum stages (see data/curriculum.json). Breath phrasing per TĀ 4.91. No doctrine invented; question prompts are phenomenological, not claims.",
+  "voice": "slow guide (community Osho-style — direction label only, never worn as identity)",
+  "voice_id": "06134e9a49cb4a36997b75402c8a0621",
+  "model": "s2.1-pro-free",
+  "stages": [
+    {"n": 1, "title": "Full body round",
+     "segments": [
+       {"say": "Full body round. Sit upright, hands resting. Breathe naturally, never forcing the breath. All fifty sounds, in order: sound, touch, locus. Begin with a at the forehead and continue to kṣa. I will be quiet while you chant.", "hold": 600},
+       {"say": "The round is complete. Stop the practice. Let the breath find its own length. One question, not to answer, only to feel: was there a place the round passed through you? Rest.", "hold": 0}
+     ]},
+    {"n": 2, "title": "Vowel powers",
+     "segments": [
+       {"say": "Vowel powers. Sit upright, hands resting. Breathe naturally, never forcing the breath. Each vowel carries its power, not only its sound. Two phonemes tonight, at their loci: chant aloud, touch, listen. Begin.", "hold": 600},
+       {"say": "The practice stops here. One question, not to answer, only to feel: did the power arrive, or only the sound? Rest.", "hold": 0}
+     ]},
+    {"n": 3, "title": "Varga isolation",
+     "segments": [
+       {"say": "One limb tonight. Sit upright, hands resting. Breathe naturally, never forcing the breath. Five slow rounds of one varga, the arc of its limb felt from shoulder to fingers. Begin.", "hold": 600},
+       {"say": "Five rounds are done. One question, not to answer, only to feel: did the limb feel spoken to? Rest.", "hold": 0}
+     ]},
+    {"n": 4, "title": "Recall, both directions",
+     "segments": [
+       {"say": "Recall practice. Sit upright, hands resting. Breathe naturally, never forcing the breath. Sound and body point, both directions, no chart: hear it, know where it lives; touch the place, name the sound. Begin.", "hold": 600},
+       {"say": "Enough. One question, not to answer, only to feel: what knew the point before the chart answered? Rest.", "hold": 0}
+     ]},
+    {"n": 5, "title": "Reverse pass",
+     "segments": [
+       {"say": "The reverse round. Sit upright, hands resting. Breathe naturally, never forcing the breath. From kṣa back toward a, slower than the install, the field emptying as you go. Begin.", "hold": 600},
+       {"say": "The reverse round is complete. One question, not to answer, only to feel: what remains standing when the field empties? Rest.", "hold": 0}
+     ]},
+    {"n": 6, "title": "Aṅga five points",
+     "segments": [
+       {"say": "The rapid install. Sit upright, hands resting. Breathe naturally, never forcing the breath. Five points: heart, head, shoulders, eyes, hands. Each formula voiced aloud at its place, three rounds. Begin.", "hold": 240},
+       {"say": "The rounds are done. One question, not to answer, only to feel: were the five points one gesture? Rest.", "hold": 0}
+     ]},
+    {"n": 7, "title": "Mantra trajectory",
+     "segments": [
+       {"say": "Mantra trajectory. Sit upright, hands resting. Breathe naturally, never forcing the breath. Tonight's mantra over the installed body: let the sound carry the attention along its route. Begin.", "hold": 600},
+       {"say": "The trajectory rests. One question, not to answer, only to feel: did the sound carry you, or did you carry the sound? Rest.", "hold": 0}
+     ]},
+    {"n": 8, "title": "Ascent and nectar",
+     "segments": [
+       {"say": "OM ascent. Sit upright, hands resting. Breathe naturally, never forcing the breath. Station by station from the heart up to the crown, then the nectar raining back down. Ride it both ways. Begin.", "hold": 600},
+       {"say": "The ascent and the descent are done. One question, not to answer, only to feel: where did the nectar land? Rest.", "hold": 0}
+     ]},
+    {"n": 9, "title": "Mālinī order",
+     "segments": [
+       {"say": "Mālinī order. Sit upright, hands resting. Breathe naturally, never forcing the breath. Only if Mātṛkā is already automatic: the same fifty sounds in her sequence, from na to pha, her own loci. Begin.", "hold": 600},
+       {"say": "The round is complete. One question, not to answer, only to feel: whose order was that? Rest.", "hold": 0}
+     ]},
+    {"n": 10, "title": "Gaze inward",
+     "segments": [
+       {"say": "Gaze practice. Sit upright, hands resting. Breathe naturally, never forcing the breath. Rest the vision on one point, the body wide around it. Let the sound turn inward. Begin.", "hold": 480},
+       {"say": "The gaze releases. One question, not to answer, only to feel: who is watching the gaze? Rest.", "hold": 0}
+     ]}
+  ]
+}
