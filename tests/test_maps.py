@@ -372,6 +372,39 @@ class TestCompanions(unittest.TestCase):
             self.assertGreater(p.stat().st_size, 100_000, f"c{n} suspiciously small")
 
 
+class TestCurriculum(unittest.TestCase):
+    def test_ten_stages_ordered_with_anchors(self):
+        c = json.loads((ROOT / "data/curriculum.json").read_text(encoding="utf-8"))
+        st = c["stages"]
+        self.assertEqual([s["n"] for s in st], list(range(1, 11)))
+        for s2 in st:
+            self.assertTrue(s2.get("goal"), s2["n"])
+            self.assertTrue(s2.get("graduation"), s2["n"])
+            self.assertTrue(s2.get("attested"), s2["n"])
+            self.assertTrue(s2.get("assembly"), s2["n"])
+
+    def test_menu_refs_exist(self):
+        c = json.loads((ROOT / "data/curriculum.json").read_text(encoding="utf-8"))
+        t = json.loads((ROOT / "site/data/traditions.json").read_text(encoding="utf-8"))
+        tri = [x for x in t["traditions"] if x["id"] == "trika"][0]
+        have = {ph["id"] for co in tri["courses"] for ph in co["phases"]}
+        refs = set()
+        for s2 in c["stages"]:
+            m = s2["menu"]
+            import re as _re
+            for r in _re.findall(r"\b([mn]\d+|mal1|vbt24)\b", m):
+                refs.add(r)
+        self.assertTrue(refs <= have, f"curriculum refs missing from menu: {refs - have}")
+
+    def test_ptv_powers_match_nights(self):
+        c = json.loads((ROOT / "data/curriculum.json").read_text(encoding="utf-8"))
+        ptv = json.loads((ROOT / "site/data/ptv_nights.json").read_text(encoding="utf-8"))
+        stage2 = [s2 for s2 in c["stages"] if s2["n"] == 2][0]
+        # stage 2 title/notes must point at the same nights file the app plays
+        self.assertIn("Paratrishika nights", stage2["menu"])
+        self.assertEqual(len(ptv["nights"]), 8)
+
+
 if __name__ == "__main__":
     rc = unittest.main(verbosity=2, exit=False).result.wasSuccessful()
     sys.exit(0 if rc else 1)
