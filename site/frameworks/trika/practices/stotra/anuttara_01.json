@@ -1,0 +1,402 @@
+{
+ "id": "anuttara_01",
+ "title": "Anuttarāṣṭikā · 01",
+ "provenance": "kashaudio Anuttarāṣṭikā AI render; syllable onsets = MMS + matra law (kashaudio PROCESS.md); syllable→node = onset phoneme (ASSEMBLY, same convention as data/mantras.json)",
+ "classification": {
+  "kind": "stotra-recitation",
+  "status": "assembly"
+ },
+ "dur": 22.09,
+ "audio": "audio/stotra/anuttara_01.ogg",
+ "events": [
+  {
+   "t": 0.0,
+   "do": "audio",
+   "url": "audio/stotra/anuttara_01.ogg"
+  },
+  {
+   "t": 0.06,
+   "do": "flash",
+   "node": "sa",
+   "cue": "saṅkrāmo'tra"
+  },
+  {
+   "t": 0.4,
+   "do": "flash",
+   "node": "ra"
+  },
+  {
+   "t": 0.7,
+   "do": "flash",
+   "node": "ma"
+  },
+  {
+   "t": 0.96,
+   "do": "flash",
+   "node": "ta"
+  },
+  {
+   "t": 1.161,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 1.321,
+   "do": "flash",
+   "node": "bha"
+  },
+  {
+   "t": 1.621,
+   "do": "flash",
+   "node": "va"
+  },
+  {
+   "t": 1.781,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 2.081,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 2.181,
+   "do": "flash",
+   "node": "ca"
+  },
+  {
+   "t": 2.321,
+   "do": "flash",
+   "node": "ka"
+  },
+  {
+   "t": 2.461,
+   "do": "flash",
+   "node": "tha"
+  },
+  {
+   "t": 2.821,
+   "do": "flash",
+   "node": "ya"
+  },
+  {
+   "t": 3.101,
+   "do": "flash",
+   "node": "ta"
+  },
+  {
+   "t": 3.422,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 3.582,
+   "do": "flash",
+   "node": "ca"
+  },
+  {
+   "t": 3.882,
+   "do": "flash",
+   "node": "ca"
+  },
+  {
+   "t": 4.242,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 4.362,
+   "do": "flash",
+   "node": "ca"
+  },
+  {
+   "t": 5.623,
+   "do": "flash",
+   "node": "dha",
+   "cue": "dhyānaṃ"
+  },
+  {
+   "t": 5.923,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 6.203,
+   "do": "flash",
+   "node": "va"
+  },
+  {
+   "t": 6.463,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 6.563,
+   "do": "flash",
+   "node": "ca"
+  },
+  {
+   "t": 6.703,
+   "do": "flash",
+   "node": "dha"
+  },
+  {
+   "t": 6.983,
+   "do": "flash",
+   "node": "ra"
+  },
+  {
+   "t": 7.063,
+   "do": "flash",
+   "node": "ṇa"
+  },
+  {
+   "t": 7.383,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 7.483,
+   "do": "flash",
+   "node": "ca"
+  },
+  {
+   "t": 7.603,
+   "do": "flash",
+   "node": "ja"
+  },
+  {
+   "t": 7.744,
+   "do": "flash",
+   "node": "pa"
+  },
+  {
+   "t": 8.244,
+   "do": "flash",
+   "node": "ya"
+  },
+  {
+   "t": 8.524,
+   "do": "flash",
+   "node": "sa"
+  },
+  {
+   "t": 8.824,
+   "do": "flash",
+   "node": "ra"
+  },
+  {
+   "t": 8.964,
+   "do": "flash",
+   "node": "ya"
+  },
+  {
+   "t": 9.304,
+   "do": "flash",
+   "node": "sa"
+  },
+  {
+   "t": 9.704,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 9.844,
+   "do": "flash",
+   "node": "ca"
+  },
+  {
+   "t": 11.045,
+   "do": "flash",
+   "node": "ta",
+   "cue": "tatkiṃ"
+  },
+  {
+   "t": 11.285,
+   "do": "flash",
+   "node": "ka"
+  },
+  {
+   "t": 11.605,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 11.885,
+   "do": "flash",
+   "node": "ma"
+  },
+  {
+   "t": 12.005,
+   "do": "flash",
+   "node": "sa"
+  },
+  {
+   "t": 12.145,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 12.386,
+   "do": "flash",
+   "node": "ca"
+  },
+  {
+   "t": 12.546,
+   "do": "flash",
+   "node": "ta"
+  },
+  {
+   "t": 12.866,
+   "do": "flash",
+   "node": "va"
+  },
+  {
+   "t": 12.986,
+   "do": "flash",
+   "node": "da"
+  },
+  {
+   "t": 13.126,
+   "do": "flash",
+   "node": "pa"
+  },
+  {
+   "t": 13.246,
+   "do": "flash",
+   "node": "ra"
+  },
+  {
+   "t": 13.566,
+   "do": "flash",
+   "node": "sa"
+  },
+  {
+   "t": 13.866,
+   "do": "flash",
+   "node": "ya"
+  },
+  {
+   "t": 14.126,
+   "do": "flash",
+   "node": "ca"
+  },
+  {
+   "t": 14.266,
+   "do": "flash",
+   "node": "ta"
+  },
+  {
+   "t": 14.647,
+   "do": "flash",
+   "node": "ra"
+  },
+  {
+   "t": 14.887,
+   "do": "flash",
+   "node": "ya"
+  },
+  {
+   "t": 15.027,
+   "do": "flash",
+   "node": "ta"
+  },
+  {
+   "t": 16.848,
+   "do": "flash",
+   "node": "na",
+   "cue": "na"
+  },
+  {
+   "t": 17.088,
+   "do": "flash",
+   "node": "ta"
+  },
+  {
+   "t": 17.488,
+   "do": "flash",
+   "node": "ga"
+  },
+  {
+   "t": 17.828,
+   "do": "flash",
+   "node": "na"
+  },
+  {
+   "t": 17.968,
+   "do": "flash",
+   "node": "pa"
+  },
+  {
+   "t": 18.088,
+   "do": "flash",
+   "node": "ra"
+  },
+  {
+   "t": 18.368,
+   "do": "flash",
+   "node": "ra"
+  },
+  {
+   "t": 18.488,
+   "do": "flash",
+   "node": "ha"
+  },
+  {
+   "t": 18.849,
+   "do": "flash",
+   "node": "bha"
+  },
+  {
+   "t": 18.969,
+   "do": "flash",
+   "node": "ja"
+  },
+  {
+   "t": 19.129,
+   "do": "flash",
+   "node": "sa"
+  },
+  {
+   "t": 19.269,
+   "do": "flash",
+   "node": "kha"
+  },
+  {
+   "t": 19.749,
+   "do": "flash",
+   "node": "sa"
+  },
+  {
+   "t": 20.049,
+   "do": "flash",
+   "node": "va"
+  },
+  {
+   "t": 20.449,
+   "do": "flash",
+   "node": "ya"
+  },
+  {
+   "t": 20.589,
+   "do": "flash",
+   "node": "tha"
+  },
+  {
+   "t": 20.969,
+   "do": "flash",
+   "node": "va"
+  },
+  {
+   "t": 21.25,
+   "do": "flash",
+   "node": "tha"
+  },
+  {
+   "t": 21.41,
+   "do": "flash",
+   "node": "ta"
+  }
+ ]
+}

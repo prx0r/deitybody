@@ -430,6 +430,42 @@ class TestLessons(unittest.TestCase):
         self.assertEqual(lt, [x["title"] for x in m["stages"]])
 
 
+class TestStotraScores(unittest.TestCase):
+    def test_manifest_matches_files(self):
+        m = json.loads((ROOT / "site/data/stotras.json").read_text(encoding="utf-8"))
+        self.assertEqual(m["id"], "stotras-v1")
+        self.assertIn("ASSEMBLY", m.get("note", ""))
+        n = 0
+        for w in m["works"]:
+            self.assertTrue(w.get("verses"))
+            for v in w["verses"]:
+                n += 1
+                p = ROOT / "site" / v["score"]
+                self.assertTrue(p.is_file(), v["score"])
+        self.assertEqual(n, 26)
+
+    def test_scores_shape_and_nodes(self):
+        m = json.loads((ROOT / "data/matrika_body_map.json").read_text(encoding="utf-8"))
+        valid = set(v["iast"] for v in m["vowels"])
+        for v in m["vargas"]:
+            valid |= set(s2["iast"] for s2 in v["sequence"])
+        sc_dir = ROOT / "site/frameworks/trika/practices/stotra"
+        for p in sorted(sc_dir.glob("*.json")):
+            sc = json.loads(p.read_text(encoding="utf-8"))
+            ev = sc["events"]
+            self.assertEqual(ev[0]["do"], "audio", p.name)
+            self.assertEqual(ev[0]["t"], 0.0, p.name)
+            self.assertEqual(ev[0]["url"], sc["audio"], p.name)
+            self.assertTrue((ROOT / "site" / sc["audio"]).is_file(), p.name)
+            ts = [e["t"] for e in ev]
+            self.assertEqual(ts, sorted(ts), p.name)
+            flashes = [e for e in ev if e["do"] == "flash"]
+            self.assertGreater(len(flashes), 10, p.name)
+            for f in flashes:
+                self.assertIn(f["node"], valid, f"{p.name} -> {f['node']}")
+            self.assertEqual(sc["classification"]["status"], "assembly", p.name)
+
+
 if __name__ == "__main__":
     rc = unittest.main(verbosity=2, exit=False).result.wasSuccessful()
     sys.exit(0 if rc else 1)

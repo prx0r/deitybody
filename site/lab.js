@@ -934,11 +934,11 @@ function mantraPlayAudio(url){
     s.start(); mantraLoop.src=s;
   }catch(e){}
 }
-async function playMantraScore(scorePath, meta, events){
+async function playMantraScore(scorePath, meta, events, audioUrl0){
   stopMantra();
   ensureAudio();
   const key=scorePath.split('/').pop();
-  const audioUrl=MANTRA_AUDIO[key];
+  const audioUrl=audioUrl0||MANTRA_AUDIO[key];
   runScore(events, meta);
   if(!audioUrl) return;
   let audioDur=0;
@@ -968,7 +968,14 @@ function playScorePath(s,p){
     return;
   }
   stopMantra();
-  score(s).then(j=>runScore(j.events||[],{id:j.id,title:j.title||p.title,source:j.provenance||'timed score'}));
+  score(s).then(j=>{
+    const meta={id:j.id,title:j.title||p.title,source:j.provenance||'timed score'};
+    if(j.audio && Array.isArray(j.events)){
+      playMantraScore(s, meta, j.events, j.audio);
+      return;
+    }
+    runScore(j.events||[], meta);
+  });
   readout.innerHTML='<b>'+s.split('/').pop().replace('.json','')+'</b> · playing — light follows sound';
 }
 function playPhase(p){
@@ -1174,6 +1181,25 @@ function lessonRun(a,L){
     readout.innerHTML='<b>L6 · formula prompter</b> · score not built yet — formulas: corpus/extracts/TA15_NYASA.md';
   }
 }
+function renderStotras(doc){
+  const host=document.getElementById('stotraHost'); if(!host) return;
+  for(const w of (doc.works||[])){
+    const d=document.createElement('details'); d.className='trad';
+    const sm=document.createElement('summary'); sm.textContent=w.title;
+    d.appendChild(sm);
+    const row=document.createElement('div'); row.className='grid2'; d.appendChild(row);
+    for(const v of (w.verses||[])){
+      const b=document.createElement('button'); b.textContent='▶ '+v.label;
+      b.onclick=()=>{
+        playScorePath(v.score,{fw:'trika',cfg:'matrika',title:w.title+' · '+v.label});
+        menuMark(); menuClose();
+      };
+      row.appendChild(b);
+    }
+    host.appendChild(d);
+  }
+  menuMark();
+}
 function renderLessons(doc){
   const host=document.getElementById('lessonHost'); if(!host) return;
   for(const L of (doc.lessons||[])){
@@ -1212,6 +1238,10 @@ function buildMenu(){
   const lessonHost=document.createElement('div'); lessonHost.id='lessonHost'; menu.appendChild(lessonHost);
   fetch('data/lessons.json').then(x=>x.json()).then(renderLessons)
     .catch(()=>{ readout.innerHTML='<b>lessons</b> · data/lessons.json missing'; });
+  r=sec('Stotra recitations — the chant lights the body (kashaudio)');
+  const stHost=document.createElement('div'); stHost.id='stotraHost'; menu.appendChild(stHost);
+  fetch('data/stotras.json').then(x=>x.json()).then(renderStotras)
+    .catch(()=>{ readout.innerHTML='<b>stotras</b> · data/stotras.json missing'; });
   r=sec('Display');
   btn(r,'Breath pacer',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
   btn(r,'Sound shapes',()=>toggleChladni(),'mChlad');

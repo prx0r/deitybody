@@ -126,6 +126,26 @@ with sync_playwright() as pw:
     except Exception as e:
         check("c1 click", False, str(e)[:140])
 
+    # stotra recitations: menu section + verse plays with looping audio
+    st_menu = pg.evaluate("document.getElementById('menu').textContent") or ""
+    check("stotra section in menu", "Stotra recitations" in st_menu and "Bhairavastava" in st_menu)
+    rb = pg.request.get(f"http://127.0.0.1:{PORT}/frameworks/trika/practices/stotra/bhairava_01.json")
+    check("stotra score serves", rb.status == 200 and b'"audio"' in rb.body(), f"{rb.status}")
+    try:
+        pg.evaluate("document.getElementById('menu').classList.add('show');"
+                    "[...document.querySelectorAll('#menu details')].forEach(d=>d.open=true)")
+        pg.wait_for_timeout(300)
+        pg.locator("#menu button", has_text="▶ v1").first.click()
+        pg.wait_for_function(
+            "() => { const t=(document.getElementById('readout').textContent||'');"
+            " return t.includes('loop'); }", timeout=15000)
+        check("stotra verse plays (loop readout)", True)
+        pg.evaluate("document.getElementById('menu').classList.add('show')")
+        pg.wait_for_timeout(300)
+        pg.locator("text=Clear everything").first.click(); pg.wait_for_timeout(500)
+    except Exception as e:
+        check("stotra play", False, str(e)[:140])
+
     # misc toggles
     for label, sel in [("pose seated", "text=Seated"), ("breath", "#mAlive")]:
         try:

@@ -1,0 +1,128 @@
+{
+ "id": "stotras-v1",
+ "note": "Chant audio from prx0r/kashaudio (read-only plug). ASSEMBLY: flash node = syllable onset phoneme; lights follow the recitation — never presented as attested nyāsa placement.",
+ "works": [
+  {
+   "title": "Bhairavastava — AI chant (10 verses)",
+   "provenance": "kashaudio Bhairavastava AI render; syllable onsets = MMS + matra law (kashaudio PROCESS.md)",
+   "verses": [
+    {
+     "label": "v01",
+     "score": "frameworks/trika/practices/stotra/bhairava_01.json"
+    },
+    {
+     "label": "v02",
+     "score": "frameworks/trika/practices/stotra/bhairava_02.json"
+    },
+    {
+     "label": "v03",
+     "score": "frameworks/trika/practices/stotra/bhairava_03.json"
+    },
+    {
+     "label": "v04",
+     "score": "frameworks/trika/practices/stotra/bhairava_04.json"
+    },
+    {
+     "label": "v05",
+     "score": "frameworks/trika/practices/stotra/bhairava_05.json"
+    },
+    {
+     "label": "v06",
+     "score": "frameworks/trika/practices/stotra/bhairava_06.json"
+    },
+    {
+     "label": "v07",
+     "score": "frameworks/trika/practices/stotra/bhairava_07.json"
+    },
+    {
+     "label": "v08",
+     "score": "frameworks/trika/practices/stotra/bhairava_08.json"
+    },
+    {
+     "label": "v09",
+     "score": "frameworks/trika/practices/stotra/bhairava_09.json"
+    },
+    {
+     "label": "v10-phala",
+     "score": "frameworks/trika/practices/stotra/bhairava_10_phala.json"
+    }
+   ]
+  },
+  {
+   "title": "Anuttarāṣṭikā — AI chant (8 verses)",
+   "provenance": "kashaudio Anuttarāṣṭikā AI render; syllable onsets = MMS + matra law (kashaudio PROCESS.md)",
+   "verses": [
+    {
+     "label": "v01",
+     "score": "frameworks/trika/practices/stotra/anuttara_01.json"
+    },
+    {
+     "label": "v02",
+     "score": "frameworks/trika/practices/stotra/anuttara_02.json"
+    },
+    {
+     "label": "v03",
+     "score": "frameworks/trika/practices/stotra/anuttara_03.json"
+    },
+    {
+     "label": "v04",
+     "score": "frameworks/trika/practices/stotra/anuttara_04.json"
+    },
+    {
+     "label": "v05",
+     "score": "frameworks/trika/practices/stotra/anuttara_05.json"
+    },
+    {
+     "label": "v06",
+     "score": "frameworks/trika/practices/stotra/anuttara_06.json"
+    },
+    {
+     "label": "v07",
+     "score": "frameworks/trika/practices/stotra/anuttara_07.json"
+    },
+    {
+     "label": "v08",
+     "score": "frameworks/trika/practices/stotra/anuttara_08.json"
+    }
+   ]
+  },
+  {
+   "title": "Anuttarāṣṭikā — traditional recitation (8)",
+   "provenance": "kashaudio traditional recitation, segment+MMS aligned; syllable onsets = matra law",
+   "verses": [
+    {
+     "label": "v01",
+     "score": "frameworks/trika/practices/stotra/ant_01.json"
+    },
+    {
+     "label": "v02",
+     "score": "frameworks/trika/practices/stotra/ant_02.json"
+    },
+    {
+     "label": "v03",
+     "score": "frameworks/trika/practices/stotra/ant_03.json"
+    },
+    {
+     "label": "v04",
+     "score": "frameworks/trika/practices/stotra/ant_04.json"
+    },
+    {
+     "label": "v05",
+     "score": "frameworks/trika/practices/stotra/ant_05.json"
+    },
+    {
+     "label": "v06",
+     "score": "frameworks/trika/practices/stotra/ant_06.json"
+    },
+    {
+     "label": "v07",
+     "score": "frameworks/trika/practices/stotra/ant_07.json"
+    },
+    {
+     "label": "v08",
+     "score": "frameworks/trika/practices/stotra/ant_08.json"
+    }
+   ]
+  }
+ ]
+}
