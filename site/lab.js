@@ -113,6 +113,7 @@ function speak(t){
   try{ const u=new SpeechSynthesisUtterance(t); u.rate=.95; speechSynthesis.speak(u); }catch(e){}
 }
 function runScore(events, meta){
+  stopMantra();
   session.loadPractice(meta||{id:'adhoc',title:'practice'}, events);
   try{ speechSynthesis.cancel(); }catch(e){}
   droneStop();
@@ -883,10 +884,69 @@ function loadPhase(p){
   if(p.ajahn){ startAjahn(); return {autoplay:true}; }
   return {};
 }
+/* ---------- mantra playback: phrase audio on loop, light rides the sound ----------
+   mantra.html already does this right (MantraPlayer + mantras.json). The lab
+   previously fired silent flashes once with no replay. This reuses the same
+   phrase recordings (audio/mantras/*.wav, see data/mantras.json) and loops
+   them with a breathing gap. Pressing the same ▶ restarts; Clear (or any
+   other score/chant) stops. The 50-round chant dock is untouched. */
+const MANTRA_AUDIO={
+  'aum.json':'audio/mantras/om.wav',
+  'soham.json':'audio/mantras/soham.wav',
+  'om.json':'audio/mantras/om.wav',
+  'namah-shivaya.json':'audio/mantras/om-namah-shivaya.wav'
+};
+const MANTRA_GAP=4.0;
+let mantraLoop={on:false,key:null,round:0,timers:[],src:null};
+function mantraStopAudio(){ if(mantraLoop.src){ try{mantraLoop.src.stop();}catch(e){} mantraLoop.src=null; } }
+function stopMantra(){
+  mantraLoop.on=false; mantraLoop.key=null; mantraLoop.round=0;
+  mantraLoop.timers.forEach(clearTimeout); mantraLoop.timers=[];
+  mantraStopAudio();
+}
+function mantraPlayAudio(url){
+  mantraStopAudio();
+  try{
+    const b=bufCache[url]; if(!b||!actx) return;
+    const s=actx.createBufferSource(); s.buffer=b;
+    s.connect((typeof analyser!=='undefined'&&analyser)?analyser:actx.destination);
+    s.start(); mantraLoop.src=s;
+  }catch(e){}
+}
+async function playMantraScore(scorePath, meta, events){
+  stopMantra();
+  ensureAudio();
+  const key=scorePath.split('/').pop();
+  const audioUrl=MANTRA_AUDIO[key];
+  runScore(events, meta);
+  if(!audioUrl) return;
+  let audioDur=0;
+  try{ const buf=await audioBuf(audioUrl); audioDur=buf.duration||0; }catch(e){}
+  const last=events.length?Math.max(...events.map(e=>e.t||0)):0;
+  const cycle=Math.max(audioDur,last)+MANTRA_GAP;
+  mantraLoop.on=true; mantraLoop.key=key; mantraLoop.round=1;
+  mantraPlayAudio(audioUrl);
+  readout.innerHTML='<b>'+meta.title+'</b> · sound on loop — press ▶ again to replay, Clear to stop';
+  const cycleOnce=()=>{
+    if(!mantraLoop.on||mantraLoop.key!==key) return;
+    mantraLoop.round++;
+    readout.innerHTML='<b>'+meta.title+'</b> · round '+mantraLoop.round+' — press ▶ again to restart, Clear to stop';
+    try{ session.play(); }catch(e){}
+    mantraPlayAudio(audioUrl);
+    mantraLoop.timers.push(setTimeout(cycleOnce, cycle*1000));
+  };
+  mantraLoop.timers.push(setTimeout(cycleOnce, cycle*1000));
+}
 function playScorePath(s,p){
   loadPhase(p);
-  if(s.endsWith('om.json')){ playOM(); return; }
-  if(s.endsWith('namah-shivaya.json')){ playNamah(); return; }
+  const key=s.split('/').pop();
+  if(key==='om.json'){ playOM(); return; }
+  if(key==='namah-shivaya.json'){ playNamah(); return; }
+  if(MANTRA_AUDIO[key]){
+    score(s).then(j=>playMantraScore(s,{id:j.id,title:j.title||p.title,source:j.provenance||'timed score'},j.events||[]));
+    return;
+  }
+  stopMantra();
   score(s).then(j=>runScore(j.events||[],{id:j.id,title:j.title||p.title,source:j.provenance||'timed score'}));
   readout.innerHTML='<b>'+s.split('/').pop().replace('.json','')+'</b> · playing — light follows sound';
 }
@@ -897,8 +957,10 @@ function playPhase(p){
   const scores=p.scores||[];
   if(!scores.length) return;
   const first=scores[0];
-  if(first.endsWith('om.json')){ playOM(); return; }
-  if(first.endsWith('namah-shivaya.json')){ playNamah(); return; }
+  const fkey=first.split('/').pop();
+  if(fkey==='om.json'){ playOM(); return; }
+  if(fkey==='namah-shivaya.json'){ playNamah(); return; }
+  if(MANTRA_AUDIO[fkey]){ playScorePath(first,p); return; }
   score(first).then(j=>{
     const evs=j.events||[];
     runScore(evs,{id:j.id,title:j.title||p.title,source:j.provenance||'timed score'});
@@ -928,8 +990,8 @@ function chantEls(){
     <div class="sflag"></div><div class="scount">ready</div>
     <div class="tport"><button class="cplay big">▶ chant</button>
      <button class="cprev">⏮</button><button class="cnext">⏭</button><button class="crep">↻</button></div>
-    <div class="srow"><label>series <select class="cseq"><option value="pair">starter a·ā</option><option value="vowels">vowels 16</option><option value="full" selected>full 50</option></select></label></div>
-    <div class="srow"><label>gap <input class="cgap" type="range" min="0.4" max="5" step="0.2" value="1.6"/></label><span class="cgapV">1.6s</span></div>
+     <div class="srow"><label>series <select class="cseq"><option value="pair">starter a·ā</option><option value="vowels">vowels 16</option><option value="full" selected>full 50</option><option value="full-rev">full 50 reversed (kṣa→a)</option><option value="ka">ka-varga · right arm</option><option value="ca">ca-varga · left arm</option><option value="tta">ṭa-varga · right leg</option><option value="ta">ta-varga · left leg</option><option value="pa">pa-varga · torso</option><option value="rest">ya→kṣa · spread</option></select></label></div>
+    <div class="srow"><label>gap <input class="cgap" type="range" min="0.4" max="15" step="0.2" value="1.6"/></label><span class="cgapV">1.6s</span></div>
     </div>
     <div class="cquiz" style="display:none"><div class="qprompt" style="min-height:2em"></div>
      <div class="qopts"></div><div class="qscore scount"></div>
@@ -951,11 +1013,17 @@ function chantEls(){
 function chantSeqFor(kind){
   const v=(chantEls().seq||{}).value||'full';
   void kind;
-  return v==='pair'?['a','ā']:v==='vowels'?CHANT16.slice():CHANT50.slice();
+  if(v==='pair') return ['a','ā'];
+  if(v==='vowels') return CHANT16.slice();
+  if(v==='full-rev') return CHANT50.slice().reverse();
+  const cuts={ka:[16,21],ca:[21,26],tta:[26,31],ta:[31,36],pa:[36,41],rest:[41,50]};
+  if(cuts[v]) return CHANT50.slice(cuts[v][0],cuts[v][1]);
+  return CHANT50.slice();
 }
 async function openChant(p){
   loadPhase(p);
   ensureAudio();
+  stopMantra();
   if(!chantReg){ chantReg=await loadRegistry(); ChantPlayer.setRecords({phonemes:chantReg.records}); }
   if(!chantPlayer){
     chantPlayer=new ChantPlayer(actx);
@@ -1009,7 +1077,7 @@ function chantShowCurrent(){
 function chantToggle(){
   const el=chantEls();
   if(chantPlayer.playing){ chantPlayer.pause(); el.play.textContent='▶ chant'; }
-  else{ chantPlayer.play(); el.play.textContent='⏸ pause'; chantShowCurrent(); }
+  else{ if(chantPlayer.idx>=chantPlayer.seq.length) chantPlayer.idx=0; chantPlayer.play(); el.play.textContent='⏸ pause'; chantShowCurrent(); }
 }
 function chantStopAll(){ if(chantPlayer)chantPlayer.stop(); const el=chantEls(); if(el.play)el.play.textContent='▶ chant'; }
 async function chantClip(id){
@@ -1077,6 +1145,12 @@ function renderTraditions(g){
           const ch=document.createElement('button'); ch.textContent='Chant audio'; ch.className='play';
           ch.onclick=()=>{ openChant(p); menuMark(); };
           row.append(show,ch);
+        } else if(p.ptvNight!=null){
+          const b=document.createElement('button'); b.textContent='▶ Night '+p.ptvNight; b.className='play';
+          b.onclick=()=>{ playPtvNight(p.ptvNight); menuMark(); menuClose(); };
+          const info2=document.createElement('button'); info2.textContent='Show body first';
+          info2.onclick=()=>{ loadPhase(p); readout.innerHTML='<b>'+p.title+'</b> · body ready — press ▶ Night'; menuMark(); };
+          row.append(info2,b);
         } else if(p.lotus){
           const b=document.createElement('button'); b.textContent='Show lotus'; b.className='play';
           b.onclick=()=>{ loadPhase(p); readout.innerHTML='<b>'+p.title+'</b> · lotus shown — tap petals'; menuMark(); menuClose(); };
@@ -1135,7 +1209,7 @@ function buildMenu(){
   btn(r,'Body outline',e=>{bodyOn(!bodyLinesOn); menuMark();},'mBody');
   r=sec('Practices — pick a tradition, then a course, then a phase');
   const tradHost=document.createElement('div'); tradHost.id='tradHost'; menu.appendChild(tradHost);
-  fetch('data/traditions.json').then(x=>x.json()).then(g=>renderTraditions(g)).catch(()=>renderTraditionsFallback());
+  fetch('data/traditions.json').then(x=>x.json()).then(g=>renderTraditions({traditions:(g.traditions||[]).filter(t=>t.id==='trika')})).catch(()=>renderTraditionsFallback());
   r=sec('Display');
   btn(r,'Breath pacer',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
   btn(r,'Sound shapes',()=>toggleChladni(),'mChlad');
@@ -1151,7 +1225,7 @@ function buildMenu(){
   btn(ar,'Nerve lines map',()=>{toggleNadis(); menuMark();},'mNadi');
   btn(ar,'Microphone breath',()=>{toggleMic(); menuMark();},'mMic');
   const n=document.createElement('p'); n.className='note';
-  n.textContent='One tradition per sitting. Sound + body point together — that is the practice.';
+    n.textContent='Trika only — other tracks parked (see catalog). One tradition per sitting. Sound + body point together — that is the practice.';
   menu.appendChild(n);
 }
 /* ---------- pose system: energy inhabits the posture ---------- */
@@ -1223,6 +1297,7 @@ function bodyOn(v){
 /* ---------- clear: back to blank living canvas ---------- */
 function clearAll(){
   try{ session.stop(); }catch(e){}
+  stopMantra();
   if(scanMode){scanMode=null; scanBand.visible=false;}
   setVisibleDeep(yantra,false);
   if(typeof vitLayer!=='undefined'&&vitLayer) setVisibleDeep(vitLayer.group,false);
@@ -1239,16 +1314,114 @@ function clearAll(){
 }
 /* practice actions (also callable via postMessage in embeds) */
 function playOM(){
+  stopMantra();
   if(fw==='mp'){ if(MP)mpRun('descent'); return; }
   if(fw==='layayoga'){ lotusBloom(); return; }
   if(fw==='kalachakra'){ kalConverge(); return; }
-  score('frameworks/trika/practices/om.json').then(j=>runScore(j.events,{id:j.id,title:j.title,source:j.provenance}));
+  score('frameworks/trika/practices/om.json').then(j=>playMantraScore('frameworks/trika/practices/om.json',{id:j.id,title:j.title,source:j.provenance},j.events||[]));
 }
 function playNamah(){
+  stopMantra();
   if(fw==='mp'){ if(MP)mpRun('circulation'); return; }
   if(fw==='layayoga'){ lotusBloom(); return; }
   if(fw==='kalachakra'){ kalConverge(); return; }
-  score('frameworks/trika/practices/namah-shivaya.json').then(j=>runScore(j.variants[cfg],{id:j.id+'/'+cfg,title:j.title+' ('+cfg+')',source:j.provenance}));
+  score('frameworks/trika/practices/namah-shivaya.json').then(j=>playMantraScore('frameworks/trika/practices/namah-shivaya.json',{id:j.id+'/'+cfg,title:j.title+' ('+cfg+')',source:j.provenance},j.variants[cfg]||[]));
+}
+/* ---------- PTv nights: one power per phoneme, two phonemes per night ----------
+   Powers per Jaideva Singh's Parātrīśikāvivaraṇa vowel table (data/ptv_nights.json).
+   Voice + touch + locus, looping with a breathing gap. Pause (not reset) the
+   50-round chant dock if it happens to be playing; its state is untouched. */
+let PTVN=null;
+async function ptvNights(){
+  if(!PTVN) PTVN=await (await fetch('data/ptv_nights.json')).json();
+  return PTVN;
+}
+function ptvFlash(ph){
+  const k=P.findIndex(p=>p[0]===ph.id); if(k<0) return;
+  const p=P[k], n=nodes[k];
+  show(p); pop(k);
+  const y=n.anchor.position.y, st=styleForY(y);
+  pulse(Math.max(y-.4,channelY0),Math.min(y+.9,channelY1),.55,()=>ringPing(Math.min(y+.9,channelY1),st.color),st.color);
+  if(!ph.silent) clipFor(p).then(c=>{ if(c.url) play(c.url); });
+  readout.innerHTML='<b>'+p[1]+' · '+ph.power+'</b> · '+ph.locus+' — '+ph.cue;
+}
+let PTVG=null, PTVGM=null;
+async function guideText(){
+  if(!PTVG) PTVG=await (await fetch('data/guide_ptv.json')).json();
+  return PTVG;
+}
+async function guideManifest(){
+  if(!PTVGM) PTVGM=await (await fetch('audio/guide/guide.json')).json();
+  return PTVGM;
+}
+function sleepTracked(ms){
+  return new Promise(res=>{ const id=setTimeout(res, ms); mantraLoop.timers.push(id); });
+}
+function mantraPlayBuf(buf){
+  mantraStopAudio();
+  try{
+    if(!buf||!actx) return 0;
+    const s=actx.createBufferSource(); s.buffer=buf;
+    s.connect((typeof analyser!=='undefined'&&analyser)?analyser:actx.destination);
+    s.start(); mantraLoop.src=s; return buf.duration;
+  }catch(e){ return 0; }
+}
+async function playPtvNight(n){
+  stopMantra();
+  try{ if(chantPlayer&&chantPlayer.playing) chantPlayer.pause(); }catch(e){}
+  loadPhase({fw:'trika',cfg:'matrika'});
+  ensureAudio();
+  const nights=(await ptvNights()).nights;
+  const night=nights.find(x=>x.n===n)||nights[0];
+  const alive=()=>mantraLoop.on&&mantraLoop.key==='ptv-'+night.n;
+  runScore([],{id:'ptv-night-'+night.n,title:night.title,source:'PTv vowel powers (Jaideva Singh recension)'});
+  const dwells=[];
+  for(const ph of night.phonemes){
+    if(ph.silent){ dwells.push(3.2); continue; }
+    try{
+      const k=P.findIndex(p=>p[0]===ph.id);
+      const c=k>=0?await clipFor(P[k]):null;
+      const b=c&&c.url?await audioBuf(c.url):null;
+      dwells.push((b?b.duration:0.6)+MANTRA_GAP);
+    }catch(e){ dwells.push(3.0); }
+  }
+  mantraLoop.on=true; mantraLoop.key='ptv-'+night.n; mantraLoop.round=1;
+  // guided phase: spoken direction + 3 led rounds per phoneme, then open loop
+  try{
+    const [gt, gm]=await Promise.all([guideText(), guideManifest()]);
+    const gn=gt.nights.find(x=>x.n===night.n);
+    const mf=gm[String(night.n)];
+    if(gn&&mf&&mf.intro&&mf.dir1&&mf.dir2&&mf.close){
+      const intro=await audioBuf(mf.intro), d1=await audioBuf(mf.dir1),
+            d2=await audioBuf(mf.dir2), close=await audioBuf(mf.close);
+      readout.innerHTML='<b>'+night.title+'</b> · guided — listen, then chant aloud';
+      mantraPlayBuf(intro); await sleepTracked(intro.duration*1000+1500); if(!alive()) return;
+      const dirs=[d1,d2], dtext=gn.dirs;
+      for(let k=0;k<night.phonemes.length;k++){
+        readout.innerHTML='<b>'+dtext[k]+'</b>';
+        mantraPlayBuf(dirs[k]); await sleepTracked(dirs[k].duration*1000+1200); if(!alive()) return;
+        for(let r=0;r<3;r++){
+          ptvFlash(night.phonemes[k]);
+          await sleepTracked(dwells[k]*1000); if(!alive()) return;
+        }
+      }
+      mantraPlayBuf(close); await sleepTracked(close.duration*1000+2000); if(!alive()) return;
+    }
+  }catch(e){ /* no guide audio on disk — unguided loop below */ }
+  if(!alive()) return;
+  readout.innerHTML='<b>'+night.title+'</b> · sound on loop — press ▶ again to replay, Clear to stop';
+  const step=(k)=>{
+    if(!mantraLoop.on||mantraLoop.key!=='ptv-'+night.n) return;
+    if(k>=night.phonemes.length){
+      mantraLoop.round++;
+      readout.innerHTML='<b>'+night.title+'</b> · round '+mantraLoop.round+' — press ▶ again to restart, Clear to stop';
+      mantraLoop.timers.push(setTimeout(()=>step(0), MANTRA_GAP*1000));
+      return;
+    }
+    ptvFlash(night.phonemes[k]);
+    mantraLoop.timers.push(setTimeout(()=>step(k+1), dwells[k]*1000));
+  };
+  step(0);
 }
 function playHa(){
   show(['ha','ह','prāṇa — full-channel flash','',0,'','',0,'ha.ogg']);

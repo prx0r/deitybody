@@ -2,6 +2,7 @@
 
 ## Live state
 - **Site:** https://body.stonedoorway.com/lab (canonical: `/lab`, clean URLs; `/` redirects there)
+- **Menu is Trika-only** (lab.js filters traditions.json to trika at render; other tracks parked, VBT kept as Trika course). PTv nights course (8 nights × 2 phonemes, powers from Jaideva Singh table, `site/data/ptv_nights.json`) is the nightly core.
 - **Repo:** https://github.com/prx0r/deitybody (PUBLIC), branch `main`
 - **Deploy:** `wrangler deploy` in `/root/deitybody` (worker `deitybody`, assets `./site`), CF account in `/root/.ochema-env` (`CLOUDFLARE_API_TOKEN` env). After deploy, **purge edge cache** for changed URLs or the user sees stale builds. User must hard-refresh (Cmd/Ctrl+Shift+R) or use private window.
 - **Verify every deploy:** `python3 scripts/smoke.py --url https://body.stonedoorway.com/lab` (expects 50 glyphs after entering Trika, 0 boot errors). Local dev server: any static server on `site/` (clean URLs only work live; use `/lab.html` locally).

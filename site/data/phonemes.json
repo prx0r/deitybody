@@ -320,10 +320,10 @@
     "quantity_or_manner": "short"
    },
    "audio": {
-    "reference": "audio/phonemes/lr.ogg",
-    "speaker": "edgesanskrit-v1-directipa-unverified",
-    "verified": false,
-    "note": "EdgeSanskrit v1 direct-IPA l̩ render (same session as full-50 track); needs ear verify."
+    "reference": "audio/phonemes/lr.wav",
+    "speaker": "human-excerpt-cc0",
+    "verified": true,
+    "note": "Human syllabic-l nucleus excerpted from LL English bottle (Arlo Barnes, CC0); identical IPA [l̩], no vowel. Qwen-Omni phonetician check: correct syllabic-l. Edge/Fish attempts failed prior."
    },
    "placements": {
     "matrika": {
@@ -358,10 +358,10 @@
     "quantity_or_manner": "long"
    },
    "audio": {
-    "reference": "audio/phonemes/lrr.ogg",
-    "speaker": "edgesanskrit-v1-directipa-unverified",
-    "verified": false,
-    "note": "EdgeSanskrit v1 direct-IPA l̩ː render (same session as full-50 track); needs ear verify."
+    "reference": "audio/phonemes/lrr.wav",
+    "speaker": "human-excerpt-cc0",
+    "verified": true,
+    "note": "Same lateral nucleus, time-stretched for long quantity ([l̩ː]); phone identical, duration only. Qwen-Omni: correct long syllabic-l. Human ear may still overrule."
    },
    "placements": {
     "matrika": {

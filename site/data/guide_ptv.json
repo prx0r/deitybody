@@ -1,0 +1,82 @@
+{
+  "id": "guide-ptv-v1",
+  "title": "PTv nights — spoken direction (Fish TTS, slow guide voice)",
+  "voice": "slow guide (community Osho-style voice — direction label only, never worn as identity)",
+  "voice_id": "06134e9a49cb4a36997b75402c8a0621",
+  "model": "s2.1-pro-free",
+  "note": "Direction only. The Sanskrit sounds themselves always come from the attested chant clips, never the TTS. Powers worded identically to ptv_nights.json (Jaideva Singh recension). Round counts and pacing are ASSEMBLY.",
+  "nights": [
+    {
+      "n": 1,
+      "intro": "Night one. Two sounds, a and aa. Sit upright, hands resting. Breathe naturally, never forcing the breath. Each sound is chanted aloud, touched at its place, and heard.",
+      "dirs": [
+        "First sound, a, at the forehead. a is consciousness itself, the unsurpassable ground. Listen once, then chant aloud.",
+        "Second sound, aa, at the mouth. aa is bliss, the ground enjoying itself. Listen once, then chant aloud."
+      ],
+      "close": "Rest now in silence. One question, not to answer, only to feel. Was there an I hearing the sounds, or were the sounds arising in the I? The loop continues on its own. To stop, clear the canvas."
+    },
+    {
+      "n": 2,
+      "intro": "Night two. Two sounds, i and ee. Sit upright, hands resting. Breathe naturally, never forcing the breath.",
+      "dirs": [
+        "First sound, i, at the right eye. i is the will to manifest, still untouched by objectivity. Listen once, then chant aloud.",
+        "Second sound, ee, at the left eye. ee is mastery, will now coloured by objectivity. Listen once, then chant aloud."
+      ],
+      "close": "Rest now in silence. Was there an I hearing the sounds, or were the sounds arising in the I? The loop continues on its own. To stop, clear the canvas."
+    },
+    {
+      "n": 3,
+      "intro": "Night three. Two sounds, u and oo. Sit upright, hands resting. Breathe naturally, never forcing the breath.",
+      "dirs": [
+        "First sound, u, at the right ear. u is the opening of knowing, the power of knowledge. Listen once, then chant aloud.",
+        "Second sound, oo, at the left ear. oo is the waning of knowing, whence the appearance of objects begins. Listen once, then chant aloud."
+      ],
+      "close": "Rest now in silence. Was there an I hearing the sounds, or were the sounds arising in the I? The loop continues on its own. To stop, clear the canvas."
+    },
+    {
+      "n": 4,
+      "intro": "Night four. Two sounds, ri and ree. Sit upright, hands resting. Breathe naturally, never forcing the breath. The second sound has no recording. It is held in silence.",
+      "dirs": [
+        "First sound, ri, at the right nostril. ri is the imperishable seed, subject to no change. Listen once, then chant aloud.",
+        "Second sound, ree, at the left nostril. No recording exists here. Touch the place and breathe. Hold the field in silence."
+      ],
+      "close": "Rest now in silence. Was there an I hearing the sounds, or were the sounds arising in the I? The loop continues on its own. To stop, clear the canvas."
+    },
+    {
+      "n": 5,
+      "intro": "Night five. Two sounds, li and lee. Neither has a recording. This night is touch and breath only. Sit upright, hands resting. Breathe naturally.",
+      "dirs": [
+        "First place, li, at the right cheek. This is a void pause. It binds nothing. Touch the place and breathe, no sound.",
+        "Second place, lee, at the left cheek. A void pause. Touch the place and breathe, no sound."
+      ],
+      "close": "Rest now in silence. Was there an I holding the silence, or was the silence holding the I? The loop continues on its own. To stop, clear the canvas."
+    },
+    {
+      "n": 6,
+      "intro": "Night six. Two sounds, e and ai. Sit upright, hands resting. Breathe naturally, never forcing the breath.",
+      "dirs": [
+        "First sound, e, at the lower teeth. e is the indistinct power of activity, action still formless. Listen once, then chant aloud.",
+        "Second sound, ai, at the upper teeth. ai is the distinct power of activity, action taking shape. Listen once, then chant aloud."
+      ],
+      "close": "Rest now in silence. Was there an I hearing the sounds, or were the sounds arising in the I? The loop continues on its own. To stop, clear the canvas."
+    },
+    {
+      "n": 7,
+      "intro": "Night seven. Two sounds, o and au. Sit upright, hands resting. Breathe naturally, never forcing the breath.",
+      "dirs": [
+        "First sound, o, at the lower lip. o is the more distinct power of activity. Listen once, then chant aloud.",
+        "Second sound, au, at the upper lip. au is the most distinct power of activity, action complete. Listen once, then chant aloud."
+      ],
+      "close": "Rest now in silence. Was there an I hearing the sounds, or were the sounds arising in the I? The loop continues on its own. To stop, clear the canvas."
+    },
+    {
+      "n": 8,
+      "intro": "Night eight. Two sounds, am and ah. Sit upright, hands resting. Breathe naturally, never forcing the breath. Tonight the alphabet gathers itself back.",
+      "dirs": [
+        "First sound, am, at the crown. am is the undivided knowledge of the universe, the holder of diversity. Listen once, then chant aloud.",
+        "Second sound, ah, at the tongue. ah is emission itself. The lower point expands the world. The upper point rests it all in I-consciousness. Listen once, then chant aloud."
+      ],
+      "close": "Rest now in silence. Let all fifty differentiations contract toward the single I that heard them. Was there ever anything but that I? The loop continues on its own. To stop, clear the canvas."
+    }
+  ]
+}

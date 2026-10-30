@@ -1,0 +1,72 @@
+{
+  "id": "ptv-nights-v1",
+  "title": "Parātrīśikā nights — one power per phoneme, two phonemes per night",
+  "provenance": "Vowel powers per Jaideva Singh's Parātrīśikāvivaraṇa exposition ('Explanation of the vowels which are of the nature of Siva'). Loci per TĀ 15 verse-literal matrika map. ṝ/ḷ/ḹ carry no separate gloss in this recension table — held as breath/silence at locus (PEDAGOGICAL, consistent with void-pause treatment). Nightly order: install a→aḥ (sṛṣṭi); the kṣa→a withdrawal comes later.",
+  "source_text": "corpus/primary/paratrisika_jaideva_singh_djvu.txt (vowel table)",
+  "nights": [
+    {
+      "n": 1,
+      "title": "Night 1 — a · ā (ground + bliss)",
+      "phonemes": [
+        {"id": "a", "dev": "अ", "power": "cit — consciousness itself, anuttara, the unsurpassable ground", "locus": "forehead", "cue": "a — open, rest as the ground"},
+        {"id": "ā", "dev": "आ", "power": "ānanda — bliss, the ground enjoying itself", "locus": "mouth", "cue": "ā — open wider, bliss"}
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Night 2 — i · ī (will + mastery)",
+      "phonemes": [
+        {"id": "i", "dev": "इ", "power": "icchā — will to manifest, still untouched by objectivity", "locus": "right eye", "cue": "i — will stirs, nothing yet seen"},
+        {"id": "ī", "dev": "ई", "power": "īśāna — mastery; will now coloured by objectivity", "locus": "left eye", "cue": "ī — will takes hold"}
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Night 3 — u · ū (knowing + waning)",
+      "phonemes": [
+        {"id": "u", "dev": "उ", "power": "unmeṣa — jñānaśakti, the power of knowledge opening", "locus": "right ear", "cue": "u — knowing opens"},
+        {"id": "ū", "dev": "ऊ", "power": "ūnatā — waning of knowledge, whence object-appearance begins", "locus": "left ear", "cue": "ū — knowing narrows, world appears"}
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Night 4 — ṛ · ṝ (imperishable)",
+      "phonemes": [
+        {"id": "ṛ", "dev": "ऋ", "power": "amṛtabīja — the imperishable seed, subject to no change", "locus": "right nostril", "cue": "ṛ — the changeless, breathe"},
+        {"id": "ṝ", "dev": "ॠ", "power": "held in the amṛta field — no separate gloss in this recension; breathe, do not substitute", "locus": "left nostril", "cue": "ṝ — silence, hold the field", "silent": true}
+      ]
+    },
+    {
+      "n": 5,
+      "title": "Night 5 — ḷ · ḹ (void-pause)",
+      "phonemes": [
+        {"id": "ḷ", "dev": "ऌ", "power": "śūnya-pause — binds nothing; rest at the locus, no sound", "locus": "right cheek", "cue": "ḷ — silence, touch only", "silent": true},
+        {"id": "ḹ", "dev": "ॡ", "power": "śūnya-pause — binds nothing; rest at the locus, no sound", "locus": "left cheek", "cue": "ḹ — silence, touch only", "silent": true}
+      ]
+    },
+    {
+      "n": 6,
+      "title": "Night 6 — e · ai (action indistinct + distinct)",
+      "phonemes": [
+        {"id": "e", "dev": "ए", "power": "asphuṭa kriyāśakti — indistinct power of activity", "locus": "lower teeth", "cue": "e — action stirs, formless"},
+        {"id": "ai", "dev": "ऐ", "power": "sphuṭa kriyāśakti — distinct power of activity", "locus": "upper teeth", "cue": "ai — action takes shape"}
+      ]
+    },
+    {
+      "n": 7,
+      "title": "Night 7 — o · au (action clearer + clearest)",
+      "phonemes": [
+        {"id": "o", "dev": "ओ", "power": "sphuṭatara kriyāśakti — more distinct power of activity", "locus": "lower lip", "cue": "o — action clarifies"},
+        {"id": "au", "dev": "औ", "power": "sphuṭatama kriyāśakti — most distinct power of activity", "locus": "upper lip", "cue": "au — action complete"}
+      ]
+    },
+    {
+      "n": 8,
+      "title": "Night 8 — aṃ · aḥ (contraction + emission)",
+      "phonemes": [
+        {"id": "aṃ", "dev": "अं", "power": "Śiva-bindu — undivided knowledge of the universe, the holder", "locus": "crown (śikhā)", "cue": "aṃ — gather everything to a point"},
+        {"id": "aḥ", "dev": "अः", "power": "visarga — emission itself; lower dot Śakti (world expands), upper dot Śiva (all rests in I-consciousness)", "locus": "tongue", "cue": "aḥ — release; the world rests in I"}
+      ]
+    }
+  ]
+}

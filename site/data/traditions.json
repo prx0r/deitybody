@@ -17,6 +17,25 @@
         {"id": "m5", "title": "Phase 5 — Full mantras: OM, OM NAMAH SHIVAYA", "desc": "Long trajectories. Light follows the recorded sound.",
          "fw": "trika", "cfg": "matrika", "scores": ["frameworks/trika/practices/om.json", "frameworks/trika/practices/namah-shivaya.json"]}
        ]},
+      {"id": "ptv", "title": "Paratrishika nights — one power per phoneme",
+       "phases": [
+        {"id": "n1", "title": "Night 1 — a · ā (ground + bliss)", "desc": "cit + ānanda. Forehead + mouth. Two sounds, touch + voice.",
+         "fw": "trika", "cfg": "matrika", "ptvNight": 1},
+        {"id": "n2", "title": "Night 2 — i · ī (will + mastery)", "desc": "icchā + īśāna. Right + left eye.",
+         "fw": "trika", "cfg": "matrika", "ptvNight": 2},
+        {"id": "n3", "title": "Night 3 — u · ū (knowing + waning)", "desc": "unmeṣa + ūnatā. Right + left ear.",
+         "fw": "trika", "cfg": "matrika", "ptvNight": 3},
+        {"id": "n4", "title": "Night 4 — ṛ · ṝ (imperishable)", "desc": "amṛtabīja. Nostrils. ṝ held in silence.",
+         "fw": "trika", "cfg": "matrika", "ptvNight": 4},
+        {"id": "n5", "title": "Night 5 — ḷ · ḹ (void-pause)", "desc": "śūnya-pause. Cheeks. Touch only, no sound.",
+         "fw": "trika", "cfg": "matrika", "ptvNight": 5},
+        {"id": "n6", "title": "Night 6 — e · ai (action indistinct + distinct)", "desc": "asphuṭa + sphuṭa kriyā. Teeth.",
+         "fw": "trika", "cfg": "matrika", "ptvNight": 6},
+        {"id": "n7", "title": "Night 7 — o · au (clearer + clearest)", "desc": "sphuṭatara + sphuṭatama kriyā. Lips.",
+         "fw": "trika", "cfg": "matrika", "ptvNight": 7},
+        {"id": "n8", "title": "Night 8 — aṃ · aḥ (contraction + emission)", "desc": "bindu + visarga. Crown + tongue. Close with aham.",
+         "fw": "trika", "cfg": "matrika", "ptvNight": 8}
+       ]},
       {"id": "malini", "title": "Malini order — mixed sequence",
        "phases": [
         {"id": "mal1", "title": "Phase 1 — Malini on the body", "desc": "Same 50 sounds in Malini goddess order. Do after Matrika is stable.",

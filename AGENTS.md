@@ -12,6 +12,7 @@
 6. Provenance: SOURCE_ATTESTED vs PEDAGOGICAL on every map/claim
 7. No Hz-per-phoneme doctrine. No medical claims. Stop always available
 8. Do not merge with bruno/stoned/sanskrithelp — plug via JSON contracts
+9. No synthesis presented as doctrine. Every claim about what a practice means or does traces to a text. Modern assembly (schedules, timings, app transport) is allowed only from attested parts and labeled ASSEMBLY. Unsure → needs_review, never filled with aesthetics.
 
 ## How to work here
 

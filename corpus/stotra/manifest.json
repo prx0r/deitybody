@@ -1,0 +1,77 @@
+{
+ "id": "stotra-staging-v1",
+ "purpose": "Render-ready Devanagari hymn texts for the chant engine (Vāgdhenu). Lab syllable-to-body mapping is a separate, later step — these files are text supply only.",
+ "terms": "SanskritDocuments texts: volunteer-prepared, personal study/research; check their terms before any commercial edition. GRETIL: CC BY-NC-SA 4.0.",
+ "texts": [
+  {
+   "id": "sivastotravali-1.1",
+   "file": "clean_shivastotravali.txt",
+   "author": "Utpaladeva",
+   "scope": "20 stotras, ~449 verses (full collection in file; pilot = 1.1)",
+   "metre": "1.1 is anuṣṭubh; collection mixes metres",
+   "source": "https://sanskritdocuments.org/doc_shiva/shivastotrAvalIutapaladeva.html",
+   "render_priority": 1,
+   "note": "Pilot verse. Anuṣṭubh, Vāgdhenu-native. Bhakti+recognition; the collection is the long-term project."
+  },
+  {
+   "id": "stavachintamani",
+   "file": "clean_stavachintamani.txt",
+   "author": "Bhaṭṭa Nārāyaṇa",
+   "scope": "~120 verses",
+   "metre": "anuṣṭubh (regular, short verses)",
+   "source": "https://sanskritdocuments.org/doc_shiva/stavachintAmaNI.html",
+   "render_priority": 2,
+   "note": "Best scale project for an anuṣṭubh chant engine. Kṣemarāja commented it (see Tantrapuṣpāñjali on volume)."
+  },
+  {
+   "id": "anuttarashtika",
+   "file": "clean_anuttarashtika.txt",
+   "author": "Abhinavagupta",
+   "scope": "8 verses",
+   "metre": "śārdūlavikrīḍita (long metre — test Vāgdhenu tolerance)",
+   "source": "https://sanskritdocuments.org/doc_z_misc_major_works/anuttarAShTikA.html",
+   "render_priority": 3,
+   "note": "Most radical nondual hymn; Lakshmanjoo lineage recitation exists as reference check."
+  },
+  {
+   "id": "bhairavastava",
+   "file": "clean_bhairavastava.txt",
+   "author": "Abhinavagupta",
+   "scope": "9 + 1 dating verse",
+   "metre": "non-anuṣṭubh (14-syllable class — test tolerance)",
+   "source": "https://sanskritdocuments.org/doc_shiva/bhairavastavaH.html",
+   "render_priority": 4,
+   "note": "Hymn of identification; shortest complete recitation."
+  },
+  {
+   "id": "dehastha",
+   "file": "clean_dehastha.txt",
+   "author": "anonymous Krama/Kaula (NOT Abhinavagupta — Pandey/Silburn attribution rejected, per Flood)",
+   "scope": "16 verses",
+   "metre": "mixed — check per verse",
+   "source": "https://sanskritdocuments.org/doc_deities_misc/dehasthadevatAchakrastotram.html",
+   "render_priority": 5,
+   "note": "Direct body-deity mapping; pairs with the lab sensory-deity overlay. Volume holds only its closing verses."
+  },
+  {
+   "id": "bodhapanchadashika",
+   "file": "clean_bodhapanchadashika.txt",
+   "author": "Abhinavagupta",
+   "scope": "15 verses",
+   "metre": "check per verse",
+   "source": "https://sanskritdocuments.org/doc_shiva/bodhapanchadashikA.html",
+   "render_priority": 6,
+   "note": "Philosophical teaching in verse; concise, profound."
+  },
+  {
+   "id": "kramastotra",
+   "file": "raw/kramastotra-gretil.htm + volume Appendix F (ahnika-04, Sanskrit + Dyczkowski English, all 30 + colophon)",
+   "author": "Abhinavagupta",
+   "scope": "29 + 1 dating verse",
+   "metre": "Indravajrā (11-syllable)",
+   "source": "https://gretil.sub.uni-goettingen.de/gretil/corpustei/transformations/html/sa_abhinavagupta-kramastotra.htm",
+   "render_priority": 7,
+   "note": "Krama Śakti sequence; volume text is the scholarly anchor with translation."
+  }
+ ]
+}

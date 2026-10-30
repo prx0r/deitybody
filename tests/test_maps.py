@@ -271,6 +271,59 @@ class TestCanonical(unittest.TestCase):
         self.assertIn("Tantrāloka", idx["canonical_decision"])
 
 
+class TestPTVNights(unittest.TestCase):
+    def test_nights_cover_16_vowels(self):
+        ptv = json.loads((ROOT / "site/data/ptv_nights.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(ptv["nights"]), 8)
+        got = [ph["id"] for n in ptv["nights"] for ph in n["phonemes"]]
+        m = load("matrika_body_map.json")
+        want = [v["iast"] for v in m["vowels"]]
+        self.assertEqual(got, want)
+        self.assertEqual(len(set(got)), 16)
+
+    def test_nights_have_powers_loci_cues(self):
+        ptv = json.loads((ROOT / "site/data/ptv_nights.json").read_text(encoding="utf-8"))
+        for n in ptv["nights"]:
+            for ph in n["phonemes"]:
+                self.assertTrue(ph.get("power"), ph.get("id"))
+                self.assertTrue(ph.get("locus"), ph.get("id"))
+                self.assertTrue(ph.get("cue"), ph.get("id"))
+
+    def test_silent_nights_flagged(self):
+        ptv = json.loads((ROOT / "site/data/ptv_nights.json").read_text(encoding="utf-8"))
+        by_id = {ph["id"]: ph for n in ptv["nights"] for ph in n["phonemes"]}
+        for vid in ("ṝ", "ḷ", "ḹ"):
+            self.assertTrue(by_id[vid].get("silent"), vid)
+
+
+class TestPTVGuide(unittest.TestCase):
+    def test_guide_nights_match_ptv(self):
+        guide = json.loads((ROOT / "site/data/guide_ptv.json").read_text(encoding="utf-8"))
+        ptv = json.loads((ROOT / "site/data/ptv_nights.json").read_text(encoding="utf-8"))
+        self.assertEqual(len(guide["nights"]), 8)
+        for g, n in zip(guide["nights"], ptv["nights"]):
+            self.assertEqual(g["n"], n["n"])
+            self.assertTrue(g.get("intro"), g["n"])
+            self.assertEqual(len(g.get("dirs", [])), 2)
+            self.assertTrue(all(g["dirs"]), g["n"])
+            self.assertTrue(g.get("close"), g["n"])
+
+    def test_guide_powers_match_ptv(self):
+        guide = json.loads((ROOT / "site/data/guide_ptv.json").read_text(encoding="utf-8"))
+        ptv = json.loads((ROOT / "site/data/ptv_nights.json").read_text(encoding="utf-8"))
+        loci = {ph["id"]: ph["locus"] for n in ptv["nights"] for ph in n["phonemes"]}
+        for g in guide["nights"]:
+            text = g["intro"] + " " + " ".join(g["dirs"])
+            pn = ptv["nights"][g["n"] - 1]
+            for ph in pn["phonemes"]:
+                if not ph.get("silent"):
+                    core = ph["locus"].split("(")[0].strip()
+                    self.assertIn(core, text, f"night {g['n']} {ph['id']}")
+        n1 = " ".join([guide["nights"][0]["intro"]] + guide["nights"][0]["dirs"])
+        self.assertIn("unsurpassable ground", n1)
+        self.assertIn("bliss", n1)
+
+
 if __name__ == "__main__":
     rc = unittest.main(verbosity=2, exit=False).result.wasSuccessful()
     sys.exit(0 if rc else 1)
