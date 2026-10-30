@@ -405,6 +405,31 @@ class TestCurriculum(unittest.TestCase):
         self.assertEqual(len(ptv["nights"]), 8)
 
 
+class TestLessons(unittest.TestCase):
+    def test_ten_lessons_ordered_valid_runs(self):
+        l = json.loads((ROOT / "site/data/lessons.json").read_text(encoding="utf-8"))
+        ls = l["lessons"]
+        self.assertEqual([x["n"] for x in ls], list(range(1, 11)))
+        runs = {"chant", "quiz", "night", "score", "pending"}
+        for x in ls:
+            self.assertTrue(x.get("title"), x["n"])
+            self.assertTrue(x.get("gate", "").startswith("Gate"), x["n"])
+            for a in x.get("actions", []):
+                self.assertIn(a.get("run"), runs, f"lesson {x['n']} bad run")
+                if a["run"] == "score":
+                    self.assertTrue((ROOT / "site" / a["s"]).is_file(), a["s"])
+                if a["run"] == "night":
+                    self.assertTrue(1 <= a.get("n", 0) <= 8, a)
+
+    def test_lesson_titles_match_companions_and_meditations(self):
+        l = json.loads((ROOT / "site/data/lessons.json").read_text(encoding="utf-8"))
+        c = json.loads((ROOT / "site/data/companions.json").read_text(encoding="utf-8"))
+        m = json.loads((ROOT / "site/data/meditations.json").read_text(encoding="utf-8"))
+        lt = [x["title"] for x in l["lessons"]]
+        self.assertEqual(lt, [x["title"] for x in c["stages"]])
+        self.assertEqual(lt, [x["title"] for x in m["stages"]])
+
+
 if __name__ == "__main__":
     rc = unittest.main(verbosity=2, exit=False).result.wasSuccessful()
     sys.exit(0 if rc else 1)

@@ -22,13 +22,16 @@ with sync_playwright() as pw:
     check("no boot errors", pg.locator("#booterr").inner_text().strip() == "", pg.locator("#booterr").inner_text()[:100])
     check("no pageerrors on load", len(errors) == 0, "; ".join(errors[:3]))
 
-    # menu: Trika only
+    # menu: lesson-organized, Trika only
     pg.evaluate("document.getElementById('menu').classList.add('show')")
+    pg.evaluate("[...document.querySelectorAll('#menu details')].forEach(d=>d.open=true)")
     pg.wait_for_timeout(500)
-    names = pg.locator("#tradHost .trad > summary").all_inner_texts()
-    check("menu trika-only", len(names) == 1 and "Trika" in names[0], str(names))
-    courses = pg.locator("#tradHost .course > summary").all_text_contents()
-    check("ptv course listed", any("Paratrishika" in c for c in courses), str(courses))
+    mt = pg.evaluate("document.getElementById('menu').textContent") or ""
+    check("menu is lessons, Trika only", ("Lesson 1" in mt and "Lesson 10" in mt
+          and not any(x in mt for x in ["Sivananda", "Middle Pillar", "Theravada", "Kalachakra"])), mt[:120])
+    check("lesson 2 night buttons", "▶ Night 1" in mt and "▶ Night 8" in mt)
+    check("lesson 6 pending label", "Formula prompter" in mt)
+    check("lessons carry C+M per stage", "▶ C1" in mt and "▶ M10" in mt and "▶ C10" in mt)
 
     # chant dock: options, gap max, pair round end-to-end + replay (the reported bug)
     pg.locator("#menu .grid2 button", has_text="Chant audio").first.click()
@@ -55,19 +58,20 @@ with sync_playwright() as pw:
     check("ka-varga plays", "1 of 5" in pg.locator(".cchant .scount").inner_text() or "2 of 5" in pg.locator(".cchant .scount").inner_text(), pg.locator(".cchant .scount").inner_text())
     pg.click(".cclose")
     pg.evaluate("document.getElementById('menu').classList.add('show')")
-    pg.evaluate("[...document.querySelectorAll('#tradHost details')].forEach(d=>d.open=true)")
+    pg.evaluate("[...document.querySelectorAll('#menu details')].forEach(d=>d.open=true)")
     pg.wait_for_timeout(400)
     # mantra loop (Phase 5 OM)
-    pg.locator("#tradHost button", has_text="▶ om").first.click()
+    pg.locator("#menu button", has_text="▶ om").first.click()
     pg.wait_for_timeout(4000)
     ro = pg.locator("#readout").inner_text()
     check("om mantra loop runs", "loop" in ro.lower() or "o" in ro.lower(), ro[:100])
     check("no errors after mantra", len(errors) == 0, "; ".join(errors[:3]))
 
-    # PTv night (unguided locally: no guide.json on disk)
+    # PTv night (guided locally: guide/ audio on disk)
     pg.evaluate("document.getElementById('menu').classList.add('show')")
+    pg.evaluate("[...document.querySelectorAll('#menu details')].forEach(d=>d.open=true)")
     pg.wait_for_timeout(400)
-    pg.locator("#tradHost button", has_text="▶ Night 1").first.click()
+    pg.locator("#menu button", has_text="▶ Night 1").first.click()
     pg.wait_for_timeout(6000)
     ro = pg.locator("#readout").inner_text()
     check("ptv night runs", "consciousness" in ro.lower() or "bliss" in ro.lower() or "loop" in ro.lower(), ro[:120])
@@ -75,29 +79,32 @@ with sync_playwright() as pw:
 
     # meditations: menu section present, file serves, click plays
     med_menu = pg.evaluate("document.getElementById('menu').textContent") or ""
-    check("meditation menu section", "Meditations" in med_menu and "M1" in med_menu)
+    check("meditation in lessons", "▶ M1" in med_menu)
     r1 = pg.request.get(f"http://127.0.0.1:{PORT}/audio/meditations/m1.mp3")
     check("m1.mp3 serves", r1.status == 200 and len(r1.body()) > 1_000_000, f"{r1.status} {len(r1.body())}")
     try:
-        pg.evaluate("document.getElementById('menu').classList.add('show')")
+        pg.evaluate("document.getElementById('menu').classList.add('show');"
+                    "[...document.querySelectorAll('#menu details')].forEach(d=>d.open=true)")
         pg.wait_for_timeout(300)
         pg.locator("#menu button", has_text="▶ M1").first.click()
         pg.wait_for_function(
             "() => { const t=(document.getElementById('readout').textContent||'');"
             " return t.includes('M1') && t.includes('recording'); }", timeout=20000)
         check("m1 plays (readout)", True)
-        pg.evaluate("document.getElementById('menu').classList.add('show')"); pg.wait_for_timeout(300)
+        pg.evaluate("document.getElementById('menu').classList.add('show')")
+        pg.wait_for_timeout(300)
         pg.locator("text=Clear everything").first.click(); pg.wait_for_timeout(600)
         check("clear stops meditation audio", pg.evaluate("!window.__med || true"))
     except Exception as e:
         check("m1 click", False, str(e)[:140])
 
     # companions: section present, file serves, click plays
-    check("companion menu section", "Practice explainers" in (pg.evaluate("document.getElementById('menu').textContent") or ""))
+    check("companion in lessons", "▶ C1" in (pg.evaluate("document.getElementById('menu').textContent") or ""))
     rc = pg.request.get(f"http://127.0.0.1:{PORT}/audio/companions/c1.mp3")
     check("c1.mp3 serves", rc.status == 200 and len(rc.body()) > 100_000, f"{rc.status} {len(rc.body())}")
     try:
-        pg.evaluate("document.getElementById('menu').classList.add('show')")
+        pg.evaluate("document.getElementById('menu').classList.add('show');"
+                    "[...document.querySelectorAll('#menu details')].forEach(d=>d.open=true)")
         pg.wait_for_timeout(300)
         pg.locator("#menu button", has_text="▶ C1").first.click()
         pg.wait_for_function(

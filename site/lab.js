@@ -334,7 +334,7 @@ setVisibleDeep(yantra,false);
 /* (yantra visibility is toggled from the rail → toggleYan) */
 const scan=new THREE.Mesh(new THREE.TorusGeometry(.62,.014,8,48),
   new THREE.MeshBasicMaterial({color:TEAL,transparent:true,opacity:.5}));
-scan.rotation.x=Math.PI/2; scene.add(scan);
+scan.rotation.x=Math.PI/2; scan.visible=false; scene.add(scan);   /* stray rider disk: bare canvas unless a flow shows it */
 
 /* ---------- phoneme nodes ---------- */
 /* [iast, dev, mLocus, mx,my, aLocus, ax,ay, clip] */
@@ -724,11 +724,15 @@ function show(p){
 }
 /* clip resolution: engine library take first (needs ears), human reference fallback.
    null only when nothing exists anywhere → visible flag, never fake audio. */
+const clipResolves={};
 async function clipFor(p){
+  if(clipResolves[p[0]]) return clipResolves[p[0]];
   const lib='audio/library/'+encodeURIComponent(p[0])+'/v1_hm_omega.ogg';
-  try{ const r=await fetch(lib,{method:'HEAD'}); if(r.ok) return {url:lib, kind:'engine-take'}; }catch(e){}
-  if(p[8]) return {url:'audio/phonemes/'+p[8], kind:'human-ref'};
-  return {url:null, kind:'missing'};
+  let out={url:null, kind:'missing'};
+  try{ const r=await fetch(lib,{method:'HEAD'}); if(r.ok) out={url:lib, kind:'engine-take'}; }catch(e){}
+  if(!out.url && p[8]) out={url:'audio/phonemes/'+p[8], kind:'human-ref'};
+  clipResolves[p[0]]=out;
+  return out;
 }
 function fire(iast,withSound=true){
   const k=P.findIndex(p=>p[0]===iast); if(k<0) return;
@@ -865,7 +869,6 @@ function menuMark(){
   const set=(id,on)=>{const b=menu.querySelector('#'+id); if(b)b.classList.toggle('on',!!on);};
   set('mScan',scanMode); set('mYan',yantra.visible); set('mX',xray);
   set('mFluid',fluidOn); set('mChlad',chladniOn); set('mAlive',aliveOn);
-  set('mBody',bodyLinesOn);
   set('mGrid',!!gridField);
   set('mWeave',weaveOn);
   set('mNadi',nadis&&nadis.group.visible); set('mMic',micOn);
@@ -1138,77 +1141,43 @@ function quizAnswer(btn,guess){
   el.qscore.textContent=(ok?'✓ ':'✗ ')+chantQuiz.answer+` · score ${pc}/${seen}`;
   setTimeout(()=>{ if(el.quiz.style.display!=='none') quizNext(); },1400);
 }
-function renderTraditions(g){
-  const host=document.getElementById('tradHost')||menu;
-  for(const t of (g.traditions||[])){
-    const d=document.createElement('details'); d.className='trad';
-    const s=document.createElement('summary');
-    s.textContent=t.name+' — '+t.lineage;
-    d.appendChild(s);
-    for(const c of (t.courses||[])){
-      const cd=document.createElement('details'); cd.className='course';
-      const cs=document.createElement('summary'); cs.textContent=c.title;
-      cd.appendChild(cs);
-      for(const p of (c.phases||[])){
-        const box=document.createElement('div'); box.className='phase';
-        const pt=document.createElement('div'); pt.className='pt'; pt.textContent=p.title;
-        const pd=document.createElement('div'); pd.className='pd'; pd.textContent=p.desc||'';
-        const row=document.createElement('div'); row.className='prow';
-        box.append(pt,pd,row); cd.appendChild(box);
-        const hasScore=(p.scores&&p.scores.length)||p.pillar||p.ajahn;
-        if(p.chant){
-          const show=document.createElement('button'); show.textContent='Show body';
-          show.onclick=()=>{ loadPhase(p); readout.innerHTML='<b>'+p.title+'</b> · body shown — open chant audio, press play there'; menuMark(); };
-          const ch=document.createElement('button'); ch.textContent='Chant audio'; ch.className='play';
-          ch.onclick=()=>{ openChant(p); menuMark(); };
-          row.append(show,ch);
-        } else if(p.ptvNight!=null){
-          const b=document.createElement('button'); b.textContent='▶ Night '+p.ptvNight; b.className='play';
-          b.onclick=()=>{ playPtvNight(p.ptvNight); menuMark(); menuClose(); };
-          const info2=document.createElement('button'); info2.textContent='Show body first';
-          info2.onclick=()=>{ loadPhase(p); readout.innerHTML='<b>'+p.title+'</b> · body ready — press ▶ Night'; menuMark(); };
-          row.append(info2,b);
-        } else if(p.lotus){
-          const b=document.createElement('button'); b.textContent='Show lotus'; b.className='play';
-          b.onclick=()=>{ loadPhase(p); readout.innerHTML='<b>'+p.title+'</b> · lotus shown — tap petals'; menuMark(); menuClose(); };
-          row.append(b);
-        } else if(hasScore){
-          const list=p.scores||[];
-          if(list.length>1){
-            for(const s of list){
-              const short=s.split('/').pop().replace('.json','');
-              const b=document.createElement('button'); b.textContent='▶ '+short; b.className='play';
-              b.onclick=()=>{ playScorePath(s,p); menuMark(); menuClose(); };
-              row.appendChild(b);
-            }
-          } else {
-            const b=document.createElement('button'); b.textContent='▶ Play'; b.className='play';
-            b.onclick=()=>{ playPhase(p); readout.innerHTML='<b>'+p.title+'</b> · playing — light follows sound'; menuMark(); menuClose(); };
-            const info2=document.createElement('button'); info2.textContent='Show body first';
-            info2.onclick=()=>{ loadPhase(p); readout.innerHTML='<b>'+p.title+'</b> · body ready — press Play'; menuMark(); };
-            row.append(info2,b);
-          }
-        } else {
-          const b=document.createElement('button'); b.textContent='Show'; b.className='play';
-          b.onclick=()=>{ loadPhase(p); menuMark(); menuClose(); };
-          row.append(b);
-        }
-      }
-      d.appendChild(cd);
+function lessonRun(a,L){
+  const title='L'+L.n+' · '+L.title;
+  if(a.run==='chant'){
+    openChant({title, fw:a.fw||'trika', cfg:a.cfg||'matrika', chant:'full', chantSeq:a.chantSeq||'full'});
+    menuClose();
+  }else if(a.run==='quiz'){
+    openChant({title:title+' — recall', fw:'trika', cfg:a.cfg||'matrika', chant:'quiz'});
+    menuClose();
+  }else if(a.run==='night'){
+    playPtvNight(a.n); menuClose();
+  }else if(a.run==='score'){
+    playScorePath(a.s,{fw:a.fw||'trika', cfg:a.cfg||'matrika', title:a.label});
+    menuClose();
+  }else if(a.run==='pending'){
+    readout.innerHTML='<b>L6 · formula prompter</b> · score not built yet — formulas: corpus/extracts/TA15_NYASA.md';
+  }
+}
+function renderLessons(doc){
+  const host=document.getElementById('lessonHost'); if(!host) return;
+  for(const L of (doc.lessons||[])){
+    const d=document.createElement('details'); d.className='trad'; d.dataset.lesson=L.n;
+    const sm=document.createElement('summary'); sm.textContent='Lesson '+L.n+' — '+L.title;
+    d.appendChild(sm);
+    const g=document.createElement('p'); g.className='note'; g.textContent=L.gate||'';
+    d.appendChild(g);
+    const row=document.createElement('div'); row.className='grid2'; d.appendChild(row);
+    for(const a of (L.actions||[])){
+      const b=document.createElement('button'); b.textContent=a.label;
+      b.onclick=()=>{ lessonRun(a,L); menuMark(); }; row.appendChild(b);
     }
+    const cb=document.createElement('button'); cb.textContent='▶ C'+L.n+' · '+L.title;
+    cb.onclick=()=>{ playCompanion(L.n,L.title); menuMark(); menuClose(); }; row.appendChild(cb);
+    const mb=document.createElement('button'); mb.textContent='▶ M'+L.n+' · '+L.title;
+    mb.onclick=()=>{ playMeditation(L.n,L.title); menuMark(); menuClose(); }; row.appendChild(mb);
     host.appendChild(d);
   }
   menuMark();
-}
-function renderTraditionsFallback(){
-  // Offline fallback: Trika only, hardcoded. Shown when data/traditions.json missing.
-  renderTraditions({traditions:[{id:'trika',name:'Trika',lineage:'Kashmir Shaivism',
-    courses:[{id:'matrika',title:'Matrika course — 50 sounds on the body',
-      phases:[
-        {id:'m1',title:'Phase 1 — Round the body with sound',desc:'All 50 sounds in order.',fw:'trika',cfg:'matrika',chant:'full',grade:'g0'},
-        {id:'m4',title:'Phase 4 — Small mantras',desc:'AUM + SO HAM.',fw:'trika',cfg:'matrika',scores:['frameworks/trika/practices/aum.json']},
-        {id:'m5',title:'Phase 5 — Full mantras',desc:'OM + OM NAMAH SHIVAYA.',fw:'trika',cfg:'matrika',scores:['frameworks/trika/practices/om.json']},
-      ]}]}]});
 }
 function buildMenu(){
   const sec=(t)=>{const h=document.createElement('h3'); h.textContent=t; menu.appendChild(h);
@@ -1223,22 +1192,10 @@ function buildMenu(){
     b.dataset.pose=name; return b;};
   poseBtn('Standing','standing'); poseBtn('Seated','seated');
   poseBtn('Lying down','lying');
-  btn(r,'Body outline',e=>{bodyOn(!bodyLinesOn); menuMark();},'mBody');
-  r=sec('Practices — pick a tradition, then a course, then a phase');
-  const tradHost=document.createElement('div'); tradHost.id='tradHost'; menu.appendChild(tradHost);
-  fetch('data/traditions.json').then(x=>x.json()).then(g=>renderTraditions({traditions:(g.traditions||[]).filter(t=>t.id==='trika')})).catch(()=>renderTraditionsFallback());
-  r=sec('Practice explainers — how to perform each stage (hear before you sit)');
-  [[1,'Full body round'],[2,'Vowel powers'],[3,'Varga isolation'],[4,'Recall both ways'],
-   [5,'Reverse pass'],[6,'Aṅga five points'],[7,'Mantra trajectory'],[8,'Ascent + nectar'],
-   [9,'Mālinī order'],[10,'Gaze inward']].forEach(([n2,t2])=>{
-    btn(r,'▶ C'+n2+' · '+t2,()=>playCompanion(n2,t2));
-  });
-  r=sec('Meditations — recorded sittings: frame, silence, close (curriculum stages 1–10)');
-  [[1,'Full body round'],[2,'Vowel powers'],[3,'Varga isolation'],[4,'Recall both ways'],
-   [5,'Reverse pass'],[6,'Aṅga five points'],[7,'Mantra trajectory'],[8,'Ascent + nectar'],
-   [9,'Mālinī order'],[10,'Gaze inward']].forEach(([n2,t2])=>{
-    btn(r,'▶ M'+n2+' · '+t2,()=>playMeditation(n2,t2));
-  });
+  r=sec('Lessons — Trika curriculum · each lesson: drill · explain · sit');
+  const lessonHost=document.createElement('div'); lessonHost.id='lessonHost'; menu.appendChild(lessonHost);
+  fetch('data/lessons.json').then(x=>x.json()).then(renderLessons)
+    .catch(()=>{ readout.innerHTML='<b>lessons</b> · data/lessons.json missing'; });
   r=sec('Display');
   btn(r,'Breath pacer',()=>{aliveOn=!aliveOn; if(aliveOn&&!reduce)aliveBeat();},'mAlive');
   btn(r,'Sound shapes',()=>toggleChladni(),'mChlad');
@@ -1337,8 +1294,10 @@ function clearAll(){
   if(typeof lotus!=='undefined'&&lotus) setVisibleDeep(lotus.group,false);
   if(typeof kalSpokes!=='undefined'&&kalSpokes) setVisibleDeep(kalSpokes.group,false);
   if(chladniOn) toggleChladni();
+  scan.visible=false;
+  bodyOn(false);
   setFw('bare');
-  readout.innerHTML='bare canvas · channels + breath + waves';
+  readout.innerHTML='bare canvas · breath + waves';
   menuMark();
 }
 /* practice actions (also callable via postMessage in embeds) */

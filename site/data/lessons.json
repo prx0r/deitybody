@@ -1,0 +1,181 @@
+{
+  "id": "lessons-v1",
+  "note": "Lesson-organized menu (Trika only). ASSEMBLY — titles/gates mirror data/curriculum.json; actions are menu plumbing. Each lesson block: drill(s) + explainer + recorded sitting, together.",
+  "lessons": [
+    {
+      "n": 1,
+      "title": "Full body round",
+      "gate": "Gate: follow the round without losing place.",
+      "actions": [
+        {
+          "label": "▶ Round with sound",
+          "run": "chant",
+          "cfg": "matrika",
+          "chantSeq": "full"
+        }
+      ]
+    },
+    {
+      "n": 2,
+      "title": "Vowel powers",
+      "gate": "Gate: all 16 powers + loci from memory.",
+      "actions": [
+        {
+          "label": "▶ Night 1",
+          "run": "night",
+          "n": 1
+        },
+        {
+          "label": "▶ Night 2",
+          "run": "night",
+          "n": 2
+        },
+        {
+          "label": "▶ Night 3",
+          "run": "night",
+          "n": 3
+        },
+        {
+          "label": "▶ Night 4",
+          "run": "night",
+          "n": 4
+        },
+        {
+          "label": "▶ Night 5",
+          "run": "night",
+          "n": 5
+        },
+        {
+          "label": "▶ Night 6",
+          "run": "night",
+          "n": 6
+        },
+        {
+          "label": "▶ Night 7",
+          "run": "night",
+          "n": 7
+        },
+        {
+          "label": "▶ Night 8",
+          "run": "night",
+          "n": 8
+        }
+      ]
+    },
+    {
+      "n": 3,
+      "title": "Varga isolation",
+      "gate": "Gate: feel the limb arc without looking.",
+      "actions": [
+        {
+          "label": "▶ Varga drill (pick limb)",
+          "run": "chant",
+          "cfg": "matrika",
+          "chantSeq": "full"
+        }
+      ]
+    },
+    {
+      "n": 4,
+      "title": "Recall, both directions",
+      "gate": "Gate: 40+/50 correct both directions.",
+      "actions": [
+        {
+          "label": "▶ Recall quiz",
+          "run": "quiz",
+          "cfg": "matrika"
+        }
+      ]
+    },
+    {
+      "n": 5,
+      "title": "Reverse pass",
+      "gate": "Gate: felt emptying, not backwards sounds.",
+      "actions": [
+        {
+          "label": "▶ Full 50 reversed (kṣa→a)",
+          "run": "chant",
+          "cfg": "matrika",
+          "chantSeq": "full-rev"
+        }
+      ]
+    },
+    {
+      "n": 6,
+      "title": "Aṅga five points",
+      "gate": "Gate: formulas from memory, under 60s.",
+      "actions": [
+        {
+          "label": "Formula prompter — score pending",
+          "run": "pending"
+        }
+      ]
+    },
+    {
+      "n": 7,
+      "title": "Mantra trajectory",
+      "gate": "Gate: all four from memory, in time.",
+      "actions": [
+        {
+          "label": "▶ aum",
+          "run": "score",
+          "s": "frameworks/trika/practices/aum.json"
+        },
+        {
+          "label": "▶ soham",
+          "run": "score",
+          "s": "frameworks/trika/practices/soham.json"
+        },
+        {
+          "label": "▶ om",
+          "run": "score",
+          "s": "frameworks/trika/practices/om.json"
+        },
+        {
+          "label": "▶ namah",
+          "run": "score",
+          "s": "frameworks/trika/practices/namah-shivaya.json"
+        }
+      ]
+    },
+    {
+      "n": 8,
+      "title": "Ascent and nectar",
+      "gate": "Gate: both directions vivid without readout.",
+      "actions": [
+        {
+          "label": "▶ OM — ride the stations",
+          "run": "score",
+          "s": "frameworks/trika/practices/om.json"
+        }
+      ]
+    },
+    {
+      "n": 9,
+      "title": "Mālinī order",
+      "gate": "Gate: stable round, no Mātṛkā intrusion (months 3–4).",
+      "actions": [
+        {
+          "label": "▶ Mālinī round",
+          "run": "chant",
+          "cfg": "malini",
+          "chantSeq": "full"
+        }
+      ]
+    },
+    {
+      "n": 10,
+      "title": "Gaze inward",
+      "gate": "Gate: inner ascent available on demand.",
+      "actions": [
+        {
+          "label": "▶ v24 gaze",
+          "run": "score",
+          "s": "frameworks/vbt/practices/v24-gaze.json",
+          "fw": "trika",
+          "cfg": "matrika"
+        }
+      ]
+    }
+  ]
+}

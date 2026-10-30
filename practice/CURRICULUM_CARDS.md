@@ -9,6 +9,7 @@
 ---
 
 ## 1 · Full body round
+- **How to hold the sound (phonetics, not doctrine):** the clips are pronunciation *models* — hear the shape, then your own voice holds it. **Vowels ride your exhale** (MV 2.21 uccāra; phoneme shines in rising breath — Padoux), length set by comfort, never forced (TĀ 4.91). **Relative length is fixed by Sanskrit svarabhakti/śikṣā: short = 1 mātrā, long = 2** — i.e. ā ī ū ṝ ḹ e ai o au (and aṃ/aḥ) held roughly DOUBLE a i u ṛ ḷ. **Consonants are contact + release, never held** — aspiration is release, not duration; nasals/semivowels short; h may breathe through briefly. Never stretch a recording to make it longer (vowel-quantity rule).
 - **DO:** Seat, natural breath. For each of 50: chant aloud, touch its place, look at the glyph — three at once. One sound complete before the next. Gap 4–15s.
 - **IN THE MIND:** the triad: sound arriving + touch + place known. No image yet — you are building the association the image will later ride on.
 - **NOT:** no visualization (dhyāna comes later), no forced breath ratios (TĀ 4.91), no zoning out — the mind rides each sound to its place.
