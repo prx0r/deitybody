@@ -353,6 +353,25 @@ class TestMeditations(unittest.TestCase):
             self.assertGreater(p.stat().st_size, 1_000_000, f"m{n} suspiciously small")
 
 
+class TestCompanions(unittest.TestCase):
+    def test_ten_companions_ordered_with_say(self):
+        c = json.loads((ROOT / "site/data/companions.json").read_text(encoding="utf-8"))
+        ns = [s["n"] for s in c["stages"]]
+        self.assertEqual(ns, list(range(1, 11)))
+        for st in c["stages"]:
+            self.assertTrue(st.get("say", "").strip(), st["n"])
+            self.assertGreater(len(st["say"]), 150, f"stage {st['n']} too thin for an explainer")
+        # breath rule stated in the first explainer (the rest say "same frame")
+        self.assertIn("never forcing the breath", c["stages"][0]["say"])
+        self.assertIn("ASSEMBLY", c.get("note", ""))
+
+    def test_rendered_companions_exist(self):
+        for n in range(1, 11):
+            p = ROOT / "site" / "audio" / "companions" / f"c{n}.mp3"
+            self.assertTrue(p.exists(), f"c{n}.mp3 missing")
+            self.assertGreater(p.stat().st_size, 100_000, f"c{n} suspiciously small")
+
+
 if __name__ == "__main__":
     rc = unittest.main(verbosity=2, exit=False).result.wasSuccessful()
     sys.exit(0 if rc else 1)

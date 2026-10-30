@@ -907,18 +907,20 @@ function stopMantra(){
 /* ---------- recorded meditations (site/data/meditations.json → audio/meditations/mN.mp3) ---------- */
 let medAudio=null;
 function stopMeditation(){ if(medAudio){ try{medAudio.pause();}catch(e){} medAudio=null; } }
-function playMeditation(n,title){
+function playRecorded(path,title,doneMsg){
   stopMeditation(); stopMantra();
   try{ if(chantPlayer&&chantPlayer.playing) chantPlayer.pause(); }catch(e){}
   try{ session.stop(); }catch(e){}
-  const a=new Audio('audio/meditations/m'+n+'.mp3');
-  a.onerror=()=>{ readout.innerHTML='<b>M'+n+'</b> · recording not on disk — scripts/render_meditations.py'; medAudio=null; };
-  a.onended=()=>{ readout.innerHTML='<b>M'+n+' · '+title+'</b> · complete — rest as long as you like'; medAudio=null; };
+  const a=new Audio(path);
+  a.onerror=()=>{ readout.innerHTML='<b>'+title+'</b> · recording not on disk — scripts/render_meditations.py or render_companions.py'; medAudio=null; };
+  a.onended=()=>{ readout.innerHTML='<b>'+title+'</b> · '+doneMsg; medAudio=null; };
   a.play().then(()=>{
     medAudio=a;
-    readout.innerHTML='<b>M'+n+' · '+title+'</b> · recording — frame, silence, close; Clear or any play stops it';
-  }).catch(()=>{ readout.innerHTML='<b>M'+n+'</b> · tap ▶ again to start'; });
+    readout.innerHTML='<b>'+title+'</b> · recording — Clear or any play stops it';
+  }).catch(()=>{ readout.innerHTML='<b>'+title+'</b> · tap ▶ again to start'; });
 }
+function playMeditation(n,title){ playRecorded('audio/meditations/m'+n+'.mp3','M'+n+' · '+title,'complete — rest as long as you like'); }
+function playCompanion(n,title){ playRecorded('audio/companions/c'+n+'.mp3','C'+n+' · '+title,'explainer done — now the sitting'); }
 function mantraPlayAudio(url){
   mantraStopAudio();
   try{
@@ -1225,6 +1227,12 @@ function buildMenu(){
   r=sec('Practices — pick a tradition, then a course, then a phase');
   const tradHost=document.createElement('div'); tradHost.id='tradHost'; menu.appendChild(tradHost);
   fetch('data/traditions.json').then(x=>x.json()).then(g=>renderTraditions({traditions:(g.traditions||[]).filter(t=>t.id==='trika')})).catch(()=>renderTraditionsFallback());
+  r=sec('Practice explainers — how to perform each stage (hear before you sit)');
+  [[1,'Full body round'],[2,'Vowel powers'],[3,'Varga isolation'],[4,'Recall both ways'],
+   [5,'Reverse pass'],[6,'Aṅga five points'],[7,'Mantra trajectory'],[8,'Ascent + nectar'],
+   [9,'Mālinī order'],[10,'Gaze inward']].forEach(([n2,t2])=>{
+    btn(r,'▶ C'+n2+' · '+t2,()=>playCompanion(n2,t2));
+  });
   r=sec('Meditations — recorded sittings: frame, silence, close (curriculum stages 1–10)');
   [[1,'Full body round'],[2,'Vowel powers'],[3,'Varga isolation'],[4,'Recall both ways'],
    [5,'Reverse pass'],[6,'Aṅga five points'],[7,'Mantra trajectory'],[8,'Ascent + nectar'],

@@ -82,14 +82,30 @@ with sync_playwright() as pw:
         pg.evaluate("document.getElementById('menu').classList.add('show')")
         pg.wait_for_timeout(300)
         pg.locator("#menu button", has_text="▶ M1").first.click()
-        pg.wait_for_timeout(2500)
-        ro = pg.locator("#readout").inner_text()
-        check("m1 plays (readout)", "recording" in ro.lower() or "M1" in ro, ro[:90])
+        pg.wait_for_function(
+            "() => { const t=(document.getElementById('readout').textContent||'');"
+            " return t.includes('M1') && t.includes('recording'); }", timeout=20000)
+        check("m1 plays (readout)", True)
         pg.evaluate("document.getElementById('menu').classList.add('show')"); pg.wait_for_timeout(300)
         pg.locator("text=Clear everything").first.click(); pg.wait_for_timeout(600)
         check("clear stops meditation audio", pg.evaluate("!window.__med || true"))
     except Exception as e:
         check("m1 click", False, str(e)[:140])
+
+    # companions: section present, file serves, click plays
+    check("companion menu section", "Practice explainers" in (pg.evaluate("document.getElementById('menu').textContent") or ""))
+    rc = pg.request.get(f"http://127.0.0.1:{PORT}/audio/companions/c1.mp3")
+    check("c1.mp3 serves", rc.status == 200 and len(rc.body()) > 100_000, f"{rc.status} {len(rc.body())}")
+    try:
+        pg.evaluate("document.getElementById('menu').classList.add('show')")
+        pg.wait_for_timeout(300)
+        pg.locator("#menu button", has_text="▶ C1").first.click()
+        pg.wait_for_function(
+            "() => { const t=(document.getElementById('readout').textContent||'');"
+            " return t.includes('C1 ·') && t.includes('recording'); }", timeout=20000)
+        check("c1 plays", True)
+    except Exception as e:
+        check("c1 click", False, str(e)[:140])
 
     # misc toggles
     for label, sel in [("pose seated", "text=Seated"), ("breath", "#mAlive")]:
