@@ -1762,8 +1762,16 @@ document.getElementById('menuBtn').onclick=()=>{
   const m=menu; m.classList.toggle('show');
   document.getElementById('menuBtn').classList.toggle('on',m.classList.contains('show'));
 };
-document.getElementById('splitBtn').onclick=()=>setSplit(!document.body.classList.contains('split'));
-/* menu answers to the cube only: no outside-tap or Esc collapse */
+/* outside-tap and Esc also close the menu (was cube-only) */
+document.addEventListener('pointerdown',function(e){
+  var m=document.getElementById('menu');
+  if(!m||!m.classList.contains('show'))return;
+  if(e.target.closest&&e.target.closest('#menu,#menuBtn'))return;
+  menuClose();
+},true);
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'||e.key==='27')menuClose();
+});
 /* embed control + boot params */
 window.addEventListener('message',ev=>{
   const m=ev.data||{}; if(!m.t) return;
