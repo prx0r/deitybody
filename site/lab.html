@@ -153,6 +153,70 @@ body.split #readout{left:25%}
  border-radius:8px; border:1px solid var(--line); background:#fff; color:var(--ink); cursor:pointer}
 /* embed mode: bare body only */
 body.embed #menuBtn,body.embed #splitBtn,body.embed #menu,body.embed #readout{display:none}
+/* library + ereader */
+#libChoice{display:flex;gap:.5rem;margin:.6rem 0}
+#libChoice button{flex:1;padding:.7rem .5rem;border:1px solid var(--line);border-radius:.6rem;background:#fff;cursor:pointer;font:600 .85rem ui-sans-serif,system-ui;color:var(--ink)}
+#libChoice button.on{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold)}
+#libPane .mrow{display:grid;grid-template-columns:repeat(auto-fill,minmax(9rem,1fr));gap:.4rem;margin:.4rem 0 1rem}
+#libPane .mrow a{display:block;padding:.5rem .6rem;border:1px solid var(--line);border-radius:.5rem;text-decoration:none;color:var(--ink);font-size:.82rem;background:#fff}
+#libPane .mrow a .sub{color:var(--mut);font-size:.72rem}
+#libReader{position:fixed;inset:0;z-index:40;background:#fff;display:none;overflow-y:auto}
+#libReader.open{display:block}
+#libReaderInner{max-width:46rem;margin:0 auto;padding:2rem 1.2rem 6rem}
+#libReader .rv{margin:2rem 0}
+#libReader .rd{font-size:1.75rem;line-height:1.75}
+#libReader .rr{font-size:.95rem;color:#76736e;margin:.2rem 0 .6rem}
+#libReader .re{font-size:1rem;line-height:1.65}
+#libReader .kw{transition:background .3s;border-radius:.2em;padding:0 .08em}
+#libReader .kw.on{background:#fdf0d5}
+#libRBar{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:41;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:999px;padding:.3rem .6rem;display:none;gap:.2rem;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+#libRBar.on{display:flex}
+#libRBar button{border:0;background:none;cursor:pointer;font-size:1.1rem;padding:.3rem .6rem;border-radius:999px}
+#libRBar button:hover{background:#f4f1ea}
+#libRClose{position:fixed;top:.8rem;right:1rem;z-index:42;border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:999px;width:2.4rem;height:2.4rem;cursor:pointer;font-size:1rem}
+</style>
+/* library overlay: masters left, works right */
+#libOverlay{position:fixed;inset:0;z-index:30;background:#fff;display:none;overflow-y:auto}
+#libOverlay.open{display:block}
+#libOverlay .libwrap{max-width:64rem;margin:0 auto;padding:2rem 1.2rem 5rem;display:flex;gap:2.5rem;align-items:flex-start}
+#libMasters{min-width:12rem}
+#libMasters .lmhead{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:.6rem}
+#libMasters .lmrow{display:block;width:100%;text-align:left;background:none;border:0;border-radius:.5rem;cursor:pointer;padding:.45rem .6rem;font-size:.86rem;color:var(--ink)}
+#libMasters .lmrow:hover{background:#f4f1ea}
+#libMasters .lmrow.on{background:#f4f1ea;font-weight:600}
+#libWorks{flex:1;min-width:0}
+#libWorks .lwhead{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--mut);margin-bottom:.6rem}
+#libWorks .lwgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(13rem,1fr));gap:.5rem}
+#libWorks .lwcard{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:.6rem;padding:.7rem .9rem;cursor:pointer;font-size:.86rem;color:var(--ink)}
+#libWorks .lwcard:hover{border-color:var(--gold)}
+@media (max-width:700px){#libOverlay .libwrap{flex-direction:column;gap:0}#libMasters{width:100%;min-width:0}#libMasters .lmrow{display:inline-block;margin-right:.2rem}}
+#libMasters{min-width:11rem}
+#libWorks{flex:1;min-width:0}
+#libMasters .lmrow{display:block;width:100%;text-align:left;background:none;border:0;cursor:pointer;padding:.45rem .6rem;border-radius:.5rem;font-size:.86rem;color:var(--ink)}
+#libMasters .lmrow:hover{background:#f4f1ea}
+#libMasters .lmrow.on{background:#f4f1ea;font-weight:600}
+#libWorks .mgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(11rem,1fr));gap:.5rem;margin-top:.5rem}
+#libWorks .lwcard{display:block;width:100%;text-align:left;background:#fff;border:1px solid var(--line);border-radius:.6rem;padding:.6rem .8rem;cursor:pointer;font-size:.86rem;color:var(--ink)}
+#libWorks .lwcard:hover{border-color:var(--gold)}
+#libClose{position:fixed;top:.8rem;right:1rem;z-index:32;border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:999px;width:2.4rem;height:2.4rem;cursor:pointer;font-size:1rem}
+@media (max-width:700px){#libOverlay .libwrap{flex-direction:column;gap:0}#libMasters{width:100%}#libMasters .lmrow{display:inline-block;margin-right:.2rem}}
+/* ereader: white page, just the verse */
+#libReader{position:fixed;inset:0;z-index:40;background:#fff;display:none;overflow-y:auto}
+#libReader.open{display:block}
+#libReaderInner{max-width:46rem;margin:0 auto;padding:2rem 1.2rem 6rem}
+#libReader .rv{margin:2rem 0;cursor:pointer}
+#libReader .rv:first-child{margin-top:1rem}
+#libReader .rd{font-size:1.75rem;line-height:1.9}
+#libReader .rr{font-size:.95rem;color:#76736e;margin:.15rem 0 .5rem;font-style:italic}
+#libReader .re{font-size:1rem;line-height:1.65;max-width:42rem}
+#libReader .kw{transition:background .3s;border-radius:.2em;padding:0 .08em}
+#libReader .kw.on{background:#fdf0d5}
+#libReader .reading{box-shadow:-3px 0 0 var(--gold);padding-left:.8rem}
+#libRBar{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:41;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:999px;padding:.3rem .6rem;display:none;gap:.2rem;box-shadow:0 4px 16px rgba(0,0,0,.08)}
+#libRBar.on{display:flex}
+#libRBar button{border:0;background:none;cursor:pointer;font-size:1.1rem;padding:.3rem .6rem;border-radius:999px}
+#libRBar button:hover{background:#f4f1ea}
+#libRClose{position:fixed;top:.8rem;right:1rem;z-index:42;border:1px solid var(--line);background:rgba(255,255,255,.92);border-radius:999px;width:2.4rem;height:2.4rem;cursor:pointer;font-size:1rem}
 @media (max-width:640px){
  body.split #scene{right:0; bottom:50%}
  body.split #fluid{right:0; bottom:50%}
@@ -192,6 +256,7 @@ window.addEventListener('unhandledrejection',function(e){
 <form id="ask"><input id="askQ" type="text" autocomplete="off"/><button type="submit">?</button></form></div>
 <div id="chladniBox" style="display:none"><canvas id="chladni" width="220" height="220"></canvas><div id="chladniCap">—</div></div>
 <iframe id="second" title="Second body"></iframe>
+<script src="lib/iast.js"></script>
 <script type="module" src="lab.js"></script>
 </body>
 </html>

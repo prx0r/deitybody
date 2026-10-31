@@ -1226,6 +1226,22 @@ function buildMenu(){
     const r=document.createElement('div'); r.className='grid2'; menu.appendChild(r); return r;};
   const btn=(parent,label,fn,id)=>{const b=document.createElement('button'); b.textContent=label;
     if(id)b.id=id; b.onclick=(ev)=>{fn(ev); menuMark();}; parent.appendChild(b); return b;};
+
+  /* choice-first: Practise or Library (user picks, nothing auto-opens) */
+  const choiceRow=document.createElement('div'); choiceRow.id='libChoice';
+  const bPrac=document.createElement('button'); bPrac.textContent='Practise'; bPrac.id='choicePrac';
+  const bLib=document.createElement('button'); bLib.textContent='Library'; bLib.id='choiceLib';
+  choiceRow.appendChild(bPrac); choiceRow.appendChild(bLib);
+  menu.appendChild(choiceRow);
+  const practicePane=document.createElement('div'); practicePane.id='practicePane'; practicePane.style.display='none';
+  menu.appendChild(practicePane);
+  bPrac.onclick=()=>{ showPane('practice'); };
+  bLib.onclick=()=>{ menuClose(); openLibrary(); };
+  window.__showLabPane = showPane;
+  function showPane(which){
+    const pp=document.getElementById('practicePane');
+    if(which==='practice'){ if(pp)pp.style.display=''; bPrac.classList.add('on'); bLib.classList.remove('on'); }
+  }
   let r=sec('');
   btn(r,'Close',()=>{menuClose();});
   btn(r,'Clear everything',()=>{clearAll(); menuClose();});
@@ -1259,6 +1275,17 @@ function buildMenu(){
   const n=document.createElement('p'); n.className='note';
     n.textContent='Trika only — other tracks parked (see catalog). One tradition per sitting. Sound + body point together — that is the practice.';
   menu.appendChild(n);
+  /* move all practice content into practicePane (choice stays on top) */
+  (function(){
+    const pp=document.getElementById('practicePane');
+    if(!pp) return;
+    const keep=new Set();
+    const cr=document.getElementById('libChoice'); if(cr) keep.add(cr);
+    if(pp.parentNode===menu) keep.add(pp);
+    Array.prototype.slice.call(menu.childNodes).forEach(ch=>{
+      if(!keep.has(ch)) pp.appendChild(ch);
+    });
+  })();
 }
 /* ---------- pose system: energy inhabits the posture ---------- */
 let poseName='standing';
@@ -1791,3 +1818,205 @@ window.addEventListener('message',ev=>{
 addEventListener('resize',resize); resize(); tick();
 try{ buildHubAndBranches(); }catch(e){}
 if(!reduce) aliveBeat();
+
+/* ================= LIBRARY OVERLAY ================= */
+const LIBIPVV = 'https://ipvv-a8u.pages.dev';
+const LIBAUD = {anuttarastika:'anuttarashtika_trad'};
+const LIB = { masters:[], works:{}, index:null };
+let libAudio = null, libTimer = null, libCurIx = null, libVerses = [];
+
+function libEl(id){ return document.getElementById(id); }
+function libStopAll(){
+  if(libTimer){ cancelAnimationFrame(libTimer); libTimer = null; }
+  if(libAudio){ try{ libAudio.pause(); libAudio.onended=null; }catch(e){} }
+  try{ speechSynthesis.cancel(); }catch(e){}
+  document.querySelectorAll('#libReader .kw.on').forEach(w=>w.classList.remove('on'));
+  document.querySelectorAll('#libReader .reading').forEach(v=>v.classList.remove('reading'));
+  libCurIx = null;
+}
+async function libFetch(path){
+  const r = await fetch(LIBIPVV + path);
+  if(!r.ok) throw new Error('nf '+r.status);
+  const ct = r.headers.get('content-type')||'';
+  return ct.includes('json') ? r.json() : r.text();
+}
+function openLibrary(){
+  let ov = libEl('libOverlay');
+  if(!ov){
+    ov = document.createElement('div'); ov.id='libOverlay';
+    ov.innerHTML = `<div class="libwrap"><div id="libMasters"><div class="lmhead">Library</div><div id="libMList"><span class="sub">…</span></div></div><div id="libWorks"><div class="sub" style="padding:1rem">select a master</div></div></div><button id="libClose" aria-label="close">✕</button>`;
+    document.body.appendChild(ov);
+    libEl('libClose').onclick = closeLibrary;
+  }
+  ov.classList.add('open');
+  loadLibMasters();
+}
+function closeLibrary(){
+  const ov = libEl('libOverlay');
+  if(ov) ov.classList.remove('open');
+}
+async function loadLibMasters(){
+  const box = libEl('libMList');
+  if(!box) return;
+  if(!LIB.masters.length){
+    try{
+      const sec = await libFetch('/data/sections.json');
+      LIB.masters = ((sec.sections||[]).find(s=>s.id==='masters')||{}).members || [];
+    }catch(e){ LIB.masters = ['abhinavagupta','ksemaraja','utpaladeva','somananda','vasugupta','kallata']; }
+  }
+  const counts = {};
+  await Promise.all(LIB.masters.slice(0,30).map(async m=>{
+    try{ const w = await libFetch(`/data/works_${m}.json`); counts[m]=Array.isArray(w)?w.length:0; LIB.works[m]=w; }
+    catch(e){ counts[m]=0; }
+  }));
+  const sorted = [...LIB.masters].sort((a,b)=>(counts[b]||0)-(counts[a]||0));
+  box.innerHTML = sorted.map(m=>`<div class="lmrow" data-m="${m}"><span>${m}</span><span class="sub">· ${counts[m]||0}</span></div>`).join('');
+  box.querySelectorAll('[data-m]').forEach(el=>{
+    const open = (e)=>{ if(e) e.preventDefault(); showLibWorks(el.getAttribute('data-m')); };
+    el.onclick = open;
+    el.onmouseenter = ()=>{ if(window.matchMedia && window.matchMedia('(pointer:fine)').matches) showLibWorks(el.getAttribute('data-m')); };
+  });
+  if(sorted.length) showLibWorks(sorted[0]);
+}
+async function showLibWorks(m){
+  document.querySelectorAll('#libMasters .lmrow').forEach(el=>el.classList.toggle('on', el.getAttribute('data-m')===m));
+  let w = LIB.works[m];
+  if(!w){ try{ w = await libFetch(`/data/works_${m}.json`); LIB.works[m]=w; }catch(e){ return; } }
+  const box = libEl('libWorks');
+  if(!box) return;
+  box.innerHTML = `<div class="lwhead">${m}</div><div class="lwgrid">` +
+    ((Array.isArray(w)?w:[]).map(x=>{
+      const wid = x.id||x.work||'';
+      const t = x.title||x.id||'';
+      return `<div class="lwcard" data-w="${wid}" data-m="${m}"><span>${t}</span></div>`;
+    }).join('') || '<span class="sub">—</span>') + `</div>`;
+  box.querySelectorAll('[data-w]').forEach(el=>{
+    el.onclick = ()=>openReader(el.getAttribute('data-w'));
+  });
+}
+/* ================= EREADER ================= */
+function escH(s){ const d=document.createElement('div'); d.textContent=(s||''); return d.innerHTML; }
+async function openReader(wid){
+  let rd = libEl('libReader');
+  if(!rd){
+    rd = document.createElement('div'); rd.id='libReader';
+    rd.innerHTML = `<button id="libRClose" aria-label="close">✕</button><div id="libReaderBody"></div><div id="libRBar"><button id="libRPlay" title="recite">▶</button><button id="libRSpeak" title="read aloud">🔊</button><button id="libRStop" title="stop" style="display:none">■</button></div>`;
+    document.body.appendChild(rd);
+    libEl('libRClose').onclick = closeReader;
+    libEl('libRStop').onclick = ()=>{ libStopAll(); const sb=libEl('libRStop'); if(sb) sb.style.display='none'; const pb=libEl('libRPlay'); if(pb) pb.style.display=''; };
+    libEl('libRSpeak').onclick = ()=>{ speakLibAll(); };
+    libEl('libRPlay').onclick = ()=>{
+      let ix=0;
+      const all = document.querySelectorAll('#libReaderBody .rv');
+      if(!all.length) return;
+      const audio = libAudioEl();
+      audio.onended = ()=>{ ix++; if(ix < all.length){ playLibVerse(all[ix]); } else { libStopAll(); const sb=libEl('libRStop'); if(sb) sb.style.display='none'; } };
+      playLibVerse(all[0]);
+    };
+  }
+  rd.classList.add('open');
+  const rb0 = document.getElementById('libRBar');
+  if(rb0) rb0.classList.add('on');
+  const rb = libEl('libReaderBody');
+  rb.innerHTML = '<p class="sub">loading…</p>';
+  let items = [];
+  try{ items = await libFetch(`/data/translations/${wid}.json`); }catch(e){ items=[]; }
+  if(!items || !items.length){
+    rb.innerHTML = `<div class="rv"><div class="re">Nothing on file for “${escH(wid)}” yet.</div></div>`;
+    return;
+  }
+  const audir = LIBAUD[wid] || wid;
+  let kar = null;
+  try{ kar = await libFetch(`/data/karaoke-${wid}.json`); }catch(e){}
+  const hasKar = Array.isArray(kar) && kar.length>0;
+  libVerses = items.map((it,ix)=>{
+    const raw = (window.cleanSA||((s)=>(s||'').trim()))(it.sanskrit||'');
+    const k = hasKar ? kar[ix % kar.length] : null;
+    const au = k ? `${LIBIPVV}/audio/${audir}/${k.id||('v'+String(ix+1).padStart(2,'0'))}.mp3` : null;
+    return {raw, k, en: (it.gate==='PASS' && (it.l2||it.l1)) ? libCleanEN(it.l2||it.l1) : '', au, ix};
+  });
+  rb.innerHTML = libVerses.map((v,ix)=>{
+    let dtxt = '';
+    if(v.k && v.k.words){
+      const padas=[[],[],[],[]];
+      v.k.words.forEach(w=>{ (padas[w.pada||0]=padas[w.pada||0]||[]).push(w); });
+      dtxt = padas.filter(p=>p.length).map(p=>`<div class="rd">`+p.map(w=>`<span class="kw" data-t0="${w.t_on}" data-t1="${w.t_off}" data-v="${ix}">${escH(window.IAST?window.IAST.convert(w.w):w.w)}</span>`).join(' ')+`</div><div class="rr">${esc(p.map(w=>w.r||'').join(' '))}</div>`).join('');
+    } else {
+      const dev = window.IAST?window.IAST.convert(raw):raw;
+      dtxt = `<div class="rd">${esc(dev)}</div><div class="rr">${esc(raw)}</div>`;
+    }
+    return `<div class="rv" data-v="${ix}">${dtxt}${v.en?`<div class="re">${esc(v.en)}</div>`:''}</div>`;
+  }).join('');
+  // tap a verse: hear it (chant if audio, spoken if not)
+  rb.querySelectorAll('.rv').forEach(v=>{
+    v.onclick = ()=>playLibVerse(v);
+  });
+}
+function libCleanEN(s){ try{ return window.cleanEN(s); }catch(e){ return (s||'').replace(/^#+\s.*\n/,'').trim(); } }
+function closeReader(){
+  libStopAll();
+  const rd = libEl('libReader');
+  if(rd) rd.classList.remove('open');
+  const rb = libEl('libRBar');
+  if(rb) rb.classList.remove('on');
+}
+function libAudioEl_(){
+  if(!libAudioEl){ libAudioEl = new Audio(); libAudioEl.preload='auto'; }
+  return libAudioEl;
+}
+let libAudioEl = null;
+function libTick(){
+  const audio = libAudioEl; if(!audio) return;
+  const t = audio.currentTime;
+  document.querySelectorAll('#libReader .kw.on').forEach(w=>w.classList.remove('on'));
+  const all = Array.prototype.slice.call(document.querySelectorAll('#libReader .kw[data-t0]'));
+  for(const w of all){
+    const v = w.closest('.rv');
+    if(!v || parseInt(v.getAttribute('data-v'),10)!==libCurIx) continue;
+    const a=parseFloat(w.getAttribute('data-t0')), b=parseFloat(w.getAttribute('data-t1'));
+    if(t>=a && t<=b){ w.classList.add('on'); break; }
+  }
+  if(!audio.paused && !audio.ended) libTimer = requestAnimationFrame(libTick);
+}
+function playLibVerse(vEl){
+  libStopAll();
+  const ix = parseInt(vEl.getAttribute('data-v'),10);
+  libCurIx = ix;
+  document.querySelectorAll('#libReader .rv').forEach(x=>x.classList.remove('reading'));
+  vEl.classList.add('reading');
+  vEl.scrollIntoView({block:'center',behavior:'smooth'});
+  const au = libVerses[ix] && libVerses[ix].au;
+  const sb = libEl('libRStop'); if(sb) sb.style.display='';
+  const pb = libEl('libRPlay'); if(pb) pb.style.display='none';
+  if(au){
+    const audio = libAudioEl_(); libAudio = audio;
+    audio.src = au;
+    audio.play().catch(()=>{ speakLibVerse(vEl,false); });
+    libTimer = requestAnimationFrame(libTick);
+  } else {
+    speakLibVerse(vEl,false);
+  }
+}
+function speakLibVerse(vEl, advance){
+  try{
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(vEl.textContent.slice(0,1200));
+    u.rate = 0.95;
+    if(advance){
+      u.onend = ()=>{
+        const all = Array.prototype.slice.call(document.querySelectorAll('#libReader .rv'));
+        const i = all.indexOf(vEl);
+        if(i>=0 && i+1<all.length) speakLibVerse(all[i+1], true);
+        else libStopAll();
+      };
+    } else {
+      u.onend = ()=>{ libStopAll(); };
+    }
+    speechSynthesis.speak(u);
+  }catch(e){}
+}
+function speakLibAll(){
+  libStopAll();
+  const all = Array.prototype.slice.call(document.querySelectorAll('#libReader .rv'));
+  if(all.length){ const sb=libEl('libRStop'); if(sb) sb.style.display=''; speakLibVerse(all[0], true); }
+}
