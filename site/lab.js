@@ -1888,15 +1888,27 @@ async function showLibWorks(m){
     ((Array.isArray(w)?w:[]).map(x=>{
       const wid = x.id||x.work||'';
       const t = x.title||x.id||'';
-      return `<div class="lwcard" data-w="${wid}" data-m="${m}"><span>${t}</span></div>`;
+      return `<div class="lwcard" data-w="${wid}" data-m="${m}" data-t="${escH(t)}"><span>${escH(t)}</span></div>`;
     }).join('') || '<span class="sub">—</span>') + `</div>`;
   box.querySelectorAll('[data-w]').forEach(el=>{
-    el.onclick = ()=>openReader(el.getAttribute('data-w'));
+    el.onclick = ()=>openReader(el.getAttribute('data-w'), {title: el.getAttribute('data-t')||'', master: el.getAttribute('data-m')||m});
   });
+}
+/* Devanagari numerals for verse numbers */
+function devaNum(n){
+  const d=['०','१','२','३','४','५','६','७','८','९'];
+  return String(n).split('').map(c=>d[+c]||c).join('');
+}
+function libFindTitle(wid){
+  for(const m of Object.keys(LIB.works||{})){
+    const w = LIB.works[m];
+    if(Array.isArray(w)){ const hit = w.find(x=>(x.id||x.work)===wid); if(hit) return {title: hit.title||wid, master: m}; }
+  }
+  return {title: wid, master: ''};
 }
 /* ================= EREADER ================= */
 function escH(s){ const d=document.createElement('div'); d.textContent=(s||''); return d.innerHTML; }
-async function openReader(wid){
+async function openReader(wid, hint){
   let rd = libEl('libReader');
   if(!rd){
     rd = document.createElement('div'); rd.id='libReader';
@@ -1936,17 +1948,39 @@ async function openReader(wid){
     return {raw, k, en: (it.gate==='PASS' && (it.l2||it.l1)) ? libCleanEN(it.l2||it.l1) : '', au, ix};
   });
   rb.innerHTML = libVerses.map((v,ix)=>{
+    const vn = devaNum(ix+1);
     let dtxt = '';
     if(v.k && v.k.words){
       const padas=[[],[],[],[]];
       v.k.words.forEach(w=>{ (padas[w.pada||0]=padas[w.pada||0]||[]).push(w); });
-      dtxt = padas.filter(p=>p.length).map(p=>`<div class="rd">`+p.map(w=>`<span class="kw" data-t0="${w.t_on}" data-t1="${w.t_off}" data-v="${ix}">${escH(window.IAST?window.IAST.convert(w.w):w.w)}</span>`).join(' ')+`</div><div class="rr">${esc(p.map(w=>w.r||'').join(' '))}</div>`).join('');
+      dtxt = padas.filter(p=>p.length).map(p=>`<div class="rd">`+p.map(w=>`<span class="kw" data-t0="${w.t_on}" data-t1="${w.t_off}" data-v="${ix}">${escH(window.IAST?window.IAST.convert(w.w):w.w)}</span>`).join(' ')+`</div><div class="rr">${escH(p.map(w=>w.r||'').join(' '))}</div>`).join('');
     } else {
-      const dev = window.IAST?window.IAST.convert(raw):raw;
-      dtxt = `<div class="rd">${esc(dev)}</div><div class="rr">${esc(raw)}</div>`;
+      const dev = window.IAST?window.IAST.convert(v.raw):v.raw;
+      dtxt = `<div class="rd">${escH(dev)}</div><div class="rr">${escH(v.raw)}</div>`;
     }
-    return `<div class="rv" data-v="${ix}">${dtxt}${v.en?`<div class="re">${esc(v.en)}</div>`:''}</div>`;
+    return `<div class="rv" data-v="${ix}"><div class="vnum">${vn}</div>${dtxt}${v.en?`<div class="re">${escH(v.en)}</div>`:''}<div class="vclose">॥ ${vn} ॥</div></div>`;
   }).join('');
+  // work header: master eyebrow, title, Devanagari title, provenance
+  const meta = (hint && hint.title) ? hint : libFindTitle(wid);
+  const passN = items.filter(it=>it.gate==='PASS' && (it.l2||it.l1)).length;
+  const wdeva = window.IAST ? window.IAST.convert(meta.title||wid) : (meta.title||wid);
+  const chanted = libVerses.some(v=>v.au);
+  const head = document.createElement('header');
+  head.className = 'rhead';
+  head.innerHTML = `${meta.master?`<div class="eyebrow">${escH(meta.master)}</div>`:''}`
+    + `<h1 class="wtitle">${escH(meta.title||wid)}</h1>`
+    + `<div class="wdeva">${escH(wdeva)}</div>`
+    + `<div class="wmeta">${items.length} verse${items.length===1?'':'s'} · ${passN?passN+' with English':'Sanskrit only'} · ${chanted?'chanted recitation':'read aloud'}</div>`
+    + `<div class="orn">❖</div>`;
+  rb.insertBefore(head, rb.firstChild);
+  const top = document.createElement('div');
+  top.className = 'rtop';
+  top.textContent = meta.title||wid;
+  rb.insertBefore(top, rb.firstChild);
+  const end = document.createElement('div');
+  end.className = 'rend';
+  end.textContent = '❖ ❖ ❖';
+  rb.appendChild(end);
   // tap a verse: hear it (chant if audio, spoken if not)
   rb.querySelectorAll('.rv').forEach(v=>{
     v.onclick = ()=>playLibVerse(v);
