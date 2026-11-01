@@ -203,28 +203,15 @@ body.embed #menuBtn,body.embed #splitBtn,body.embed #menu,body.embed #readout{di
 /* ereader: white page, just the verse */
 #libReader{position:fixed;inset:0;z-index:40;background:#fff;display:none;overflow-y:auto}
 #libReader.open{display:block}
-#libReader .rtop{position:sticky;top:0;z-index:5;display:flex;justify-content:center;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);font-family:ui-sans-serif,system-ui;font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);padding:.6rem 3.5rem}
-#libReader .rhead{text-align:center;margin:0 auto 1rem;max-width:46rem;padding:2.6rem 1.2rem 2.2rem}
-#libReader .eyebrow{font-family:ui-sans-serif,system-ui;font-size:.68rem;letter-spacing:.24em;text-transform:uppercase;color:var(--gold-hi)}
-#libReader .wtitle{font-weight:500;font-size:2rem;margin:.7rem 0 .2rem;line-height:1.2}
-#libReader .wdeva{font-family:'Noto Serif Devanagari',serif;font-size:2.3rem;line-height:1.6;color:var(--ink)}
-#libReader .wmeta{font-family:ui-sans-serif,system-ui;font-size:.76rem;color:var(--mut);margin-top:.8rem}
-#libReader .orn{color:var(--gold);margin-top:1.4rem;font-size:.85rem;letter-spacing:.6em;text-indent:.6em}
-#libReader .rv{margin:0 auto;max-width:46rem;padding:2.1rem 1.2rem;cursor:pointer;border-top:1px solid var(--line)}
-#libReader .vnum{font-family:ui-sans-serif,system-ui;font-size:.7rem;color:var(--gold-hi);letter-spacing:.22em;margin-bottom:.6rem}
-#libReader .rd{font-family:'Noto Serif Devanagari',serif;font-size:1.85rem;line-height:1.9}
-#libReader .rr{font-size:.95rem;color:#76736e;margin:.2rem 0 .6rem;font-style:italic}
-#libReader .re{font-size:1.02rem;line-height:1.7;max-width:42rem;color:#33363e;border-left:2px solid #f0e6cf;padding-left:1rem;margin-top:.9rem}
-#libReader .vclose{text-align:center;color:#c6bfae;margin:1.3rem 0 0;font-family:'Noto Serif Devanagari',serif;font-size:1.05rem}
+#libReaderInner{max-width:46rem;margin:0 auto;padding:2rem 1.2rem 6rem}
+#libReader .rv{margin:2rem 0;cursor:pointer}
+#libReader .rv:first-child{margin-top:1rem}
+#libReader .rd{font-size:1.75rem;line-height:1.9}
+#libReader .rr{font-size:.95rem;color:#76736e;margin:.15rem 0 .5rem;font-style:italic}
+#libReader .re{font-size:1rem;line-height:1.65;max-width:42rem}
 #libReader .kw{transition:background .3s;border-radius:.2em;padding:0 .08em}
 #libReader .kw.on{background:#fdf0d5}
-#libReader .reading{box-shadow:-3px 0 0 var(--gold);padding-left:calc(1.2rem - 3px)}
-#libReader .rend{max-width:46rem;margin:0 auto;padding:0 1.2rem 7rem;text-align:center;color:#c6bfae;font-size:.9rem;letter-spacing:.5em;text-indent:.5em}
-@media (max-width:640px){
- #libReader .wtitle{font-size:1.55rem}
- #libReader .wdeva{font-size:1.8rem}
- #libReader .rd{font-size:1.6rem}
-}
+#libReader .reading{box-shadow:-3px 0 0 var(--gold);padding-left:.8rem}
 #libRBar{position:fixed;bottom:1rem;left:50%;transform:translateX(-50%);z-index:41;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:999px;padding:.3rem .6rem;display:none;gap:.2rem;box-shadow:0 4px 16px rgba(0,0,0,.08)}
 #libRBar.on{display:flex}
 #libRBar button{border:0;background:none;cursor:pointer;font-size:1.1rem;padding:.3rem .6rem;border-radius:999px}
