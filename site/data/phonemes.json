@@ -320,10 +320,10 @@
     "quantity_or_manner": "short"
    },
    "audio": {
-    "reference": "audio/phonemes/lr.wav",
-    "speaker": "human-excerpt-cc0",
-    "verified": true,
-    "note": "Human syllabic-l nucleus excerpted from LL English bottle (Arlo Barnes, CC0); identical IPA [l̩], no vowel. Qwen-Omni phonetician check: correct syllabic-l. Edge/Fish attempts failed prior."
+    "reference": "audio/phonemes/lr.ogg",
+    "speaker": "synth-sanskrit-l",
+    "verified": false,
+    "note": "The human CC0 \"bottle\" excerpt previously referenced here (lr.wav/lrr.wav) turned out to be DIGITAL SILENCE (-91 dB, every sample) — that is why ḷ/ḹ (right/left cheek) played nothing. Falls back to the earlier synthesised syllabic-l render, now loudness-matched to the rest of the set (RMS -21 dB). Still needs a human ear before it is called verified."
    },
    "placements": {
     "matrika": {
@@ -358,10 +358,10 @@
     "quantity_or_manner": "long"
    },
    "audio": {
-    "reference": "audio/phonemes/lrr.wav",
-    "speaker": "human-excerpt-cc0",
-    "verified": true,
-    "note": "Same lateral nucleus, time-stretched for long quantity ([l̩ː]); phone identical, duration only. Qwen-Omni: correct long syllabic-l. Human ear may still overrule."
+    "reference": "audio/phonemes/lrr.ogg",
+    "speaker": "synth-sanskrit-l",
+    "verified": false,
+    "note": "The human CC0 \"bottle\" excerpt previously referenced here (lr.wav/lrr.wav) turned out to be DIGITAL SILENCE (-91 dB, every sample) — that is why ḷ/ḹ (right/left cheek) played nothing. Falls back to the earlier synthesised syllabic-l render, now loudness-matched to the rest of the set (RMS -21 dB). Still needs a human ear before it is called verified."
    },
    "placements": {
     "matrika": {
@@ -1862,7 +1862,7 @@
     "reference": "audio/phonemes/ksa.ogg",
     "speaker": "commons-mr35-pd",
     "verified": true,
-    "note": "Public-domain Marathi \"ksha\" (Wikimedia Commons MR35), Omni-verified 2026-10-30. Replaces EdgeSanskrit clip that audibly voiced ga."
+    "note": "Public-domain Marathi \"ksha\" (Wikimedia Commons MR35), Omni-verified 2026-10-30. Replaces EdgeSanskrit clip that audibly voiced ga. Level-matched 2026-11-01: it was 8.8 dB quieter, 0.77 s vs 1.11 s and mono against the human grid, which made it jar against neighbours. Same recording, gain +5 dB, now stereo 44.1 kHz at RMS -21 dB."
    },
    "placements": {
     "matrika": {

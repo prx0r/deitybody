@@ -122,6 +122,7 @@ function runScore(events, meta){
   const last=events.length?Math.max(...events.map(e=>e.t||0)):0;
   droneStart(last+2.5);
   session.play();
+  repeatArm(meta&&meta.__replay, last);
 }
 function exec(e){
   if(e.cue){ info.querySelector('.locus').textContent=e.cue+(e.feel?` · feel: ${e.feel}`:''); speak(e.cue); }
@@ -348,8 +349,8 @@ const P=[
 ['ū','ऊ','left ear',244,128,'left ear',244,128,'uu.ogg'],
 ['ṛ','ऋ','right nostril',191,140,'headband',170,78,'r.ogg'],
 ['ṝ','ॠ','left nostril',209,140,'headband',230,78,'rr.ogg'],
-['ḷ','ऌ','right cheek',172,150,'headband',190,78,'lr.wav'],
-['ḹ','ॡ','left cheek',228,150,'headband',210,78,'lrr.wav'],
+['ḷ','ऌ','right cheek',172,150,'headband',190,78,'lr.ogg'],
+['ḹ','ॡ','left cheek',228,150,'headband',210,78,'lrr.ogg'],
 ['e','ए','lower teeth',186,166,'right knee',170,570,'e.ogg'],
 ['ai','ऐ','upper teeth',214,162,'left knee',230,570,'ai.ogg'],
 ['o','ओ','lower lip',188,178,'right shank',170,630,'o.ogg'],
@@ -389,7 +390,7 @@ const P=[
 ['ṣa','ष','marrow',216,420,'belly',200,400,'shha.ogg'],
 ['sa','स','essence',184,435,'jīva / Self',200,330,'sa.ogg'],
 ['ha','ह','prāṇa',216,450,'particular prāṇa',200,365,'ha.ogg'],
-['kṣa','क्ष','generative',200,468,'navel',200,390,null]];
+['kṣa','क्ष','generative',200,468,'navel',200,390,'ksa.ogg']];
 function zFor(locus){
   if(/eye|ear|nostril|cheek|mouth|teeth|lip|tongue|nose|forehead|crown|head|face/.test(locus)) return .55;
   if(/side|chest|heart|skin|throat|speech/.test(locus)) return .45;
@@ -875,6 +876,7 @@ function menuMark(){
   set('mNadi',nadis&&nadis.group.visible); set('mMic',micOn);
   set('mVit',vitLayer&&vitLayer.group.visible);
   set('mGuide',guideOn);
+  set('repBtn',repeatCfg.on);
 }
 function markRail(){ menuMark(); }
 function menuClose(){ menu.classList.remove('show'); document.getElementById('menuBtn').classList.remove('on'); }
@@ -908,16 +910,48 @@ function stopMantra(){
   mantraLoop.timers.forEach(clearTimeout); mantraLoop.timers=[];
   mantraStopAudio();
 }
+/* ---------- repeat: replay a whole staged practice forever ----------
+   For the curriculum stages (full-body placement etc): when repeat is on, after
+   the score finishes wait `gap` seconds and start it again from the beginning.
+   The interval is the gap AFTER the practice, not a fixed cycle, so a 40 s
+   placement followed by a 10 s gap repeats every 50 s. */
+let repeatCfg={on:false,gap:10,timer:null};
+function repeatStop(){ if(repeatCfg.timer){ clearTimeout(repeatCfg.timer); repeatCfg.timer=null; } }
+function repeatArm(fn,totalSec){
+  repeatStop();
+  if(!repeatCfg.on||typeof fn!=='function') return;
+  const wait=Math.max(1,(Number(totalSec)||0)+repeatCfg.gap);
+  repeatCfg.timer=setTimeout(()=>{
+    repeatCfg.timer=null;
+    if(!repeatCfg.on) return;
+    try{ fn(); }catch(e){}
+  }, wait*1000);
+  try{
+    const r=document.getElementById('readout');
+    if(r&&repeatCfg.on) r.innerHTML+=' <b>↻</b> '+wait.toFixed(0)+'s';
+  }catch(e){}
+}
+function repeatToggle(on){
+  repeatCfg.on=!!on;
+  if(!repeatCfg.on) repeatStop();
+  const b=document.getElementById('repBtn');
+  if(b) b.classList.toggle('on',repeatCfg.on);
+}
+
 /* ---------- recorded meditations (site/data/meditations.json → audio/meditations/mN.mp3) ---------- */
 let medAudio=null;
 function stopMeditation(){ if(medAudio){ try{medAudio.pause();}catch(e){} medAudio=null; } }
 function playRecorded(path,title,doneMsg){
-  stopMeditation(); stopMantra();
+  repeatStop(); stopMeditation(); stopMantra();
   try{ if(chantPlayer&&chantPlayer.playing) chantPlayer.pause(); }catch(e){}
   try{ session.stop(); }catch(e){}
   const a=new Audio(path);
   a.onerror=()=>{ readout.innerHTML='<b>'+title+'</b> · recording not on disk — scripts/render_meditations.py or render_companions.py'; medAudio=null; };
-  a.onended=()=>{ readout.innerHTML='<b>'+title+'</b> · '+doneMsg; medAudio=null; };
+  a.onended=()=>{
+    medAudio=null;
+    if(repeatCfg.on){ repeatArm(()=>playRecorded(path,title,doneMsg), a.duration||0); return; }
+    readout.innerHTML='<b>'+title+'</b> · '+doneMsg;
+  };
   a.play().then(()=>{
     medAudio=a;
     readout.innerHTML='<b>'+title+'</b> · recording — Clear or any play stops it';
@@ -969,7 +1003,8 @@ function playScorePath(s,p){
   }
   stopMantra();
   score(s).then(j=>{
-    const meta={id:j.id,title:j.title||p.title,source:j.provenance||'timed score'};
+    const meta={id:j.id,title:j.title||p.title,source:j.provenance||'timed score',
+                __replay:()=>playScorePath(s,p)};
     if(j.audio && Array.isArray(j.events)){
       playMantraScore(s, meta, j.events, j.audio);
       return;
@@ -991,7 +1026,8 @@ function playPhase(p){
   if(MANTRA_AUDIO[fkey]){ playScorePath(first,p); return; }
   score(first).then(j=>{
     const evs=j.events||[];
-    runScore(evs,{id:j.id,title:j.title||p.title,source:j.provenance||'timed score'});
+    runScore(evs,{id:j.id,title:j.title||p.title,source:j.provenance||'timed score',
+                   __replay:()=>playPhase(p)});
     if(scores[1]) readout.innerHTML='<b>'+p.title+'</b> · playing 1 of 2 — press Play again for part 2';
   });
 }
@@ -1052,13 +1088,30 @@ function chantSeqFor(kind){
 async function openChant(p){
   loadPhase(p);
   ensureAudio();
-  stopMeditation(); stopMantra();
+  repeatStop(); stopMeditation(); stopMantra();
   if(!chantReg){ chantReg=await loadRegistry(); ChantPlayer.setRecords({phonemes:chantReg.records}); }
   if(!chantPlayer){
     chantPlayer=new ChantPlayer(actx);
     chantPlayer.onPhoneme=(id,ph,idx)=>chantShow(id,ph,idx);
-    chantPlayer.onEnd=()=>{ const el=chantEls(); el.play.textContent='▶ chant'; el.count.textContent='complete — again, or switch series.'; };
   }
+  /* chant dock honours the same ↻ repeat: when on, the full series restarts
+     after `gap` seconds, indefinitely. Mantra phrase scores already loop via
+     mantraLoop, so this branch only covers the chant dock series. */
+  chantPlayer.onEnd=()=>{
+    const el=chantEls();
+    if(repeatCfg.on){
+      repeatStop();
+      repeatCfg.timer=setTimeout(()=>{
+        repeatCfg.timer=null;
+        if(!repeatCfg.on) return;
+        try{ chantPlayer.idx=0; chantPlayer.play(); el.play.textContent='⏸ pause'; }catch(e){}
+      }, Math.max(1,repeatCfg.gap)*1000);
+      el.play.textContent='▶ chant';
+      el.count.textContent='complete — ↻ in '+Math.max(1,repeatCfg.gap).toFixed(0)+'s';
+      return;
+    }
+    el.play.textContent='▶ chant'; el.count.textContent='complete — again, or switch series.';
+  };
   chantMap=p.cfg||'matrika';
   chantQuiz=null;
   const el=chantEls();
@@ -1122,7 +1175,7 @@ function chantToggle(){
   if(chantPlayer.playing){ chantPlayer.pause(); el.play.textContent='▶ chant'; }
   else{ if(chantPlayer.idx>=chantPlayer.seq.length) chantPlayer.idx=0; chantPlayer.play(); el.play.textContent='⏸ pause'; chantShowCurrent(); }
 }
-function chantStopAll(){ if(chantPlayer)chantPlayer.stop(); const el=chantEls(); if(el.play)el.play.textContent='▶ chant'; }
+function chantStopAll(){ repeatStop(); if(chantPlayer)chantPlayer.stop(); const el=chantEls(); if(el.play)el.play.textContent='▶ chant'; }
 async function chantClip(id){
   const ph=(chantReg.records||[]).find(x=>x.iast===id);
   if(!ph||!ph.audio.reference) return;
@@ -1233,6 +1286,20 @@ function buildMenu(){
   const bLib=document.createElement('button'); bLib.textContent='Library'; bLib.id='choiceLib';
   choiceRow.appendChild(bPrac); choiceRow.appendChild(bLib);
   menu.appendChild(choiceRow);
+  /* repeat control: applies to whichever staged practice you press Play on */
+  const repRow=document.createElement('div'); repRow.id='repRow';
+  repRow.style.cssText='display:flex;gap:.4rem;align-items:center;margin:.5rem 0;font-family:ui-sans-serif,system-ui;font-size:.8rem';
+  const repBtn=document.createElement('button'); repBtn.id='repBtn'; repBtn.textContent='↻ repeat';
+  repBtn.style.cssText='font-family:ui-sans-serif,system-ui;font-size:.8rem;padding:.45rem .7rem;border-radius:6px;border:1px solid var(--line);background:#fff;cursor:pointer';
+  repBtn.onclick=(e)=>{ e.stopPropagation(); repeatToggle(!repeatCfg.on); menuMark(); };
+  const repIn=document.createElement('input'); repIn.id='repGap'; repIn.type='number';
+  repIn.min='1'; repIn.max='120'; repIn.step='1'; repIn.value=String(repeatCfg.gap);
+  repIn.style.cssText='width:3.8rem;font-family:ui-sans-serif,system-ui;font-size:.8rem;padding:.4rem;border:1px solid var(--line);border-radius:6px';
+  repIn.oninput=repIn.onchange=()=>{ const v=Math.max(1,Math.min(120,Number(repIn.value)||10)); repeatCfg.gap=v; repIn.value=String(v); };
+  const repLbl=document.createElement('span'); repLbl.textContent='s gap after each run';
+  repLbl.style.color='var(--mut)';
+  repRow.appendChild(repBtn); repRow.appendChild(repIn); repRow.appendChild(repLbl);
+  menu.appendChild(repRow);
   const practicePane=document.createElement('div'); practicePane.id='practicePane'; practicePane.style.display='none';
   menu.appendChild(practicePane);
   bPrac.onclick=()=>{ showPane('practice'); };
@@ -1281,6 +1348,7 @@ function buildMenu(){
     if(!pp) return;
     const keep=new Set();
     const cr=document.getElementById('libChoice'); if(cr) keep.add(cr);
+    const rr=document.getElementById('repRow'); if(rr) keep.add(rr);
     if(pp.parentNode===menu) keep.add(pp);
     Array.prototype.slice.call(menu.childNodes).forEach(ch=>{
       if(!keep.has(ch)) pp.appendChild(ch);
@@ -1356,7 +1424,7 @@ function bodyOn(v){
 /* ---------- clear: back to blank living canvas ---------- */
 function clearAll(){
   try{ session.stop(); }catch(e){}
-  stopMeditation(); stopMantra();
+  repeatStop(); stopMeditation(); stopMantra();
   if(scanMode){scanMode=null; scanBand.visible=false;}
   setVisibleDeep(yantra,false);
   if(typeof vitLayer!=='undefined'&&vitLayer) setVisibleDeep(vitLayer.group,false);
