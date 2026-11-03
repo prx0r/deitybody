@@ -1035,6 +1035,15 @@ function playPhase(p){
 const CHANT16=['a','ā','i','ī','u','ū','ṛ','ṝ','ḷ','ḹ','e','ai','o','au','aṃ','aḥ'];
 const CHANT50=["a","ā","i","ī","u","ū","ṛ","ṝ","ḷ","ḹ","e","ai","o","au","aṃ","aḥ","ka","kha","ga","gha","ṅa","ca","cha","ja","jha","ña","ṭa","ṭha","ḍa","ḍha","ṇa","ta","tha","da","dha","na","pa","pha","ba","bha","ma","ya","ra","la","va","śa","ṣa","sa","ha","kṣa"];
 let chantReg=null, chantPlayer=null, chantMap='matrika', chantQuiz=null, chantLoadToken=0;
+/* voice1 = human guide clips (audio/phonemes/); voice2 = Fish 4e873… (audio/phonemes_v2/,
+   owner-requested, free lane). Swap is path-prefix only — records stay the source of truth. */
+let chantVoice='human';
+function chantActiveRecords(){
+  if(!chantReg) return [];
+  if(chantVoice==='human') return chantReg.records;
+  return chantReg.records.map(r=>({...r, audio:{...r.audio,
+    reference:((r.audio&&r.audio.reference)||'').replace('audio/phonemes/','audio/phonemes_v2/')}}));
+}
 const chantProgress=loadProgress();
 function chantEls(){
   const side=document.getElementById('side');
@@ -1047,6 +1056,7 @@ function chantEls(){
     quiz:side.querySelector('.cquiz'), qprompt:side.querySelector('.qprompt'),
     qopts:side.querySelector('.qopts'), qscore:side.querySelector('.qscore'),
     chantUI:side.querySelector('.cchant'),
+    voice:side.querySelector('.cvoice'),
   };
   side.innerHTML=`<h2>Chant audio</h2><div class="card">
     <div class="cchant">
@@ -1057,6 +1067,7 @@ function chantEls(){
      <div class="smouth"></div>
     <div class="srow"><label>series <select class="cseq"><option value="pair">starter a·ā</option><option value="vowels">vowels 16</option><option value="full" selected>full 50</option><option value="full-rev">full 50 reversed (kṣa→a)</option><option value="ka">ka-varga · right arm</option><option value="ca">ca-varga · left arm</option><option value="tta">ṭa-varga · right leg</option><option value="ta">ta-varga · left leg</option><option value="pa">pa-varga · torso</option><option value="rest">ya→kṣa · spread</option></select></label></div>
     <div class="srow"><label>gap <input class="cgap" type="range" min="0.4" max="15" step="0.2" value="1.6"/></label><span class="cgapV">1.6s</span></div>
+    <div class="srow"><label>voice <select class="cvoice"><option value="human">voice1 · guide (human)</option><option value="fish">voice2 · fish 4e873</option></select></label></div>
     </div>
     <div class="cquiz" style="display:none"><div class="qprompt" style="min-height:2em"></div>
      <div class="qopts"></div><div class="qscore scount"></div>
@@ -1072,6 +1083,13 @@ function chantEls(){
   side.querySelector('.cclose').onclick=()=>{ chantStopAll(); side.classList.remove('open'); };
   el.seq.onchange=chantRebuild;
   el.gap.oninput=e=>{ if(chantPlayer)chantPlayer.gap=+e.target.value; el.gapV.textContent=(+e.target.value).toFixed(1)+'s'; };
+  el.voice.onchange=async e=>{
+    chantVoice=(e.target.value==='fish')?'fish':'human';
+    if(chantPlayer){ chantPlayer.buffers=new Map();          // refetch under new prefix
+      ChantPlayer.setRecords({phonemes:chantActiveRecords()}); }
+    chantEls().count.textContent='loading clips…';
+    await chantRebuild();
+  };
   side.querySelector('.qhear').onclick=()=>{ if(chantQuiz&&!chantQuiz.done&&chantQuiz.dir==='sound_to_body') chantClip(chantQuiz.answer); };
   return el;
 }
@@ -1089,7 +1107,8 @@ async function openChant(p){
   loadPhase(p);
   ensureAudio();
   repeatStop(); stopMeditation(); stopMantra();
-  if(!chantReg){ chantReg=await loadRegistry(); ChantPlayer.setRecords({phonemes:chantReg.records}); }
+  if(!chantReg){ chantReg=await loadRegistry(); }
+  ChantPlayer.setRecords({phonemes:chantActiveRecords()});
   if(!chantPlayer){
     chantPlayer=new ChantPlayer(actx);
     chantPlayer.onPhoneme=(id,ph,idx)=>chantShow(id,ph,idx);
@@ -1177,14 +1196,14 @@ function chantToggle(){
 }
 function chantStopAll(){ repeatStop(); if(chantPlayer)chantPlayer.stop(); const el=chantEls(); if(el.play)el.play.textContent='▶ chant'; }
 async function chantClip(id){
-  const ph=(chantReg.records||[]).find(x=>x.iast===id);
+  const ph=chantActiveRecords().find(x=>x.iast===id);
   if(!ph||!ph.audio.reference) return;
   const b=await (await fetch(ph.audio.reference)).arrayBuffer();
   const d=await actx.decodeAudioData(b);
   const s=actx.createBufferSource(); s.buffer=d; s.connect(actx.destination); s.start();
 }
 function chantAudible(){
-  return CHANT50.filter(id=>{const p=(chantReg.records||[]).find(x=>x.iast===id); return p&&p.audio.reference;});
+  return CHANT50.filter(id=>{const p=chantActiveRecords().find(x=>x.iast===id); return p&&p.audio.reference;});
 }
 function quizNext(){
   const el=chantEls();
