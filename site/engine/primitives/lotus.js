@@ -1,13 +1,13 @@
 /* Lotus primitive — procedural petal wheel with glyphs, yantra core, unfold.
    Colours/topology come from per-text configs, never from here. */
-import * as THREE from 'three';
-import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import * as THREE from '../../vendor/three.module.js';
+import { CSS2DObject } from '../../vendor/addons/renderers/CSS2DRenderer.js';
 
 export function buildLotus(cfg, opts){
   const { scene, playPhoneme, onPetal } = opts;
   const group = new THREE.Group();
-  const N = cfg.geometry.petals, R = opts.radius ?? 0.85;
-  const gold = opts.color ?? 0xc9a45c;
+  const N = cfg.geometry.petals, R = (opts.radius!=null?opts.radius:0.85);
+  const gold = (opts.color!=null?opts.color:0xc9a45c);
   const petals = [];
   for(let k=0; k<N; k++){
     const a = (k/N)*Math.PI*2;
@@ -57,9 +57,9 @@ export function buildLotus(cfg, opts){
   group.add(bindu);
   /* center bīja */
   const bel = document.createElement('div');
-  bel.className = 'petal core'; bel.textContent = cfg.center?.bijaDev || '';
+  bel.className = 'petal core'; bel.textContent = (cfg.center&&cfg.center.bijaDev) || '';
   bel.style.pointerEvents = 'auto';
-  bel.addEventListener('click', ev=>{ ev.stopPropagation(); onPetal && onPetal({bija: cfg.center?.bija, phoneme: null, core:true}, bel); });
+  bel.addEventListener('click', ev=>{ ev.stopPropagation(); onPetal && onPetal({bija: (cfg.center&&cfg.center.bija), phoneme: null, core:true}, bel); });
   const bo = new CSS2DObject(bel); bo.position.set(0, 0, 0.12); group.add(bo);
   scene.add(group);
   return {

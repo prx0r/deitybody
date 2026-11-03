@@ -3,7 +3,7 @@
    upper-arm .55, fore+hand .95, thigh 1.0, shank 1.0, foot H/6, head H/8.
    Torso/pelvis/head reposition per pose. Group transform per pose keeps
    feet/seat inside the square frame. */
-import * as THREE from 'three';
+import * as THREE from '../../vendor/three.module.js';
 
 const INK = 0x7a5c3e;
 

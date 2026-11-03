@@ -4,15 +4,15 @@
    - excitations: taps/scores inject coherent wavefronts that propagate + decay
    - knots: sustained attention leaves a standing shimmer at a locus
    Closest prior art: ZPEVC/zpe-vc (click-catalyst vacuum, energy→phase events). */
-import * as THREE from 'three';
+import * as THREE from '../../vendor/three.module.js';
 
 /* Vitruvian bounds: the square (earthly measure) contains the field.
    Scene units: x∈[-3.6,3.6], y∈[-3.9,3.3]. Soft reflect at the walls. */
 const BX=3.6, Y0=-3.9, Y1=3.3;
 export function buildGridField(opts){
   const { scene } = opts;
-  const N = opts.count ?? 900;
-  const R = opts.radius ?? 5.2;
+  const N = (opts.count!=null?opts.count:900);
+  const R = (opts.radius!=null?opts.radius:5.2);
   const pos = new Float32Array(N*3);
   const seed = new Float32Array(N*2);   // phase, energy
   const live = new Float32Array(N);     // 0..1 lifecycle position

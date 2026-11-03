@@ -225,13 +225,30 @@ body.embed #menuBtn,body.embed #splitBtn,body.embed #menu,body.embed #readout{di
  #chladniBox{width:150px}
 }
 </style>
-<script type="importmap">{"imports":{"three":"./vendor/three.module.js","three/addons/":"./vendor/addons/"}}</script>
 </head>
 <body>
 <canvas id="fluid"></canvas>
 <img id="vitruv" alt=""/>
 <canvas id="scene"></canvas>
 <div id="booterr" style="display:none;position:fixed;z-index:99;left:.6rem;right:.6rem;top:.6rem;background:#3a1420;color:#ffd7de;font:13px/1.4 ui-sans-serif,system-ui;padding:.7rem .9rem;border-radius:10px;border:1px solid #d4899a"></div>
+<script>
+/* classic-browser floor: ES modules (Chrome 61 / Safari 10.1 / Firefox 60) + WebGL.
+   No importmap needed — every three import is a relative path now. */
+(function(){
+  var mods=('noModule' in HTMLScriptElement.prototype);
+  var gl=false; try{ var c=document.createElement('canvas');
+    gl=!!(c.getContext('webgl')||c.getContext('experimental-webgl')); }catch(e){}
+  if(!mods||!gl){
+    window.addEventListener('DOMContentLoaded',function(){
+      var b=document.getElementById('booterr'); if(!b) return;
+      b.style.display='block';
+      b.textContent = !mods
+        ? 'This browser is too old for the interactive lab (needs ES-module support: Chrome 61+, Safari 10.1+, Firefox 60+). The chant pages may still open: /mantra.html'
+        : 'WebGL is unavailable or blocked in this browser, so the 3D body cannot draw. Try updating the browser or enabling hardware acceleration.';
+    });
+  }
+})();
+</script>
 <script>
 window.__bootErrors=[];
 window.addEventListener('error',function(e){

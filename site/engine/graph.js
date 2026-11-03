@@ -15,7 +15,7 @@ export async function loadGraph(){
     nodes.set('region:'+name,{kind:'region',id:name,frame:'phenomenological',y:r.y,nodes:r.nodes||[]});
   }
   for(const [name,c] of Object.entries(body.centers||{})){
-    nodes.set('center:'+name,{kind:'center',id:name,frame:'phenomenological',x:c.x??0,y:c.y,z:c.z??0});
+    nodes.set('center:'+name,{kind:'center',id:name,frame:'phenomenological',x:(c.x!=null?c.x:0),y:c.y,z:(c.z!=null?c.z:0)});
   }
   for(const [name] of Object.entries(body.channels||{})){
     nodes.set('channel:'+name,{kind:'channel',id:name,frame:'phenomenological'});
@@ -23,14 +23,14 @@ export async function loadGraph(){
   if(phon) for(const p of phon.phonemes||[]){
     nodes.set('phoneme:'+p.iast,{kind:'phoneme',id:p.iast,frame:'tradition',tradition:'trika',
       matrika:p.matrika, malini:p.malini, clip:p.clip});
-    edges.push({from:'phoneme:'+p.iast, rel:'installed_at', to:'locus:'+p.matrika?.locus});
+    edges.push({from:'phoneme:'+p.iast, rel:'installed_at', to:'locus:'+(p.matrika&&p.matrika.locus)});
   }
   const api={
     data:body, nodes, edges,
     node(id){ return nodes.get(id)||null; },
-    regionNodes(name){ return body.regions[name]?.nodes||[]; },
+    regionNodes(name){ var r=body.regions[name]; return (r&&r.nodes)||[]; },
     traditionLoci(framework){
-      if(framework==='trika'&&phon) return phon.phonemes.map(p=>({id:p.iast,...p}));
+      if(framework==='trika'&&phon) return phon.phonemes.map(p=>Object.assign({},p,{id:p.iast}));
       return [];
     },
   };

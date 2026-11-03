@@ -2,8 +2,8 @@
    Provides: posed surface, named bones (channels can parent to spine),
    breath swell hook, built-in clips. Subtle layers stay separate and primary.
    Replace Xbot.glb with a neutral licensed GLB before any release. */
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import * as THREE from '../../vendor/three.module.js';
+import { GLTFLoader } from '../../vendor/addons/loaders/GLTFLoader.js';
 
 export async function buildAvatar(opts){
   const { scene } = opts;

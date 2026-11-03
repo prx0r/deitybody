@@ -1,7 +1,7 @@
 /* Living subtle-body lab — Three.js, zero build. Same frozen maps + audio as homescreen. */
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/OrbitControls.js';
-import { CSS2DRenderer, CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import * as THREE from './vendor/three.module.js';
+import { OrbitControls } from './vendor/addons/OrbitControls.js';
+import { CSS2DRenderer, CSS2DObject } from './vendor/addons/renderers/CSS2DRenderer.js';
 import { loadBody } from './engine/body.js';
 import { Session } from './engine/session.js';
 import { loadGraph } from './engine/graph.js';
@@ -127,7 +127,7 @@ function runScore(events, meta){
 function exec(e){
   if(e.cue){ info.querySelector('.locus').textContent=e.cue+(e.feel?` · feel: ${e.feel}`:''); speak(e.cue); }
   else if(e.feel){ info.querySelector('.locus').textContent=`feel: ${e.feel}`; }
-  const Y=a=>BD?BD.regionY(a):({heart:.78,crown:3.3,dvadasanta:4.3,feet:-3.9}[a]??0);
+  const Y=a=>{if(BD)return BD.regionY(a);const m={heart:.78,crown:3.3,dvadasanta:4.3,feet:-3.9}[a];return m!=null?m:0;};
   switch(e.do){
     case 'info':
       info.querySelector('.dev').textContent=e.dev||'';
@@ -139,7 +139,7 @@ function exec(e){
       show(P[k]); pop(k); if(e.sound&&P[k][8]) play('audio/phonemes/'+P[k][8]);
       const ny=nodes[k].anchor.position.y, st=styleForY(ny);
       ringPing(ny, st.color);
-      shapeFlash(nodes[k].anchor.position.x, ny, nodes[k].anchor.position.z, e.shape||st.shape, e.color??st.color);
+      shapeFlash(nodes[k].anchor.position.x, ny, nodes[k].anchor.position.z, e.shape||st.shape, e.color!=null?e.color:st.color);
       playTone(toneForY(ny), toneDur(P[k][0], ny));
       break; }
     case 'pulse': case 'sweep': {
@@ -172,10 +172,10 @@ function exec(e){
     case 'mpfire': mpFire(e.id); break;
   }
 }
-import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { EffectComposer } from './vendor/addons/postprocessing/EffectComposer.js';
+import { RenderPass } from './vendor/addons/postprocessing/RenderPass.js';
+import { UnrealBloomPass } from './vendor/addons/postprocessing/UnrealBloomPass.js';
+import { OutputPass } from './vendor/addons/postprocessing/OutputPass.js';
 
 const GOLD=0xc9a45c, TEAL=0x5ec4b6, INK=0xf0ebe0, ROSE=0xd4899a;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -461,7 +461,7 @@ function petalShow(p, el){
     (lotusCfg ? ` · ${lotusCfg.provenance.status}` : '');
   info.querySelector('.locus').textContent =
     (p.core ? 'Heart-seat of the lotus. ' : 'Petal syllable as attention-seat. ') +
-    'Source: ' + (lotusCfg?.provenance.text || '') + ' — verify Sanskrit before teaching.';
+    'Source: ' + ((lotusCfg&&lotusCfg.provenance.text) || '') + ' — verify Sanskrit before teaching.';
   el.classList.add('lit'); setTimeout(()=>el.classList.remove('lit'), 900);
   if(clip) play(clip); else if(p.core) play('audio/phonemes/ya.ogg');
   const [sx, sy] = [innerWidth/2, innerHeight*0.45];
@@ -570,7 +570,7 @@ function toggleNadis(){
     nadis=buildNadis(nadisCfg,{scene, mapPoint:(x,y)=>xfPos(x,y)});
     for(const n of nadisCfg.nadis){
       if(n.id==='sushumna'||n.id==='ida'||n.id==='pingala') continue;
-      pathReg.register('nadi:'+n.id,{points:n.points.map(p=>[p[0],p[1],p[2]??0]),
+      pathReg.register('nadi:'+n.id,{points:n.points.map(p=>[p[0],p[1],p[2]!=null?p[2]:0]),
         color:0x8a6f3c,radius:.012,opacity:.5,provenance:'ten principals; endpoints traditional-variant'});
     }
     pathReg.rebuild((x,y)=>xfPos(x,y));
@@ -610,7 +610,7 @@ function buildHubAndBranches(){
   for(const [a,b] of TREE){ treePts.push([a.x,a.y],[b.x,b.y]); }
   for(const n of nadisCfg.nadis){
     if(!n.points||n.points.length<2) continue;
-    const base=n.points.map(p=>{const [x,y]=xfPos(p[0],p[1]); return new THREE.Vector3(x,y,p[2]??0);});
+    const base=n.points.map(p=>{const [x,y]=xfPos(p[0],p[1]); return new THREE.Vector3(x,y,p[2]!=null?p[2]:0);});
     for(let b=0;b<3;b++){
       const i=Math.min(base.length-2,Math.floor((0.3+b*0.25)*(base.length-1)));
       const o=base[i].clone(), co=Math.cos(b*2.1), si=Math.sin(b*2.1);
@@ -651,7 +651,7 @@ function fluidSplat(x,y,dx,dy){
   const o={bubbles:true,cancelable:true,clientX:x,clientY:y};
   fluidCanvas.dispatchEvent(new MouseEvent('mousedown',o));
   for(let k=1;k<=3;k++) fluidCanvas.dispatchEvent(new MouseEvent('mousemove',
-    {...o,clientX:x+dx*k/3,clientY:y+dy*k/3}));
+    Object.assign({},o,{clientX:x+dx*k/3,clientY:y+dy*k/3})));
   fluidCanvas.dispatchEvent(new MouseEvent('mouseup',o));
 }
 if(fluidOn){
@@ -1041,8 +1041,8 @@ let chantVoice='human';
 function chantActiveRecords(){
   if(!chantReg) return [];
   if(chantVoice==='human') return chantReg.records;
-  return chantReg.records.map(r=>({...r, audio:{...r.audio,
-    reference:((r.audio&&r.audio.reference)||'').replace('audio/phonemes/','audio/phonemes_v2/')}}));
+  return chantReg.records.map(r=>Object.assign({},r,{audio:Object.assign({},r.audio,
+    {reference:((r.audio&&r.audio.reference)||'').replace('audio/phonemes/','audio/phonemes_v2/')})}));
 }
 const chantProgress=loadProgress();
 function chantEls(){
@@ -1819,7 +1819,7 @@ function tick(){
     const bp=axisPoint(-0.6);
     pacer.visible=true; pacer.position.copy(bp);
     if(poseName==='lying') pacer.rotation.set(0,Math.PI/2,0); else pacer.rotation.set(Math.PI/2,0,0);
-    const br=breath.state.expansion??0.5;
+    const br=breath.state.expansion!=null?breath.state.expansion:0.5;
     pacer.scale.setScalar(0.85+0.3*br); pacer.material.opacity=.14+.12*br;
   } else pacer.visible=false;
   if(heartField&&!reduce) heartField.material.opacity=.08+.06*Math.sin(t*2*Math.PI*0.1+1);

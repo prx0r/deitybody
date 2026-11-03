@@ -30,17 +30,17 @@ function drawPoints(canvas,points){
 }
 
 function radialWarp(g,t){
-  const P=[],N=10000,tt=t*(g.time_rate??.45);
+  const P=[],N=10000,tt=t*((g.time_rate!=null?g.time_rate:.45));
   for(let i=N;i--;){
-    const y=i/(g.i_div??100);
-    const k=(g.k_base??8)+Math.sin(i/(g.k_freq??19)+tt)*Math.cos(i/(g.k_freq2??49));
-    const e=y/(g.e_div??8)-(g.e_bias??12);
+    const y=i/((g.i_div!=null?g.i_div:100));
+    const k=((g.k_base!=null?g.k_base:8))+Math.sin(i/((g.k_freq!=null?g.k_freq:19))+tt)*Math.cos(i/((g.k_freq2!=null?g.k_freq2:49)));
+    const e=y/((g.e_div!=null?g.e_div:8))-((g.e_bias!=null?g.e_bias:12));
     const mag=Math.hypot(k,e);
-    const d=Math.pow(mag,g.d_power??2)/(g.d_div??79)+(g.d_bias??1);
-    const phase=d*d-tt+Math.cos(tt/(g.phase_slow??3))+(g.e_phase??.3)*Math.sin(e);
-    const q=k/d*(g.k_over_d??4)-e*Math.sin(k)+k/(d*d)*((g.inner_bias??12)+d*(g.inner_scale??6)*Math.sin(phase));
-    const x=q+(g.x_offset??0);
-    const yy=(g.y_wave??12)*Math.sin(d*(g.y_freq??2.6)-tt)+d*(g.y_scale??66)+(g.e_y??0)*e;
+    const d=Math.pow(mag,(g.d_power!=null?g.d_power:2))/((g.d_div!=null?g.d_div:79))+((g.d_bias!=null?g.d_bias:1));
+    const phase=d*d-tt+Math.cos(tt/((g.phase_slow!=null?g.phase_slow:3)))+((g.e_phase!=null?g.e_phase:.3))*Math.sin(e);
+    const q=k/d*((g.k_over_d!=null?g.k_over_d:4))-e*Math.sin(k)+k/(d*d)*(((g.inner_bias!=null?g.inner_bias:12))+d*((g.inner_scale!=null?g.inner_scale:6))*Math.sin(phase));
+    const x=q+((g.x_offset!=null?g.x_offset:0));
+    const yy=((g.y_wave!=null?g.y_wave:12))*Math.sin(d*((g.y_freq!=null?g.y_freq:2.6))-tt)+d*((g.y_scale!=null?g.y_scale:66))+((g.e_y!=null?g.e_y:0))*e;
     if(Number.isFinite(x)&&Number.isFinite(yy))P.push([x,yy]);
   }
   return P;
@@ -48,49 +48,49 @@ function radialWarp(g,t){
 
 
 function polarWarp(g,t){
-  const P=[],N=12000,tt=t*(g.time_rate??.5),parity=Math.max(1,Math.round(g.parity??2));
+  const P=[],N=12000,tt=t*((g.time_rate!=null?g.time_rate:.5)),parity=Math.max(1,Math.round((g.parity!=null?g.parity:2)));
   for(let i=N;i--;){
-    const y=i/(g.i_div??110);
-    const k=(g.k_amp??8)*Math.cos(y<(g.switch_y??59)?i%(g.k_mod??9):i*(g.k_mult??4));
-    const e=y/(g.e_div??6)-(g.e_bias??16);
-    const d=Math.pow(Math.hypot(k,e),g.d_power??2)/(g.d_div??79)+(g.d_bias??1.1);
+    const y=i/((g.i_div!=null?g.i_div:110));
+    const k=((g.k_amp!=null?g.k_amp:8))*Math.cos(y<((g.switch_y!=null?g.switch_y:59))?i%((g.k_mod!=null?g.k_mod:9)):i*((g.k_mult!=null?g.k_mult:4)));
+    const e=y/((g.e_div!=null?g.e_div:6))-((g.e_bias!=null?g.e_bias:16));
+    const d=Math.pow(Math.hypot(k,e),(g.d_power!=null?g.d_power:2))/((g.d_div!=null?g.d_div:79))+((g.d_bias!=null?g.d_bias:1.1));
     if(Math.abs(d)<1e-6)continue;
-    const q=k/d*(g.k_over_d??3)-e*Math.sin(k)+k/(d*d)*((g.inner_bias??9)-d*(g.inner_scale??4)*Math.sin(d*d-tt+Math.sin(e)*(g.e_phase??.5)))+(g.q_bias??70);
-    const c=d/(g.c_div??2)-tt/(g.t_div??12)+(i%parity)*(g.parity_phase??4);
+    const q=k/d*((g.k_over_d!=null?g.k_over_d:3))-e*Math.sin(k)+k/(d*d)*(((g.inner_bias!=null?g.inner_bias:9))-d*((g.inner_scale!=null?g.inner_scale:4))*Math.sin(d*d-tt+Math.sin(e)*((g.e_phase!=null?g.e_phase:.5))))+((g.q_bias!=null?g.q_bias:70));
+    const c=d/((g.c_div!=null?g.c_div:2))-tt/((g.t_div!=null?g.t_div:12))+(i%parity)*((g.parity_phase!=null?g.parity_phase:4));
     const x=q*Math.sin(c);
-    const yy=q*Math.cos(c)+e*(g.e_y??1);
+    const yy=q*Math.cos(c)+e*((g.e_y!=null?g.e_y:1));
     if(Number.isFinite(x)&&Number.isFinite(yy)&&Math.abs(x)<1e6&&Math.abs(yy)<1e6)P.push([x,yy]);
   }
   return P;
 }
 
 function latentNineteen(g,t){
-  const P=[],N=10000,tt=t*(g.time_rate??.62),mMax=Math.max(2,Math.round(g.m_mod??19));
+  const P=[],N=10000,tt=t*((g.time_rate!=null?g.time_rate:.62)),mMax=Math.max(2,Math.round((g.m_mod!=null?g.m_mod:19)));
   for(let i=N;i--;){
     const m=i%mMax;
-    const k=(g.k_amp??9)*Math.cos(i*(g.k_f1??5))*Math.sin(i*(g.k_f2??1));
-    const e=(g.e_amp??9)*Math.cos(i*(g.e_f1??7))*Math.cos(i*(g.e_f2??1));
+    const k=((g.k_amp!=null?g.k_amp:9))*Math.cos(i*((g.k_f1!=null?g.k_f1:5)))*Math.sin(i*((g.k_f2!=null?g.k_f2:1)));
+    const e=((g.e_amp!=null?g.e_amp:9))*Math.cos(i*((g.e_f1!=null?g.e_f1:7)))*Math.cos(i*((g.e_f2!=null?g.e_f2:1)));
     if(e<=g.e_gate)continue;
     const mag=Math.hypot(k,e);
-    const d=Math.pow(mag,g.d_power??3)/(g.d_div??999)+(g.d_bias??4.6)-Math.pow(Math.cos(tt/(g.slow??4)+m),3)*(g.phase_depth??.333);
+    const d=Math.pow(mag,(g.d_power!=null?g.d_power:3))/((g.d_div!=null?g.d_div:999))+((g.d_bias!=null?g.d_bias:4.6))-Math.pow(Math.cos(tt/((g.slow!=null?g.slow:4))+m),3)*((g.phase_depth!=null?g.phase_depth:.333));
     if(Math.abs(d)<1e-6)continue;
     const o=Math.sin(d*d-tt+m);
-    const c=d/(g.c_div??8)-tt/(g.t_div??32)+m;
-    const x=(g.radius??99)*Math.sin(c)+k/(g.k_div??3)*Math.exp(clamp(o,-1,1));
-    const y=(g.radius??99)*Math.cos(c/(g.c_y_div??3))+d*(g.d_y??39)+Math.pow(Math.max(.001,e),clamp(o,-.8,.8));
+    const c=d/((g.c_div!=null?g.c_div:8))-tt/((g.t_div!=null?g.t_div:32))+m;
+    const x=((g.radius!=null?g.radius:99))*Math.sin(c)+k/((g.k_div!=null?g.k_div:3))*Math.exp(clamp(o,-1,1));
+    const y=((g.radius!=null?g.radius:99))*Math.cos(c/((g.c_y_div!=null?g.c_y_div:3)))+d*((g.d_y!=null?g.d_y:39))+Math.pow(Math.max(.001,e),clamp(o,-.8,.8));
     if(Number.isFinite(x)&&Number.isFinite(y)&&Math.abs(x)<1e6&&Math.abs(y)<1e6)P.push([x,y]);
   }
   return P;
 }
 
 function torusLattice(g,t){
-  const P=[],ny=Math.round(g.rows??40),nx=Math.round(g.cols??80),tt=t*(g.time_rate??.22);
+  const P=[],ny=Math.round((g.rows!=null?g.rows:40)),nx=Math.round((g.cols!=null?g.cols:80)),tt=t*((g.time_rate!=null?g.time_rate:.22));
   const ax=.5,ay=-.5,ca=Math.cos(ax),sa=Math.sin(ax),cb=Math.cos(ay),sb=Math.sin(ay);
   for(let y=0;y<ny;y++)for(let x=0;x<nx;x++){
-    const v=(y+tt)*(Math.PI/(g.p_div??40))*2*(g.v_freq??1);
-    const u=(x+tt)*(Math.PI/(g.p_div??40))*(g.u_freq??1);
-    const R=(g.major??2)+(g.minor??1)*Math.sin(v);
-    let X=R*Math.cos(u),Y=R*Math.sin(u),Z=(g.z_amp??1)*Math.cos(v);
+    const v=(y+tt)*(Math.PI/((g.p_div!=null?g.p_div:40)))*2*((g.v_freq!=null?g.v_freq:1));
+    const u=(x+tt)*(Math.PI/((g.p_div!=null?g.p_div:40)))*((g.u_freq!=null?g.u_freq:1));
+    const R=((g.major!=null?g.major:2))+((g.minor!=null?g.minor:1))*Math.sin(v);
+    let X=R*Math.cos(u),Y=R*Math.sin(u),Z=((g.z_amp!=null?g.z_amp:1))*Math.cos(v);
     // Fixed camera, not an evolvable parameter.
     let y1=Y*ca-Z*sa,z1=Y*sa+Z*ca,x1=X;
     let x2=x1*cb-z1*sb,z2=x1*sb+z1*cb;

@@ -1,12 +1,12 @@
 /* Vitruvian overlay — circle (heavens) + square (earth) + measure ticks
    + heart torus (HeartMath note) + vacuum point (holofractal note).
    Diagram, not doctrine. Statuses live in vitruvian-man.json. */
-import * as THREE from 'three';
-import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import * as THREE from '../../vendor/three.module.js';
+import { CSS2DObject } from '../../vendor/addons/renderers/CSS2DRenderer.js';
 
 export function buildVitruvian(cfg, opts){
   const { scene } = opts;
-  const gold = opts.color ?? 0xc9a45c;
+  const gold = (opts.color!=null?opts.color:0xc9a45c);
   const teal = 0x5ec4b6;
   const group = new THREE.Group();
   const line = (pts, color=gold, op=.7) => {

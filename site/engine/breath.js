@@ -14,14 +14,14 @@ export function createBreath(){
     tick(dt, t, mic){
       s._t = t;
       if(mic && mic.on && mic.level != null){
-        const prev = s.expansion ?? 0.5;
+        const prev = s.expansion != null ? s.expansion : 0.5;
         s.expansion = mic.level;
         s.velocity = dt > 0 ? (s.expansion - prev)/dt : 0;
         s.phase = s.velocity > 0.02 ? 'inhale' : s.velocity < -0.02 ? 'exhale' : 'pause';
         s.confidence = 0.6; s.source = 'microphone';
       }else{
         const br = 0.5 + 0.5*Math.sin(t*2*Math.PI*0.1);
-        const prev = s.expansion ?? br;
+        const prev = s.expansion != null ? s.expansion : br;
         s.expansion = br;
         s.velocity = dt > 0 ? (br - prev)/dt : 0;
         s.phase = Math.cos(t*2*Math.PI*0.1) > 0 ? 'inhale' : 'exhale';

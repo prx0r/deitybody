@@ -6,7 +6,7 @@ export function makeTools(ctx){
   return {
     getPracticeState(){
       const s = session.snapshot();
-      return {...s, note:'prescribed+rendered state. Not a measurement of attention.'};
+      return Object.assign({},s,{note:'prescribed+rendered state. Not a measurement of attention.'});
     },
     getSourcePassage(){
       const p = session.practice;

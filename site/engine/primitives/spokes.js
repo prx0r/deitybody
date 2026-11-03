@@ -1,12 +1,12 @@
 /* Spoke-wheel primitive — radial subsidiary channels around a hub drop.
    For channel-count centres (e.g. Kālacakra); spokes are channels, NOT lotus petals. */
-import * as THREE from 'three';
-import { CSS2DObject } from 'three/addons/renderers/CSS2DRenderer.js';
+import * as THREE from '../../vendor/three.module.js';
+import { CSS2DObject } from '../../vendor/addons/renderers/CSS2DRenderer.js';
 
 export function buildSpokes(cfg, opts){
   const { scene, onCentre } = opts;
   const group = new THREE.Group();
-  const color = opts.color ?? 0xc9a45c;
+  const color = (opts.color!=null?opts.color:0xc9a45c);
   const wheels = [];
   for(const c of cfg.centres){
     const w = new THREE.Group(); w.position.set(0, c.y3, 0.1);

@@ -2,7 +2,7 @@
    arc-length travel. Poses rebuild the same paths; visuals never own curves.
    Uses three's built-in arc-length mapping (getPointAt/getTangentAt), so
    constant u-steps are constant-distance steps. Junctions explicit. */
-import * as THREE from 'three';
+import * as THREE from '../vendor/three.module.js';
 
 export function createPathRegistry(scene){
   const paths = new Map();
@@ -20,7 +20,7 @@ export function createPathRegistry(scene){
         if(rec.mesh){ scene.remove(rec.mesh); rec.mesh.geometry.dispose(); }
         const pts = rec.basePoints.map(p=>{
           const [x,y] = mapFn ? mapFn(p[0],p[1]) : [p[0],p[1]];
-          return new THREE.Vector3(x,y,p[2]??0);
+          return new THREE.Vector3(x,y,p[2]!=null?p[2]:0);
         });
         rec.curve = new THREE.CatmullRomCurve3(pts);
         rec.mesh = new THREE.Mesh(
