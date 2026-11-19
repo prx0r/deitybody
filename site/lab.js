@@ -216,7 +216,8 @@ if(bloomOn){
 /* ---------- constellation: no physical body. The phonemes ARE the geometry. ---------- */
 const MATRIKA_ORDER=["a","ā","i","ī","u","ū","ṛ","ṝ","ḷ","ḹ","e","ai","o","au","aṃ","aḥ","ka","kha","ga","gha","ṅa","ca","cha","ja","jha","ña","ṭa","ṭha","ḍa","ḍha","ṇa","ta","tha","da","dha","na","pa","pha","ba","bha","ma","ya","ra","la","va","śa","ṣa","sa","ha","kṣa"];
 let MALINI_ORDER=null;
-fetch('data/malini_order.json').then(r=>r.json()).then(j=>{MALINI_ORDER=j.order;}).catch(()=>{});
+const MALINI_READY=fetch('data/malini_order.json').then(r=>r.json())
+  .then(j=>{MALINI_ORDER=j.order;return j.order;}).catch(()=>null);
 const IDX={};
 const edgeMat=new THREE.LineBasicMaterial({color:0xa86f14,transparent:true,opacity:.32});
 const edgeGeo=new THREE.BufferGeometry();
@@ -1096,9 +1097,15 @@ function chantEls(){
 function chantSeqFor(kind){
   const v=(chantEls().seq||{}).value||'full';
   void kind;
+  const malini = chantMap==='malini' && Array.isArray(MALINI_ORDER) && MALINI_ORDER.length>0;
   if(v==='pair') return ['a','ā'];
   if(v==='vowels') return CHANT16.slice();
-  if(v==='full-rev') return CHANT50.slice().reverse();
+  if(v==='full-rev') return (malini?MALINI_ORDER:CHANT50).slice().reverse();
+  /* In Mālinī mode the mātṛkā varga cuts (ka-varga, ca-varga, …) do not
+     exist: bhinna-yoni mixes vowels and consonants. Any series label
+     therefore resolves to the full Mālinī round rather than silently
+     chanting mātṛkā order. */
+  if(malini) return MALINI_ORDER.slice();
   const cuts={ka:[16,21],ca:[21,26],tta:[26,31],ta:[31,36],pa:[36,41],rest:[41,50]};
   if(cuts[v]) return CHANT50.slice(cuts[v][0],cuts[v][1]);
   return CHANT50.slice();
@@ -1134,6 +1141,7 @@ async function openChant(p){
   chantMap=p.cfg||'matrika';
   chantQuiz=null;
   const el=chantEls();
+  syncChantSeriesUI(chantMap);
   el.title.textContent='Chant audio · '+(p.title||'');
   el.side.classList.add('open');
   if(p.chant==='quiz'){
@@ -1151,6 +1159,7 @@ async function openChant(p){
 async function chantRebuild(){
   const el=chantEls();
   const tok=++chantLoadToken;
+  if(chantMap==='malini' && !MALINI_ORDER){ try{ await MALINI_READY; }catch(e){} }
   el.play.disabled=true; el.play.textContent='… loading';
   const seq=chantSeqFor();
   /* mouth position shows immediately — does not wait for audio */
@@ -1166,6 +1175,24 @@ async function chantRebuild(){
   el.play.disabled=false;
   const id=chantPlayer.seq[0];
   chantShow(id,(chantReg.records||[]).find(x=>x.iast===id),0);
+}
+/* The series menu is written for mātṛkā (varga cuts). In Mālinī mode only
+   the full round makes sense, so relabel 'full' and hide the varga cuts. */
+function syncChantSeriesUI(map){
+  const sel=chantEls().seq;
+  if(!sel) return;
+  const malini=map==='malini';
+  const full=sel.querySelector('option[value="full"]');
+  const rev=sel.querySelector('option[value="full-rev"]');
+  if(full) full.textContent=malini?'full 50 · Mālinī (na→pha)':'full 50';
+  if(rev) rev.textContent=malini?'full 50 reversed · Mālīni (pha→na)':'full 50 reversed (kṣa→a)';
+  for(const opt of sel.querySelectorAll('option')){
+    const v=opt.value;
+    const mātṛkāOnly=['ka','ca','tta','ta','pa','rest'].includes(v);
+    opt.hidden=malini&&mātṛkāOnly;
+    opt.disabled=malini&&mātṛkāOnly;
+  }
+  if(malini && ['ka','ca','tta','ta','pa','rest'].includes(sel.value)) sel.value='full';
 }
 function chantShow(id,ph,idx){
   const el=chantEls();
